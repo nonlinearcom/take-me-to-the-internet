@@ -9,9 +9,9 @@ Digital Storytelling &amp; Web Design curated resource list.
 3. Learn JavaScript --soon
 4. Wordpress --soon
 5. Workflow / Tools --soon
-6. **[Articles](#Articles)**
-7. **[Guides](#Guides)**
-8. **[Reference](#Reference)**
+6. **[Articles](#articles)**
+7. **[Guides](#guides)**
+8. **[Reference](#reference)**
 
 
 ---
