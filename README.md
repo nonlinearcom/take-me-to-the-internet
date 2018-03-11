@@ -1,8 +1,7 @@
 # take-me-to-the-internet
 Digital Storytelling &amp; Web Design curated resource list.
 
-![alt text](./img/webdesign.jpg")
-
+![Alt text](img/webdesign.jpg?raw=true "Webdesign")
 
 ---
 ## Table of Contents
