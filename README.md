@@ -1,6 +1,8 @@
 # take-me-to-the-internet
 Digital Storytelling &amp; Web Design curated resource list.
 
+![alt text](./img/webdesign.jpg")
+
 
 ---
 ## Table of Contents
@@ -48,6 +50,9 @@ Digital Storytelling &amp; Web Design curated resource list.
 ## Articles
 
 * [On Web Brutalism and Contemporary Web Design](https://quod.lib.umich.edu/d/dialectic/14932326.0001.107/--on-web-brutalism-and-contemporary-web-design?rgn=main;view=fulltext#N4-ptr1)
+
+* [The web we have to save](
+https://medium.com/matter/the-web-we-have-to-save-2eb1fe15a426)
 
 ---
 ## Reference
