@@ -42,11 +42,13 @@ Digital Storytelling &amp; Web Design curated resource list.
 
 ---
 ## Workflow
- * text editor
+ * Using a text editor
     * [Using Atom](https://www.youtube.com/watch?v=EyG20hhON6E) :arrow_forward:
 
-
-
+ * Useful packages
+    * [Emmet](https://atom.io/packages/emmet)
+    * [Atom Beautify](https://atom.io/packages/atom-beautify)
+    * [Pigments](https://atom.io/packages/pigments)
 ---
 ## Articles
 
@@ -77,12 +79,23 @@ https://medium.com/matter/the-web-we-have-to-save-2eb1fe15a426)
 ## Resources
 
 * Images
-    * [Unsplash](https://unsplash.com)
-    * [IMG](https://img.silly.graphics)
+    - [Unsplash](https://unsplash.com)
+    - [IMG](https://img.silly.graphics)
+
 
 * Fonts
-    * [Google fonts](https://fonts.google.com)
+    - [Google fonts](https://fonts.google.com)
 
+
+* Color
+    - [Pigment](https://pigment.shapefactory.co)
+
+
+* Programs
+    - Free alternative to Adobe Illustrator
+    - [inkscape](https://inkscape.org/)
+    - Free alternative to Adobe Photoshop
+    - [gimp](https://www.gimp.org)
 
 
 **[⬆ back to top](#table-of-contents)**
