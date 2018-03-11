@@ -75,12 +75,12 @@ https://medium.com/matter/the-web-we-have-to-save-2eb1fe15a426)
 ---
 ## Resources
 
-    * Images
-        * [Unsplash](https://unsplash.com)
-        * [IMG](https://img.silly.graphics)
+* Images
+    * [Unsplash](https://unsplash.com)
+    * [IMG](https://img.silly.graphics)
 
-    * Fonts
-        * [Google fonts](https://fonts.google.com)
+* Fonts
+    * [Google fonts](https://fonts.google.com)
 
 
 
