@@ -16,17 +16,17 @@ Digital Storytelling &amp; Web Design curated resource list.
 
 ---
 ## Start here
-  * [What is the Internet?](https://www.youtube.com/watch?v=Dxcc6ycZ73M)
+  * [What is the Internet?](https://www.youtube.com/watch?v=Dxcc6ycZ73M) :arrow_forward:
 
 
 ---
 ## Learn HTML
 
-* [HTML5 Basics-Tags](https://youtu.be/1SLB-vCqR0g)
+* [HTML5 Basics-Tags](https://youtu.be/1SLB-vCqR0g) :arrow_forward:
 
 ---
 ## Learn CSS
-* [CSS Basics](https://youtu.be/s7ONvIgOWdM)
+* [CSS Basics](https://youtu.be/s7ONvIgOWdM):arrow_forward:
 
 
 ---
@@ -39,7 +39,7 @@ Digital Storytelling &amp; Web Design curated resource list.
 ---
 ## Workflow
  * text editor
-    * [Using Atom](https://www.youtube.com/watch?v=EyG20hhON6E) :movie_camera:
+    * [Using Atom](https://www.youtube.com/watch?v=EyG20hhON6E) :arrow_forward:
 
 
 
