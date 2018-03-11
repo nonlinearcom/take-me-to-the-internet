@@ -12,6 +12,7 @@ Digital Storytelling &amp; Web Design curated resource list.
 6. **[Articles](#articles)**
 7. **[Guides](#guides)**
 8. **[Reference](#reference)**
+9. **[Inspiration](#inspiration)**
 
 
 ---
@@ -48,9 +49,22 @@ Digital Storytelling &amp; Web Design curated resource list.
 
 * [On Web Brutalism and Contemporary Web Design](https://quod.lib.umich.edu/d/dialectic/14932326.0001.107/--on-web-brutalism-and-contemporary-web-design?rgn=main;view=fulltext#N4-ptr1)
 
-
+---
 ## Reference
+* [w3schools.com/html](https://www.w3schools.com/html/default.asp)
+* [w3schools.com/css](https://www.w3schools.com/css/)
 * [htmlreference.io](https://htmlreference.io)
 * [cssreference.io](https://cssreference.io)
+
+---
+## Inspiration
+
+* [Brutalist Websites](http://brutalistwebsites.com)
+* [Httpster](http://httpster.net)
+* [Open Directory](http://www.open-directory.co)
+* [The Gallery](http://thegallery.io)
+* [Site Inspire](http://siteinspire.net)
+* [Sites we like](http://www.designmadeingermany.de/sites-we-like/)
+
 
 **[⬆ back to top](#table-of-contents)**
