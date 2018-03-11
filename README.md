@@ -71,6 +71,7 @@ https://medium.com/matter/the-web-we-have-to-save-2eb1fe15a426)
 * [The Gallery](http://thegallery.io)
 * [Site Inspire](http://siteinspire.net)
 * [Sites we like](http://www.designmadeingermany.de/sites-we-like/)
+* [Type Wolf](https://www.typewolf.com)
 
 ---
 ## Resources
