@@ -1,4 +1,4 @@
-# take-me-to-the-internet
+# Take me to the internet
 Digital Storytelling &amp; Web Design curated resource list.
 
 ![Alt text](img/webdesign.jpg?raw=true "Webdesign")
@@ -14,11 +14,13 @@ Digital Storytelling &amp; Web Design curated resource list.
 7. **[Guides](#guides)**
 8. **[Reference](#reference)**
 9. **[Inspiration](#inspiration)**
+10. **[Resources](#resources)**
 
 
 ---
 ## Start here
   * [What is the Internet?](https://www.youtube.com/watch?v=Dxcc6ycZ73M) :arrow_forward:
+  * [A brief history of web design for designers](http://blog.froont.com/brief-history-of-web-design-for-designers/)
 
 
 ---
@@ -69,6 +71,13 @@ https://medium.com/matter/the-web-we-have-to-save-2eb1fe15a426)
 * [The Gallery](http://thegallery.io)
 * [Site Inspire](http://siteinspire.net)
 * [Sites we like](http://www.designmadeingermany.de/sites-we-like/)
+
+---
+## Resources
+
+    * images
+        * [Unsplash](https://unsplash.com)
+        * [IMG](https://img.silly.graphics)
 
 
 **[⬆ back to top](#table-of-contents)**
