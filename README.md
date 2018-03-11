@@ -8,7 +8,7 @@ Digital Storytelling &amp; Web Design curated resource list.
 2. **[Learn HTML](#learn-html)**
 3. Learn JavaScript --soon
 4. Wordpress --soon
-5. Workflow / Tools --soon
+5. **[Workflow](#workflow)**
 6. **[Articles](#articles)**
 7. **[Guides](#guides)**
 8. **[Reference](#reference)**
@@ -34,6 +34,14 @@ Digital Storytelling &amp; Web Design curated resource list.
 
 * [marksheet](https://marksheet.io)
 * [Web Design in 4 minutes](https://jgthms.com/web-design-in-4-minutes/)
+
+
+---
+## Workflow
+ * text editor
+    * [Using Atom](https://www.youtube.com/watch?v=EyG20hhON6E) :movie_camera:
+
+
 
 ---
 ## Articles
