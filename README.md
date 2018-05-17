@@ -1,5 +1,5 @@
 # Take me to the internet
-Digital Storytelling &amp; Web Design curated resource list.
+Visual Design & coding fundamentals.
 
 ![Alt text](img/webdesign.jpg?raw=true "Webdesign")
 
