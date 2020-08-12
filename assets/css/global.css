@@ -1,8 +1,8 @@
 body {
 	margin: 0;
 	font-family: var(--font-stack);
-	font-size: 21px;
-	line-height: 1.4;
+	font-size: var(--font-size);
+	line-height: var(--line-height);
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
 }
@@ -20,4 +20,19 @@ a {
 }
 
 
+h1, h2, p {
+	font-size: var(--font-size);
+	font-weight: 400;
+}
 
+// Page transitions
+
+.page-enter-active,
+.page-leave-active {
+	transition: all 0.5s;
+}
+.page-enter,
+.page-leave-active {
+	opacity: 0;
+	transform: translateX(100%);
+}

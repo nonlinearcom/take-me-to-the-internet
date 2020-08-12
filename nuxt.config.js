@@ -74,8 +74,8 @@ export default {
 	 ** Global CSS
 	 */
 	css: [
-		'assets/css/global.css',
 		'assets/css/variables.css',
+		'assets/css/global.css',
 		// 'plyr/dist/plyr.css',
 	],
 	/*

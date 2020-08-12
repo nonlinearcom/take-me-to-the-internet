@@ -12,7 +12,7 @@
 export default {
 	async asyncData({ app, $content }) {
 		const page = await $content('index').fetch()
-		const list = await $content('activities').sortBy('slug', 'asc').fetch()
+		const list = await $content('activities').sortBy('slug', 'desc').fetch()
 		return { page, list }
 	},
 }
@@ -24,5 +24,15 @@ article {
 	flex-direction: column;
 	min-height: 100vh;
 	padding: var(--app-margin);
+
+	.nuxt-content {
+		margin-bottom: 25vh;
+
+		.info {
+			position: absolute;
+			top: 0;
+			right: 0;
+		}
+	}
 }
 </style>

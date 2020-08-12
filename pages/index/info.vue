@@ -10,7 +10,7 @@ export default {
 	async asyncData({ params, $content, error }) {
 		let page
 		try {
-			page = await $content('activities', params.slug).fetch()
+			page = await $content('', 'info').fetch()
 		} catch (e) {
 			return error({ statusCode: 404, message: 'Page not found' })
 		}

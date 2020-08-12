@@ -1,13 +1,13 @@
 ---
-type: Course
-year: 2020
+type: Workshop
+year: 2017
 title: Visual design and coding fundamentals
-slug: visual-design-coding-fundamentals-MICRI
+slug: visual-design-coding-fundamentals-PHD-2017
 role: Lecturer
 institution: IULM university
 location: Milan
+offline: true
 extra:
-assisntant: TA Francesco luzzana
 ---
 
-##  MICRI page
+##  PHD workshop
