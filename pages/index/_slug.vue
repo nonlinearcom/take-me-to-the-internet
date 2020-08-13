@@ -31,7 +31,31 @@ export default {
 	border-left: 1px solid #888;
 	width: 50%;
 	height: 100vh;
-	transition: all 0.5s;
+	transition: transform 0.5s ease-out;
 	transform: translateX(0%);
+	overflow-y: auto;
+}
+// Page transitions
+.page-enter-active,
+.page-leave-active {
+	transition: transform 0.5s ease-out;
+}
+
+.page-enter,
+.page-leave-to {
+	/* opacity: 0; */
+	transform: translateX(100%);
+}
+
+@media (max-width: 1024px) {
+	.panel {
+		width: 66.66%;
+	}
+}
+
+@media (max-width: 640px) {
+	.panel {
+		width: 90%;
+	}
 }
 </style>
