@@ -1,6 +1,10 @@
 <template>
 	<section class="panel">
 		<nuxt-link to="/">back</nuxt-link>
+		<h2>{{ page.institution }}</h2>
+		<h2>{{ page.title }}</h2>
+		<h3>{{ page.role }}</h3>
+		<h3>{{ page.assistant }}</h3>
 		<nuxt-content :document="page" />
 	</section>
 </template>
@@ -47,7 +51,7 @@ export default {
 	transform: translateX(100%);
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
 	.panel {
 		width: 66.66%;
 	}

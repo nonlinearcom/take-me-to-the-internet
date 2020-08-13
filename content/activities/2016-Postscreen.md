@@ -6,7 +6,7 @@ slug: post-screen-workshop-2016
 role: Instructor
 institution: Post-screen festival
 location: Milan
-assisntant:
+assistant:
 offline: false
 ---
 

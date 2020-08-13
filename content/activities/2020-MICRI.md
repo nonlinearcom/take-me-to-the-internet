@@ -7,7 +7,7 @@ role: Lecturer
 institution: IULM university
 location: Milan
 extra:
-assisntant: TA Francesco luzzana
+assistant: TA Francesco luzzana
 ---
 
 ##  MICRI page

@@ -4,7 +4,8 @@
 			<nuxt-content :document="page" />
 			<AppTable :table-data="list" />
 		</article>
-		<NuxtChild :key="$route.params.id" />
+
+		<NuxtChild />
 	</div>
 </template>
 

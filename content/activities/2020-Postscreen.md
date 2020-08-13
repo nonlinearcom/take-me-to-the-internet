@@ -7,7 +7,7 @@ slug: take-me-to-the-intenet-workshop-2020
 role: Instructor
 institution: Post-screen festival
 location: Milan
-assisntant:
+assistant:
 duration: 4 hours
 offline: false
 ---
