@@ -10,6 +10,7 @@ location: Milan
 assistant:
 duration: 4 hours
 offline: false
+cover: 'take-me-to-the-internet/test1'
 ---
 
 

@@ -92,8 +92,12 @@ export default {
 	/*
 	 ** Nuxt.js modules
 	 */
-	modules: ['@nuxt/content', 'nuxt-webfontloader'],
+	modules: ['@nuxt/content', '@nuxtjs/cloudinary', 'nuxt-webfontloader'],
 
+	cloudinary: {
+		cloudName: 'non-linear',
+		/* all other options */
+	},
 	webfontloader: {
 		webfontloader: {
 			google: {

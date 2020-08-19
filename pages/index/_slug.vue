@@ -38,6 +38,7 @@ export default {
 	transition: transform 0.5s ease-out;
 	transform: translateX(0%);
 	overflow-y: auto;
+	z-index: 20;
 }
 // Page transitions
 .page-enter-active,
