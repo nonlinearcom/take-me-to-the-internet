@@ -6,6 +6,7 @@
 				:key="item.createdAt"
 				:class="{ offline: item.offline }"
 				@click="goToPanel(item.slug)"
+				@mouseover="getCover(item.cover)"
 			>
 				<td class="year">{{ item.year }}</td>
 				<td class="type">{{ item.type }}</td>
@@ -33,6 +34,9 @@ export default {
 	methods: {
 		goToPanel(slug) {
 			this.$router.push({ path: slug })
+		},
+		getCover(cover) {
+			this.$emit('getCurrentCover', cover)
 		},
 	},
 }

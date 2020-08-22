@@ -5,6 +5,8 @@ body {
 	line-height: var(--line-height);
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
+	max-width: 100%;
+	overflow-x: hidden;
 }
 
 *,
