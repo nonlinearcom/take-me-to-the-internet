@@ -33,7 +33,7 @@ export default {
 	computed: {
 		preview() {
 			return this.$cloudinary().url(this.cover, {
-				width: 300,
+				width: 600,
 				crop: 'scale',
 				dpr: '2.0',
 			})
@@ -48,10 +48,9 @@ export default {
 <style lang="postcss">
 .previewCover {
 	position: absolute;
-	background-color: red;
 	/* transition: all 2s; */
-	max-width: 300px;
-	width: 150px;
+	max-width: 600px;
+	width: 400px;
 	height: auto;
 	z-index: 5;
 	pointer-events: none;

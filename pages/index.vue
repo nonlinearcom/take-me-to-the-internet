@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<article>
-			<nuxt-link class="info" to="/info">Info</nuxt-link>
+		<article class="home">
+			<!-- <nuxt-link class="info" to="/info">Info</nuxt-link> -->
 			<nuxt-content :document="page" />
 			<TablePreview :table-data="list" />
 		</article>
@@ -53,7 +53,7 @@ export default {
 	opacity: 0;
 }
 
-article {
+article.home {
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;

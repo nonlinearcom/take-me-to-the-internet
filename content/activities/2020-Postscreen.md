@@ -9,12 +9,20 @@ institution: Post-screen festival
 location: Milan
 assistant:
 duration: 4 hours
+cover: take-me-to-the-internet/post-screen/2020/img_1
+
+gallery:
+  - image: take-me-to-the-internet/post-screen/2020/img_1
+    alt: Iulm 2020
+  - image: take-me-to-the-internet/post-screen/2020/img_4
+    alt: Iulm 2020
+  - image: take-me-to-the-internet/post-screen/2020/img_2
+    alt: Iulm 2020
+  - image: take-me-to-the-internet/post-screen/2020/img_3
+	alt: Iulm 2020
+
 offline: false
-cover: 'take-me-to-the-internet/test1'
 ---
-
-
-Are.na for web design and networked publishing practice
 
 The workshop gives an introduction to web design practices connected to the digital platform Are.na and to Jamstack architectures. The course will consider plural and networked curatorial practices through contemporary forms of engagement such as the feed and the stack.
 

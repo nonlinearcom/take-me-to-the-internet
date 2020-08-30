@@ -8,6 +8,7 @@ institution: IULM university
 location: Milan
 offline: true
 extra:
+offline: true
 ---
 
 ##  PHD workshop

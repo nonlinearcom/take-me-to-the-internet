@@ -1,12 +1,29 @@
 <template>
-	<section class="panel">
-		<nuxt-link to="/">back</nuxt-link>
-		<h2>{{ page.institution }}</h2>
-		<h2>{{ page.title }}</h2>
-		<h3>{{ page.role }}</h3>
-		<h3>{{ page.assistant }}</h3>
-		<nuxt-content :document="page" />
-	</section>
+	<article class="panel">
+		<nuxt-link class="close text-mini" to="/">CLOSE</nuxt-link>
+		<header>
+			<div>
+				<h2 v-if="page.title" class="title">{{ page.title }}</h2>
+				<h2 v-if="page.subtitle" class="title">{{ page.subtitle }}</h2>
+			</div>
+
+			<h2 v-if="page.institution" class="subtitle">
+				{{ page.department }}
+				<span>{{ page.institution }}</span>
+				{{ page.location }},
+				{{ page.year }}
+			</h2>
+
+			<aside v-if="page.role" class="meta">
+				<h3>{{ page.type }}</h3>
+				<h3>{{ page.role }}</h3>
+				<h3>{{ page.assistant }}</h3>
+			</aside>
+
+			<nuxt-content :document="page" />
+		</header>
+		<AppGallery v-if="page.gallery" :gallery="page.gallery" />
+	</article>
 </template>
 
 <script>
@@ -29,16 +46,52 @@ export default {
 	position: fixed;
 	top: 0;
 	right: 0;
-	padding: var(--app-margin);
 	transform: translateX(100%);
 	background-color: white;
-	border-left: 1px solid #888;
+	background-color: #f5f5f5;
+	/* border-left: 1px solid #888; */
 	width: 50%;
 	height: 100vh;
 	transition: transform 0.5s ease-out;
 	transform: translateX(0%);
 	overflow-y: auto;
 	z-index: 20;
+
+	a.close {
+		display: block;
+		position: absolute;
+		top: 18px;
+		right: var(--app-margin);
+		font-size: 12px;
+		font-weight: 400;
+		border: 1px solid var(--text-color);
+		border-radius: 20px;
+		padding: 0 10px;
+	}
+	header {
+		margin: var(--app-margin);
+
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-gap: calc(var(--app-margin) / 2);
+
+		h2 {
+			font-size: var(--font-size);
+			font-weight: 400;
+			margin-bottom: 0;
+		}
+		.subtitle span {
+			display: block;
+		}
+	}
+	aside h3 {
+		margin-bottom: 0;
+	}
+	.nuxt-content {
+	}
+	img {
+		display: block;
+	}
 }
 // Page transitions
 .page-enter-active,
@@ -61,6 +114,9 @@ export default {
 @media (max-width: 640px) {
 	.panel {
 		width: 90%;
+		header {
+			grid-template-columns: 1fr;
+		}
 	}
 }
 </style>

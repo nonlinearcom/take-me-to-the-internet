@@ -33,3 +33,13 @@ h2, h3, p {
 	margin-bottom: calc(var(--font-size-small) * var(--line-height))
 }
 
+h2.title-h1, h3.title-h1{
+	font-size: var(--font-size);
+	font-weight: 400;
+	margin-bottom: 0;
+}
+
+.text-small{
+	font-size: var(--font-size-small);
+	font-weight: 400;
+}

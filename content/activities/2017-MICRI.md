@@ -7,6 +7,7 @@ role: Lecturer
 institution: IULM university
 location: Milan
 extra:
+offline: true
 ---
 
 ##  MICRI page

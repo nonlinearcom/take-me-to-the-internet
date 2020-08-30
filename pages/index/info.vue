@@ -1,6 +1,6 @@
 <template>
 	<section class="panel">
-		<nuxt-link to="/">back</nuxt-link>
+		<nuxt-link to="/">X</nuxt-link>
 		<nuxt-content :document="page" />
 	</section>
 </template>
@@ -20,7 +20,7 @@ export default {
 	transition: 'page',
 }
 </script>
-<style lang="postcss">
+<style lang="postcss" scoped>
 .panel {
 	position: fixed;
 	top: 0;

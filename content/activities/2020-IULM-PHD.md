@@ -8,6 +8,5 @@ institution: IULM university
 location: Milan
 extra:
 cover: 'take-me-to-the-internet/test1'
+offline: true
 ---
-
-##  PHD workshop

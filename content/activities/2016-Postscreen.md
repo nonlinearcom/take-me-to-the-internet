@@ -7,7 +7,7 @@ role: Instructor
 institution: Post-screen festival
 location: Milan
 assistant:
-offline: false
+offline: true
 ---
 
 ##  Computer Graphics page
