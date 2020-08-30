@@ -57,7 +57,7 @@ table {
 			cursor: pointer;
 		}
 		&.offline {
-			cursor: normal;
+			cursor: deafult;
 			pointer-events: none;
 			color: #888;
 		}

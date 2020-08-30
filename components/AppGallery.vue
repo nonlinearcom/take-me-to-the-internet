@@ -5,6 +5,7 @@
 			:key="item.alt"
 			class="responsive"
 			:src="getImage(item.image)"
+			:alt="item.alt"
 		/>
 	</div>
 </template>
