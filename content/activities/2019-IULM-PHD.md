@@ -10,15 +10,15 @@ location: Milan
 extra:
 cover: take-me-to-the-internet/iulm/2019/doctorate/cover
 gallery:
-  - image: take-me-to-the-internet/iulm/2019/doctorate/cover
+  - media: take-me-to-the-internet/iulm/2019/doctorate/cover
     alt: Iulm 2019
-  - image: take-me-to-the-internet/iulm/2019/doctorate/img_1
+  - media: take-me-to-the-internet/iulm/2019/doctorate/img_1
     alt: Iulm 2019
-  - image: take-me-to-the-internet/iulm/2019/doctorate/img_2
+  - media: take-me-to-the-internet/iulm/2019/doctorate/img_2
     alt: Iulm 2019
-  - image: take-me-to-the-internet/iulm/2019/doctorate/img_3
+  - media: take-me-to-the-internet/iulm/2019/doctorate/img_3
     alt: Iulm 2019
-  - image: take-me-to-the-internet/iulm/2019/doctorate/img_4
+  - media: take-me-to-the-internet/iulm/2019/doctorate/img_4
     alt: Iulm 2019
 
 ---

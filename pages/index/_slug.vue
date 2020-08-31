@@ -23,6 +23,7 @@
 			<nuxt-content :document="page" />
 		</header>
 		<AppGallery v-if="page.gallery" :gallery="page.gallery" />
+		<AppVideoGallery v-if="page.videos" :videos="page.videos" />
 	</article>
 </template>
 
@@ -113,7 +114,7 @@ export default {
 
 @media (max-width: 640px) {
 	.panel {
-		width: 90%;
+		width: 100%;
 		header {
 			grid-template-columns: 1fr;
 		}

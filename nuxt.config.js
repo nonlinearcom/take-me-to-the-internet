@@ -39,7 +39,7 @@ export default {
 				hid: 'og:title',
 				property: 'og:title',
 				content:
-					'Sodecos - Société Suisse de développement et de production cosmétique',
+					'Take me to the internet | Teaching portal of Manuel Ehrenfeld',
 			},
 			{
 				hid: 'og:description',
@@ -59,7 +59,7 @@ export default {
 				hid: 'twitter:title',
 				name: 'twitter:title',
 				content:
-					'Sodecos - Société Suisse de développement et de production cosmétique',
+					'Take me to the internet | Teaching portal of Manuel Ehrenfeld',
 			},
 			{
 				hid: 'twitter:description',

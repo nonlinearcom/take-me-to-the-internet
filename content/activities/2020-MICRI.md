@@ -8,17 +8,23 @@ institution: IULM university
 department: Master’s Degree in Communication for International Relations
 location: Milan
 extra:
-assistant: TA Francesco luzzana
+assistant: TA Francesco Luzzana
 cover: 'take-me-to-the-internet/iulm/micri/2020/img_1'
 gallery:
-  - image: take-me-to-the-internet/iulm/micri/2020/img_1
+  - media: take-me-to-the-internet/iulm/micri/2020/img_1
     alt: Iulm 2020
-  - image: take-me-to-the-internet/iulm/micri/2020/img_2
+  - media: take-me-to-the-internet/iulm/micri/2020/img_2
     alt: Iulm 2020
-  - image: take-me-to-the-internet/iulm/micri/2020/img_3
+  - media: take-me-to-the-internet/iulm/micri/2020/img_3
     alt: Iulm 2020
 #   - image: take-me-to-the-internet/iulm/2019/doctorate/img_4
 #     alt: Iulm 2019
+  - media: take-me-to-the-internet/Iulm/micri/2020/micri2020_mobile
+    alt: Iulm 2020
+    type: video
+  - media: take-me-to-the-internet/Iulm/micri/2020/micri2020_desktop
+    alt: Iulm 2020
+    type: video
 ---
 
 Networked Magazine is a collective publication exploring the transformative impact of technology as seen through the eyes of   postgraduate students during the months of pandemic.
