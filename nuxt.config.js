@@ -88,15 +88,14 @@ export default {
 		// '~/plugins/vue-observe-visibility.client.js',
 		// '~/plugins/plyr.client.js'
 	],
-	/*
-	 ** Nuxt.js dev-modules
-	 */
-	buildModules: ['@nuxtjs/eslint-module'],
-	/*
-	 ** Nuxt.js modules
-	 */
+
+	buildModules: ['@nuxtjs/eslint-module', '@nuxtjs/google-analytics'],
+
 	modules: ['@nuxt/content', '@nuxtjs/cloudinary', 'nuxt-webfontloader'],
 
+	googleAnalytics: {
+		id: 'UA-304654-50',
+	},
 	cloudinary: {
 		cloudName: 'non-linear',
 		/* all other options */

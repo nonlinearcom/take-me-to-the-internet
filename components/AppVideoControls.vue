@@ -42,9 +42,9 @@ export default {
 			return `translate(${this.followX}px, ${this.followY}px)`
 		},
 		cursorIcon() {
-			if (this.isPlaying) {
-				return '/svg/icon_play.svg'
-			} else return '/svg/icon_pause.svg'
+			const icon = this.isPlaying ? 'icon_play' : 'icon_pause'
+
+			return require(`@/assets/img/svg/${icon}.svg`)
 		},
 	},
 
