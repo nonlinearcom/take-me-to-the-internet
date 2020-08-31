@@ -29,10 +29,10 @@ export default {
 	},
 	methods: {
 		getMousePosition(e) {
-			this.mouseCoord.x =
-				e.clientX - e.target.getBoundingClientRect().x - 50
-			this.mouseCoord.y =
-				e.clientY - e.target.getBoundingClientRect().y - 50
+			this.mouseCoord.x = e.clientX - e.target.getBoundingClientRect().x
+			// e.clientX - e.target.getBoundingClientRect().x - 50
+			this.mouseCoord.y = e.clientY - e.target.getBoundingClientRect().y
+			// e.clientY - e.target.getBoundingClientRect().y - 50
 		},
 	},
 }

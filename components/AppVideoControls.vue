@@ -1,12 +1,11 @@
 <template>
-	<section>
-		<img
-			v-if="controlIsActive"
-			:src="cursorIcon"
-			:alt="isPlaying ? 'Play' : 'Pause'"
-			:style="{ transform: translatePosition }"
-		/>
-	</section>
+	<img
+		v-if="controlIsActive"
+		class="cursor"
+		:src="cursorIcon"
+		alt="cursor"
+		:style="{ transform: translatePosition }"
+	/>
 </template>
 
 <script>
@@ -25,21 +24,13 @@ export default {
 			default: () => {},
 		},
 	},
-	data() {
-		return {
-			followX: 0,
-			followY: 0,
-		}
-	},
+
 	computed: {
-		dX() {
-			return this.mouseCoord.x - this.followX
-		},
-		dY() {
-			return this.mouseCoord.y - this.followY
-		},
 		translatePosition() {
-			return `translate(${this.followX}px, ${this.followY}px)`
+			return `translate(
+				${this.mouseCoord.x - 15}px,
+				${this.mouseCoord.y - 15}px
+			)`
 		},
 		cursorIcon() {
 			const icon = this.isPlaying ? 'icon_play' : 'icon_pause'
@@ -47,32 +38,15 @@ export default {
 			return require(`@/assets/img/svg/${icon}.svg`)
 		},
 	},
-
-	mounted() {
-		this.movePreview()
-	},
-	methods: {
-		movePreview() {
-			// https://codepen.io/tguelcan-the-sasster/pen/ROoxWm
-			// this.dX = this.x - this.followX
-			// this.dY = this.y - this.followY
-			this.followX += this.dX
-			this.followY += this.dY
-
-			window.requestAnimationFrame(this.movePreview)
-		},
-	},
 }
 </script>
 
 <style lang="postcss">
-section {
-	img {
-		position: absolute;
-		z-index: 5;
-		pointer-events: none;
-		width: 50px;
-		height: auto;
-	}
+img.cursor {
+	position: absolute;
+	z-index: 5;
+	pointer-events: none;
+	width: 30px;
+	height: auto;
 }
 </style>

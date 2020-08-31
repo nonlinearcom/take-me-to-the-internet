@@ -2,25 +2,21 @@
 	<article class="panel">
 		<nuxt-link class="close text-mini" to="/">CLOSE</nuxt-link>
 		<header>
-			<div>
+			<div class="full">
 				<h2 v-if="page.title" class="title">{{ page.title }}</h2>
 				<h2 v-if="page.subtitle" class="title">{{ page.subtitle }}</h2>
 			</div>
 
-			<h2 v-if="page.institution" class="subtitle">
-				{{ page.department }}
-				<span>{{ page.institution }}</span>
-				{{ page.location }},
-				{{ page.year }}
-			</h2>
+			<nuxt-content :document="page" />
 
 			<aside v-if="page.role" class="meta">
+				<h3>{{ page.department }}</h3>
+				<h3>{{ page.institution }}</h3>
+				<h3>{{ page.location }}, {{ page.year }}</h3>
 				<h3>{{ page.type }}</h3>
-				<h3>{{ page.role }}</h3>
-				<h3>{{ page.assistant }}</h3>
+				<!-- <h3>{{ page.role }}</h3>
+				<h3>{{ page.assistant }}</h3> -->
 			</aside>
-
-			<nuxt-content :document="page" />
 		</header>
 		<AppGallery v-if="page.gallery" :gallery="page.gallery" />
 		<AppVideoGallery v-if="page.videos" :videos="page.videos" />
@@ -73,9 +69,13 @@ export default {
 		margin: var(--app-margin);
 
 		display: grid;
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: 2fr 1fr;
 		grid-gap: calc(var(--app-margin) / 2);
 
+		.full {
+			grid-column: 1 / span 2;
+			margin-bottom: 100px;
+		}
 		h2 {
 			font-size: var(--font-size);
 			font-weight: 400;
@@ -84,12 +84,17 @@ export default {
 		.subtitle span {
 			display: block;
 		}
+		p {
+			max-width: 600px;
+		}
+
+		aside {
+			h3 {
+				margin-bottom: 0;
+			}
+		}
 	}
-	aside h3 {
-		margin-bottom: 0;
-	}
-	.nuxt-content {
-	}
+
 	img {
 		display: block;
 	}
@@ -116,7 +121,7 @@ export default {
 	.panel {
 		width: 100%;
 		header {
-			grid-template-columns: 1fr;
+			display: block;
 		}
 	}
 }

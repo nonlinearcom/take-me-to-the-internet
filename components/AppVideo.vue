@@ -1,6 +1,6 @@
 <template>
-	<!-- TODO: poster + alt -->
-	<div class="video_contain">
+	<!-- TODO: poster -->
+	<div class="video_wrapper">
 		<AppVideoControls
 			:control-is-active="controlIsActive"
 			:is-playing="isPlaying"
@@ -8,8 +8,7 @@
 		/>
 		<video
 			:ref="item.media"
-			class="responsive pause"
-			:alt="item.alt"
+			class="responsive"
 			muted
 			loop
 			@click="togglePlay"
@@ -35,7 +34,7 @@ export default {
 	},
 	data() {
 		return {
-			isPlaying: false,
+			isPlaying: true,
 			controlIsActive: false,
 		}
 	},
@@ -43,9 +42,9 @@ export default {
 		getVideo(url) {
 			return this.$cloudinary('video').url(url, {})
 		},
+
 		togglePlay(e) {
 			const video = e.target
-			video.classList.toggle('pause')
 			if (video.paused === true) {
 				video.play()
 				this.isPlaying = false
