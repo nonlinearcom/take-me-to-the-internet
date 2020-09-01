@@ -60,6 +60,8 @@ Networked Magazine is a collective publication exploring the transformative impa
 
 Selected Topics: Digital Violence, Privacy, Automation, Machine Learning, Politics, Computer Vision, Digital Platforms, Digital Labor, Surveillance, Wearables, InternetCulture.
 
-The workshop aimed to help students to understand the opportunities and constraints of the digital space, incorporate visual design strategies and basic coding skills.
+The workshop aimed to help students to understand the opportunities and constraints of the digital space, incorporate visual design strategies and basic coding skills.  
 
+Output
 
+[Networked Magazine](https://micri2020.netlify.app/)

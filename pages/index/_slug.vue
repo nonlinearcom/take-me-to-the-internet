@@ -48,9 +48,34 @@ export default {
 			title: `${this.page.title}`,
 			meta: [
 				{
-					hid: 'description',
-					name: 'description',
+					hid: 'og:title',
+					name: 'og:title',
+					content: this.page.title,
+				},
+				{
+					hid: 'og:description',
+					name: 'og:description',
 					content: `${this.page.subtitle}, ${this.page.departement}, ${this.page.institution}, ${this.page.year}`,
+				},
+				{
+					hid: 'og:image',
+					name: 'og:image',
+					content: this.$cloudinary().url(this.page.cover),
+				},
+				{
+					hid: 'twitter:title',
+					name: 'twitter:title',
+					content: this.page.title,
+				},
+				{
+					hid: 'twitter:description',
+					name: 'twitter:description',
+					content: `${this.page.subtitle}, ${this.page.departement}, ${this.page.institution}, ${this.page.year}`,
+				},
+				{
+					hid: 'twitter:image',
+					name: 'twitter:image',
+					content: this.$cloudinary().url(this.page.cover),
 				},
 			],
 		}

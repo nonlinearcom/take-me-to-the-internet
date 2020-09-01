@@ -10,4 +10,3 @@ extra:
 offline: true
 ---
 
-##  MICRI page
