@@ -10,7 +10,25 @@ location: Milan
 assistant:
 duration: 4 hours
 cover: take-me-to-the-internet/post-screen/2020/img_1
-
+partecipants:
+  - Guglielmo Anfossi
+  - Umberto Antonaci
+  - Andrea Bellini
+  - Maurizio Berta
+  - Giulia Bianco
+  - Davide Borgo
+  - Eugenio Cinalli
+  - Sara Di Lauro
+  - Luca Faraldi
+  - Fiorella Minnucci
+  - Diego Pagnini
+  - Mattia Pintonello
+  - Vitalii Piven
+  - Federico Poni
+  - Evelin Vicedomino
+  - Lorenzo Villella
+  - Melita Vuillermin
+  - Matteo Yon
 gallery:
   - media: take-me-to-the-internet/post-screen/2020/img_1
     alt: Iulm 2020

@@ -20,6 +20,15 @@
 		</header>
 		<AppGallery v-if="page.gallery" :gallery="page.gallery" />
 		<AppVideoGallery v-if="page.videos" :videos="page.videos" />
+
+		<div v-if="page.partecipants" class="partecipants">
+			<h3>Partecipants</h3>
+			<ul>
+				<li v-for="partecipant in page.partecipants" :key="partecipant">
+					{{ partecipant }}
+				</li>
+			</ul>
+		</div>
 	</article>
 </template>
 
@@ -101,6 +110,21 @@ export default {
 
 	img {
 		display: block;
+	}
+
+	.partecipants {
+		margin: calc(var(--app-margin) / 2);
+		ul {
+			padding: 0;
+			font-size: var(--font-size-small);
+			font-weight: 400;
+			column-width: 400px;
+
+			li {
+				margin: 0;
+				list-style-type: none;
+			}
+		}
 	}
 }
 // Page transitions

@@ -10,6 +10,35 @@ location: Milan
 extra:
 assistant: TA Francesco Luzzana
 cover: 'take-me-to-the-internet/iulm/micri/2020/img_1'
+partecipants: 
+  - Francesca Andreatta
+  - Valentina Ardizzone
+  - Fabiana Azzolino
+  - Tiziano Bergo
+  - Rachele Casorati
+  - Francesca Catalano
+  - Giulia Cogoni
+  - Mersha Colucci
+  - Nicolò Daniele
+  - Lisa Finetti
+  - Eleonora Gatti
+  - Mariavittoria Genovesi
+  - Kesara Gjini
+  - Lorenzo Mariani
+  - Luca Mazza
+  - Beatrice Medved
+  - Giorgia Monti
+  - Giulia Pagani
+  - Francesca Paradisi
+  - Chiara Passalacqua
+  - Carlotta Ruocco
+  - Michela Russo
+  - Andrea Seiti
+  - Rezarta Selmani
+  - Kristina Terekhova
+  - Alessia Tolu
+  - Simona Vellami
+  - Dario Zemagna
 gallery:
   - media: take-me-to-the-internet/iulm/micri/2020/img_1
     alt: Iulm 2020
