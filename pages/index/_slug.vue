@@ -6,9 +6,9 @@
 				<h2 v-if="page.title" class="title">{{ page.title }}</h2>
 				<h2 v-if="page.subtitle" class="title">{{ page.subtitle }}</h2>
 			</div>
-
-			<nuxt-content class="description" :document="page" />
-
+			<div class="description">
+				<nuxt-content :document="page" />
+			</div>
 			<aside v-if="page.role" class="meta">
 				<h3>{{ page.department }}</h3>
 				<h3>{{ page.institution }}</h3>
