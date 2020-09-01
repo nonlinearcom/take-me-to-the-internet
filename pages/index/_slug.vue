@@ -75,6 +75,10 @@ export default {
 		.full {
 			grid-column: 1 / span 2;
 			margin-bottom: 100px;
+
+			.title {
+				border-top: none;
+			}
 		}
 		h2 {
 			font-size: var(--font-size);

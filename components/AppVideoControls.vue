@@ -2,8 +2,8 @@
 	<img
 		v-if="controlIsActive"
 		class="cursor"
-		:src="cursorIcon"
 		alt="cursor"
+		:src="cursorIcon"
 		:style="{ transform: translatePosition }"
 	/>
 </template>
@@ -34,7 +34,6 @@ export default {
 		},
 		cursorIcon() {
 			const icon = this.isPlaying ? 'icon_play' : 'icon_pause'
-
 			return require(`@/assets/img/svg/${icon}.svg`)
 		},
 	},
