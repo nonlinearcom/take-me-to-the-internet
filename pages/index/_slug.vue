@@ -7,7 +7,7 @@
 				<h2 v-if="page.subtitle" class="title">{{ page.subtitle }}</h2>
 			</div>
 
-			<nuxt-content :document="page" />
+			<nuxt-content class="description" :document="page" />
 
 			<aside v-if="page.role" class="meta">
 				<h3>{{ page.department }}</h3>
@@ -125,7 +125,14 @@ export default {
 	.panel {
 		width: 100%;
 		header {
-			display: block;
+			display: flex;
+			flex-direction: column;
+			.meta {
+				order: 1;
+			}
+			.description {
+				order: 2;
+			}
 		}
 	}
 }
