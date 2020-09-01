@@ -1,6 +1,12 @@
 <template>
 	<img
-		v-if="controlIsActive"
+		v-if="$device.isMobile"
+		:src="cursorIcon"
+		class="cursor mobile"
+		alt="cursor"
+	/>
+	<img
+		v-else-if="controlIsActive"
 		class="cursor"
 		alt="cursor"
 		:src="cursorIcon"
@@ -24,7 +30,6 @@ export default {
 			default: () => {},
 		},
 	},
-
 	computed: {
 		translatePosition() {
 			return `translate(
@@ -47,5 +52,10 @@ img.cursor {
 	pointer-events: none;
 	width: 30px;
 	height: auto;
+}
+img.mobile {
+	position: absolute;
+	left: calc(var(--app-margin) / 2);
+	bottom: calc(var(--app-margin) / 2);
 }
 </style>

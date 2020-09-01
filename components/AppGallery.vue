@@ -29,7 +29,6 @@ export default {
 	},
 	methods: {
 		getMousePosition(e) {
-			console.log(window.pageYOffset)
 			this.mouseCoord.x = e.clientX - e.target.getBoundingClientRect().x
 			// e.clientX - e.target.getBoundingClientRect().x - 50
 			this.mouseCoord.y = e.clientY - e.target.getBoundingClientRect().y

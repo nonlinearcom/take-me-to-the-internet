@@ -1,6 +1,7 @@
 <template>
 	<section @mousemove.passive="getMousePosition">
 		<AppPreview
+			v-if="$device.isDesktop"
 			:is-active="previewIsActive"
 			:cover="previewCover"
 			:cover-x="followX"

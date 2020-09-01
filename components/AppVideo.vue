@@ -38,6 +38,7 @@ export default {
 			controlIsActive: false,
 		}
 	},
+
 	methods: {
 		getVideo(url) {
 			return this.$cloudinary('video').url(url, {})
@@ -58,8 +59,11 @@ export default {
 </script>
 
 <style lang="postcss">
-video {
-	display: block;
-	cursor: none;
+.video_wrapper {
+	position: relative;
+	video {
+		display: block;
+		cursor: none;
+	}
 }
 </style>

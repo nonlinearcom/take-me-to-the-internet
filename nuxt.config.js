@@ -91,7 +91,12 @@ export default {
 
 	buildModules: ['@nuxtjs/eslint-module', '@nuxtjs/google-analytics'],
 
-	modules: ['@nuxt/content', '@nuxtjs/cloudinary', 'nuxt-webfontloader'],
+	modules: [
+		'@nuxt/content',
+		'@nuxtjs/cloudinary',
+		'nuxt-webfontloader',
+		'@nuxtjs/device',
+	],
 
 	googleAnalytics: {
 		id: 'UA-304654-50',
