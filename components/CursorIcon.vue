@@ -1,0 +1,44 @@
+<template>
+	<svg
+		width="100"
+		height="100"
+		viewBox="0 0 100 100"
+		fill="none"
+		xmlns="http://www.w3.org/2000/svg"
+	>
+		<path
+			v-if="isPlaying"
+			d="M22 18.5877C22 17.0212 23.7192 16.0628 25.0516 16.8865L74.3166 47.3412C75.5643 48.1125 75.5848 49.9199 74.355 50.7193L25.09 82.7415C23.7595 83.6063 22 82.6515 22 81.0646V18.5877Z"
+			fill="currentColor"
+		/>
+		<g v-else>
+			<rect
+				x="22"
+				y="15"
+				width="20"
+				height="70"
+				rx="2"
+				fill="currentColor"
+			/>
+			<rect
+				x="57"
+				y="15"
+				width="20"
+				height="70"
+				rx="2"
+				fill="currentColor"
+			/>
+		</g>
+	</svg>
+</template>
+
+<script>
+export default {
+	props: {
+		isPlaying: {
+			type: Boolean,
+			default: false,
+		},
+	},
+}
+</script>

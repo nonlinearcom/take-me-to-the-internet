@@ -1,16 +1,11 @@
 <template>
-	<img
-		v-if="$device.isMobile"
-		:src="cursorIcon"
-		class="cursor mobile"
-		alt="cursor"
-	/>
-	<img
-		v-else-if="controlIsActive"
+	<cursor-icon
+		v-if="$device.isMobile || controlIsActive"
 		class="cursor"
 		alt="cursor"
-		:src="cursorIcon"
-		:style="{ transform: translatePosition }"
+		:is-playing="isPlaying"
+		:class="{ mobile: $device.isMobile, dark: isDark }"
+		:style="transformCursor"
 	/>
 </template>
 
@@ -18,6 +13,10 @@
 export default {
 	props: {
 		isPlaying: {
+			type: Boolean,
+			default: false,
+		},
+		isDark: {
 			type: Boolean,
 			default: false,
 		},
@@ -37,25 +36,33 @@ export default {
 				${this.mouseCoord.y - 15}px
 			)`
 		},
-		cursorIcon() {
-			const icon = this.isPlaying ? 'icon_play' : 'icon_pause'
-			return require(`@/assets/img/svg/${icon}.svg`)
+		transformCursor() {
+			if (!this.$device.isMobile) {
+				return {
+					transform: this.translatePosition,
+				}
+			}
+			return {}
 		},
 	},
 }
 </script>
 
 <style lang="postcss">
-img.cursor {
+.cursor {
 	position: absolute;
 	z-index: 5;
 	pointer-events: none;
 	width: 30px;
 	height: auto;
 }
-img.mobile {
+.mobile {
 	position: absolute;
 	left: calc(var(--app-margin) / 2);
 	bottom: calc(var(--app-margin) / 2);
+}
+
+.dark {
+	color: white;
 }
 </style>

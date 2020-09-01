@@ -1,11 +1,13 @@
 <template>
-	<!-- TODO: poster -->
 	<div class="video_wrapper">
 		<AppVideoControls
 			:control-is-active="controlIsActive"
 			:is-playing="isPlaying"
+			:is-dark="item.dark"
 			:mouse-coord="mouseCoord"
 		/>
+		<!-- TODO: poster -->
+		<!-- :poster="getPoster(item.media)" -->
 		<video
 			:ref="item.media"
 			class="responsive"
@@ -43,6 +45,12 @@ export default {
 		getVideo(url) {
 			return this.$cloudinary('video').url(url, {})
 		},
+		// getPoster(url) {
+		// 	return this.$cloudinary().url(url, {
+		// 		effect: 'preview',
+		// 		resource_type: 'video',
+		// 	})
+		// },
 
 		togglePlay(e) {
 			const video = e.target
