@@ -43,6 +43,18 @@ export default {
 		}
 		return { page }
 	},
+	head() {
+		return {
+			title: `${this.page.title}`,
+			meta: [
+				{
+					hid: 'description',
+					name: 'description',
+					content: `${this.page.subtitle}, ${this.page.departement}, ${this.page.institution}, ${this.page.year}`,
+				},
+			],
+		}
+	},
 	layout: 'panel',
 	transition: 'page',
 }
