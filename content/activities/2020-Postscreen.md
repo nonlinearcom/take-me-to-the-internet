@@ -32,6 +32,7 @@ partecipants:
 gallery:
   - media: take-me-to-the-internet/post-screen/2020/img_1
     alt: Iulm 2020
+    caption: Ex Chiesa San Carpoforo
   - media: take-me-to-the-internet/post-screen/2020/img_4
     alt: Iulm 2020
   - media: take-me-to-the-internet/post-screen/2020/img_2
