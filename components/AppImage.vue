@@ -8,9 +8,10 @@
 			:key="item.media"
 			:alt="item.alt"
 			:width="lqip"
-			height="15"
-			:src="getImage(item.media, lqip)"
-			:srcset="getSrcs(item.media)"
+			height="3"
+			:src="getLqip(item.media)"
+			:data-src="getImage(item.media, medium)"
+			:data-srcset="getSrcs(item.media)"
 		/>
 		<transition name="fade">
 			<figcaption v-if="showCaption">{{ item.caption }}</figcaption>
@@ -19,6 +20,8 @@
 </template>
 
 <script>
+import lozad from 'lozad'
+
 export default {
 	props: {
 		item: {
@@ -29,13 +32,25 @@ export default {
 	data() {
 		return {
 			showCaption: false,
-			lqip: 20,
+			lqip: 4,
 			small: 600,
 			medium: 1000,
 			large: 1500,
 		}
 	},
+	mounted() {
+		const observer = lozad(this.$el.children[0])
+		observer.observe()
+	},
 	methods: {
+		getLqip(image) {
+			return this.$cloudinary().url(image, {
+				width: this.lqip,
+				crop: 'scale',
+				dpr: '2.0',
+				blur: 500,
+			})
+		},
 		getImage(image, size) {
 			return this.$cloudinary().url(image, {
 				width: size,
