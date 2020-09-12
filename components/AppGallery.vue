@@ -1,13 +1,14 @@
 <template>
 	<div ref="galleryContainer" @mousemove.passive="getMousePosition">
-		<div v-for="item in gallery" :key="item.media">
+		<template v-for="item in gallery">
 			<AppVideo
 				v-if="item.type == 'video'"
+				:key="item.media"
 				:item="item"
 				:mouse-coord="mouseCoord"
 			/>
-			<AppImage v-else :item="item" />
-		</div>
+			<AppImage v-else :key="item.media" :item="item" />
+		</template>
 	</div>
 </template>
 

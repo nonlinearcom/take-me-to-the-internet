@@ -1,5 +1,4 @@
 export default {
-	mode: 'universal',
 	target: 'static',
 	components: true,
 	/*
@@ -85,7 +84,7 @@ export default {
 	 ** Plugins to load before mounting the App
 	 */
 	plugins: [
-		// '~/plugins/vue-observe-visibility.client.js',
+		'~/plugins/vue-observe-visibility.client.js',
 		// '~/plugins/plyr.client.js'
 	],
 

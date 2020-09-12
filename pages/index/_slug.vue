@@ -89,6 +89,7 @@ export default {
 	position: fixed;
 	top: 0;
 	right: 0;
+
 	transform: translateX(100%);
 	background-color: white;
 	background-color: #f5f5f5;
@@ -98,6 +99,7 @@ export default {
 	transition: transform 0.5s ease-out;
 	transform: translateX(0%);
 	overflow-y: auto;
+	overflow-x: hidden;
 	z-index: 20;
 
 	a.close {

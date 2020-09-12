@@ -1,27 +1,18 @@
 <template>
 	<figure
 		class="responsive"
-		:class="{ active: inView }"
 		@mouseenter="showCaption = true"
 		@mouseleave="showCaption = false"
 	>
-		<picture
-			v-observe-visibility="{
-				callback: visibilityChanged,
-				once: true,
-			}"
-		>
-			<source
-				:srcset="getImage(item.media, large)"
-				media="(min-width: 1200px)"
-			/>
-			<source
-				:srcset="getImage(item.media, medium)"
-				media="(min-width: 740px)"
-			/>
-			<img :src="getLqip(item.media)" :alt="item.alt" />
-		</picture>
-
+		<img
+			:key="item.media"
+			:alt="item.alt"
+			:width="lqip"
+			height="3"
+			:src="getLqip(item.media)"
+			:data-src="getImage(item.media, medium)"
+			:data-srcset="getSrcs(item.media)"
+		/>
 		<transition name="fade">
 			<figcaption v-if="showCaption">{{ item.caption }}</figcaption>
 		</transition>
@@ -41,23 +32,22 @@ export default {
 	data() {
 		return {
 			showCaption: false,
-			lqip: 20,
+			lqip: 4,
 			small: 600,
 			medium: 1000,
 			large: 1500,
-			inView: false,
 		}
 	},
-
+	mounted() {
+		const observer = lozad(this.$el.children[0])
+		observer.observe()
+	},
 	methods: {
-		visibilityChanged(isVisible, entry) {
-			this.inView = isVisible
-			console.log(isVisible, entry)
-		},
 		getLqip(image) {
 			return this.$cloudinary().url(image, {
 				width: this.lqip,
 				crop: 'scale',
+				dpr: '2.0',
 				blur: 500,
 			})
 		},
@@ -82,29 +72,9 @@ export default {
 <style lang="postcss">
 figure {
 	position: relative;
-	width: 100%;
-
-	&.active picture img {
-		transition: opacity 0.5s;
-		opacity: 1;
-	}
-
-	picture {
+	img {
 		width: 100%;
 		height: auto;
-		overflow: hidden;
-
-		img {
-			transition: opacity 0.5s;
-
-			opacity: 0.5;
-			width: 100%; /* stretch to fill the picture element */
-			transition: filter 0.5s;
-		}
-
-		/* &.lazy img {
-			filter: blur(10px);
-		} */
 	}
 	figcaption {
 		position: absolute;
