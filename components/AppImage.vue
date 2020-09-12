@@ -11,14 +11,10 @@
 				once: true,
 			}"
 		>
-			<source
-				:srcset="getImage(item.media, large)"
-				media="(min-width: 1200px)"
-			/>
-			<source
-				:srcset="getImage(item.media, medium)"
-				media="(min-width: 740px)"
-			/>
+			<source :srcset="getImage(item.media, small)" />
+			<source :srcset="getImage(item.media, medium)" />
+			<source :srcset="getImage(item.media, large)" />
+
 			<img :src="getLqip(item.media)" :alt="item.alt" />
 		</picture>
 
