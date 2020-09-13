@@ -1,36 +1,16 @@
 <template>
-	<figure
-		class="responsive"
+	<img
+		v-observe-visibility="{
+			callback: visibilityChanged,
+			once: true,
+		}"
 		:class="{ active: inView }"
-		@mouseenter="showCaption = true"
-		@mouseleave="showCaption = false"
-	>
-		<picture
-			v-observe-visibility="{
-				callback: visibilityChanged,
-				once: true,
-			}"
-		>
-			<source
-				:srcset="getImage(small)"
-				:media="`(max-width: ${small}px)`"
-			/>
-			<source
-				:srcset="getImage(medium)"
-				:media="`(max-width: ${medium}px)`"
-			/>
-			<source
-				:srcset="getImage(large)"
-				:media="`(max-width: ${large}px)`"
-			/>
-
-			<img :src="getImage(large)" :alt="item.alt" loading="lazy" />
-		</picture>
-
-		<transition name="fade">
-			<figcaption v-if="showCaption">{{ item.caption }}</figcaption>
-		</transition>
-	</figure>
+		class="responsive"
+		:alt="item.alt"
+		:src="getLqip(item.media)"
+		:srcset="getSrcs(item.media)"
+		sizes="70vmin"
+	/>
 </template>
 
 <script>
@@ -47,9 +27,9 @@ export default {
 		return {
 			showCaption: false,
 			lqip: 20,
-			small: 480,
-			medium: 960,
-			large: 1600,
+			small: 600,
+			medium: 1000,
+			large: 1500,
 			inView: false,
 		}
 	},
@@ -59,20 +39,27 @@ export default {
 			this.inView = isVisible
 			// console.log(isVisible, entry)
 		},
-		// getLqip(image) {
-		// 	return this.$cloudinary().url(image, {
-		// 		width: this.lqip,
-		// 		crop: 'scale',
-		// 		blur: 500,
-		// 	})
-		// },
-		getImage(size) {
-			return this.$cloudinary().url(this.item.media, {
+		getLqip(image) {
+			return this.$cloudinary().url(image, {
+				width: this.lqip,
+				crop: 'scale',
+				blur: 500,
+			})
+		},
+		getImage(image, size) {
+			return this.$cloudinary().url(image, {
 				width: size,
 				crop: 'scale',
 				dpr: 'auto',
 				fetchFormat: 'auto',
 			})
+		},
+		getSrcs(image) {
+			return `
+			${this.getImage(image, this.small)} ${this.small}w,
+			${this.getImage(image, this.medium)} ${this.medium}w,
+			${this.getImage(image, this.large)} ${this.large}w
+		`
 		},
 	},
 }
