@@ -34,8 +34,6 @@
 </template>
 
 <script>
-import lozad from 'lozad'
-
 export default {
 	props: {
 		item: {
