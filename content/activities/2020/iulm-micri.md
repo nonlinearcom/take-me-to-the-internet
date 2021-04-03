@@ -1,16 +1,20 @@
 ---
+title: Visual design and coding fundamentals
+subtitle:
+shortTile:
+slug: visual-design-coding-fundamentals-MICRI
+
 type: Course
 year: 2020
-title: Visual design and coding fundamentals
-slug: visual-design-coding-fundamentals-MICRI
 role: Lecturer
 institution: IULM university
 department: Master’s Degree in Communication for International Relations
 location: Milan
-extra:
 assistant: TA Francesco Luzzana
+
+offline: false
 cover: 'take-me-to-the-internet/iulm/micri/2020/img_1'
-partecipants: 
+partecipants:
   - Francesca Andreatta
   - Valentina Ardizzone
   - Fabiana Azzolino
@@ -60,7 +64,7 @@ Networked Magazine is a collective publication exploring the transformative impa
 
 Selected Topics: Digital Violence, Privacy, Automation, Machine Learning, Politics, Computer Vision, Digital Platforms, Digital Labor, Surveillance, Wearables, InternetCulture.
 
-The workshop aimed to help students to understand the opportunities and constraints of the digital space, incorporate visual design strategies and basic coding skills.  
+The workshop aimed to help students to understand the opportunities and constraints of the digital space, incorporate visual design strategies and basic coding skills.
 
 Output
 

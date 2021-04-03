@@ -34,14 +34,22 @@
 
 <script>
 export default {
+	layout: 'panel',
+	transition: 'page',
 	async asyncData({ params, $content, error }) {
 		let page
 		try {
-			page = await $content('activities', params.slug).fetch()
+			// default slug
+			// page = await $content('activities', params.slug).fetch()
+
+			// custom slug
+			page = await $content('activities', {deep: true})
+				.where({ slug: params.slug })
+      			.fetch()
 		} catch (e) {
 			return error({ statusCode: 404, message: 'Page not found' })
 		}
-		return { page }
+		return { page : page[0] }
 	},
 	head() {
 		return {
@@ -60,7 +68,7 @@ export default {
 				{
 					hid: 'og:image',
 					name: 'og:image',
-					content: this.$cloudinary().url(this.page.cover),
+					content: this.$cloudinary.image.url(this.page.cover),
 				},
 				{
 					hid: 'twitter:title',
@@ -75,13 +83,11 @@ export default {
 				{
 					hid: 'twitter:image',
 					name: 'twitter:image',
-					content: this.$cloudinary().url(this.page.cover),
+					content: this.$cloudinary.image.url(this.page.cover),
 				},
 			],
 		}
 	},
-	layout: 'panel',
-	transition: 'page',
 }
 </script>
 <style lang="postcss">

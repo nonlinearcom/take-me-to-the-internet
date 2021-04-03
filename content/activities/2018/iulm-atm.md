@@ -1,12 +1,16 @@
 ---
-type: Workshop
-year: 2019
 title: Digital storytelling
-slug: digital-storytelling-2019
+subtitle:
+shortTile:
+slug: digital-storytelling-2018
+
+type: Workshop
+year: 2018
 role: Lecturer
 institution: IULM university
 location: Milan
-extra:
+
+
 offline: true
 ---
 

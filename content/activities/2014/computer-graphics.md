@@ -1,13 +1,16 @@
 ---
-type: Course
-year: 2017
 title: Computer Graphics
-slug: computer-graphics-brera-2017
+subtitle:
+shortTile:
+slug: computer-graphics-brera-2014
 
+type: Course
+year: 2014
 role: Professor
 institution: Brera Academy
 location: Milan
-assistant: TA Iulia Radu, Nicolò Cervello
+
+
 offline: true
 ---
 

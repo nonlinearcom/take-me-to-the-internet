@@ -1,12 +1,16 @@
 ---
-type: Course
-year: 2015
 title: Computer Graphics
-slug: computer-graphics-brera-2015
+subtitle:
+shortTile:
+slug: computer-graphics-brera-2018
+
+type: Course
+year: 2018
 role: Professor
 institution: Brera Academy
 location: Milan
-extra:
+
+assistant: TA Francesco luzzana
 offline: true
 ---
 

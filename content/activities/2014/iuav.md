@@ -1,12 +1,16 @@
 ---
+title: Visual design and coding fundamentals
+subtitle:
+shortTile:
+slug: visual-design-coding-fundamentals-IUAV
+
 type: Course
 year: 2014
-title: Visual design and coding fundamentals
-slug: visual-design-coding-fundamentals-IUAV
 role: Professor
 institution: IUAV University
 location: Venice
-extra:
+
+
 offline: true
 ---
 

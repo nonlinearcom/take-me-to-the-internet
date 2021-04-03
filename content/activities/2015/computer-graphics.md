@@ -1,12 +1,16 @@
 ---
-type: Course
-year: 2014
 title: Computer Graphics
-slug: computer-graphics-brera-2014
+subtitle:
+shortTile:
+slug: computer-graphics-brera-2015
+
+type: Course
+year: 2015
 role: Professor
 institution: Brera Academy
 location: Milan
-extra:
+
+
 offline: true
 ---
 

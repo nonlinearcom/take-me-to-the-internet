@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<article class="home">
-			<!-- <nuxt-link class="info" to="/info">Info</nuxt-link> -->
+			<nuxt-link class="info" to="/info">Info</nuxt-link>
 			<nuxt-content :document="page" />
 			<TablePreview :table-data="list" />
 		</article>
@@ -13,32 +13,12 @@
 export default {
 	async asyncData({ app, $content }) {
 		const page = await $content('index').fetch()
-		const list = await $content('activities').sortBy('slug', 'desc').fetch()
+		const list = await $content('activities',{deep: true})
+			.only(['title', 'slug', 'type', 'role', 'institution', 'location', 'offline', 'cover' , 'dir', 'year', 'path'])
+			.sortBy('year', 'desc').fetch()
+
 		return { page, list }
 	},
-	// data() {
-	// 	return {
-	// 		x: 0,
-	// 		y: 0,
-	// 	}
-	// },
-	// methods: {
-	// 	getMousePosition(e) {
-	// 		if (e.pageX || e.pageY) {
-	// 			this.x = e.pageX
-	// 			this.y = e.pageY
-	// 		} else if (e.clientX || e.clientY) {
-	// 			this.x =
-	// 				e.clientX +
-	// 				document.body.scrollLeft +
-	// 				document.documentElement.scrollLeft
-	// 			this.y =
-	// 				e.clientY +
-	// 				document.body.scrollTop +
-	// 				document.documentElement.scrollTop
-	// 		}
-	// 	},
-	// },
 }
 </script>
 

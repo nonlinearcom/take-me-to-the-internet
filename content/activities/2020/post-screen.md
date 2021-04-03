@@ -1,14 +1,19 @@
 ---
-type: Workshop
-year: 2020
 title: Take Me To The Internet
 subtitle: Are.na for web design and networked publishing practice
+shortTile:
 slug: take-me-to-the-intenet-workshop-2020
+
+
+type: Workshop
+year: 2020
 role: Instructor
 institution: Post-screen festival
 location: Milan
 assistant:
 duration: 4 hours
+
+offline: false
 cover: take-me-to-the-internet/post-screen/2020/img_1
 partecipants:
   - Guglielmo Anfossi
@@ -39,8 +44,6 @@ gallery:
     alt: Iulm 2020
   - media: take-me-to-the-internet/post-screen/2020/img_3
 	  alt: Iulm 2020
-
-offline: false
 ---
 
 The workshop gives an introduction to web design practices connected to the digital platform Are.na and to Jamstack architectures. The course will consider plural and networked curatorial practices through contemporary forms of engagement such as the feed and the stack.

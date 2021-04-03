@@ -1,12 +1,17 @@
 ---
+title: Computer Graphics
+subtitle:
+shortTile:
+slug: computer-graphics-brera-2020
+
 type: Course
 year: 2020
-title: Computer Graphics
-slug: computer-graphics-brera-2020
 role: Professor
 institution: Brera Academy
 location: Milan
 assistant: TA Francesco Luzzana
+
+offline: false
 cover: 'take-me-to-the-internet/brera/computer-graphics/2020/vvvv_control_lerp'
 gallery:
     - media: https://res.cloudinary.com/non-linear/video/upload/v1598973218/take-me-to-the-internet/brera/computer-graphics%20/2020/vvvv_control_lerp.mp4

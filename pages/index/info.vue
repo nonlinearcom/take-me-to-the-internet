@@ -7,6 +7,8 @@
 
 <script>
 export default {
+	layout: 'panel',
+	transition: 'page',
 	async asyncData({ params, $content, error }) {
 		let page
 		try {
@@ -16,8 +18,6 @@ export default {
 		}
 		return { page }
 	},
-	layout: 'panel',
-	transition: 'page',
 }
 </script>
 <style lang="postcss" scoped>
