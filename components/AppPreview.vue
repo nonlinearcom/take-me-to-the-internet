@@ -32,11 +32,7 @@ export default {
 	},
 	computed: {
 		preview() {
-			return this.$cloudinary().url(this.cover, {
-				width: 600,
-				crop: 'scale',
-				dpr: '2.0',
-			})
+			return this.$cloudinary.image.url(this.cover, { width: 600, crop: 'scale', dpr: '2.0',})
 		},
 		translatePosition() {
 			return `translate(${this.coverX}px, ${this.coverY}px)`

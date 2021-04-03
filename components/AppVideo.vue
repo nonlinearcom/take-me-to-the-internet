@@ -43,7 +43,7 @@ export default {
 
 	methods: {
 		getVideo(url) {
-			return this.$cloudinary('video').url(url, {})
+			return  this.$cloudinary.video.url(url, {})
 		},
 		// getPoster(url) {
 		// 	return this.$cloudinary().url(url, {

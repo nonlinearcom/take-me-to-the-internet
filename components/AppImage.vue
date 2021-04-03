@@ -65,7 +65,7 @@ export default {
 		// 	})
 		// },
 		getImage(size) {
-			return this.$cloudinary().url(this.item.media, {
+			return this.$cloudinary.image.url(this.item.media, {
 				width: size,
 				crop: 'scale',
 				dpr: 'auto',
