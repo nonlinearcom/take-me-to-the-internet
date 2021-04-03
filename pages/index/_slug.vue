@@ -68,7 +68,9 @@ export default {
 				{
 					hid: 'og:image',
 					name: 'og:image',
-					content: this.$cloudinary.image.url(this.page.cover),
+					// content: this.$cloudinary.image.url(this.page.cover),
+					// content: `https://res.cloudinary.com/non-linear/image/upload/${this.page.cover}`,
+					content: `https://res.cloudinary.com/non-linear/image/upload/f_auto,q_auto/v1/${this.page.cover}`,
 				},
 				{
 					hid: 'twitter:title',
@@ -83,7 +85,9 @@ export default {
 				{
 					hid: 'twitter:image',
 					name: 'twitter:image',
-					content: this.$cloudinary.image.url(this.page.cover),
+					// content: this.$cloudinary.image.url(this.page.cover),
+					content: `https://res.cloudinary.com/non-linear/image/upload/f_auto,q_auto/v1/${this.page.cover}`,
+
 				},
 			],
 		}

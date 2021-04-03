@@ -5,7 +5,7 @@
 		@mouseenter="showCaption = true"
 		@mouseleave="showCaption = false"
 	>
-		<picture
+		<!-- <picture
 			v-observe-visibility="{
 				callback: visibilityChanged,
 				once: true,
@@ -25,7 +25,12 @@
 			/>
 
 			<img :src="getImage(large)" :alt="item.alt" loading="lazy" />
-		</picture>
+		</picture> -->
+
+		 <nuxt-picture
+			provider="cloudinary"
+			:src="item.media"
+		/>
 
 		<transition name="fade">
 			<figcaption v-if="showCaption">{{ item.caption }}</figcaption>
@@ -51,26 +56,10 @@ export default {
 			inView: false,
 		}
 	},
-
 	methods: {
 		visibilityChanged(isVisible, entry) {
 			this.inView = isVisible
 			// console.log(isVisible, entry)
-		},
-		// getLqip(image) {
-		// 	return this.$cloudinary().url(image, {
-		// 		width: this.lqip,
-		// 		crop: 'scale',
-		// 		blur: 500,
-		// 	})
-		// },
-		getImage(size) {
-			return this.$cloudinary.image.url(this.item.media, {
-				width: size,
-				crop: 'scale',
-				dpr: 'auto',
-				fetchFormat: 'auto',
-			})
 		},
 	},
 }
@@ -94,7 +83,7 @@ figure {
 		img {
 			transition: opacity 0.5s;
 
-			opacity: 0.5;
+			/* opacity: 0.5; */
 			width: 100%; /* stretch to fill the picture element */
 			transition: filter 0.5s;
 		}

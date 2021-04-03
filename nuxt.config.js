@@ -88,20 +88,33 @@ export default {
 		// '~/plugins/plyr.client.js'
 	],
 
-	buildModules: ['@nuxt/postcss8','@nuxtjs/eslint-module', '@nuxtjs/composition-api'],
+	buildModules: [
+		'@nuxt/postcss8',
+		'@nuxt/image',
+		'@nuxtjs/eslint-module',
+		'@nuxtjs/composition-api'
+	],
 
 	modules: [
-		'@nuxtjs/cloudinary',
+		// '@nuxtjs/cloudinary',
 		'@nuxt/content',
 		'nuxt-webfontloader',
 		'@nuxtjs/device',
 	],
-
-	cloudinary: {
-		cloudName: 	process.env.CLOUDINARY_NAME,  // 'non-linear',
-		api_key: 	process.env.CLOUDINARY_API_KEY, // '331859946444422'
-  		api_secret: process.env.CLOUDINARY_API_SECRET // 'MmCfq0eIphktvVU6K3LpEctdP-0'
+	image: {
+		sizes: [420, 768, 1024, 1200, 2048],
+		// intersectOptions: {
+		// 	rootMargin: '50px',
+		// },
+		cloudinary: {
+			baseURL: 'https://res.cloudinary.com/non-linear/image/upload/',
+		},
 	},
+	// cloudinary: {
+	// 	cloudName: 	process.env.CLOUDINARY_NAME,  // 'non-linear',
+	// 	api_key: 	process.env.CLOUDINARY_API_KEY, // '331859946444422'
+  	// 	api_secret: process.env.CLOUDINARY_API_SECRET // 'MmCfq0eIphktvVU6K3LpEctdP-0'
+	// },
 	webfontloader: {
 		webfontloader: {
 			google: {

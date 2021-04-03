@@ -1,12 +1,20 @@
 <template>
 	<transition name="fade">
-		<img
+		<nuxt-img
 			v-show="isActive"
+			provider="cloudinary"
 			class="previewCover"
 			:src="preview"
 			alt="alt"
 			:style="{ transform: translatePosition }"
 		/>
+		<!-- <img
+			v-show="isActive"
+			class="previewCover"
+			:src="preview"
+			alt="alt"
+			:style="{ transform: translatePosition }"
+		/> -->
 	</transition>
 </template>
 
@@ -19,7 +27,7 @@ export default {
 		},
 		cover: {
 			type: String,
-			default: 'take-me-to-the-internet/test1',
+			default: 'test1',
 		},
 		coverX: {
 			type: Number,
@@ -32,7 +40,8 @@ export default {
 	},
 	computed: {
 		preview() {
-			return this.$cloudinary.image.url(this.cover, { width: 600, crop: 'scale', dpr: '2.0',})
+			// return this.$cloudinary.image.url(this.cover, { width: 600, crop: 'scale', dpr: '2.0',})
+			return `${this.cover}`
 		},
 		translatePosition() {
 			return `translate(${this.coverX}px, ${this.coverY}px)`

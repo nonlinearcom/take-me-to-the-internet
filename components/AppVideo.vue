@@ -9,7 +9,6 @@
 		<!-- TODO: poster -->
 		<!-- :poster="getPoster(item.media)" -->
 		<video
-			:ref="item.media"
 			class="responsive"
 			muted
 			loop
@@ -43,14 +42,9 @@ export default {
 
 	methods: {
 		getVideo(url) {
-			return  this.$cloudinary.video.url(url, {})
+			return  'https://res.cloudinary.com/non-linear/video/upload/v1/' + url
 		},
-		// getPoster(url) {
-		// 	return this.$cloudinary().url(url, {
-		// 		effect: 'preview',
-		// 		resource_type: 'video',
-		// 	})
-		// },
+
 
 		togglePlay(e) {
 			const video = e.target
