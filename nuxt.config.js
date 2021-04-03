@@ -88,21 +88,19 @@ export default {
 		// '~/plugins/plyr.client.js'
 	],
 
-	buildModules: ['@nuxtjs/eslint-module', '@nuxtjs/google-analytics'],
+	buildModules: ['@nuxt/postcss8','@nuxtjs/eslint-module', '@nuxtjs/composition-api'],
 
 	modules: [
-		'@nuxt/content',
 		'@nuxtjs/cloudinary',
+		'@nuxt/content',
 		'nuxt-webfontloader',
 		'@nuxtjs/device',
 	],
 
-	googleAnalytics: {
-		id: 'UA-304654-50',
-	},
 	cloudinary: {
-		cloudName: 'non-linear',
-		/* all other options */
+		cloudName: 	process.env.CLOUDINARY_NAME,  // 'non-linear',
+		api_key: 	process.env.CLOUDINARY_API_KEY, // '331859946444422'
+  		api_secret: process.env.CLOUDINARY_API_SECRET // 'MmCfq0eIphktvVU6K3LpEctdP-0'
 	},
 	webfontloader: {
 		webfontloader: {
