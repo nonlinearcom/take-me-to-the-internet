@@ -16,7 +16,7 @@
 		"@nuxt/content": "^1.14.0",
 		"@nuxtjs/composition-api": "^0.22.4",
 		"@nuxtjs/device": "^2.0.1",
-		"@vueuse/core": "^4.6.3",
+		"@vueuse/core": "^4.7.0",
 		"lozad": "^1.16.0",
 		"nuxt": "^2.15.4",
 		"nuxt-webfontloader": "^1.1.0",

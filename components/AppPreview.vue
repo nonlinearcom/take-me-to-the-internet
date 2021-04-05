@@ -8,17 +8,13 @@
 			alt="alt"
 			:style="{ transform: translatePosition }"
 		/>
-		<!-- <img
-			v-show="isActive"
-			class="previewCover"
-			:src="preview"
-			alt="alt"
-			:style="{ transform: translatePosition }"
-		/> -->
 	</transition>
 </template>
 
 <script>
+
+
+
 export default {
 	props: {
 		isActive: {
@@ -29,22 +25,27 @@ export default {
 			type: String,
 			default: 'test1',
 		},
-		coverX: {
+		offset:{
 			type: Number,
-			default: 0,
+			default:0,
+			required:false
 		},
-		coverY: {
-			type: Number,
-			default: 0,
+		xPos:{
+			type:Number,
+			default:0
 		},
+		yPos:{
+			type:Number,
+			default:0
+		}
 	},
+
 	computed: {
 		preview() {
-			// return this.$cloudinary.image.url(this.cover, { width: 600, crop: 'scale', dpr: '2.0',})
 			return `${this.cover}`
 		},
-		translatePosition() {
-			return `translate(${this.coverX}px, ${this.coverY}px)`
+		translatePosition(){
+			return`translate(${this.xPos}px, ${this.yPos}px)`
 		},
 	},
 }

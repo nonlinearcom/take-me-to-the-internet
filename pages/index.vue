@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<article class="home">
-			<nuxt-link class="info" to="/info">Info</nuxt-link>
+			<!-- <nuxt-link class="info" to="/info">Info</nuxt-link> -->
 			<nuxt-content :document="page" />
 			<TablePreview :table-data="list" />
 		</article>
@@ -23,15 +23,7 @@ export default {
 </script>
 
 <style lang="postcss">
-/* fade transitions */
-.fade-enter-active,
-.fade-leave-active {
-	transition: opacity 0.5s;
-}
-.fade-enter,
-.fade-leave-to {
-	opacity: 0;
-}
+
 
 article.home {
 	display: flex;

@@ -1,11 +1,15 @@
 <template>
-	<section @mousemove.passive="getMousePosition">
+	<section>
+		<!-- <button @click="pause">pause</button>
+    	<button @click="resume">resume</button>
+		<div>xPos:{{xPos}} - YPos{{yPos}}</div>
+		<div>isOutside: {{isOutside}}</div> -->
 		<AppPreview
 			v-if="$device.isDesktop"
-			:is-active="previewIsActive"
+			:is-active="!isOutside"
 			:cover="previewCover"
-			:cover-x="followX"
-			:cover-y="followY"
+			:x-pos="xPos"
+			:y-pos="yPos"
 		/>
 		<AppTable
 			ref="table"
@@ -18,6 +22,10 @@
 </template>
 
 <script>
+
+import { ref, reactive } from '@vue/composition-api'
+import { useFollowMe }  from '~/composables/useFollowMe'
+
 export default {
 	props: {
 		tableData: {
@@ -25,44 +33,29 @@ export default {
 			default: () => [],
 		},
 	},
+
+	setup () {
+		// we need to pass the table $ref as target
+		// https://markus.oberlehner.net/blog/refs-and-the-vue-3-composition-api/
+		const table = ref(null)
+
+		return {
+			table,
+			...useFollowMe(table)
+		}
+
+	},
+
 	data() {
 		return {
-			followX: 0,
-			followY: 0,
-			x: 0,
-			y: 0,
 			previewIsActive: false,
 			previewCover: null,
 		}
 	},
-	computed: {
-		dX() {
-			return this.x - this.followX
-		},
-		dY() {
-			return this.y - this.followY
-		},
-	},
 
-	mounted() {
-		this.movePreview()
-	},
 	methods: {
 		setPreviewCover(coverName) {
 			this.previewCover = coverName
-		},
-		movePreview() {
-			// https://codepen.io/tguelcan-the-sasster/pen/ROoxWm
-			// this.dX = this.x - this.followX
-			// this.dY = this.y - this.followY
-			this.followX += this.dX / 10
-			this.followY += this.dY / 10
-
-			window.requestAnimationFrame(this.movePreview)
-		},
-		getMousePosition(e) {
-			this.x = e.clientX
-			this.y = e.clientY - this.$refs.table.$el.getBoundingClientRect().y
 		},
 	},
 }
