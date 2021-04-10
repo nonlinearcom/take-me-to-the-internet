@@ -45,7 +45,7 @@ export default {
 			return `${this.cover}`
 		},
 		translatePosition(){
-			return`translate(${this.xPos}px, ${this.yPos}px)`
+			return`translate(${this.xPos}px, ${this.yPos - 130}px)`
 		},
 	},
 }
@@ -55,10 +55,11 @@ export default {
 .previewCover {
 	position: absolute;
 	/* transition: all 2s; */
-	max-width: 600px;
-	width: 400px;
-	height: auto;
+	max-height: 260px;
+	width: auto;
+	/* height: auto; */
 	z-index: 5;
 	pointer-events: none;
+	margin-top: ;
 }
 </style>

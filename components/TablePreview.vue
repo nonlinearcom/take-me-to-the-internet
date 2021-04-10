@@ -1,9 +1,5 @@
 <template>
 	<section>
-		<!-- <button @click="pause">pause</button>
-    	<button @click="resume">resume</button>
-		<div>xPos:{{xPos}} - YPos{{yPos}}</div>
-		<div>isOutside: {{isOutside}}</div> -->
 		<AppPreview
 			v-if="$device.isDesktop"
 			:is-active="!isOutside"
@@ -23,9 +19,8 @@
 
 <script>
 
-import { ref, reactive } from '@vue/composition-api'
-import { useFollowMe }  from '~/composables/useFollowMe'
-
+import { ref, reactive, computed } from '@vue/composition-api'
+import useFollowMe from '~/composables/useFollowMe'
 export default {
 	props: {
 		tableData: {
@@ -43,7 +38,6 @@ export default {
 			table,
 			...useFollowMe(table)
 		}
-
 	},
 
 	data() {
