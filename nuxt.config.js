@@ -92,11 +92,10 @@ export default {
 		'@nuxt/postcss8',
 		'@nuxt/image',
 		'@nuxtjs/eslint-module',
-		'@nuxtjs/composition-api'
+		'@nuxtjs/composition-api/module'
 	],
 
 	modules: [
-		// '@nuxtjs/cloudinary',
 		'@nuxt/content',
 		'nuxt-webfontloader',
 		'@nuxtjs/device',
