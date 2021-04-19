@@ -15,3 +15,4 @@ offline: true
 ---
 
 ##  Computer Graphics page
+lorem ipsum
