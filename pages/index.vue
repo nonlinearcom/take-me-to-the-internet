@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<article class="home">
-			<!-- <nuxt-link class="info" to="/info">Info</nuxt-link> -->
+			<nuxt-link class="info" to="/info">Info</nuxt-link>
 			<nuxt-content :document="page" />
 			<TablePreview :table-data="list" />
 		</article>
@@ -39,6 +39,10 @@ article.home {
 		top: var(--app-margin);
 		right: var(--app-margin);
 		z-index: 10;
+	}
+
+	.container{
+		max-width: 50ch;
 	}
 }
 </style>
