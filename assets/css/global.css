@@ -11,7 +11,12 @@ body {
 	background-color: var(--bg);
  	color: var(--color);
 	transition: background-color 0.3s;
+
+	&.panel-opened{
+		overflow-y: hidden;
+	}
 }
+
 
 *,
 *:before,

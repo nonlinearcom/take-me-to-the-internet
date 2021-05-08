@@ -51,8 +51,16 @@ export default {
 		}
 		return { page: page[0] }
 	},
+	data() {
+		return {
+			isPanelOpen: false
+		}
+	},
 	head() {
 		return {
+			bodyAttrs: {
+          		class: this.isPanelOpen ? 'panel-opened' : ''
+        	},
 			title: `${this.page.title}`,
 			meta: [
 				{
@@ -91,6 +99,13 @@ export default {
 			],
 		}
 	},
+	beforeMount () {
+		//  $body.style.overflow = 'hidden'
+		 this.isPanelOpen = true
+	},
+	destroyed () {
+		 this.isPanelOpen = false
+	}
 }
 </script>
 <style lang="postcss">
