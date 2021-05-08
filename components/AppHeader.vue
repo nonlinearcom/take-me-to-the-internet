@@ -18,9 +18,10 @@
 
 <style lang="postcss">
 .app-header{
-	padding: var(--app-margin);
+
 	display: flex;
 	align-items: baseline;
+	padding:  var(--app-margin-small);
 	.header__title{
 		margin-bottom: 0;
 	}

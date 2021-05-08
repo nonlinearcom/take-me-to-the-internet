@@ -1,5 +1,5 @@
 <template>
-	<section>
+	<section class="table-preview">
 		<AppPreview
 			v-if="$device.isDesktop"
 			:is-active="!isOutside"
@@ -56,6 +56,7 @@ export default {
 </script>
 
 <style lang="postcss">
-section {
+.table-preview {
+	margin-top: 200px;
 }
 </style>

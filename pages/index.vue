@@ -27,7 +27,7 @@ article.home {
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
-	padding: var(--app-margin);
+	padding: var(--app-margin-small);
 
 	.nuxt-content {
 		margin-bottom: 25vh;

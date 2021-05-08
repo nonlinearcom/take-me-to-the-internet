@@ -1,5 +1,5 @@
 ---
-title: Info
+title: Profile
 description:
 subtitle:
 shortTile:

@@ -1,7 +1,7 @@
 body {
 	margin: 0;
 	font-family: var(--font-stack);
-	font-size: var(--font-size);
+	font-size: var(--text);
 	line-height: var(--line-height);
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
@@ -27,26 +27,34 @@ a {
 }
 
 h1{
-	font-size: var(--font-size);
+	font-size: var(--title);
+	line-height: var(--title-height);
 	font-weight: 400;
-	margin-bottom: calc(var(--font-size) * var(--line-height))
+	margin-bottom: calc(var(--title) * var(--title-height));
+
+	/* font-size: var(--text);
+	line-height: var(--text-height);
+	margin-bottom: calc(var(--text) * var(--title-height)) */
 }
 
-h2, h3, p {
-	font-size: var(--font-size-small);
+h2, h3 {
+	font-size: var(--text-small);
 	font-weight: 400;
-	margin-bottom: calc(var(--font-size-small) * var(--line-height))
+	margin-bottom: calc(var(--text-small) * var(--text-height))
+}
+
+p {
+	font-size: var(--text);
+	margin-bottom: calc(var(--text) * var(--text-height))
 }
 
 h2.title-h1, h3.title-h1{
-	font-size: var(--font-size);
-	font-weight: 400;
+	font-size: var(--text);
 	margin-bottom: 0;
 }
 
 .text-small{
-	font-size: var(--font-size-small);
-	font-weight: 400;
+	font-size: var(--text-small);
 }
 
 
@@ -61,4 +69,15 @@ h2.title-h1, h3.title-h1{
 .fade-enter,
 .fade-leave-to {
 	opacity: 0;
+}
+
+.nuxt-content{
+	a {
+		line-height: inherit;
+		border-bottom: 1px solid var(--color-alt);
+	}
+	a:hover{
+		color:  var(--color-alt);
+		/* border-color: var(--color) */
+	}
 }

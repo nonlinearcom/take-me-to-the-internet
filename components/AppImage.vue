@@ -98,7 +98,7 @@ figure {
 		bottom: calc(var(--app-margin) / 2);
 
 		display: block;
-		font-size: var(--font-size-small);
+		font-size: var(--text-small);
 		font-weight: 400;
 		color: #888;
 		background: rgba(255, 255, 255, 1);

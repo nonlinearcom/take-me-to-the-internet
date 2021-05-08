@@ -79,7 +79,7 @@ table {
 			color: #888;
 		}
 		td {
-			font-size: var(--font-size-small);
+			font-size: var(--text-small);
 			font-weight: 400;
 			text-align: left;
 			vertical-align: top;
@@ -110,19 +110,19 @@ table {
 }
 
 @media (max-width: 1024px) {
-	.location {
+	table .location {
 		display: none;
 	}
 }
 
 @media (max-width: 900px) {
-	.role {
+	table .role {
 		display: none;
 	}
 }
 
 @media (max-width: 640px) {
-	.type {
+	table .type {
 		display: none;
 	}
 }
@@ -140,22 +140,21 @@ table {
 			padding: 0;
 		}
 	}
-	.year {
-		border-top: 1px solid #e5e5e5;
+	table .year {
 		flex: 0 1 70px;
 		padding-top: 8px;
 	}
-	.title {
-		border-top: 1px solid #e5e5e5;
+	table .title {
+		border-top: 1px solid var(--border-color);
 		flex-basis: calc(100% - 70px);
 		padding-top: 8px;
 	}
 
-	.location {
+	table .location {
 		display: none;
 	}
 
-	.institution {
+	table .institution {
 		margin-left: 70px;
 		padding-bottom: 8px;
 		/* display: none; */

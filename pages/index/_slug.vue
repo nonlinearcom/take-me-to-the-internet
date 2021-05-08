@@ -43,13 +43,13 @@ export default {
 			// page = await $content('activities', params.slug).fetch()
 
 			// custom slug
-			page = await $content('activities', {deep: true})
+			page = await $content('activities', { deep: true })
 				.where({ slug: params.slug })
-      			.fetch()
+				.fetch()
 		} catch (e) {
 			return error({ statusCode: 404, message: 'Page not found' })
 		}
-		return { page : page[0] }
+		return { page: page[0] }
 	},
 	head() {
 		return {
@@ -87,7 +87,6 @@ export default {
 					name: 'twitter:image',
 					// content: this.$cloudinary.image.url(this.page.cover),
 					content: `https://res.cloudinary.com/non-linear/image/upload/f_auto,q_auto/v1/${this.page.cover}`,
-
 				},
 			],
 		}
@@ -101,8 +100,7 @@ export default {
 	right: 0;
 
 	transform: translateX(100%);
-	background-color:var(--bg-secondary);
-	/* border-left: 1px solid #888; */
+	background-color: var(--bg);
 	width: 50%;
 	height: 100vh;
 	transition: transform 0.5s ease-out;
@@ -110,6 +108,9 @@ export default {
 	overflow-y: auto;
 	overflow-x: hidden;
 	z-index: 20;
+
+	/* https://alligator.io/css/transition-box-shadows/ */
+	box-shadow: 0 0px 40px rgba(0, 0, 0, 0.3);
 
 	a.close {
 		display: block;
@@ -122,56 +123,62 @@ export default {
 		border-radius: 20px;
 		padding: 0 10px;
 	}
-	header {
-		margin: var(--app-margin);
+}
 
-		display: grid;
-		grid-template-columns: 2fr 1fr;
-		grid-gap: calc(var(--app-margin) / 2);
+.panel header {
+	margin: var(--app-margin);
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+	/* grid-template-columns: repeat(3, 1fr); */
 
-		.full {
-			grid-column: 1 / span 2;
-			margin-bottom: 100px;
+	grid-gap: calc(var(--app-margin) / 2);
 
-			.title {
-				border-top: none;
-			}
-		}
-		h2 {
-			font-size: var(--font-size);
-			font-weight: 400;
-			margin-bottom: 0;
-		}
-		.subtitle span {
-			display: block;
-		}
-		p {
-			max-width: 600px;
-		}
+	.full {
+		grid-column: 1 / span 2;
+		margin-bottom: 100px;
 
-		aside {
-			h3 {
-				margin-bottom: 0;
-			}
-		}
+	}
+	.title{
+		font-size: var(--title);
+	}
+	.description{
+		grid-column: 1 / span 1;
 	}
 
-	img {
+	h2 {
+		font-size: var(--text);
+		margin-bottom: 0;
+	}
+	.subtitle span {
 		display: block;
 	}
+	p {
+		grid-column: 1 / span 2;
+		/* max-width: 600px; */
+	}
 
-	.partecipants {
-		margin: calc(var(--app-margin) / 2);
-		ul {
-			padding: 0;
-			font-size: var(--font-size-small);
-			font-weight: 400;
-			column-width: 400px;
+	aside {
+		h3 {
+			margin-bottom: 0;
+		}
+	}
+}
 
-			li {
-				margin: 0;
-				list-style-type: none;
-			}
+.panel img {
+	display: block;
+}
+
+.panel .partecipants {
+	margin: calc(var(--app-margin) / 2);
+	ul {
+		padding: 0;
+		font-size: var(--text-small);
+		font-weight: 400;
+		column-width: 400px;
+
+		li {
+			margin: 0;
+			list-style-type: none;
 		}
 	}
 }
@@ -187,15 +194,17 @@ export default {
 	transform: translateX(100%);
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1440px) {
 	.panel {
 		width: 66.66%;
 	}
 }
 
-@media (max-width: 640px) {
+
+@media (max-width: 1024px) {
 	.panel {
 		width: 100%;
+		box-shadow: none;
 		header {
 			display: flex;
 			flex-direction: column;
