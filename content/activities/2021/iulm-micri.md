@@ -2,7 +2,7 @@
 title: Visual design and coding fundamentals
 subtitle:
 shortTile:
-slug: visual-design-coding-fundamentals-MICRI-2020
+slug: visual-design-coding-fundamentals-MICRI-2021
 
 type: Course
 year: 2021

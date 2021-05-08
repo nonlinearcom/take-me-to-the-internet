@@ -1,9 +1,9 @@
 ---
 title: Info
-description: Teaching portal of Manuel Ehrenfeld
+description:
 subtitle:
 shortTile:
-slug: info
+slug: manuel-ehrenfeld
 
 ---
 Manuel Ehrenfeld is a Geneva-based designer & developer. He currently is adjunct professor on Computer Graphics at Brera Fine Arts Academy and lecturer on Communication design at IULM University in Milan.

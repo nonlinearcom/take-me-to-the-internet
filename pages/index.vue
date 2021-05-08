@@ -1,10 +1,6 @@
 <template>
 	<div>
 		<article class="home">
-			<nuxt-link class="info" to="/info">Info</nuxt-link>
-			<ColorPicker />
-
-			<nuxt-content :document="page" />
 			<TablePreview :table-data="list" />
 		</article>
 		<NuxtChild />
@@ -14,12 +10,12 @@
 <script>
 export default {
 	async asyncData({ app, $content }) {
-		const page = await $content('index').fetch()
+		// const page = await $content('index').fetch()
 		const list = await $content('activities',{deep: true})
 			.only(['title', 'slug', 'type', 'role', 'institution', 'location', 'offline', 'cover' , 'dir', 'year', 'path'])
 			.sortBy('year', 'desc').fetch()
 
-		return { page, list }
+		return { list }
 	},
 }
 </script>

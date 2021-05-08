@@ -9,7 +9,7 @@ year: 2020
 role: Lecturer
 institution: IULM university
 department: Visual and Media Studies research doctorate
-location: Milan (remote)
+location: Remote
 
 offline: true
 cover: 'take-me-to-the-internet/test1'

@@ -2,13 +2,13 @@
 	<table>
 		<tbody>
 			<tr
-				v-for="item in tableData"
+				v-for="item, index in tableData"
 				:key="item.createdAt"
 				:class="{ offline: item.offline }"
 				@click="goToPanel(item.slug)"
 				@mouseover="getCover(item.cover)"
 			>
-				<td class="year">{{ item.year }}</td>
+				<td class="year" :class="{ visible: dateCheck(item.year, index) }">{{ item.year }}</td>
 				<td class="type">{{ item.type }}</td>
 				<td class="title">
 					<h3 v-if="item.offline">{{item.title}}</h3>
@@ -39,6 +39,21 @@ export default {
 		getCover(cover) {
 			this.$emit('getCurrentCover', cover)
 		},
+		getYear(index) {
+			return this.tableData[index].year
+		},
+		dateCheck(year, index) {
+			const prevIndex = index - 1
+
+			// display first by default
+			if (prevIndex === -1) {
+				return true
+			}
+
+			if (year === this.getYear(prevIndex)) {
+				return false
+			} else return true
+		},
 	},
 }
 </script>
@@ -50,7 +65,7 @@ table {
 	border-spacing: 0;
 	width: 100%;
 	tr {
-		border-top: 1px solid var(--border-color);
+		/* border-top: 1px solid var(--border-color); */
 
 		&:last-child {
 			border-bottom: 1px solid var(--border-color);
@@ -70,12 +85,21 @@ table {
 			vertical-align: top;
 			line-height: 1.4;
 			padding: 8px 16px;
-
+			border-top: 1px solid var(--border-color);
 			&:first-child {
 				padding-left: 0;
 			}
 			&:last-child {
 				padding-right: 0;
+			}
+
+			&.year {
+				border-top: none;
+				opacity: 0;
+			}
+			&.year.visible {
+				border-top: 1px solid var(--border-color);
+				opacity: 1;
 			}
 
 			h3{

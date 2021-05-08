@@ -1,8 +1,4 @@
 <template>
-	<!-- <section class="panel">
-		<nuxt-link to="/">X</nuxt-link>
-		<nuxt-content :document="page" />
-	</section> -->
 	<article class="panel">
 		<nuxt-link class="close text-mini" to="/">CLOSE</nuxt-link>
 		<header>
