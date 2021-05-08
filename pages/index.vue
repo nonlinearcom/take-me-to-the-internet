@@ -2,6 +2,8 @@
 	<div>
 		<article class="home">
 			<nuxt-link class="info" to="/info">Info</nuxt-link>
+			<ColorPicker />
+
 			<nuxt-content :document="page" />
 			<TablePreview :table-data="list" />
 		</article>

@@ -92,7 +92,8 @@ export default {
 		'@nuxt/postcss8',
 		'@nuxt/image',
 		'@nuxtjs/eslint-module',
-		'@nuxtjs/composition-api/module'
+		'@nuxtjs/composition-api/module',
+		'@nuxtjs/color-mode'
 	],
 
 	modules: [
@@ -155,6 +156,12 @@ export default {
 					grid: false,
 				},
 			},
+		},
+
+		babel:{
+			plugins: [
+			  ['@babel/plugin-proposal-private-methods', { loose: true }]
+			]
 		},
 
 		/*

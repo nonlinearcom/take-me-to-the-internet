@@ -7,6 +7,10 @@ body {
 	-webkit-font-smoothing: antialiased;
 	max-width: 100%;
 	overflow-x: hidden;
+
+	background-color: var(--bg);
+ 	color: var(--color);
+	transition: background-color 0.3s;
 }
 
 *,
@@ -17,7 +21,8 @@ body {
 }
 
 a {
-	color: currentColor;
+	/* color: currentColor; */
+	color: var(--color-primary);
 	text-decoration: none;
 }
 

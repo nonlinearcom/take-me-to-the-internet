@@ -1,18 +1,35 @@
 :root {
-	--app-margin: 48px;
 
-	--main-color: #416d81;
-	--text-color: #222;
-	--light-color: #dae1e7;
 
 	--font-stack: 'Inter', 'Helvetica Neue', Arial, sans-serif;
 	--font-size: 21px;
 	--line-height: 1.4;
-
 	--font-size-small: 16px;
 
+	--app-margin: 48px;
+
+	/* nuxt color-mode */
+	--color: #111111;
+	--color-primary: #111111;
+	--color-secondary: #dddddd;
+	--bg: #ffffff;
+	--bg-secondary: #f5f5f5;
+
+	--border-color: #dddddd;
 
 }
+
+.dark-mode {
+  --color: #ebf4f1;
+  --color-primary: #ebf4f1;
+  --color-secondary: #444444;
+  --bg: #222222;
+  --bg-secondary: #121212;
+
+  --border-color: #444444;
+}
+
+
 
 @media screen and (max-width: 768px) {
 	:root {

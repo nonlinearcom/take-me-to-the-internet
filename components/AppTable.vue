@@ -11,7 +11,8 @@
 				<td class="year">{{ item.year }}</td>
 				<td class="type">{{ item.type }}</td>
 				<td class="title">
-					<nuxt-link :to="`/${item.slug}`">{{
+					<h3 v-if="item.offline">{{item.title}}</h3>
+					<nuxt-link v-else :to="`/${item.slug}`">{{
 						item.title
 					}}</nuxt-link>
 				</td>
@@ -49,9 +50,10 @@ table {
 	border-spacing: 0;
 	width: 100%;
 	tr {
-		border-top: 1px solid #e5e5e5;
+		border-top: 1px solid var(--border-color);
+
 		&:last-child {
-			border-bottom: 1px solid #e5e5e5;
+			border-bottom: 1px solid var(--border-color);
 		}
 		&:hover {
 			cursor: pointer;
@@ -74,6 +76,10 @@ table {
 			}
 			&:last-child {
 				padding-right: 0;
+			}
+
+			h3{
+				margin-bottom: 0;
 			}
 		}
 	}

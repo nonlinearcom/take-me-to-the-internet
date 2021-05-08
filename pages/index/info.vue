@@ -57,9 +57,7 @@ export default {
 	right: 0;
 
 	transform: translateX(100%);
-	background-color: white;
-	background-color: #f5f5f5;
-	/* border-left: 1px solid #888; */
+	background-color:var(--bg);
 	width: 50%;
 	height: 100vh;
 	transition: transform 0.5s ease-out;
@@ -75,7 +73,7 @@ export default {
 		right: var(--app-margin);
 		font-size: 12px;
 		font-weight: 400;
-		border: 1px solid var(--text-color);
+		border: 1px solid var(--color);
 		border-radius: 20px;
 		padding: 0 10px;
 	}
