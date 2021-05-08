@@ -1,6 +1,6 @@
 <template>
 	<header class="app-header">
-			<h1 class="header__title">Take me to the internet <br> Teaching portal of <a href="mailto:me@manuelehrenfeld.info">Manuel Ehrenfeld</a></h1>
+			<h1 class="header__title">Take me to the internet <br> Teaching portal of Manuel Ehrenfeld</h1>
 			</h1>
 			<nav class="header__navigation">
 				<nuxt-link class="info" to="/manuel-ehrenfeld">Info</nuxt-link>
@@ -33,6 +33,17 @@
 		> *{
 			margin-left: 16px;
 		}
+	}
+}
+
+@media (max-width: 1024px) {
+
+	.app-header .header__title{
+		font-size:var(--text);
+	}
+	.app-header .header__navigation{
+		position: absolute;
+		right:var(--app-margin);
 	}
 }
 </style>
