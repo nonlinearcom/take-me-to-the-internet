@@ -5,29 +5,8 @@
 		@mouseenter="showCaption = true"
 		@mouseleave="showCaption = false"
 	>
-		<!-- <picture
-			v-observe-visibility="{
-				callback: visibilityChanged,
-				once: true,
-			}"
-		>
-			<source
-				:srcset="getImage(small)"
-				:media="`(max-width: ${small}px)`"
-			/>
-			<source
-				:srcset="getImage(medium)"
-				:media="`(max-width: ${medium}px)`"
-			/>
-			<source
-				:srcset="getImage(large)"
-				:media="`(max-width: ${large}px)`"
-			/>
-
-			<img :src="getImage(large)" :alt="item.alt" loading="lazy" />
-		</picture> -->
-
 		 <nuxt-picture
+		 	class="responsive"
 			provider="cloudinary"
 			:src="item.media"
 		/>
@@ -76,7 +55,7 @@ figure {
 	}
 
 	picture {
-		width: 100%;
+		width: 100%!important;
 		height: auto;
 		overflow: hidden;
 
@@ -87,22 +66,22 @@ figure {
 			width: 100%; /* stretch to fill the picture element */
 			transition: filter 0.5s;
 		}
-
-		/* &.lazy img {
-			filter: blur(10px);
-		} */
 	}
 	figcaption {
-		position: absolute;
-		left: calc(var(--app-margin) / 2);
-		bottom: calc(var(--app-margin) / 2);
-
 		display: block;
-		font-size: var(--text-small);
-		font-weight: 400;
-		color: #888;
-		background: rgba(255, 255, 255, 1);
+		position: absolute;
+		right: calc(var(--app-margin) / 2);
+		bottom: calc(var(--app-margin) / 2);
+		/* right: 0;
+		bottom: 0; */
 		border-radius: 20px;
+
+
+
+		font-size: var(--text-mini);
+
+		color: var(--color);
+		background:rgba(var(--bg-rgb), 0.8);
 		padding: 0 10px;
 	}
 }

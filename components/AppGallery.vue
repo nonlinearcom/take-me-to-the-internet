@@ -40,8 +40,5 @@ export default {
 </script>
 
 <style lang="postcss">
-.responsive {
-	width: 100%;
-	height: auto;
-}
+
 </style>
