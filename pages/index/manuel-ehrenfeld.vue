@@ -3,8 +3,10 @@
 		<nuxt-link class="close text-mini" to="/">CLOSE</nuxt-link>
 		<header>
 			<div class="full">
-				<h2 v-if="page.title" class="title">{{ page.title }}</h2>
-				<h2 v-if="page.subtitle" class="title">{{ page.subtitle }}</h2>
+				<h2 v-if="page.title" class="header-title">
+					{{ page.title }}
+					<template v-if="page.subtitle"><br>{{ page.subtitle }}</template>
+				</h2>
 			</div>
 			<div class="description">
 				<nuxt-content :document="page" />

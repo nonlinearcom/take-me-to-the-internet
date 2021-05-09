@@ -1,6 +1,6 @@
 ---
 title: Computer Graphics
-subtitle:
+subtitle: (remote)
 shortTile:
 slug: computer-graphics-brera-2020
 

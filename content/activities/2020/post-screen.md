@@ -1,6 +1,6 @@
 ---
 title: Take Me To The Internet
-subtitle: Are.na for web design and networked publishing practice
+subtitle: Alternative publishing practices with Are.na
 shortTile:
 slug: take-me-to-the-intenet-workshop-2020
 
