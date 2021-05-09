@@ -43,4 +43,9 @@ article.home {
 		max-width: 50ch;
 	}
 }
+@media (max-width: 540px) {
+	article.home {
+		padding: var(--app-margin-mini);
+	}
+}
 </style>

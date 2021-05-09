@@ -141,12 +141,12 @@ table {
 		}
 	}
 	table .year {
-		flex: 0 1 70px;
+		flex: 0 1 60px;
 		padding-top: 8px;
 	}
 	table .title {
 		border-top: 1px solid var(--border-color);
-		flex-basis: calc(100% - 70px);
+		flex-basis: calc(100% - 60px);
 		padding-top: 8px;
 	}
 
@@ -155,7 +155,7 @@ table {
 	}
 
 	table .institution {
-		margin-left: 70px;
+		margin-left: 60px;
 		padding-bottom: 8px;
 		/* display: none; */
 	}

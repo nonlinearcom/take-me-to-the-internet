@@ -38,12 +38,31 @@
 
 @media (max-width: 1024px) {
 
-	.app-header .header__title{
-		font-size:var(--text);
+	.app-header {
+		.header__title{
+			font-size:var(--text);
+		}
 	}
-	.app-header .header__navigation{
-		position: absolute;
-		right:var(--app-margin);
+
+}
+
+@media (max-width: 540px) {
+	.app-header{
+		flex-direction: column;
+		padding: var(--app-margin-mini);
+		.header__navigation{
+			position: relative;
+			margin-left: 0;
+			margin-top: var(--app-margin);
+			flex-direction: column;
+
+			> *{
+				margin-left: 0;
+				margin-top:8px;
+			}
+		}
 	}
+
+
 }
 </style>

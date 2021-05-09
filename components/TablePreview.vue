@@ -2,7 +2,7 @@
 	<section class="table-preview">
 		<AppPreview
 			v-if="$device.isDesktop"
-			:is-active="!isOutside"
+			:is-active="!isOutside && previewIsActive"
 			:cover="previewCover"
 			:x-pos="xPos"
 			:y-pos="yPos"

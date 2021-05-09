@@ -226,4 +226,10 @@ export default {
 		}
 	}
 }
+
+@media (max-width: 540px) {
+	.panel header {
+		margin: var(--app-margin-mini);
+	}
+}
 </style>
