@@ -14,6 +14,7 @@
 	--text-height: 1.4;
 
 	--text-small:16px;
+	--text-mini:14px;
 
 	--app-margin: 48px;
 	--app-margin-small: 24px;
@@ -22,21 +23,28 @@
 
 
 
-	/* nuxt color-mode */
+	/* color-mode */
 	--color: #111111;
+	--color-rgb: 17,17,17; /*#111111 */
+
 	--color-alt: #aaa;
+
 	--bg: #ffffff;
+	--bg-rgb: 255,255,255; /*#ffffff; */
 
 	--border-color: #dddddd;
-
 }
 
 .dark-mode {
-  --color: #ebf4f1;
-  --color-alt: #666666;
-  --bg: #222222;
+	--color: #ebf4f1;
+	--color-rgb: 235,244,241;/*#ebf4f1 */
 
-  --border-color: #333333;
+	--color-alt: #666666;
+
+	--bg: #222222;
+	--bg-rgb: 34,34,34; /*#222222; */
+
+	--border-color: #333333;
 }
 
 

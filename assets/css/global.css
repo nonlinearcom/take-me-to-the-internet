@@ -58,11 +58,15 @@ h2.title-h1, h3.title-h1{
 	margin-bottom: 0;
 }
 
+
+/* Functional */
+.responsive {
+	width: 100%;
+	height: auto;
+}
 .text-small{
 	font-size: var(--text-small);
 }
-
-
 
 
 /* fade transitions */
@@ -75,6 +79,8 @@ h2.title-h1, h3.title-h1{
 .fade-leave-to {
 	opacity: 0;
 }
+
+/* nuxt-content */
 
 .nuxt-content{
 	a {

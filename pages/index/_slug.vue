@@ -3,8 +3,10 @@
 		<nuxt-link class="close text-mini" to="/">CLOSE</nuxt-link>
 		<header>
 			<div class="full">
-				<h2 v-if="page.title" class="title">{{ page.title }}</h2>
-				<h2 v-if="page.subtitle" class="title">{{ page.subtitle }}</h2>
+				<h2 v-if="page.title" class="header-title">
+					{{ page.title }}
+					<template v-if="page.subtitle"><br>{{ page.subtitle }}</template>
+				</h2>
 			</div>
 			<div class="description">
 				<nuxt-content :document="page" />
@@ -141,32 +143,24 @@ export default {
 }
 
 .panel header {
-	margin: var(--app-margin);
 	display: grid;
 	grid-template-columns: 2fr 1fr;
-	/* grid-template-columns: repeat(3, 1fr); */
-
 	grid-gap: calc(var(--app-margin) / 2);
 
+	margin: var(--app-margin-small);
 	.full {
 		grid-column: 1 / span 2;
 		margin-bottom: 100px;
 
 	}
-	.title{
+	.header-title{
 		font-size: var(--title);
+		line-height: var(--title-height);
 	}
 	.description{
 		grid-column: 1 / span 1;
 	}
 
-	h2 {
-		font-size: var(--text);
-		margin-bottom: 0;
-	}
-	.subtitle span {
-		display: block;
-	}
 	p {
 		grid-column: 1 / span 2;
 		/* max-width: 600px; */
