@@ -52,7 +52,7 @@
 		padding: var(--app-margin-mini);
 		.header__navigation{
 			position: relative;
-			margin-left: 0;
+			margin-left: 0!important;
 			margin-top: var(--app-margin);
 			flex-direction: column;
 
