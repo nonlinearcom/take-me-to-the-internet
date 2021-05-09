@@ -14,13 +14,13 @@ assistant: TA Francesco Luzzana
 offline: false
 cover: 'take-me-to-the-internet/brera/computer-graphics/2020/vvvv_control_lerp'
 gallery:
-    - media: https://res.cloudinary.com/non-linear/video/upload/v1598973218/take-me-to-the-internet/brera/computer-graphics%20/2020/vvvv_control_lerp.mp4
+    - media: take-me-to-the-internet/brera/computer-graphics/2020/vvvv_control_lerp.mp4
       type: video
       dark: true
-    - media: https://res.cloudinary.com/non-linear/video/upload/v1598973218/take-me-to-the-internet/brera/computer-graphics%20/2020/vvvv_random_switch.mp4
+    - media: take-me-to-the-internet/brera/computer-graphics/2020/vvvv_random_switch.mp4
       type: video
       dark: true
-    - media: https://res.cloudinary.com/non-linear/video/upload/v1598973218/take-me-to-the-internet/brera/computer-graphics%20/2020/vvvv_mouse_area.mp4
+    - media: take-me-to-the-internet/brera/computer-graphics/2020/vvvv_mouse_area.mp4
       type: video
       dark: true
 ---
