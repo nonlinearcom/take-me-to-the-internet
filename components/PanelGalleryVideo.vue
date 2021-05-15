@@ -36,11 +36,11 @@ export default {
 
 		const breakpoints = useBreakpoints({
 			mobile: 768,
-			tablet: 1024,
-			laptop: 1200,
-			desktop: 1280,
-			desktopL: 1440,
-			desktopXL: 1600,
+			// tablet: 1024,
+			// laptop: 1200,
+			// desktop: 1280,
+			// desktopL: 1440,
+			// desktopXL: 1600,
 		})
 
 		const isMobile = breakpoints.smaller('mobile')

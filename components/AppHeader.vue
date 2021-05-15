@@ -1,6 +1,8 @@
 <template>
 	<header class="app-header">
 		<h1 class="header__title">Take — me — to — the — internet</h1>
+		<!-- <h1 class="header__title">TMTTI</h1> -->
+
 		<h2 class="header__subtitle title--h1">Teaching portal <span>of Manuel Ehrenfeld</span></h2>
 		<nuxt-link class="info title--h1" to="/manuel-ehrenfeld">About</nuxt-link>
 		<ColorButton />
@@ -43,28 +45,42 @@
 @media (max-width: 1024px) {
 
 	.app-header {
-		.header__title{
+		grid-template-columns: 2fr 1fr;
+
+		.header__title,.header__subtitle, .info{
 			font-size:var(--text);
+		}
+		.header__title{
+			/* grid-column: 1 / span 2; */
+		}
+		.header__subtitle{
+			grid-column: 2;
+		}
+		.info{
+			grid-column: 2;
+			grid-row: 3;
 		}
 	}
 
 }
 
-@media (max-width: 540px) {
+@media (max-width: 768px) {
 	.app-header{
-		flex-direction: column;
-		padding: var(--app-margin-mini);
-		.header__navigation{
-			position: relative;
-			margin-left: 0!important;
-			margin-top: var(--app-margin);
-			flex-direction: column;
+		grid-template-columns: 1fr 1fr;
+		/* padding: var(--app-margin-mini); */
 
-			> *{
-				margin-left: 0;
-				margin-top:8px;
-			}
+		.header__title{
+			grid-column: 1 / span 2;
 		}
+		.header__subtitle{
+			padding-top:var(--app-margin);
+			grid-column: 1;
+		}
+		.info{
+			grid-column: 1;
+			grid-row: 3;
+		}
+
 	}
 
 

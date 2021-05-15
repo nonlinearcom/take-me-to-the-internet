@@ -2,7 +2,7 @@
 title: Take Me To The Internet
 subtitle: Alternative publishing practices with Are.na
 shortTile:
-slug: take-me-to-the-intenet-workshop-2020
+slug: take-me-to-the-internet-workshop-2020
 
 
 type: Workshop
