@@ -4,8 +4,9 @@
 		<video ref="video" class="responsive" />
 
 		<button
-			v-if="!isOutside"
+			v-if="!isOutside || isMobile"
 			class="followCursor"
+			:class="{'mobile' : isMobile}"
 			:style="moveButton"
 			@click="isPlaying = !isPlaying"
 		>
@@ -19,7 +20,7 @@
 
 <script>
 import { ref, computed } from '@vue/composition-api'
-import { useMediaControls, useMouseInElement } from '@vueuse/core'
+import { useMediaControls, useMouseInElement, useBreakpoints } from '@vueuse/core'
 
 export default {
 	props: {
@@ -32,7 +33,23 @@ export default {
 	setup (props) {
 		const video = ref()
 		const videoSrc = computed(() => 'https://res.cloudinary.com/non-linear/video/upload/v1/' + props.item.media)
-		const moveButton = computed(() => `transform: translate(${elementX.value - 25}px, ${elementY.value - 25}px)`)
+
+		const breakpoints = useBreakpoints({
+			mobile: 768,
+			tablet: 1024,
+			laptop: 1200,
+			desktop: 1280,
+			desktopL: 1440,
+			desktopXL: 1600,
+		})
+
+		const isMobile = breakpoints.smaller('mobile')
+
+		const moveButton = computed(() => {
+			return (isMobile.value)
+				? ''
+				: `transform: translate(${elementX.value - 25}px, ${elementY.value - 25}px)`
+		})
 
 		// TODO: add Scrubber & poster
 		// https://github.com/vueuse/vueuse/blob/main/packages/core/useMediaControls/demo.vue
@@ -52,7 +69,8 @@ export default {
 			elementX ,
 			elementY,
 			isOutside,
-			moveButton
+			moveButton,
+			isMobile
 		}
 	},
 }
@@ -83,6 +101,13 @@ export default {
 		svg{
 			width:100%;
 			height:100%;
+		}
+
+		&.mobile{
+			top:auto;
+			bottom:0;
+			border-radius: 0;
+			cursor: pointer;
 		}
 	}
 }
