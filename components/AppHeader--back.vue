@@ -1,9 +1,11 @@
 <template>
 	<header class="app-header">
-		<h1 class="header__title">Take — me — to — the — internet</h1>
-		<h2 class="header__subtitle title--h1">Teaching portal <span>of Manuel Ehrenfeld</span></h2>
-		<nuxt-link class="info title--h1" to="/manuel-ehrenfeld">About</nuxt-link>
-		<ColorButton />
+			<h1 class="header__title">Take me to the internet <br> Teaching portal of Manuel Ehrenfeld</h1>
+			</h1>
+			<nav class="header__navigation">
+				<nuxt-link class="info" to="/manuel-ehrenfeld">Info</nuxt-link>
+				<ColorButton />
+			</nav>
 
 	</header>
 </template>
@@ -16,28 +18,22 @@
 
 <style lang="postcss">
 .app-header{
-	position: relative;
-	display: grid;
-	grid-template-columns: 6fr 3fr 3fr;
+
+	display: flex;
 	align-items: baseline;
 	padding:  var(--app-margin-small);
-
 	.header__title{
 		margin-bottom: 0;
-		padding-right: 16px;
 	}
-
-	.header__subtitle span{
-		white-space: nowrap;
-		padding-right: 16px;
+	.header__navigation{
+		margin-left: auto;
+		display:flex;
+		/* flex-direction: column; */
+		align-items: center;
+		> *{
+			margin-left: 16px;
+		}
 	}
-
-	.color-button{
-		position: absolute;
-		right:var(--app-margin-small);
-		top:var(--app-margin-mini);
-	}
-
 }
 
 @media (max-width: 1024px) {

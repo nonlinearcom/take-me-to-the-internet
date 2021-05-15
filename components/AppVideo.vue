@@ -1,7 +1,7 @@
 <template>
 	<div class="video_wrapper">
-		<AppVideoControls
-			:control-is-active="controlIsActive"
+		<VideoControls
+			:is-visible="controlIsActive"
 			:is-playing="isPlaying"
 			:is-dark="item.dark"
 			:mouse-coord="mouseCoord"

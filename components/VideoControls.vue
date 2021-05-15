@@ -1,12 +1,21 @@
 <template>
-	<cursor-icon
+	<!-- <cursor-icon
 		v-if="$device.isMobile || controlIsActive"
 		class="cursor"
 		alt="cursor"
 		:is-playing="isPlaying"
 		:class="{ mobile: $device.isMobile, dark: isDark }"
 		:style="transformCursor"
+	/> -->
+	<svg-icon v-if="isVisible" name="play"
+		class="cursor"
+		alt="cursor"
+		:is-playing="isPlaying"
+		:class="{ mobile: $device.isMobile, dark: isDark }"
+		:style="transformCursor"
 	/>
+
+
 </template>
 
 <script>
@@ -20,7 +29,7 @@ export default {
 			type: Boolean,
 			default: false,
 		},
-		controlIsActive: {
+		isVisible: {
 			type: Boolean,
 			default: false,
 		},

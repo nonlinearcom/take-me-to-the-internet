@@ -93,7 +93,8 @@ export default {
 		'@nuxt/image',
 		'@nuxtjs/eslint-module',
 		'@nuxtjs/composition-api/module',
-		'@nuxtjs/color-mode'
+		'@nuxtjs/color-mode',
+		'@nuxtjs/svg-sprite',
 	],
 
 	modules: [
@@ -156,12 +157,6 @@ export default {
 					grid: false,
 				},
 			},
-		},
-
-		babel:{
-			plugins: [
-			  ['@babel/plugin-proposal-private-methods', { loose: true }]
-			]
 		},
 
 		/*

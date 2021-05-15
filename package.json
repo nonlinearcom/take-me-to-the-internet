@@ -27,6 +27,7 @@
 		"@nuxtjs/composition-api": "^0.23.1",
 		"@nuxtjs/eslint-config": "^6.0.0",
 		"@nuxtjs/eslint-module": "^3.0.2",
+		"@nuxtjs/svg-sprite": "^0.5.2",
 		"babel-eslint": "^10.0.1",
 		"eslint": "^7.24.0",
 		"eslint-config-prettier": "^8.1.0",
