@@ -1,3 +1,5 @@
-<svg id="play" width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-	<path d="M22 18.5877C22 17.0212 23.7192 16.0628 25.0516 16.8865L74.3166 47.3412C75.5643 48.1125 75.5848 49.9199 74.355 50.7193L25.09 82.7415C23.7595 83.6063 22 82.6515 22 81.0646V18.5877Z" fill="currentColor"/>
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" id="play" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
+<path fill="currentColor" d="M26,18.6c0-1.6,1.7-2.5,3.1-1.7l49.3,30.5c1.2,0.8,1.3,2.6,0,3.4l-49.3,32c-1.3,0.9-3.1-0.1-3.1-1.7V18.6z"/>
 </svg>

@@ -54,6 +54,13 @@ h2.title--h2, h3.itle--h2{
 	margin-bottom: 0;
 }
 
+button{
+	padding: 0;
+	border: none;
+	background: none;
+}
+
+
 
 /* Functional */
 .responsive {

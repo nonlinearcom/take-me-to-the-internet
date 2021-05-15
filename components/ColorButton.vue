@@ -14,9 +14,7 @@ export default {
 </script>
 <style lang="postcss">
 .color-button{
-	padding: 0;
-	border: none;
-	background: none;
+
 	/* width:50px;
 	height: 50px; */
 	/* border-radius: 50%; */

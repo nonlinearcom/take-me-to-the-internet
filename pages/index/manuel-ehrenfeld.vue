@@ -20,8 +20,7 @@
 				<h3>{{ page.assistant }}</h3> -->
 			</aside>
 		</header>
-		<AppGallery v-if="page.gallery" :gallery="page.gallery" />
-		<AppVideoGallery v-if="page.videos" :videos="page.videos" />
+		<PanelGallery v-if="page.gallery" :gallery="page.gallery" />
 
 		<div v-if="page.partecipants" class="partecipants">
 			<h3>Partecipants</h3>
