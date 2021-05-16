@@ -100,7 +100,7 @@ export default {
 	modules: [
 		'@nuxt/content',
 		'nuxt-webfontloader',
-		'@nuxtjs/device',
+		// '@nuxtjs/device',
 	],
 	image: {
 		sizes: [420, 768, 1024, 1200, 2048],

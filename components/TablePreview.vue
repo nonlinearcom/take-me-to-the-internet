@@ -1,7 +1,7 @@
 <template>
 	<section class="table-preview">
 		<AppPreview
-			v-if="$device.isDesktop"
+			v-if="isLaptop && previewCover !== null"
 			:is-active="!isOutside && previewIsActive"
 			:cover="previewCover"
 			:x-pos="xPos"
@@ -19,8 +19,10 @@
 
 <script>
 
-import { ref, reactive, computed } from '@vue/composition-api'
+import { ref } from '@vue/composition-api'
 import useFollowMe from '~/composables/useFollowMe'
+import{ useMyBreakpoints } from '~/composables/useMyBreakpoints'
+
 export default {
 	props: {
 		tableData: {
@@ -33,9 +35,10 @@ export default {
 		// we need to pass the table $ref as target
 		// https://markus.oberlehner.net/blog/refs-and-the-vue-3-composition-api/
 		const table = ref(null)
-
+		const { isLaptop } = useMyBreakpoints()
 		return {
 			table,
+			isLaptop,
 			...useFollowMe(table)
 		}
 	},

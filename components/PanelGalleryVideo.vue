@@ -4,9 +4,9 @@
 		<video ref="video" class="responsive" />
 
 		<button
-			v-if="!isOutside || isMobile"
+			v-if="!isOutside || isTablet"
 			class="followCursor"
-			:class="{'mobile' : isMobile}"
+			:class="{'mobile' : isTablet}"
 			:style="moveButton"
 			@click="isPlaying = !isPlaying"
 		>
@@ -15,12 +15,14 @@
 		</button>
 
 		<!-- <span>{{ currentTime }} / {{ duration }}</span> -->
+		<!-- <span>{{isTablet}}</span> -->
 	</div>
 </template>
 
 <script>
 import { ref, computed } from '@vue/composition-api'
-import { useMediaControls, useMouseInElement, useBreakpoints } from '@vueuse/core'
+import { useMediaControls, useMouseInElement } from '@vueuse/core'
+import{ useMyBreakpoints } from '~/composables/useMyBreakpoints'
 
 export default {
 	props: {
@@ -34,19 +36,10 @@ export default {
 		const video = ref()
 		const videoSrc = computed(() => 'https://res.cloudinary.com/non-linear/video/upload/v1/' + props.item.media)
 
-		const breakpoints = useBreakpoints({
-			mobile: 768,
-			// tablet: 1024,
-			// laptop: 1200,
-			// desktop: 1280,
-			// desktopL: 1440,
-			// desktopXL: 1600,
-		})
-
-		const isMobile = breakpoints.smaller('mobile')
+		const { isTablet } = useMyBreakpoints()
 
 		const moveButton = computed(() => {
-			return (isMobile.value)
+			return (isTablet.value)
 				? ''
 				: `transform: translate(${elementX.value - 25}px, ${elementY.value - 25}px)`
 		})
@@ -70,7 +63,7 @@ export default {
 			elementY,
 			isOutside,
 			moveButton,
-			isMobile
+			isTablet
 		}
 	},
 }
