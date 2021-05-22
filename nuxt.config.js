@@ -8,7 +8,7 @@ export default {
 		htmlAttrs: {
 			lang: 'en',
 		},
-		title: process.env.npm_package_name || '',
+		title: process.env.npm_package_name || 'Take me to the internet',
 		meta: [
 			{ charset: 'utf-8' },
 			{
@@ -19,7 +19,6 @@ export default {
 				hid: 'description',
 				name: 'description',
 				content:
-					process.env.npm_package_description ||
 					'Teaching portal of Manuel Ehrenfeld, designer & developer based in Geneva.',
 			},
 			{ name: 'robots', content: 'index, follow' },
@@ -39,13 +38,13 @@ export default {
 			{
 				hid: 'og:title',
 				property: 'og:title',
-				content:
-					'Take me to the internet | Teaching portal of Manuel Ehrenfeld',
+				content: 'Take me to the internet',
 			},
 			{
 				hid: 'og:description',
 				property: 'og:description',
-				content: process.env.npm_package_description || '',
+				content:
+					'Teaching portal of Manuel Ehrenfeld, designer & developer based in Geneva.',
 			},
 
 			// twitter
@@ -59,13 +58,13 @@ export default {
 			{
 				hid: 'twitter:title',
 				name: 'twitter:title',
-				content:
-					'Take me to the internet | Teaching portal of Manuel Ehrenfeld',
+				content: 'Take me to the internet',
 			},
 			{
 				hid: 'twitter:description',
 				name: 'twitter:description',
-				content: process.env.npm_package_description || '',
+				content:
+					'Teaching portal of Manuel Ehrenfeld, designer & developer based in Geneva.',
 			},
 		],
 		link: [{ rel: 'icon', type: 'image/png', href: '/favicon.png' }],
