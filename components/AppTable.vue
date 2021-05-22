@@ -88,7 +88,7 @@ table {
 		}
 		&:focus {
 			background-color: var(--bg-hover);
-
+			border: none;
 			outline: none;
 		}
 		td {

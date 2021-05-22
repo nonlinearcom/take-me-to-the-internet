@@ -104,7 +104,7 @@ export default {
 	webfontloader: {
 		webfontloader: {
 			google: {
-				families: ['Inter:200,400,700&display=swap'],
+				families: ['Inter:400&display=swap'],
 			},
 		},
 	},
