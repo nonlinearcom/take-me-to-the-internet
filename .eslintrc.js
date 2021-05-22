@@ -9,18 +9,15 @@ module.exports = {
 	},
 	extends: [
 		'@nuxtjs',
+		'plugin:prettier/recommended',
 		'plugin:nuxt/recommended',
-		// 'plugin:prettier/recommended',
-		'prettier',
 	],
-	plugins: ['prettier'],
+	plugins: [],
 	// add your custom rules here
 	rules: {
-		endOfLine: 0,
-		semi: [2, 'never'],
 		'no-console': 'off',
-		'no-unused-vars': 'off',
-		'no-unexpected-multiline': 'error',
+		// 'no-unused-vars': 'off',
+		// 'no-unexpected-multiline': 'error',
 		'no-irregular-whitespace': [
 			'error',
 			{

@@ -114,7 +114,7 @@ export default {
 	// cloudinary: {
 	// 	cloudName: 	process.env.CLOUDINARY_NAME,  // 'non-linear',
 	// 	api_key: 	process.env.CLOUDINARY_API_KEY, // '331859946444422'
-  	// 	api_secret: process.env.CLOUDINARY_API_SECRET // 'MmCfq0eIphktvVU6K3LpEctdP-0'
+	// 	api_secret: process.env.CLOUDINARY_API_SECRET // 'MmCfq0eIphktvVU6K3LpEctdP-0'
 	// },
 	webfontloader: {
 		webfontloader: {
@@ -143,18 +143,21 @@ export default {
 			},
 		},
 		postcss: {
-			// parser: require('postcss-comment'),
-			plugins: {
-				'postcss-import': {},
-				'postcss-url': {},
-				'postcss-nested': {},
-			},
-			preset: {
-				stage: 0,
-				importFrom: './assets/css/variables.css',
-				autoprefixer: {
-					// TODO: check fixes for warnings when grid: true,
-					grid: false,
+			postcss: {
+				parser: 'postcss-scss',
+				plugins: {},
+				preset: {
+					features: {
+						'nesting-rules': true,
+						'custom-media-queries': true,
+					},
+					importFrom: [
+						'./assets/css/variables.css',
+						// './assets/css/breakpoints.css',
+					],
+					autoprefixer: {
+						grid: true,
+					},
 				},
 			},
 		},
