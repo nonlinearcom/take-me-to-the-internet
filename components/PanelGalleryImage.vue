@@ -5,10 +5,11 @@
 		@mouseenter="showCaption = true"
 		@mouseleave="showCaption = false"
 	>
-		 <nuxt-picture
-		 	class="responsive"
+		<nuxt-picture
+			class="responsive"
 			provider="cloudinary"
 			:src="item.media"
+			:alt="item.alt"
 		/>
 
 		<transition name="fade">
@@ -28,18 +29,13 @@ export default {
 	data() {
 		return {
 			showCaption: false,
-			lqip: 20,
-			small: 480,
-			medium: 960,
-			large: 1600,
 			inView: false,
 		}
 	},
 	methods: {
-		visibilityChanged(isVisible, entry) {
-			this.inView = isVisible
-			// console.log(isVisible, entry)
-		},
+		// visibilityChanged(isVisible, entry) {
+		// 	this.inView = isVisible
+		// },
 	},
 }
 </script>
@@ -55,7 +51,7 @@ figure {
 	}
 
 	picture {
-		width: 100%!important;
+		width: 100% !important;
 		height: auto;
 		overflow: hidden;
 
@@ -76,12 +72,10 @@ figure {
 		bottom: 0; */
 		border-radius: 20px;
 
-
-
 		font-size: var(--text-mini);
 
 		color: var(--color);
-		background:rgba(var(--bg-rgb), 0.8);
+		background: rgba(var(--bg-rgb), 0.8);
 		padding: 0 10px;
 	}
 }

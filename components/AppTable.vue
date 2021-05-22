@@ -1,17 +1,25 @@
 <template>
 	<table>
-		<tbody>
+		<tbody role="presentation">
 			<tr
-				v-for="item, index in tableData"
+				v-for="(item, index) in tableData"
 				:key="item.createdAt"
 				:class="{ offline: item.offline }"
+				tabindex="0"
+				role="row"
+				:aria-disabled="item.offline"
 				@click="goToPanel(item.slug)"
 				@mouseover="getCover(item.cover)"
 			>
-				<td class="year" :class="{ visible: dateCheck(item.year, index) }">{{ item.year }}</td>
+				<td
+					class="year"
+					:class="{ visible: dateCheck(item.year, index) }"
+				>
+					{{ item.year }}
+				</td>
 				<td class="type">{{ item.type }}</td>
 				<td class="title">
-					<h3 v-if="item.offline">{{item.title}}</h3>
+					<h3 v-if="item.offline">{{ item.title }}</h3>
 					<nuxt-link v-else :to="`/${item.slug}`">{{
 						item.title
 					}}</nuxt-link>
@@ -78,6 +86,9 @@ table {
 			pointer-events: none;
 			color: #888;
 		}
+		&:focus {
+			/* background-color: red; */
+		}
 		td {
 			font-size: var(--text-small);
 			font-weight: 400;
@@ -102,7 +113,7 @@ table {
 				opacity: 1;
 			}
 
-			h3{
+			h3 {
 				margin-bottom: 0;
 			}
 		}

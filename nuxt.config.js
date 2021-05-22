@@ -18,7 +18,9 @@ export default {
 			{
 				hid: 'description',
 				name: 'description',
-				content: process.env.npm_package_description || '',
+				content:
+					process.env.npm_package_description ||
+					'Teaching portal of Manuel Ehrenfeld, designer & developer based in Geneva.',
 			},
 			{ name: 'robots', content: 'index, follow' },
 			// facebook
@@ -66,27 +68,14 @@ export default {
 				content: process.env.npm_package_description || '',
 			},
 		],
-		link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+		link: [{ rel: 'icon', type: 'image/png', href: '/favicon.png' }],
 	},
-	/*
-	 ** Customize the progress-bar color
-	 */
+
 	loading: { color: '#fff' },
-	/*
-	 ** Global CSS
-	 */
-	css: [
-		'assets/css/variables.css',
-		'assets/css/global.css',
-		// 'plyr/dist/plyr.css',
-	],
-	/*
-	 ** Plugins to load before mounting the App
-	 */
-	plugins: [
-		'~/plugins/vue-observe-visibility.client.js',
-		// '~/plugins/plyr.client.js'
-	],
+
+	css: ['assets/css/variables.css', 'assets/css/global.css'],
+
+	plugins: ['~/plugins/vue-observe-visibility.client.js'],
 
 	buildModules: [
 		'@nuxt/postcss8',
@@ -97,11 +86,8 @@ export default {
 		'@nuxtjs/svg-sprite',
 	],
 
-	modules: [
-		'@nuxt/content',
-		'nuxt-webfontloader',
-		// '@nuxtjs/device',
-	],
+	modules: ['@nuxt/content', 'nuxt-webfontloader'],
+
 	image: {
 		sizes: [420, 768, 1024, 1200, 2048],
 		// intersectOptions: {
@@ -124,12 +110,24 @@ export default {
 		},
 	},
 
-	/*
-	 ** Build configuration
-	 */
 	build: {
+		postcss: {
+			plugins: {
+				'postcss-nested': {},
+			},
+			preset: {
+				features: {
+					'custom-media-queries': true,
+				},
+				importFrom: ['./assets/css/variables.css'],
+				autoprefixer: {
+					grid: true,
+				},
+			},
+		},
+
 		analyze: false,
-		extractCSS: false,
+		extractCSS: true,
 		optimization: {
 			splitChunks: {
 				cacheGroups: {
@@ -142,29 +140,7 @@ export default {
 				},
 			},
 		},
-		postcss: {
-			postcss: {
-				parser: 'postcss-scss',
-				plugins: {},
-				preset: {
-					features: {
-						'nesting-rules': true,
-						'custom-media-queries': true,
-					},
-					importFrom: [
-						'./assets/css/variables.css',
-						// './assets/css/breakpoints.css',
-					],
-					autoprefixer: {
-						grid: true,
-					},
-				},
-			},
-		},
 
-		/*
-		 ** You can extend webpack config here
-		 */
 		extend(config, ctx) {},
 	},
 }

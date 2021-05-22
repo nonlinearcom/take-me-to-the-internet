@@ -36,14 +36,14 @@ partecipants:
   - Matteo Yon
 gallery:
   - media: take-me-to-the-internet/post-screen/2020/img_1
-    alt: Iulm 2020
+    alt: Alternative publishing practices with Are.na
     caption: Ex Chiesa San Carpoforo
   - media: take-me-to-the-internet/post-screen/2020/img_4
-    alt: Iulm 2020
+    alt: Alternative publishing practices with Are.na
   - media: take-me-to-the-internet/post-screen/2020/img_2
-    alt: Iulm 2020
+    alt: Alternative publishing practices with Are.na
   - media: take-me-to-the-internet/post-screen/2020/img_3
-	  alt: Iulm 2020
+    alt: Alternative publishing practices with Are.na
 ---
 
 The workshop gives an introduction to web design practices connected to the digital platform Are.na and to Jamstack architectures. The course will consider plural and networked curatorial practices through contemporary forms of engagement such as the feed and the stack.
