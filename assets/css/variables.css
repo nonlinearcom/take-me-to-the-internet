@@ -30,6 +30,7 @@
 
 	--bg: #ffffff;
 	--bg-rgb: 255,255,255; /*#ffffff; */
+	--bg-hover:#f5f5f5;
 
 	--border-color: #dddddd;
 }
@@ -42,6 +43,7 @@
 
 	--bg: #222222;
 	--bg-rgb: 34,34,34; /*#222222; */
+	--bg-hover:#1a1a1a;
 
 	--border-color: #333333;
 }

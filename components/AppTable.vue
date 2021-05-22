@@ -42,7 +42,7 @@ export default {
 	},
 	methods: {
 		goToPanel(slug) {
-			this.$router.push({ path: slug })
+			this.$router.push({ path: `/${slug}` })
 		},
 		getCover(cover) {
 			this.$emit('getCurrentCover', cover)
@@ -87,7 +87,9 @@ table {
 			color: #888;
 		}
 		&:focus {
-			/* background-color: red; */
+			background-color: var(--bg-hover);
+
+			outline: none;
 		}
 		td {
 			font-size: var(--text-small);
@@ -97,12 +99,6 @@ table {
 			line-height: 1.4;
 			padding: 8px 16px;
 			border-top: 1px solid var(--border-color);
-			&:first-child {
-				padding-left: 0;
-			}
-			&:last-child {
-				padding-right: 0;
-			}
 
 			&.year {
 				border-top: none;
@@ -151,14 +147,15 @@ table {
 			padding: 0;
 		}
 	}
+	table tr td {
+		padding: 8px 0 0 var(--app-margin-mini);
+	}
 	table .year {
 		flex: 0 1 60px;
-		padding-top: 8px;
 	}
 	table .title {
 		border-top: 1px solid var(--border-color);
 		flex-basis: calc(100% - 60px);
-		padding-top: 8px;
 	}
 
 	table .location {

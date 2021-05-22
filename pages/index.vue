@@ -11,9 +11,22 @@
 export default {
 	async asyncData({ app, $content }) {
 		// const page = await $content('index').fetch()
-		const list = await $content('activities',{deep: true})
-			.only(['title', 'slug', 'type', 'role', 'institution', 'location', 'offline', 'cover' , 'dir', 'year', 'path'])
-			.sortBy('year', 'desc').fetch()
+		const list = await $content('activities', { deep: true })
+			.only([
+				'title',
+				'slug',
+				'type',
+				'role',
+				'institution',
+				'location',
+				'offline',
+				'cover',
+				'dir',
+				'year',
+				'path',
+			])
+			.sortBy('year', 'desc')
+			.fetch()
 
 		return { list }
 	},
@@ -21,13 +34,11 @@ export default {
 </script>
 
 <style lang="postcss">
-
-
 article.home {
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
-	padding: var(--app-margin-small);
+	/* padding: var(--app-margin-small); */
 
 	.nuxt-content {
 		margin-bottom: 25vh;
@@ -39,13 +50,13 @@ article.home {
 		z-index: 10;
 	}
 
-	.container{
+	.container {
 		max-width: 50ch;
 	}
 }
 @media (max-width: 540px) {
-	article.home {
+	/* article.home {
 		padding: var(--app-margin-mini);
-	}
+	} */
 }
 </style>
