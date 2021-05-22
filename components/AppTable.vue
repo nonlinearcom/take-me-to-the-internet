@@ -20,9 +20,12 @@
 				<td class="type">{{ item.type }}</td>
 				<td class="title">
 					<h3 v-if="item.offline">{{ item.title }}</h3>
-					<nuxt-link v-else :to="`/${item.slug}`">{{
-						item.title
-					}}</nuxt-link>
+					<nuxt-link
+						v-else
+						class="stretched-link"
+						:to="`/${item.slug}`"
+						>{{ item.title }}</nuxt-link
+					>
 				</td>
 				<td class="role">{{ item.role }}</td>
 				<td class="institution">{{ item.institution }}</td>
@@ -73,8 +76,6 @@ table {
 	border-spacing: 0;
 	width: 100%;
 	tr {
-		/* border-top: 1px solid var(--border-color); */
-
 		&:last-child {
 			border-bottom: 1px solid var(--border-color);
 		}
@@ -108,7 +109,9 @@ table {
 				border-top: 1px solid var(--border-color);
 				opacity: 1;
 			}
-
+			&.title a:focus {
+				background-color: var(--bg-hover);
+			}
 			h3 {
 				margin-bottom: 0;
 			}
