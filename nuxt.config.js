@@ -109,6 +109,10 @@ export default {
 		},
 	},
 
+	colorMode: {
+		preference: 'dark',
+	},
+
 	build: {
 		postcss: {
 			plugins: {
