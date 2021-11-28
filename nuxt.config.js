@@ -1,3 +1,9 @@
+const createSitemapRoutes = async () => {
+	const { $content } = require('@nuxt/content')
+	const posts = await $content({ deep: true }).where({ offline: {$eq: false}}).only(['slug', 'active']).fetch();
+	return posts.map((post)=>(post.path === '/index' ? '/' : post.slug))
+}
+
 export default {
 	target: 'static',
 	components: true,
@@ -85,7 +91,7 @@ export default {
 		'@nuxtjs/svg-sprite',
 	],
 
-	modules: ['@nuxt/content', 'nuxt-webfontloader'],
+	modules: ['@nuxt/content', 'nuxt-webfontloader', '@nuxtjs/sitemap'],
 
 	image: {
 		sizes: [420, 768, 1024, 1200, 2048],
@@ -107,6 +113,12 @@ export default {
 
 	colorMode: {
 		preference: 'dark',
+	},
+
+	sitemap: {
+		hostname: 'https://take-me-to-the-internet.com',
+		gzip:  true,
+		routes: createSitemapRoutes
 	},
 
 	build: {
