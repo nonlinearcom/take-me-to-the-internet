@@ -50,8 +50,6 @@ gallery:
     alt: Iulm 2020
   - media: take-me-to-the-internet/iulm/micri/2020/img_3
     alt: Iulm 2020
-#   - image: take-me-to-the-internet/iulm/2019/doctorate/img_4
-#     alt: Iulm 2019
   - media: take-me-to-the-internet/Iulm/micri/2020/micri2020_mobile
     alt: Iulm 2020
     type: video
