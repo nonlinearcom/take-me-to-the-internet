@@ -1,21 +1,20 @@
 <template>
 	<header class="app-header">
-		<h1 class="header__title">Take — me — to — the — internet</h1>
-		<!-- <h1 class="header__title">TMTTI</h1> -->
+		<h1 class="header__title">
+			<!-- T —— M —— T —— T —— I <br /> -->
+			Take — me — to — the — internet
+			<!-- <br>
+			Visual design and coding fundamentals -->
+		</h1>
 
 		<h2 class="header__subtitle title--h1">
-			Teaching portal <span>of Manuel Ehrenfeld</span>
+			Teaching portal <br>of Manuel Ehrenfeld
 		</h2>
-		<nuxt-link class="info title--h1" to="/manuel-ehrenfeld"
-			>About</nuxt-link
-		>
+		<nuxt-link class="info title--h1" to="/manuel-ehrenfeld">About</nuxt-link>
 		<ColorButton />
 	</header>
 </template>
 
-<script>
-export default {}
-</script>
 
 <style lang="postcss">
 .app-header {

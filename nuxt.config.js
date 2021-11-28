@@ -1,3 +1,9 @@
+const createSitemapRoutes = async () => {
+	const { $content } = require('@nuxt/content')
+	const posts = await $content({ deep: true }).where({ offline: {$eq: false}}).only(['slug', 'active']).fetch();
+	return posts.map((post)=>(post.path === '/index' ? '/' : post.slug))
+}
+
 export default {
 	target: 'static',
 	components: true,
@@ -85,7 +91,7 @@ export default {
 		'@nuxtjs/svg-sprite',
 	],
 
-	modules: ['@nuxt/content', 'nuxt-webfontloader'],
+	modules: ['@nuxt/content', 'nuxt-webfontloader', '@nuxtjs/sitemap'],
 
 	image: {
 		sizes: [420, 768, 1024, 1200, 2048],
@@ -96,11 +102,7 @@ export default {
 			baseURL: 'https://res.cloudinary.com/non-linear/image/upload/',
 		},
 	},
-	// cloudinary: {
-	// 	cloudName: 	process.env.CLOUDINARY_NAME,  // 'non-linear',
-	// 	api_key: 	process.env.CLOUDINARY_API_KEY, // '331859946444422'
-	// 	api_secret: process.env.CLOUDINARY_API_SECRET // 'MmCfq0eIphktvVU6K3LpEctdP-0'
-	// },
+
 	webfontloader: {
 		webfontloader: {
 			google: {
@@ -113,7 +115,14 @@ export default {
 		preference: 'dark',
 	},
 
+	sitemap: {
+		hostname: 'https://take-me-to-the-internet.com',
+		gzip:  true,
+		routes: createSitemapRoutes
+	},
+
 	build: {
+		standalone: true,
 		postcss: {
 			plugins: {
 				'postcss-nested': {},
@@ -143,7 +152,5 @@ export default {
 				},
 			},
 		},
-
-		extend(config, ctx) {},
 	},
 }
