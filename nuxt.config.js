@@ -96,11 +96,7 @@ export default {
 			baseURL: 'https://res.cloudinary.com/non-linear/image/upload/',
 		},
 	},
-	// cloudinary: {
-	// 	cloudName: 	process.env.CLOUDINARY_NAME,  // 'non-linear',
-	// 	api_key: 	process.env.CLOUDINARY_API_KEY, // '331859946444422'
-	// 	api_secret: process.env.CLOUDINARY_API_SECRET // 'MmCfq0eIphktvVU6K3LpEctdP-0'
-	// },
+
 	webfontloader: {
 		webfontloader: {
 			google: {
@@ -114,6 +110,7 @@ export default {
 	},
 
 	build: {
+		standalone: true,
 		postcss: {
 			plugins: {
 				'postcss-nested': {},
@@ -143,7 +140,5 @@ export default {
 				},
 			},
 		},
-
-		extend(config, ctx) {},
 	},
 }

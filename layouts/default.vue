@@ -1,8 +1,27 @@
 <template>
-	<div>
+	<div class="app-container">
 		<AppHeader />
 		<nuxt />
 	</div>
 </template>
 
-<style></style>
+<style>
+.app-container {
+	/* background: radial-gradient(
+			circle at 50% 0,
+			rgba(255, 0, 0, 0.5),
+			rgba(255, 0, 0, 0) 70.71%
+		),
+		radial-gradient(
+			circle at 6.7% 75%,
+			rgba(0, 0, 255, 0.5),
+			rgba(0, 0, 255, 0) 70.71%
+		),
+		radial-gradient(
+				circle at 93.3% 75%,
+				rgba(0, 255, 0, 0.5),
+				rgba(0, 255, 0, 0) 70.71%
+			)
+			beige; */
+}
+</style>
