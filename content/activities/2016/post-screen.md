@@ -1,6 +1,6 @@
 ---
-title: Post-screen 2020 vvvv workshop
-subtitle:
+title: vvvv workshop
+subtitle: Introduction to creative coding
 shortTile:
 slug: post-screen-workshop-2016
 
@@ -11,7 +11,19 @@ institution: Post-screen festival
 location: Milan
 
 assistant:
-offline: true
+offline: false
+
+gallery:
+  - media: take-me-to-the-internet/post-screen/2016/img_2
+    alt: vvvv workshop
+  - media: take-me-to-the-internet/post-screen/2016/img_3
+    alt: vvvv workshop
+  - media: take-me-to-the-internet/post-screen/2016/img_4
+    alt: vvvv workshop
+  - media: take-me-to-the-internet/post-screen/2016/img_5
+    alt: vvvv workshop
+  - media: take-me-to-the-internet/post-screen/2016/img_1
+    alt: vvvv workshop
 ---
 
-##  Computer Graphics page
+The first two days of Post-screen festival were dedicated to a series of creative coding workshops. Participants had a glance on interaction design concepts and created real-time graphics through the visual programming software vvvv.
