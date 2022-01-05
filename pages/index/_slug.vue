@@ -1,42 +1,47 @@
 <template>
-	<article class="panel">
-		<nuxt-link class="close text-mini" to="/">CLOSE</nuxt-link>
-		<header>
-			<div class="full">
-				<h2 v-if="page.title" class="header-title">
-					{{ page.title }}
-					<template v-if="page.subtitle"><br>{{ page.subtitle }}</template>
-				</h2>
-			</div>
-			<div class="description">
-				<nuxt-content :document="page" />
-			</div>
-			<aside v-if="page.role" class="meta">
-				<h3>{{ page.department }}</h3>
-				<h3>{{ page.institution }}</h3>
-				<h3>{{ page.location }}, {{ page.year }}</h3>
-				<h3>{{ page.type }}</h3>
-				<!-- <h3>{{ page.role }}</h3>
-				<h3>{{ page.assistant }}</h3> -->
-			</aside>
-		</header>
-		<PanelGallery v-if="page.gallery" :gallery="page.gallery" />
+	<transition name="panel" appear>
+		<div class="panel__overlay" @click.self="closeModal()">
+			<article class="panel">
+				<nuxt-link class="close text-mini" to="/">
+					<svg-icon name="arrow-left" aria-hidden="true" />
+					BACK
+				</nuxt-link>
+				<header>
+					<h2 v-if="page.title" class="header-title full">
+						{{ page.title }}
+						<template v-if="page.subtitle"><br>{{ page.subtitle }}</template>
+					</h2>
+					<div class="description">
+						<nuxt-content :document="page" />
+					</div>
+					<aside v-if="page.role" class="meta">
+						<h3>{{ page.department }}</h3>
+						<h3>{{ page.institution }}</h3>
+						<h3>{{ page.location }}, {{ page.year }}</h3>
+						<h3>{{ page.type }}</h3>
+						<!-- <h3>{{ page.role }}</h3>
+						<h3>{{ page.assistant }}</h3> -->
+					</aside>
+				</header>
+				<PanelGallery v-if="page.gallery" :gallery="page.gallery" />
 
-		<div v-if="page.partecipants" class="partecipants">
-			<h3>Partecipants</h3>
-			<ul>
-				<li v-for="partecipant in page.partecipants" :key="partecipant">
-					{{ partecipant }}
-				</li>
-			</ul>
+				<div v-if="page.partecipants" class="partecipants">
+					<h3>Partecipants</h3>
+					<ul>
+						<li v-for="partecipant in page.partecipants" :key="partecipant">
+							{{ partecipant }}
+						</li>
+					</ul>
+				</div>
+			</article>
 		</div>
-	</article>
+	</transition>
 </template>
 
 <script>
 export default {
 	layout: 'panel',
-	transition: 'page',
+	transition: 'modal',
 	async asyncData({ params, $content, error }) {
 		let page
 		try {
@@ -106,10 +111,30 @@ export default {
 	},
 	destroyed () {
 		 this.isPanelOpen = false
+	},
+	methods: {
+		closeModal() {
+			this.$router.push({
+				path: '/'
+			})
+		}
 	}
 }
 </script>
 <style lang="postcss">
+
+.panel__overlay{
+	position: fixed;
+ 	z-index: 10;
+  	top: 0;
+  	left: 0;
+  	width: 100%;
+  	height: 100%;
+  	background-color: rgba(var(--bg-rgb), .4);
+	overflow: hidden;
+	cursor: pointer;
+}
+
 .panel {
 	position: fixed;
 	top: 0;
@@ -124,20 +149,34 @@ export default {
 	overflow-y: auto;
 	overflow-x: hidden;
 	z-index: 20;
+	cursor: default;
 
 	/* https://alligator.io/css/transition-box-shadows/ */
 	box-shadow: 0 0px 40px rgba(0, 0, 0, 0.3);
 
+	pointer-events: all;
+
 	a.close {
-		display: block;
 		position: absolute;
-		top: 18px;
-		right: var(--app-margin);
-		font-size: 12px;
-		font-weight: 400;
+		display: flex;
+		align-items: center;
+		top: 28px;
+		right: var(--app-margin-small);
+		height: 28px;
+		padding-left:4px;
+		padding-right: 12px;
+		font-size: var(--font-size-small);
+		text-transform: uppercase;
 		border: 1px solid var(--color);
-		border-radius: 20px;
-		padding: 0 10px;
+		border-radius: 25px;
+
+		overflow:hidden;
+		.icon{
+			transition: transform 0.5s;
+			width:30px;
+			height: 28px;
+		}
+
 	}
 }
 
@@ -149,6 +188,7 @@ export default {
 	margin: var(--app-margin-small);
 	.full {
 		grid-column: 1 / span 2;
+		padding-right:100px;
 		margin-bottom: 100px;
 
 	}
@@ -166,6 +206,7 @@ export default {
 	}
 
 	aside {
+		margin-bottom: var(--app-margin);
 		h3 {
 			margin-bottom: 0;
 		}
@@ -177,12 +218,12 @@ export default {
 }
 
 .panel .partecipants {
-	margin: calc(var(--app-margin) / 2);
+	margin: var(--app-margin)  calc(var(--app-margin) / 2);
 	ul {
 		padding: 0;
 		font-size: var(--text-small);
 		font-weight: 400;
-		column-width: 400px;
+		column-width: 300px;
 
 		li {
 			margin: 0;
@@ -190,17 +231,15 @@ export default {
 		}
 	}
 }
-// Page transitions
-.page-enter-active,
-.page-leave-active {
-	transition: transform 0.5s ease-out;
-}
 
-.page-enter,
-.page-leave-to {
-	/* opacity: 0; */
-	transform: translateX(100%);
-}
+
+
+
+
+
+
+
+
 
 @media (max-width: 1440px) {
 	.panel {
@@ -227,8 +266,13 @@ export default {
 }
 
 @media (max-width: 540px) {
-	.panel header {
-		margin: var(--app-margin-mini);
+	.panel {
+		header {
+			margin: var(--app-margin-mini);
+		}
+		.partecipants {
+			column-width: 200px;
+		}
 	}
 }
 </style>

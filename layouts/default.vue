@@ -3,7 +3,7 @@
 </template>
 
 <style>
-	/*
+
 .app-container {
  background: radial-gradient(
 			circle at 50% 0,
@@ -22,5 +22,5 @@
 			)
 			beige;
 }
-*/
+
 </style>

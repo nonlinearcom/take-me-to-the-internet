@@ -4,7 +4,7 @@
 			<!-- Take — me — to — the — internet -->
 			<!-- <br>
 			Visual design and coding fundamentals -->
-			<span>Take</span><span>me</span><span>to</span><span>the</span><span>internet</span>
+			<span>TAKE</span><span>ME</span><span>TO</span><span>THE</span><span>INTERNET</span>
 
 		</h1>
 
@@ -91,7 +91,6 @@ export default {
 	}
 
 	.expand{
-		line-height: 1.5;
 
 		display: flex;
 		align-items: center;

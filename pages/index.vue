@@ -1,5 +1,5 @@
 <template>
-	<article class="intro">
+	<article class="intro ">
 		<HomeHeader @expand="expand()"/>
 		<HomeInfo :info="info" :expanded="expanded"/>
 		<HomeTable :table-data="list" />
