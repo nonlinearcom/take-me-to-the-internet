@@ -42,7 +42,7 @@ export default {
 .home-header {
 	display: grid;
 	grid-template-columns: 50% 1fr 1fr 50px;
-	align-items: baseline;
+	align-items: flex-start;
 	padding: var(--app-margin-small);
 
 			position: relative;
@@ -58,7 +58,7 @@ export default {
 	}
 
 	.expand{
-
+		line-height: 1.5;
 
 		display: flex;
 		align-items: center;
@@ -113,11 +113,11 @@ export default {
 
 @media (max-width: 768px) {
 	.home-header {
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: 3fr auto 40px;
 		padding: var(--app-margin-mini);
 
 		.header__title {
-			grid-column: 1 / span 2;
+			grid-column: 1 / span 3;
 			grid-row: 1;
 			/* line-height: 50px; */
 			margin-bottom: 25px;
@@ -127,13 +127,10 @@ export default {
 			grid-column: 1;
 			margin-bottom: 25px;
 		}
-		.info {
-			grid-column: 1;
-			grid-row: 4;
-		}
+
 		.color-button {
-			grid-column: 2;
-			grid-row: 1;
+			grid-column: 3;
+			grid-row: 2;
 			transform: translate(8px,-6px);
 		}
 	}
