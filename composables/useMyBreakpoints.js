@@ -1,4 +1,3 @@
-import { ref } from '@nuxtjs/composition-api'
 import { useBreakpoints } from '@vueuse/core'
 
 const breakpoints = useBreakpoints({

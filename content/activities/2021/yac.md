@@ -49,7 +49,6 @@ partecipants:
 - Ilaria Iacconi Iambrenghi
 
 
-
 ---
 
 After engaging in discussions over the current state of the internet and the post-digital condition, we learned how to collectively craft a digital publication.

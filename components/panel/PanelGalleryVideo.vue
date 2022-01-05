@@ -48,7 +48,7 @@ export default {
 		// https://github.com/vueuse/vueuse/blob/main/packages/core/useMediaControls/demo.vue
 		// poster: 'https://bitmovin.com/wp-content/uploads/2016/06/sintel-poster.jpg',
 
-		const { playing, currentTime, duration } = useMediaControls(video, {
+		const { playing } = useMediaControls(video, {
 			src: videoSrc,
 		})
 

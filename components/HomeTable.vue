@@ -1,5 +1,5 @@
 <template>
-	<section class="table-preview">
+	<section class="home-table">
 		<AppPreview
 			v-if="isLaptop && previewCover !== null"
 			:is-active="!isOutside && previewIsActive"
@@ -59,7 +59,7 @@ export default {
 </script>
 
 <style lang="postcss">
-.table-preview {
-	margin-top: 200px;
+.home-table {
+	margin-top: 25vh;
 }
 </style>

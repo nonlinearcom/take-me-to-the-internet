@@ -1,7 +1,7 @@
 <template>
 	<button
-		width="50"
-		height="50"
+		width="40"
+		height="28"
 		class="color-button"
 		:class="$colorMode.preference"
 		aria-label="color mode button"
@@ -23,8 +23,16 @@ export default {
 </script>
 <style lang="postcss">
 .color-button {
+	height: 40px;
+	width: 40px;
+	transform: translateY(-6px);
 	cursor: pointer;
 	transition: background-color 0.2s;
 	color: var(--color);
+
+	svg{
+		height:100%;
+		width:100%;
+	}
 }
 </style>

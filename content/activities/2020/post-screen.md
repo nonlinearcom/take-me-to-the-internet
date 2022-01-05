@@ -47,7 +47,3 @@ gallery:
 ---
 
 The workshop gives an introduction to web design practices connected to the digital platform Are.na and to Jamstack architectures. The course will consider plural and networked curatorial practices through contemporary forms of engagement such as the feed and the stack.
-
-Resources
-
-[Github Repo](https://github.com/nonlinearcom/arena-mag)

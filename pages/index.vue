@@ -1,16 +1,15 @@
 <template>
-	<div>
-		<article class="home">
-			<TablePreview :table-data="list" />
-		</article>
+	<article class="intro">
+		<HomeHeader @expand="expand()"/>
+		<HomeInfo :info="info" :expanded="expanded"/>
+		<HomeTable :table-data="list" />
 		<NuxtChild />
-	</div>
+	</article>
 </template>
 
 <script>
 export default {
 	async asyncData({ app, $content }) {
-		// const page = await $content('index').fetch()
 		const list = await $content('activities', { deep: true })
 			.only([
 				'title',
@@ -28,35 +27,43 @@ export default {
 			.sortBy('year', 'desc')
 			.fetch()
 
-		return { list }
+		const info = await $content('', 'info').fetch()
+
+		return { list, info }
+	},
+	data() {
+		return {
+			expanded: false
+		}
+	},
+	methods: {
+		expand() {
+			console.log('expand')
+			this.expanded = !this.expanded
+		}
 	},
 }
 </script>
 
 <style lang="postcss">
-article.home {
+
+.bio{
+	padding-left: 50%;
+	padding-right: var(--app-margin-small);
+
+	p{
+		max-width: 44ch;
+	}
+}
+
+
+article.intro {
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
-	/* padding: var(--app-margin-small); */
 
-	.nuxt-content {
-		margin-bottom: 25vh;
-	}
-	.info {
-		position: absolute;
-		top: var(--app-margin);
-		right: var(--app-margin);
-		z-index: 10;
-	}
-
-	.container {
-		max-width: 50ch;
-	}
 }
 @media (max-width: 540px) {
-	/* article.home {
-		padding: var(--app-margin-mini);
-	} */
+
 }
 </style>
