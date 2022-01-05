@@ -1,9 +1,11 @@
 <template>
 	<header class="home-header">
 		<h1 class="header__title">
-			Take — me — to — the — internet
+			<!-- Take — me — to — the — internet -->
 			<!-- <br>
 			Visual design and coding fundamentals -->
+			<span>Take</span><span>me</span><span>to</span><span>the</span><span>internet</span>
+
 		</h1>
 
 		<h2 class="header__subtitle title--h1" @click="toogleInfo()">
@@ -41,15 +43,46 @@ export default {
 <style lang="postcss">
 .home-header {
 	display: grid;
-	grid-template-columns: 50% 1fr 1fr 50px;
+	grid-template-columns: 50% 1fr 1fr 40px;
+	gap: 32px;
 	align-items: flex-start;
 	padding: var(--app-margin-small);
 
-			position: relative;
 
 	.header__title {
 		margin-bottom: 0;
-		padding-right: 16px;
+
+		/* dynamic logo */
+		position: relative;
+		display:flex;
+		justify-content: space-between;
+		margin-right:50px;
+
+		span{
+			padding: 0 8px;
+			transition: background-color 0.3s;
+			background-color: var(--bg);
+			z-index:2;
+
+			&:first-child{
+				padding-left:0;
+			}
+
+			&:last-child{
+				padding-right:0;
+			}
+		}
+		&:after{
+			content:'';
+			z-index:1;
+			position: absolute;
+			display: block;
+			height: 2px;
+			top:50%;
+			right:2px;
+			left:2px;
+			background-color: var(--color);
+		}
 	}
 
 	.header__subtitle{
@@ -93,8 +126,8 @@ export default {
 
 @media (max-width: 1024px) {
 	.home-header {
-		grid-template-columns: 50% 1fr auto 50px;
-
+		grid-template-columns: 50% 1fr auto 40px;
+		gap:20px;
 		.header__title,
 		.header__subtitle,
 		.info {
@@ -111,7 +144,7 @@ export default {
 	}
 }
 
-@media (max-width: 768px) {
+@media (max-width:768px) {
 	.home-header {
 		grid-template-columns: 3fr auto 40px;
 		padding: var(--app-margin-mini);
@@ -119,7 +152,7 @@ export default {
 		.header__title {
 			grid-column: 1 / span 3;
 			grid-row: 1;
-			/* line-height: 50px; */
+			margin-right:0;
 			margin-bottom: 25px;
 		}
 		.header__subtitle {

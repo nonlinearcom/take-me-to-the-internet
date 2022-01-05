@@ -27,7 +27,7 @@
 
 .header-info {
 
-	padding-left: 50%;
+	padding-left: calc(50% + 30px);
 	padding-right: var(--app-margin);
 
 	.nuxt-content {
@@ -35,11 +35,15 @@
 		padding-top: var(--app-margin);
 	}
 }
-
+@media (max-width: 1024px) {
+	.header-info {
+		padding-left: calc(50% + 20px);
+	}
+}
 @media (max-width: 768px) {
 	.header-info {
 
-		padding:var(--app-margin);
+		padding:var(--app-margin-mini);
 
 		.nuxt-content {
 			max-width: auto;
