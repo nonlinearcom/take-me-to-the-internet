@@ -121,6 +121,20 @@ export default {
 		routes: createSitemapRoutes
 	},
 
+	// this is working
+	// https://github.com/nuxt/content/issues/398
+
+	// content: {
+	// 	markdown: {
+	// 		remarkExternalLinks: {
+	// 			content: {
+	// 			  type: "element",
+	// 			  tagName: "icon-external-link",
+	// 			},
+	// 		},
+	// 	},
+    // },
+
 	build: {
 		standalone: true,
 		postcss: {
