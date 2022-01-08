@@ -15,7 +15,7 @@
 	"dependencies": {
 		"@nuxt/content": "^1.15.1",
 		"@nuxtjs/sitemap": "^2.4.0",
-		"@vueuse/core": "^7.1.2",
+		"@vueuse/core": "^7.5.3",
 		"nuxt": "^2.15.4",
 		"nuxt-webfontloader": "^1.1.0",
 		"vue-observe-visibility": "^1.0.0"

@@ -12,7 +12,7 @@ location: Remote
 assistant: TA Francesco Luzzana
 
 offline: false
-cover: 'take-me-to-the-internet/brera/computer-graphics/2020/vvvv_control_lerp'
+cover: 'take-me-to-the-internet/brera/computer-graphics/2021/mouse_interaction'
 gallery:
     - media: take-me-to-the-internet/brera/computer-graphics/2021/mouse_interaction.mp4
       type: video

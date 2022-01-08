@@ -1,6 +1,6 @@
 ---
 title: Visual design and coding fundamentals
-subtitle:
+subtitle: (remote)
 shortTile:
 slug: visual-design-coding-fundamentals-MICRI-2021
 
