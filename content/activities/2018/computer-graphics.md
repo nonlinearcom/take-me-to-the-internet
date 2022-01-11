@@ -11,6 +11,7 @@ institution: Brera Academy
 location: Milan
 
 assistant: TA Francesco luzzana
+cover:
 offline: true
 ---
 

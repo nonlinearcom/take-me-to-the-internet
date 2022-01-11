@@ -10,7 +10,7 @@ role: Professor
 institution: Brera Academy
 location: Milan
 
-
+cover:
 offline: true
 ---
 

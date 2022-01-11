@@ -1,10 +1,10 @@
 <template>
 	<transition name="fade">
 		<nuxt-img
-			v-show="isActive"
+			v-show="showPreview"
 			provider="cloudinary"
 			class="previewCover"
-			:src="preview"
+			:src="cover"
 			alt="alt"
 			:style="{ transform: translatePosition }"
 		/>
@@ -22,8 +22,8 @@ export default {
 			default: false,
 		},
 		cover: {
-			type: String,
-			default: 'test1',
+			type: [String, Object],
+			default: '',
 		},
 		offset:{
 			type: Number,
@@ -41,8 +41,8 @@ export default {
 	},
 
 	computed: {
-		preview() {
-			return `${this.cover}`
+		showPreview() {
+			return !!(this.isActive && this.cover !== null)
 		},
 		translatePosition(){
 			return`translate(${this.xPos}px, ${this.yPos - 130}px)`

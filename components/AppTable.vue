@@ -8,8 +8,8 @@
 				tabindex="0"
 				role="row"
 				:aria-disabled="item.offline"
-				@click="goToPanel(item.slug)"
-				@mouseover="getCover(item.cover)"
+				@click="goToPanel(item)"
+				@mouseover="$emit('showCover', item.cover)"
 			>
 				<td
 					class="year"
@@ -44,12 +44,12 @@ export default {
 		},
 	},
 	methods: {
-		goToPanel(slug) {
-			this.$router.push({ path: `/${slug}` })
+		goToPanel(item) {
+			if(item.offline)
+				return
+			this.$router.push({ path: `/${item.slug}` })
 		},
-		getCover(cover) {
-			this.$emit('getCurrentCover', cover)
-		},
+
 		getYear(index) {
 			return this.tableData[index].year
 		},
@@ -75,16 +75,16 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 	width: 100%;
+	cursor: pointer;
 	tr {
 		&:last-child {
 			border-bottom: 1px solid var(--border-color);
 		}
 		&:hover {
-			cursor: pointer;
+			/* cursor: pointer; */
 		}
 		&.offline {
-			cursor: deafult;
-			pointer-events: none;
+			cursor: default;
 			color: #888;
 		}
 		&:focus {

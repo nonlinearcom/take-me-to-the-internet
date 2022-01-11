@@ -1,18 +1,16 @@
 <template>
 	<section class="home-table">
 		<AppPreview
-			v-if="isLaptop && previewCover !== null"
-			:is-active="!isOutside && previewIsActive"
-			:cover="previewCover"
+			v-if="isLaptop"
+			:is-active="!isOutside"
+			:cover="currentCover"
 			:x-pos="xPos"
 			:y-pos="yPos"
 		/>
 		<AppTable
 			ref="table"
 			:table-data="tableData"
-			@getCurrentCover="setPreviewCover($event)"
-			@mouseenter.native="previewIsActive = true"
-			@mouseleave.native="previewIsActive = false"
+			@showCover="getCoverUrl($event)"
 		/>
 	</section>
 </template>
@@ -45,14 +43,13 @@ export default {
 
 	data() {
 		return {
-			previewIsActive: false,
-			previewCover: null,
+			currentCover: null,
 		}
 	},
 
 	methods: {
-		setPreviewCover(coverName) {
-			this.previewCover = coverName
+		getCoverUrl(url) {
+			this.currentCover = url
 		},
 	},
 }

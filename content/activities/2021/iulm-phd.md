@@ -12,7 +12,7 @@ department: Visual and Media Studies research doctorate
 location: Remote
 
 offline: true
-cover: 'take-me-to-the-internet/test1'
+cover:
 ---
 
 During this workshop we will focus on contemporary forms of interaction design for online publications. Working from an expanded definition of magazines, we will consider plural and networked strategies through digital forms of engagement such as the feed and the concept of multi-player authorship.

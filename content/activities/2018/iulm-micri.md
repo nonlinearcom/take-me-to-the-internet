@@ -10,7 +10,7 @@ role: Lecturer
 institution: IULM university
 location: Milan
 
-
+cover:
 offline: true
 ---
 
