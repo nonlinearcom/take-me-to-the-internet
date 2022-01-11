@@ -163,6 +163,7 @@ export default {
 		top: 28px;
 		right: var(--app-margin-small);
 		height: 28px;
+		max-height:28px;
 		padding-left:4px;
 		padding-right: 12px;
 		font-size: var(--font-size-small);

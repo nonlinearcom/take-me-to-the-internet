@@ -1,14 +1,11 @@
 <template>
-	<transition name="fade">
 		<nuxt-img
-			v-show="showPreview"
 			provider="cloudinary"
 			class="previewCover"
 			:src="cover"
-			alt="alt"
+			alt="Take me to the internet"
 			:style="{ transform: translatePosition }"
 		/>
-	</transition>
 </template>
 
 <script>
@@ -17,13 +14,9 @@
 
 export default {
 	props: {
-		isActive: {
-			type: Boolean,
-			default: false,
-		},
 		cover: {
-			type: [String, Object],
-			default: '',
+			type: String,
+			default: null,
 		},
 		offset:{
 			type: Number,
@@ -41,9 +34,6 @@ export default {
 	},
 
 	computed: {
-		showPreview() {
-			return !!(this.isActive && this.cover !== null)
-		},
 		translatePosition(){
 			return`translate(${this.xPos}px, ${this.yPos - 130}px)`
 		},
@@ -60,6 +50,5 @@ export default {
 	/* height: auto; */
 	z-index: 5;
 	pointer-events: none;
-	margin-top: ;
 }
 </style>
