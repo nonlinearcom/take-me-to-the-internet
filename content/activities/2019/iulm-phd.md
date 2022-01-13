@@ -2,7 +2,7 @@
 title: Visual design and coding fundamentals
 subtitle:
 shortTile:
-slug: visual-design-coding-fundamentals-PHD-2019
+slug: visual-design-coding-fundamentals-phd-2019
 
 type: Workshop
 year: 2019
