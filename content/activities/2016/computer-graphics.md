@@ -11,8 +11,22 @@ institution: Brera Academy
 location: Milan
 
 assistant: TA Iulia Radu, Nicolò Cervello
-cover:
-offline: true
+offline: false
+cover: take-me-to-the-internet/brera/computer-graphics/2016/1p
+gallery:
+  - media: take-me-to-the-internet/brera/computer-graphics/2016/1p
+    alt: Computer Graphics 2016
+  - media: take-me-to-the-internet/brera/computer-graphics/2016/5p
+    alt: Computer Graphics 2016
+  - media: take-me-to-the-internet/brera/computer-graphics/2016/2p
+    alt: Computer Graphics 2016
+  - media: take-me-to-the-internet/brera/computer-graphics/2016/p30
+    alt: Computer Graphics 2016
+  - media: take-me-to-the-internet/brera/computer-graphics/2016/IMG_7989
+    alt: Computer Graphics 2016
+
+
 ---
 
-##  Computer Graphics page
+The course aims to introduce bachelor students to software programming in the context of the visual arts. By incorporating essential creative coding strategies, students will develop the skills and confidence necessary to produce interactive systems with particular attention to the poetics of technologically-based art.
+
