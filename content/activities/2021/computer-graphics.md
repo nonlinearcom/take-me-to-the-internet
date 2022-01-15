@@ -9,7 +9,7 @@ year: 2021
 role: Professor
 institution: Brera Academy
 location: Remote
-assistant: TA Francesco Luzzana
+assistant: Francesco Luzzana
 
 offline: false
 cover: 'take-me-to-the-internet/brera/computer-graphics/2021/mouse_interaction'

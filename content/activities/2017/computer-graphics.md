@@ -11,7 +11,7 @@ role: Professor
 institution: Brera Academy
 location: Milan
 
-assistant: TA Iulia Radu, Nicolò Cervello
+assistant: Iulia Radu, Nicolò Cervello
 cover:
 offline: true
 ---

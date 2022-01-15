@@ -7,7 +7,7 @@ slug: digital-storytelling-2019
 type: Workshop
 year: 2019
 role: Lecturer
-institution: IULM university
+institution: IULM University
 location: Milan
 
 cover:

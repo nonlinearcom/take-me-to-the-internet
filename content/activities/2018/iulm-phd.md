@@ -7,8 +7,8 @@ slug: visual-design-coding-fundamentals-phd-2018
 type: Workshop
 year: 2018
 role: Lecturer
-institution: IULM university
-department: Visual and Media Studies research doctorate
+institution: IULM University
+department: Visual and Media Studies Research Doctorate
 location: Milan
 
 offline: false

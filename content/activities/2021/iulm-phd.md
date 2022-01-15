@@ -7,8 +7,8 @@ slug: visual-design-coding-fundamentals-visual-media-studies-phd-IULM-2021
 type: Workshop
 year: 2021
 role: Lecturer
-institution: IULM university
-department: Visual and Media Studies research doctorate
+institution: IULM University
+department: Visual and Media Studies Research Doctorate
 location: Remote
 
 offline: true

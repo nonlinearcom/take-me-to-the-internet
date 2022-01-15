@@ -7,10 +7,10 @@ slug: visual-design-coding-fundamentals-MICRI-2020
 type: Course
 year: 2020
 role: Lecturer
-institution: IULM university
+institution: IULM University
 department: Master’s Degree in Communication for International Relations
 location: Milan
-assistant: TA Francesco Luzzana
+assistant: Francesco Luzzana
 
 offline: false
 cover: 'take-me-to-the-internet/iulm/micri/2020/img_1'

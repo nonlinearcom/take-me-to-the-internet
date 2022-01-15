@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<section>
 		<template v-for="item in gallery">
 			<PanelGalleryVideo
 				v-if="item.type == 'video'"
@@ -8,7 +8,7 @@
 			/>
 			<PanelGalleryImage v-else :key="item.media" :item="item" />
 		</template>
-	</div>
+	</section>
 </template>
 
 <script>

@@ -7,7 +7,7 @@ slug: visual-design-coding-fundamentals-PHD-2017
 type: Workshop
 year: 2017
 role: Lecturer
-institution: IULM university
+institution: IULM University
 location: Milan
 
 cover:

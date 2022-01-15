@@ -7,7 +7,7 @@ slug: visual-design-coding-fundamentals-MICRI-2019
 type: Course
 year: 2019
 role: Lecturer
-institution: IULM university
+institution: IULM University
 location: Milan
 
 cover:

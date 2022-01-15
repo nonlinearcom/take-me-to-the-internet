@@ -17,22 +17,28 @@
 					<aside v-if="page.role" class="meta">
 						<h3>{{ page.department }}</h3>
 						<h3>{{ page.institution }}</h3>
-						<h3>{{ page.location }}, {{ page.year }}</h3>
 						<h3>{{ page.type }}</h3>
-						<!-- <h3>{{ page.role }}</h3>
-						<h3>{{ page.assistant }}</h3> -->
+						<h3>{{ page.location }}, {{ page.year }}</h3>
+
+						<!-- <h3>{{ page.role }}</h3> -->
+						<template v-if="page.assistant">
+							<h3><br>Teaching assistant <br>{{ page.assistant }}</h3>
+						</template>
+
 					</aside>
 				</header>
+
 				<PanelGallery v-if="page.gallery" :gallery="page.gallery" />
 
-				<div v-if="page.partecipants" class="partecipants">
+
+				<section v-if="page.partecipants" class="partecipants">
 					<h3>Partecipants</h3>
 					<ul>
 						<li v-for="partecipant in page.partecipants" :key="partecipant">
 							{{ partecipant }}
 						</li>
 					</ul>
-				</div>
+				</section>
 			</article>
 		</div>
 	</transition>
