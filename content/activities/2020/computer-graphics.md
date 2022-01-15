@@ -9,7 +9,7 @@ year: 2020
 role: Professor
 institution: Brera Academy
 location: Milan
-assistant: T.A. Francesco Luzzana
+assistant: Francesco Luzzana
 
 offline: false
 cover: 'take-me-to-the-internet/brera/computer-graphics/2020/vvvv_control_lerp'
