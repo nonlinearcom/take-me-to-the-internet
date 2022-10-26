@@ -80,7 +80,7 @@ export default {
 			{
 				hid: 'umami',
 				'data-website-id':'c7c20644-536c-4ba9-9a75-4b49ec150576',
-				src: 'https://umami-production-def7.up.railway.app/umami.js',
+				src: 'https://umami-production-def7.up.railway.app/uma.js',
 				defer: true,
 			},
 		]
