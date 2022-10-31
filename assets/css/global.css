@@ -107,7 +107,7 @@ button{
 
 
 
- /* panel + overlay nested transitions !!! */
+ /* panel + overlay nested transitions ! */
 .modal-enter-active{
 	transition: opacity 0.5s ease-out 0s;
 

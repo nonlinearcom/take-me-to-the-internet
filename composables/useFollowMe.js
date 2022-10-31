@@ -1,7 +1,3 @@
-import { reactive, toRefs, computed, watch } from '@vue/composition-api'
-import { useMouseInElement, useRafFn } from '@vueuse/core'
-
-
 export default function useFollowMe(el) {
 	// const el = ref(null)
 	const { elementX, elementY, isOutside } = useMouseInElement(el)
@@ -16,11 +12,6 @@ export default function useFollowMe(el) {
 
 
 	function updatePosition(){
-		// from demo = 0.000001234
-		// state.xPos += state.dX / 10
-		// state.yPos += state.dY / 10
-
-		// optimization
 		state.xPos += Math.floor(state.dX / 10)
 		state.yPos += Math.floor(state.dY / 10)
 	}

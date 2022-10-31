@@ -2,7 +2,7 @@
 	<section class="header-info">
 
 		<TransitionExpand>
-			<nuxt-content v-if="expanded" :document="info" />
+			<ContentRenderer class="nuxt-content" v-if="expanded" :value="info" />
 		</TransitionExpand>
 
 	</section>

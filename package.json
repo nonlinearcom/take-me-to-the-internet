@@ -1,39 +1,24 @@
 {
-	"name": "take-me-to-the-internet",
-	"version": "1.0.0",
-	"description": "Take me to the internet | teaching portal of manuel ehrenfeld",
-	"author": "Non-linear",
-	"private": true,
-	"scripts": {
-		"dev": "nuxt",
-		"build": "nuxt build",
-		"start": "nuxt start",
-		"generate": "nuxt generate",
-		"lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
-		"lintfix": "eslint --fix --ext .js,.vue --ignore-path .gitignore ."
-	},
-	"dependencies": {
-		"@nuxt/content": "^1.15.1",
-		"@nuxtjs/sitemap": "^2.4.0",
-		"@vueuse/core": "^7.5.3",
-		"nuxt": "^2.15.4",
-		"nuxt-webfontloader": "^1.1.0",
-		"vue-observe-visibility": "^1.0.0"
-	},
-	"devDependencies": {
-		"@babel/eslint-parser": "^7.14.7",
-		"@nuxt/image": "^0.6.0",
-		"@nuxt/postcss8": "^1.1.3",
-		"@nuxtjs/color-mode": "^2.0.5",
-		"@nuxtjs/composition-api": "^0.31.0",
-		"@nuxtjs/eslint-config": "^6.0.1",
-		"@nuxtjs/eslint-module": "^3.0.2",
-		"@nuxtjs/svg-sprite": "^0.5.2",
-		"eslint": "^7.29.0",
-		"eslint-config-prettier": "^8.3.0",
-		"eslint-plugin-nuxt": "^2.0.0",
-		"eslint-plugin-vue": "^7.12.1",
-		"postcss-nested": "^5.0.5",
-		"prettier": "^2.3.2"
-	}
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@nuxt/content": "^2.2.1",
+    "@nuxt/image-edge": "^1.0.0-27769790.4b27db3",
+    "@nuxtjs/color-mode": "^3.1.8",
+    "@vueuse/core": "^9.4.0",
+    "@vueuse/nuxt": "^9.4.0",
+    "nuxt": "3.0.0-rc.12",
+    "postcss-nested": "^6.0.0",
+    "sitemap": "^7.1.1"
+  },
+  "dependencies": {
+    "nuxt-umami": "^1.1.0",
+    "vite-svg-loader": "^3.6.0"
+  }
 }
