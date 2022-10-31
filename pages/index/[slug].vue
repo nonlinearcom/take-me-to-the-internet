@@ -3,16 +3,16 @@
 		<div class="panel__overlay" @click.self="closeModal()">
 			<article class="panel">
 				<nuxt-link class="close text-mini" to="/">
-					<svg-icon name="arrow-left" aria-hidden="true" />
+					<AppIcon name="arrow-left" aria-hidden="true" />
 					BACK
 				</nuxt-link>
 				<header>
 					<h2 v-if="page.title" class="header-title full">
 						{{ page.title }}
-						<template v-if="page.subtitle"><br>{{ page.subtitle }}</template>
+						<template v-if="page.subtitle"><br />{{ page.subtitle }}</template>
 					</h2>
 					<div class="description">
-						<nuxt-content :document="page" />
+						<ContentRenderer  :value="page" />
 					</div>
 					<aside v-if="page.role" class="meta">
 						<h3>{{ page.department }}</h3>
@@ -20,16 +20,13 @@
 						<h3>{{ page.type }}</h3>
 						<h3>{{ page.location }}, {{ page.year }}</h3>
 
-						<!-- <h3>{{ page.role }}</h3> -->
 						<template v-if="page.assistant">
-							<h3><br>Teaching assistant <br>{{ page.assistant }}</h3>
+							<h3><br />Teaching assistant <br />{{ page.assistant }}</h3>
 						</template>
-
 					</aside>
 				</header>
 
 				<PanelGallery v-if="page.gallery" :gallery="page.gallery" />
-
 
 				<section v-if="page.partecipants" class="partecipants">
 					<h3>Partecipants</h3>
@@ -44,99 +41,47 @@
 	</transition>
 </template>
 
-<script>
-export default {
-	layout: 'panel',
-	transition: 'modal',
-	async asyncData({ params, $content, error }) {
-		let page
-		try {
-			// default slug
-			// page = await $content('activities', params.slug).fetch()
+<script setup>
+definePageMeta({
+	pageTransition: { name: 'modal' }
+})
+const { path } = useRoute()
+const router = useRouter()
+const isPanelOpen = ref(false)
 
-			// custom slug
-			page = await $content('activities', { deep: true })
-				.where({ slug: params.slug })
-				.fetch()
-		} catch (e) {
-			return error({ statusCode: 404, message: 'Page not found' })
-		}
-		return { page: page[0] }
-	},
-	data() {
-		return {
-			isPanelOpen: false
-		}
-	},
-	head() {
-		return {
-			bodyAttrs: {
-          		class: this.isPanelOpen ? 'panel-opened' : ''
-        	},
-			title: `${this.page.title}`,
-			meta: [
-				{
-					hid: 'og:title',
-					name: 'og:title',
-					content: this.page.title,
-				},
-				{
-					hid: 'og:description',
-					name: 'og:description',
-					content: `${this.page.subtitle}, ${this.page.departement}, ${this.page.institution}, ${this.page.year}`,
-				},
-				{
-					hid: 'og:image',
-					name: 'og:image',
-					// content: this.$cloudinary.image.url(this.page.cover),
-					// content: `https://res.cloudinary.com/non-linear/image/upload/${this.page.cover}`,
-					content: `https://res.cloudinary.com/non-linear/image/upload/f_auto,q_auto/v1/${this.page.cover}`,
-				},
-				{
-					hid: 'twitter:title',
-					name: 'twitter:title',
-					content: this.page.title,
-				},
-				{
-					hid: 'twitter:description',
-					name: 'twitter:description',
-					content: `${this.page.subtitle}, ${this.page.departement}, ${this.page.institution}, ${this.page.year}`,
-				},
-				{
-					hid: 'twitter:image',
-					name: 'twitter:image',
-					// content: this.$cloudinary.image.url(this.page.cover),
-					content: `https://res.cloudinary.com/non-linear/image/upload/f_auto,q_auto/v1/${this.page.cover}`,
-				},
-			],
-		}
-	},
-	beforeMount () {
-		//  $body.style.overflow = 'hidden'
-		 this.isPanelOpen = true
-	},
-	destroyed () {
-		 this.isPanelOpen = false
-	},
-	methods: {
-		closeModal() {
-			this.$router.push({
-				path: '/'
-			})
-		}
-	}
+const { data: page } = await useAsyncData(`content-${path}`, () => {
+	return queryContent()
+		.where({ slug: path.substring(1) })
+		.findOne()
+})
+
+function closeModal() {
+	router.back()
 }
-</script>
-<style lang="postcss">
 
-.panel__overlay{
+onBeforeMount(() => {
+	isPanelOpen.value = true
+})
+onUnmounted(() => {
+	isPanelOpen.value = false
+})
+
+useHead({
+	bodyAttrs: {
+		class: isPanelOpen ? 'panel-opened' : ''
+	},
+})
+</script>
+
+<style lang="postcss">
+.panel__overlay {
 	position: fixed;
- 	z-index: 10;
-  	top: 0;
-  	left: 0;
-  	width: 100%;
-  	height: 100%;
-  	background-color: rgba(var(--bg-rgb), .4);
+	z-index: 10;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(var(--bg-rgb), 0.4);
 	overflow: hidden;
 	cursor: pointer;
 }
@@ -169,21 +114,21 @@ export default {
 		top: 28px;
 		right: var(--app-margin-small);
 		height: 28px;
-		max-height:28px;
-		padding-left:4px;
+		max-height: 28px;
+		padding-left: 4px;
 		padding-right: 12px;
 		font-size: var(--font-size-small);
 		text-transform: uppercase;
 		border: 1px solid var(--color);
 		border-radius: 25px;
 
-		overflow:hidden;
-		.icon{
+		overflow: hidden;
+
+		.icon {
 			transition: transform 0.5s;
-			width:30px;
+			width: 30px;
 			height: 28px;
 		}
-
 	}
 }
 
@@ -193,17 +138,19 @@ export default {
 	grid-gap: calc(var(--app-margin) / 2);
 
 	margin: var(--app-margin-small);
+
 	.full {
 		grid-column: 1 / span 2;
-		padding-right:100px;
+		padding-right: 100px;
 		margin-bottom: 100px;
-
 	}
-	.header-title{
+
+	.header-title {
 		font-size: var(--title);
 		line-height: var(--title-height);
 	}
-	.description{
+
+	.description {
 		grid-column: 1 / span 1;
 	}
 
@@ -214,6 +161,7 @@ export default {
 
 	aside {
 		margin-bottom: var(--app-margin);
+
 		h3 {
 			margin-bottom: 0;
 		}
@@ -225,7 +173,8 @@ export default {
 }
 
 .panel .partecipants {
-	margin: var(--app-margin)  calc(var(--app-margin) / 2);
+	margin: var(--app-margin) calc(var(--app-margin) / 2);
+
 	ul {
 		padding: 0;
 		font-size: var(--text-small);
@@ -239,32 +188,25 @@ export default {
 	}
 }
 
-
-
-
-
-
-
-
-
-
 @media (max-width: 1440px) {
 	.panel {
 		width: 66.66%;
 	}
 }
 
-
 @media (max-width: 1024px) {
 	.panel {
 		width: 100%;
 		box-shadow: none;
+
 		header {
 			display: flex;
 			flex-direction: column;
+
 			.meta {
 				order: 1;
 			}
+
 			.description {
 				order: 2;
 			}
@@ -277,6 +219,7 @@ export default {
 		header {
 			margin: var(--app-margin-mini);
 		}
+
 		.partecipants {
 			column-width: 200px;
 		}

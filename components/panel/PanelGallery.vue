@@ -1,12 +1,11 @@
 <template>
 	<section>
-		<template v-for="item in gallery">
+		<template v-for="item in gallery" :key="item.media">
 			<PanelGalleryVideo
 				v-if="item.type == 'video'"
-				:key="item.media"
 				:item="item"
 			/>
-			<PanelGalleryImage v-else :key="item.media" :item="item" />
+			<PanelGalleryImage v-else  :item="item" />
 		</template>
 	</section>
 </template>
@@ -21,5 +20,3 @@ export default {
 	},
 }
 </script>
-
-<style lang="postcss"></style>

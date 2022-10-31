@@ -1,5 +1,3 @@
-import { useBreakpoints } from '@vueuse/core'
-
 const breakpoints = useBreakpoints({
 	mobile: 768,
 	tablet: 1024,
@@ -32,16 +30,3 @@ export function useMyBreakpoints() {
 		isDesktopXL,
 	}
 }
-
-
-
-// 	// template debug utility
-// 	<div>
-// 		<div>mobile: {{ mobile }}</div>
-// 		<div>tablet: {{ tablet }}</div>
-// 		<div>laptop: {{ laptop }}</div>
-// 		<div>desktop: {{ desktop }}</div>
-// 		<div>desktopL: {{ desktopL }}</div>
-// 		<div>desktopXL: {{ desktopXL }}</div>
-// 	</div>
-// 	*/

@@ -2,47 +2,39 @@
 	<article class="intro ">
 		<HomeHeader @expand="expand()"/>
 		<HomeInfo :info="info" :expanded="expanded"/>
-		<HomeTable :table-data="list" />
-		<NuxtChild />
+		<HomeTable :table-data="activities" />
+		<NuxtPage />
 	</article>
 </template>
 
-<script>
-export default {
-	async asyncData({ app, $content }) {
-		const list = await $content('activities', { deep: true })
-			.only([
-				'title',
-				'slug',
-				'type',
-				'role',
-				'institution',
-				'location',
-				'offline',
-				'cover',
-				'dir',
-				'year',
-				'path',
-			])
-			.sortBy('year', 'desc')
-			.fetch()
+<script setup>
+	definePageMeta({
+		keepalive: true
+	})
 
-		const info = await $content('', 'info').fetch()
+	const { data: info }  = await useAsyncData(() => queryContent('info').findOne())
+	const { data: activities } = await useAsyncData('activities', () => queryContent('activities').only([
+		'title',
+		'slug',
+		'type',
+		'role',
+		'institution',
+		'location',
+		'offline',
+		'cover',
+		'dir',
+		'year',
+		'path',
+	])
+		.sort({ title: 1 })
+		.sort({ year: -1 })
+		.find())
 
-		return { list, info }
-	},
-	data() {
-		return {
-			expanded: false
-		}
-	},
-	methods: {
-		expand() {
-			console.log('expand')
-			this.expanded = !this.expanded
-		}
-	},
-}
+	const expanded = ref(false);
+
+	function expand() {
+		expanded.value = !expanded.value
+	}
 </script>
 
 <style lang="postcss">

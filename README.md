@@ -1,22 +1,42 @@
-# sodecos
+# Nuxt 3 Minimal Starter
 
-> My transcendent Nuxt.js project
+Look at the [nuxt 3 documentation](https://v3.nuxtjs.org) to learn more.
 
-## Build Setup
+## Setup
 
-``` bash
-# install dependencies
-$ npm install
+Make sure to install the dependencies:
 
-# serve with hot reload at localhost:3000
-$ npm run dev
+```bash
+# yarn
+yarn install
 
-# build for production and launch server
-$ npm run build
-$ npm run start
+# npm
+npm install
 
-# generate static project
-$ npm run generate
+# pnpm
+pnpm install --shamefully-hoist
 ```
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+## Development Server
+
+Start the development server on http://localhost:3000
+
+```bash
+npm run dev
+```
+
+## Production
+
+Build the application for production:
+
+```bash
+npm run build
+```
+
+Locally preview production build:
+
+```bash
+npm run preview
+```
+
+Checkout the [deployment documentation](https://v3.nuxtjs.org/guide/deploy/presets) for more information.

@@ -1,11 +1,7 @@
 <template>
 	<header class="home-header">
 		<h1 class="header__title">
-			<!-- Take — me — to — the — internet -->
-			<!-- <br>
-			Visual design and coding fundamentals -->
 			<span>TAKE</span><span>ME</span><span>TO</span><span>THE</span><span>INTERNET</span>
-
 		</h1>
 
 		<h2 class="header__subtitle title--h1" @click="toogleInfo()">
@@ -15,7 +11,7 @@
 		<button class="expand"
 			:class="{active : isActive}"
 			@click="toogleInfo()">
-			<svg-icon name="plus" aria-hidden="true" />
+			<AppIcon name="plus" aria-hidden="true"/>
 			info
 		</button>
 

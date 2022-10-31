@@ -20,12 +20,13 @@
 				<td class="type">{{ item.type }}</td>
 				<td class="title">
 					<h3 v-if="item.offline">{{ item.title }}</h3>
-					<nuxt-link
+					<NuxtLink
 						v-else
 						class="stretched-link"
 						:to="`/${item.slug}`"
-						>{{ item.title }}</nuxt-link
 					>
+						{{ item.title }}
+					</NuxtLink>
 				</td>
 				<td class="role">{{ item.role }}</td>
 				<td class="institution">{{ item.institution }}</td>
@@ -35,38 +36,38 @@
 	</table>
 </template>
 
-<script>
-export default {
-	props: {
+<script setup>
+	const router = useRouter()
+
+	const props = defineProps({
 		tableData: {
 			type: Array,
 			default: () => [],
 		},
-	},
-	methods: {
-		goToPanel(item) {
-			if(item.offline)
-				return
-			this.$router.push({ path: `/${item.slug}` })
-		},
+	})
 
-		getYear(index) {
-			return this.tableData[index].year
-		},
-		dateCheck(year, index) {
-			const prevIndex = index - 1
+	function goToPanel(item) {
+		if(item.offline)
+			return
+		router.push({ path: `/${item.slug}`});
+	}
 
-			// display first by default
-			if (prevIndex === -1) {
-				return true
-			}
+	function getYear(index) {
+		return props.tableData[index].year
+	}
+	function dateCheck(year, index) {
+		const prevIndex = index - 1
 
-			if (year === this.getYear(prevIndex)) {
-				return false
-			} else return true
-		},
-	},
-}
+		// display first by default
+		if (prevIndex === -1) {
+			return true
+		}
+
+		if (year === getYear(prevIndex)) {
+			return false
+		} else return true
+	}
+
 </script>
 
 <style lang="postcss">

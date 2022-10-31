@@ -6,6 +6,7 @@
 		@mouseleave="showCaption = false"
 	>
 		<nuxt-picture
+			loading="lazy"
 			class="responsive"
 			provider="cloudinary"
 			:src="item.media"

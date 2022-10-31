@@ -7,7 +7,7 @@
 		aria-label="color mode button"
 		@click="toogleColor()"
 	>
-		<svg-icon name="dark" aria-hidden="true" />
+		<AppIcon name="dark" aria-hidden="true" />
 	</button>
 </template>
 <script>
