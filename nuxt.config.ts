@@ -98,7 +98,7 @@ export default defineNuxtConfig({
 		cache: false,
 		domains: 'take-me-to-the-internet.com',
 		websiteId: 'c7c20644-536c-4ba9-9a75-4b49ec150576',
-		scriptUrl: 'https://umami-production-def7.up.railway.app/uma.js',
+		scriptUrl: 'https://analytics.non-linear.com/uma.js',
 	},
 
 	postcss: {
