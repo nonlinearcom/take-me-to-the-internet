@@ -3,7 +3,7 @@ title: Profile
 description:
 subtitle:
 shortTile:
-slug: manuel-ehrenfeld
+slug:
 
 ---
 
