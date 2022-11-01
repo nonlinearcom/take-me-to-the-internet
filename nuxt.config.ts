@@ -90,7 +90,6 @@ export default defineNuxtConfig({
 		'@nuxtjs/color-mode',
 		'@nuxt/image-edge',
 		'@vueuse/nuxt',
-		'nuxt-umami'
 	],
 	content: {
 		markdown: {}
