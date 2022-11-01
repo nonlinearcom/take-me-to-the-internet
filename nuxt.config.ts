@@ -62,6 +62,15 @@ export default defineNuxtConfig({
 			],
 			link: [
 				{ rel: 'icon', type: 'image/png', href: '/favicon.png' }
+			],
+			script: [
+				{
+					hid: 'umami',
+					'data-website-id':'c7c20644-536c-4ba9-9a75-4b49ec150576',
+					src: 'https://analytics.non-linear.com/uma.js',
+					async: true,
+					defer:true,
+				},
 			]
 		},
 		pageTransition: {
@@ -92,15 +101,6 @@ export default defineNuxtConfig({
 			baseURL: 'https://res.cloudinary.com/non-linear/image/upload/',
 		},
 	},
-	umami: {
-		autoTrack: true,
-		doNotTrack: false,
-		cache: false,
-		domains: 'take-me-to-the-internet.com',
-		websiteId: 'c7c20644-536c-4ba9-9a75-4b49ec150576',
-		scriptUrl: 'https://analytics.non-linear.com/uma.js',
-	},
-
 	postcss: {
 		plugins: {
 			'postcss-nested': {},
