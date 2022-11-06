@@ -11,7 +11,6 @@
 	definePageMeta({
 		keepalive: true
 	})
-
 	const { data: info }  = await useAsyncData(() => queryContent('info').findOne())
 	const { data: activities } = await useAsyncData('activities', () => queryContent('activities').only([
 		'title',
@@ -35,6 +34,9 @@
 	function expand() {
 		expanded.value = !expanded.value
 	}
+useHead({
+	title: 'Teaching portal of Manuel Ehrenfeld',
+})
 </script>
 
 <style lang="postcss">

@@ -1,50 +1,54 @@
 <template>
-	<transition name="panel" appear>
+	<transition name="modal" appear>
 		<div class="panel__overlay" @click.self="closeModal()">
-			<article class="panel">
-				<nuxt-link class="close text-mini" to="/">
-					<AppIcon name="arrow-left" aria-hidden="true" />
-					BACK
-				</nuxt-link>
-				<header>
-					<h2 v-if="page.title" class="header-title full">
-						{{ page.title }}
-						<template v-if="page.subtitle"><br />{{ page.subtitle }}</template>
-					</h2>
-					<div class="description">
-						<ContentRenderer  :value="page" />
-					</div>
-					<aside v-if="page.role" class="meta">
-						<h3>{{ page.department }}</h3>
-						<h3>{{ page.institution }}</h3>
-						<h3>{{ page.type }}</h3>
-						<h3>{{ page.location }}, {{ page.year }}</h3>
+			<!-- <transition name="modal" appear> -->
+				<article class="panel">
+					<nuxt-link class="close text-mini" to="/">
+						<AppIcon name="arrow-left" aria-hidden="true" />
+						BACK
+					</nuxt-link>
+					<header>
+						<h2 v-if="page.title" class="header-title full">
+							{{ page.title }}
+							<template v-if="page.subtitle"><br />{{ page.subtitle }}</template>
+						</h2>
+						<div class="description">
+							<ContentRenderer  :value="page" />
+						</div>
+						<aside v-if="page.role" class="meta">
+							<h3>{{ page.department }}</h3>
+							<h3>{{ page.institution }}</h3>
+							<h3>{{ page.type }}</h3>
+							<h3>{{ page.location }}, {{ page.year }}</h3>
 
-						<template v-if="page.assistant">
-							<h3><br />Teaching assistant <br />{{ page.assistant }}</h3>
-						</template>
-					</aside>
-				</header>
+							<template v-if="page.assistant">
+								<h3><br />Teaching assistant <br />{{ page.assistant }}</h3>
+							</template>
+						</aside>
+					</header>
 
-				<PanelGallery v-if="page.gallery" :gallery="page.gallery" />
+					<PanelGallery v-if="page.gallery" :gallery="page.gallery" />
 
-				<section v-if="page.partecipants" class="partecipants">
-					<h3>Partecipants</h3>
-					<ul>
-						<li v-for="partecipant in page.partecipants" :key="partecipant">
-							{{ partecipant }}
-						</li>
-					</ul>
-				</section>
-			</article>
+					<section v-if="page.partecipants" class="partecipants">
+						<h3>Partecipants</h3>
+						<ul>
+							<li v-for="partecipant in page.partecipants" :key="partecipant">
+								{{ partecipant }}
+							</li>
+						</ul>
+					</section>
+				</article>
+			<!-- </transition> -->
 		</div>
 	</transition>
 </template>
 
 <script setup>
 definePageMeta({
-	pageTransition: { name: 'modal' }
+	pageTransition: { name: 'modal', mode: 'out-in' }
 })
+
+
 const { path } = useRoute()
 const router = useRouter()
 const isPanelOpen = ref(false)
@@ -65,11 +69,17 @@ onBeforeMount(() => {
 onUnmounted(() => {
 	isPanelOpen.value = false
 })
+console.log(page)
 
 useHead({
 	bodyAttrs: {
 		class: isPanelOpen ? 'panel-opened' : ''
 	},
+	title: page.title,
+	meta: [
+		{ name: 'description', content: page.description },
+		{ property: 'og:description', content: page.description },
+	]
 })
 </script>
 
