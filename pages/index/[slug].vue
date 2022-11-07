@@ -1,5 +1,5 @@
 <template>
-	<transition name="modal" appear>
+	<!-- <transition name="modal" appear> -->
 		<div class="panel__overlay" @click.self="closeModal()">
 			<!-- <transition name="modal" appear> -->
 				<article class="panel">
@@ -40,13 +40,13 @@
 				</article>
 			<!-- </transition> -->
 		</div>
-	</transition>
+	<!-- </transition> -->
 </template>
 
 <script setup>
-definePageMeta({
-	pageTransition: { name: 'modal', mode: 'out-in' }
-})
+// definePageMeta({
+// 	pageTransition: { name: 'modal', mode: 'out-in' }
+// })
 
 
 const { path } = useRoute()
@@ -85,9 +85,9 @@ useHead({
 	},
 	title: pageTitle,
 	meta: [
-		{ name: 'description', content: page.value.description },
-		{ property: 'og:description', content: page.value.description },
-		{ property: 'og:image', content: `https://res.cloudinary.com/non-linear/image/upload/f_webp,q_auto,w_1536/${page.value.cover}` },
+		{ name: 'description', content: page.value?.description },
+		{ property: 'og:description', content: page.value?.description },
+		{ property: 'og:image', content: `https://res.cloudinary.com/non-linear/image/upload/f_webp,q_auto,w_1536/${page.value?.cover}` },
 		{ name: 'twitter:card', content: `summary_large_image` }
 	]
 })
