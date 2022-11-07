@@ -72,10 +72,10 @@ onUnmounted(() => {
 
 const pageTitle = computed(() => {
 
-	if (!page.value.subtitle) {
-		return page.value.title
+	if (!page.value?.subtitle) {
+		return page.value?.title
 	} else {
-		return `${page.value.title} ${page.value.subtitle}`
+		return `${page.value?.title} ${page.value?.subtitle}`
 	}
 })
 
