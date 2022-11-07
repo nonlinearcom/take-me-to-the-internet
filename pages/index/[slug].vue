@@ -69,16 +69,26 @@ onBeforeMount(() => {
 onUnmounted(() => {
 	isPanelOpen.value = false
 })
-console.log(page)
+
+const pageTitle = computed(() => {
+
+	if (!page.value.subtitle) {
+		return page.value.title
+	} else {
+		return `${page.value.title} ${page.value.subtitle}`
+	}
+})
 
 useHead({
 	bodyAttrs: {
 		class: isPanelOpen ? 'panel-opened' : ''
 	},
-	title: page.title,
+	title: pageTitle,
 	meta: [
-		{ name: 'description', content: page.description },
-		{ property: 'og:description', content: page.description },
+		{ name: 'description', content: page.value.description },
+		{ property: 'og:description', content: page.value.description },
+		{ property: 'og:image', content: `https://res.cloudinary.com/non-linear/image/upload/f_webp,q_auto,w_1536/${page.value.cover}` },
+		{ name: 'twitter:card', content: `summary_large_image` }
 	]
 })
 </script>

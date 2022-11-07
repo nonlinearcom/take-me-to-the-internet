@@ -35,7 +35,7 @@
 		expanded.value = !expanded.value
 	}
 useHead({
-	title: 'Teaching portal of Manuel Ehrenfeld',
+	title: 'Teaching portal of Manuel Ehrenfeld'
 })
 </script>
 
