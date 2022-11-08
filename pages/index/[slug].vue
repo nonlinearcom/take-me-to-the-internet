@@ -49,13 +49,14 @@
 // })
 
 
-const { path } = useRoute()
+const route = useRoute()
 const router = useRouter()
 const isPanelOpen = ref(false)
 
-const { data: page } = await useAsyncData(`content-${path}`, () => {
+const { data: page } = await useAsyncData(`content-${route.params.slug}`, () => {
+
 	return queryContent()
-		.where({ slug: path.substring(1) })
+		.where({ slug: route.params.slug })
 		.findOne()
 })
 
@@ -70,26 +71,26 @@ onUnmounted(() => {
 	isPanelOpen.value = false
 })
 
-const pageTitle = computed(() => {
+// const pageTitle = computed(() => {
 
-	if (!page.value?.subtitle) {
-		return page.value?.title
-	} else {
-		return `${page.value?.title} ${page.value?.subtitle}`
-	}
-})
+// 	if (!page.value?.subtitle) {
+// 		return page.value?.title
+// 	} else {
+// 		return `${page.value?.title} ${page.value?.subtitle}`
+// 	}
+// })
 
 useHead({
 	bodyAttrs: {
 		class: isPanelOpen ? 'panel-opened' : ''
 	},
-	title: pageTitle,
-	meta: [
-		{ name: 'description', content: page.value?.description },
-		{ property: 'og:description', content: page.value?.description },
-		{ property: 'og:image', content: `https://res.cloudinary.com/non-linear/image/upload/f_webp,q_auto,w_1536/${page.value?.cover}` },
-		{ name: 'twitter:card', content: `summary_large_image` }
-	]
+	// title: pageTitle,
+	// meta: [
+	// 	{ name: 'description', content: page.value?.description },
+	// 	{ property: 'og:description', content: page.value?.description },
+	// 	{ property: 'og:image', content: `https://res.cloudinary.com/non-linear/image/upload/f_webp,q_auto,w_1536/${page.value?.cover}` },
+	// 	{ name: 'twitter:card', content: `summary_large_image` }
+	// ]
 })
 </script>
 
