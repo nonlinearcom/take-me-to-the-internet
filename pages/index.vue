@@ -8,9 +8,9 @@
 </template>
 
 <script setup>
-	definePageMeta({
-		keepalive: true
-	})
+	// definePageMeta({
+	// 	keepalive: true
+	// })
 	const { data: info }  = await useAsyncData(() => queryContent('info').findOne())
 	const { data: activities } = await useAsyncData('activities', () => queryContent('activities').only([
 		'title',
@@ -57,7 +57,30 @@ article.intro {
 	min-height: 100vh;
 
 }
-@media (max-width: 540px) {
 
+/* panel + overlay nested transitions ! */
+.modal-enter-active {
+	transition: opacity 0.5s ease-out 0s;
+
+	.panel {
+		transition: transform 0.5s ease-out;
+	}
+}
+
+.modal-leave-active {
+	transition: opacity 0.2s ease-in;
+
+	.panel {
+		transition: transform 0.2s ease-out;
+	}
+}
+
+.modal-enter,
+.modal-leave-to {
+	opacity: 0;
+
+	.panel {
+		transform: translateX(100%);
+	}
 }
 </style>

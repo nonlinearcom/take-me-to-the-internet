@@ -22,29 +22,5 @@ useHead({
 </script>
 
 <style lang="postcss">
-/* panel + overlay nested transitions ! */
-.modal-enter-active {
-	transition: opacity 0.5s ease-out 0s;
 
-	.panel {
-		transition: transform 0.5s ease-out;
-	}
-}
-
-.modal-leave-active {
-	transition: opacity 0.2s ease-in;
-
-	.panel {
-		transition: transform 0.2s ease-out;
-	}
-}
-
-.modal-enter,
-.modal-leave-to {
-	opacity: 0;
-
-	.panel {
-		transform: translateX(100%);
-	}
-}
 </style>

@@ -1,12 +1,12 @@
 <template>
-	<!-- <transition name="modal" appear> -->
+	<transition name="modal" appear>
 		<div class="panel__overlay" @click.self="closeModal()">
-			<!-- <transition name="modal" appear> -->
+			<transition name="panel" appear>
 				<article class="panel">
-					<nuxt-link class="close text-mini" to="/">
+					<NuxtLink class="close text-mini" to="/">
 						<AppIcon name="arrow-left" aria-hidden="true" />
 						BACK
-					</nuxt-link>
+					</NuxtLink>
 					<header>
 						<h2 v-if="page.title" class="header-title full">
 							{{ page.title }}
@@ -38,9 +38,9 @@
 						</ul>
 					</section>
 				</article>
-			<!-- </transition> -->
+			</transition>
 		</div>
-	<!-- </transition> -->
+	</transition>
 </template>
 
 <script setup>
@@ -60,8 +60,9 @@ const { data: page } = await useAsyncData(`content-${route.params.slug}`, () => 
 		.findOne()
 })
 
-function closeModal() {
+async function closeModal() {
 	router.back()
+	await navigateTo('/')
 }
 
 onBeforeMount(() => {
