@@ -75,7 +75,7 @@ article.intro {
 	}
 }
 
-.modal-enter,
+.modal-enter-from,
 .modal-leave-to {
 	opacity: 0;
 
