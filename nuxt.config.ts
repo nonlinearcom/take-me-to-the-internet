@@ -14,10 +14,10 @@ export default defineNuxtConfig({
 			script: [
 				{
 					hid: 'umami',
-					'data-website-id':'c7c20644-536c-4ba9-9a75-4b49ec150576',
+					'data-website-id': 'c7c20644-536c-4ba9-9a75-4b49ec150576',
 					src: 'https://analytics.non-linear.com/uma.js',
 					async: true,
-					defer:true,
+					defer: true,
 				},
 			]
 		},
@@ -31,27 +31,41 @@ export default defineNuxtConfig({
 		// }
 	},
 
-	nitro: {
-		prerender: {
-			routes: ['/sitemap.xml']
-		}
-	},
+	// nitro: {
+	// 	prerender: {
+	// 		routes: ['/sitemap.xml']
+	// 	}
+	// },
+
 
 	modules: [
 		'@nuxt/content',
 		'@nuxtjs/color-mode',
-		'@nuxt/image-edge',
+		'@nuxt/image',
 		'@vueuse/nuxt',
 	],
+
 	content: {
 		markdown: {}
 	},
+
 	image: {
-		sizes: [420, 768, 1024, 1200, 2048],
 		cloudinary: {
 			baseURL: 'https://res.cloudinary.com/non-linear/image/upload/',
 		},
+		quality: 80,
+		format: ['webp'],
+		screens: {
+			'xs': 320,
+			'sm': 640,
+			'md': 768,
+			'lg': 1024,
+			'xl': 1280,
+			'xxl': 1536,
+			'2xl': 2048
+		},
 	},
+
 	postcss: {
 		plugins: {
 			'postcss-nested': {},
@@ -59,6 +73,7 @@ export default defineNuxtConfig({
 			cssnano: {}
 		}
 	},
+
 	css: [
 		'@/assets/css/fonts.css',
 		'@/assets/css/variables.css',
@@ -69,5 +84,9 @@ export default defineNuxtConfig({
 		plugins: [
 			svgLoader({})
 		]
+	},
+
+	devtools: {
+		enabled: true
 	}
 })
