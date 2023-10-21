@@ -7,7 +7,8 @@ export default defineNuxtConfig({
 		umami: {
 			host: 'https://umami-production-db3b.up.railway.app',
 			id: '51130bf5-f8f9-47d7-8848-6a54f6017518',
-			domains: ['www.take-me-to-the-internet.com','umami-production-db3b.up.railway.app', 'analytics.non-linear.com'],
+			domains: ['www.take-me-to-the-internet.com', 'umami-production-db3b.up.railway.app', 'analytics.non-linear.com'],
+			version:2,
 		},
 	},
 	app: {
