@@ -1,6 +1,15 @@
 import svgLoader from 'vite-svg-loader'
 
 export default defineNuxtConfig({
+
+	extends: ['github:ijkml/nuxt-umami'],
+	appConfig: {
+		umami: {
+			host: 'https://umami-production-db3b.up.railway.app',
+			id: '51130bf5-f8f9-47d7-8848-6a54f6017518',
+			ignoreLocalhost: true,
+		},
+	},
 	app: {
 		head: {
 			htmlAttrs: {
@@ -11,15 +20,15 @@ export default defineNuxtConfig({
 			link: [
 				{ rel: 'icon', type: 'image/png', href: '/favicon.png' }
 			],
-			script: [
-				{
-					hid: 'umami',
-					'data-website-id': 'c7c20644-536c-4ba9-9a75-4b49ec150576',
-					src: 'https://analytics.non-linear.com/uma.js',
-					async: true,
-					defer: true,
-				},
-			]
+			// script: [
+			// 	{
+			// 		hid: 'umami',
+			// 		'data-website-id': 'c7c20644-536c-4ba9-9a75-4b49ec150576',
+			// 		src: 'https://analytics.non-linear.com/uma.js',
+			// 		async: true,
+			// 		defer: true,
+			// 	},
+			// ]
 		},
 		// pageTransition: {
 		// 	name: 'fade',

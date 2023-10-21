@@ -1,5 +1,6 @@
 <template>
 		<nuxt-img
+			loading="lazy"
 			provider="cloudinary"
 			class="previewCover"
 			:src="cover"
