@@ -5259,6 +5259,13 @@ nuxi@^3.9.1:
   optionalDependencies:
     fsevents "~2.3.3"
 
+nuxt-umami@^2.5.5:
+  version "2.5.5"
+  resolved "https://registry.yarnpkg.com/nuxt-umami/-/nuxt-umami-2.5.5.tgz#9028e48ff179b61deea5e200c5ce589318dbe02c"
+  integrity sha512-awB5MEa6Me7eAumUdr2sqtfAjaWAW6JmABKGzJpszw/+cmAfDleoRQxWw4X9Aql2jOxqxa6BQCPRbDKQo+QZSA==
+  dependencies:
+    "@vueuse/core" "^10.5.0"
+
 nuxt@^3.7.4, nuxt@^3.8.0:
   version "3.8.0"
   resolved "https://registry.yarnpkg.com/nuxt/-/nuxt-3.8.0.tgz#e7149ed7a08dea1349881262adc0bd7559783036"
