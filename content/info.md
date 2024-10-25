@@ -15,7 +15,6 @@ In 2016 he started [Post-screen](https://post-screen.com), a platform for contem
 
 Since 2017 he is holding a series of “take-me-to-the-internet” workshops which introduces BA, MA and PhD students to the principles of visual design and coding fundamentals.
 
-
 [email](mailto:me@manuelehrenfeld.info) <br>
 [twitter ↗](https://twitter.com/manuelehrenfeld) <br>
 [are.na ↗](https://www.are.na/manuel-ehrenfeld) <br>

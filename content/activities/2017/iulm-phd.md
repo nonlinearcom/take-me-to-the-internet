@@ -14,4 +14,4 @@ cover:
 offline: true
 ---
 
-##  PHD workshop
+## PHD workshop

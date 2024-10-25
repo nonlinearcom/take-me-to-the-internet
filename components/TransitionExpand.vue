@@ -1,87 +1,87 @@
 <template>
-	<transition
-		name="expand"
-		@enter="enter"
-		@after-enter="afterEnter"
-		@leave="leave"
-	>
-		<slot />
-	</transition>
+  <transition
+    name="expand"
+    @enter="enter"
+    @after-enter="afterEnter"
+    @leave="leave"
+  >
+    <slot />
+  </transition>
 </template>
 
 <script>
 // from https://markus.oberlehner.net/blog/transition-to-height-auto-with-vue/
 export default {
-	name: 'TransitionExpand',
-	methods: {
-		enter(element) {
-			const width = getComputedStyle(element).width
+  name: 'TransitionExpand',
+  methods: {
+    enter(element) {
+      const width = getComputedStyle(element).width
 
-			element.style.width = width
-			element.style.position = 'absolute'
-			element.style.visibility = 'hidden'
-			element.style.height = 'auto'
+      element.style.width = width
+      element.style.position = 'absolute'
+      element.style.visibility = 'hidden'
+      element.style.height = 'auto'
 
-			const height = getComputedStyle(element).height
+      const height = getComputedStyle(element).height
 
-			element.style.width = null
-			element.style.position = null
-			element.style.visibility = null
-			element.style.height = 0
+      element.style.width = null
+      element.style.position = null
+      element.style.visibility = null
+      element.style.height = 0
 
-			// Force repaint to make sure the
-			// animation is triggered correctly.
-			// eslint-disable-next-line no-unused-expressions
-			getComputedStyle(element).height
+      // Force repaint to make sure the
+      // animation is triggered correctly.
 
-			// Trigger the animation.
-			// We use `requestAnimationFrame` because we need
-			// to make sure the browser has finished
-			// painting after setting the `height`
-			// to `0` in the line above.
-			requestAnimationFrame(() => {
-				element.style.height = height
-			})
-		},
-		afterEnter(element) {
-			element.style.height = 'auto'
-		},
-		leave(element) {
-			const height = getComputedStyle(element).height
+      getComputedStyle(element).height
 
-			element.style.height = height
+      // Trigger the animation.
+      // We use `requestAnimationFrame` because we need
+      // to make sure the browser has finished
+      // painting after setting the `height`
+      // to `0` in the line above.
+      requestAnimationFrame(() => {
+        element.style.height = height
+      })
+    },
+    afterEnter(element) {
+      element.style.height = 'auto'
+    },
+    leave(element) {
+      const height = getComputedStyle(element).height
 
-			// Force repaint to make sure the
-			// animation is triggered correctly.
-			// eslint-disable-next-line no-unused-expressions
-			getComputedStyle(element).height
+      element.style.height = height
 
-			requestAnimationFrame(() => {
-				element.style.height = 0
-			})
-		},
-	},
+      // Force repaint to make sure the
+      // animation is triggered correctly.
+
+      getComputedStyle(element).height
+
+      requestAnimationFrame(() => {
+        element.style.height = 0
+      })
+    },
+  },
 }
 </script>
 
 <style scoped>
 * {
-	will-change: height;
-	transform: translateZ(0);
-	backface-visibility: hidden;
-	perspective: 1000px;
+  will-change: height;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 </style>
 
 <style>
 .expand-enter-active,
 .expand-leave-active {
-	transition: height 1s ease-in-out;
-	overflow: hidden;
+  transition: height 1s ease-in-out;
+  overflow: hidden;
 }
 
 .expand-enter,
 .expand-leave-to {
-	height: 0;
+  height: 0;
 }
 </style>

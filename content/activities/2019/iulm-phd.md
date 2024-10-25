@@ -11,7 +11,6 @@ institution: IULM University
 department: Visual and Media Studies Research Doctorate
 location: Milan
 
-
 cover: take-me-to-the-internet/iulm/phd/2019/cover
 gallery:
   - media: take-me-to-the-internet/iulm/phd/2019/cover

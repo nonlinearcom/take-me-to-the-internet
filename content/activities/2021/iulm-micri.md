@@ -24,7 +24,7 @@ gallery:
     alt: Iulm 2020
 ---
 
-Networked Magazine is a collective publication exploring the transformative impact of technology as seen through the eyes of   postgraduate students during the months of pandemic.
+Networked Magazine is a collective publication exploring the transformative impact of technology as seen through the eyes of postgraduate students during the months of pandemic.
 
 Selected Topics: Digital Violence, Privacy, Automation, Machine Learning, Politics, Computer Vision, Digital Platforms, Digital Labor, Surveillance, Wearables, InternetCulture.
 

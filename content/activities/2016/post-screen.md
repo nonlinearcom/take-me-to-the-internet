@@ -14,7 +14,6 @@ assistant:
 offline: false
 cover: take-me-to-the-internet/post-screen/2016/img_1
 
-
 gallery:
   - media: take-me-to-the-internet/post-screen/2016/img_2
     alt: vvvv workshop

@@ -11,7 +11,6 @@ institution: IUAV University
 department: Master degree in product design and visual communication
 location: Venice
 
-
 offline: false
 cover: 'take-me-to-the-internet/iuav/iuav_cover'
 

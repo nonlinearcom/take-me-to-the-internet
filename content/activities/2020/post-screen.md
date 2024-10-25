@@ -4,7 +4,6 @@ subtitle: Alternative publishing practices with Are.na
 shortTile:
 slug: take-me-to-the-internet-workshop-2020
 
-
 type: Workshop
 year: 2020
 role: Instructor

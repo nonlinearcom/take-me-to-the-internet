@@ -14,4 +14,4 @@ cover:
 offline: true
 ---
 
-##  Computer Graphics page
+## Computer Graphics page

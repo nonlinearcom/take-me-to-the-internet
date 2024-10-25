@@ -14,4 +14,4 @@ cover:
 offline: true
 ---
 
-##  Digital storytelling workshop
+## Digital storytelling workshop

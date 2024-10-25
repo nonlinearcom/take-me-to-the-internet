@@ -39,7 +39,4 @@ Internet and the post-digital landscape. \
 Brutalism, the value of edgy aesthetics. \
 Experimental publishing
 
-
-
-
 [Networked Magazine ↗](https://tmtti-vms2020.netlify.app/)

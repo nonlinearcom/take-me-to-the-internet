@@ -27,7 +27,6 @@ gallery:
   - media: take-me-to-the-internet/iulm/phd/2018/web5
     alt: Iulm 2018
 
-
 partecipants:
   - Diego Baratto
   - Dario Boemia

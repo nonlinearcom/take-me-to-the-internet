@@ -35,8 +35,6 @@ gallery:
   - media: take-me-to-the-internet/brera/computer-graphics/2016/img9
     alt: Computer Graphics 2016
 
-
 ---
 
 The course aims to introduce bachelor students to software programming in the context of the visual arts. By incorporating essential creative coding strategies, students will develop the skills and confidence necessary to produce interactive systems with particular attention to the poetics of technologically-based art.
-

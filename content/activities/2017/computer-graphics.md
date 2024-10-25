@@ -4,7 +4,6 @@ subtitle:
 shortTile:
 slug: computer-graphics-brera-2017
 
-
 type: Course
 year: 2017
 role: Professor
@@ -16,4 +15,4 @@ cover:
 offline: true
 ---
 
-##  Computer Graphics page
+## Computer Graphics page
