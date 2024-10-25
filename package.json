@@ -12,14 +12,14 @@
     "@nuxt/devtools": "^1.0.0",
     "@nuxt/image": "^1.0.0",
     "@nuxtjs/color-mode": "^3.3.0",
-    "@vueuse/core": "^10.5.0",
-    "@vueuse/nuxt": "^10.5.0",
+    "@vueuse/core": "^11.1.0",
+    "@vueuse/nuxt": "^11.1.0",
     "nuxt": "^3.8.0",
     "postcss-nested": "^6.0.1",
     "sitemap": "^7.1.1"
   },
   "dependencies": {
-    "nuxt-umami": "^2.5.5",
-    "vite-svg-loader": "^4.0.0"
+    "nuxt-umami": "^3.0.2",
+    "vite-svg-loader": "^5.1.0"
   }
 }

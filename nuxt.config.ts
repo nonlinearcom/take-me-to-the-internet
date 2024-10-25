@@ -1,103 +1,80 @@
 import svgLoader from 'vite-svg-loader'
 
 export default defineNuxtConfig({
+ app: {
+   head: {
+     htmlAttrs: {
+       lang: 'en',
+     },
+     charset: 'utf-8',
+     title: 'Take me to the internet',
+     link: [
+       { rel: 'icon', type: 'image/png', href: '/favicon.png' }
+     ],
+   },
+ },
 
-	extends: ['nuxt-umami'],
-	appConfig: {
-		umami: {
-			host: 'https://analytics.non-linear.dev',
-			id: '51130bf5-f8f9-47d7-8848-6a54f6017518',
-			domains: ['www.take-me-to-the-internet.com'],
-			ignoreLocalhost: true,
-			version:2,
-		},
-	},
-	app: {
-		head: {
-			htmlAttrs: {
-				lang: 'en',
-			},
-			charset: 'utf-8',
-			title: 'Take me to the internet',
-			link: [
-				{ rel: 'icon', type: 'image/png', href: '/favicon.png' }
-			],
-			// script: [
-			// 	{
-			// 		hid: 'umami',
-			// 		'data-website-id': 'c7c20644-536c-4ba9-9a75-4b49ec150576',
-			// 		src: 'https://analytics.non-linear.com/uma.js',
-			// 		async: true,
-			// 		defer: true,
-			// 	},
-			// ]
-		},
-		// pageTransition: {
-		// 	name: 'fade',
-		// 	mode: 'out-in'
-		// },
-		// layoutTransition: {
-		// 	name: 'fade',
-		// 	mode: 'out-in'
-		// }
+
+ modules: [
+   '@nuxt/content',
+   '@nuxtjs/color-mode',
+   '@nuxt/image',
+   '@vueuse/nuxt',
+   'nuxt-umami'
+   ],
+
+ content: {
+     markdown: {}
 	},
 
-	// nitro: {
-	// 	prerender: {
-	// 		routes: ['/sitemap.xml']
-	// 	}
-	// },
+ image: {
+     cloudinary: {
+         baseURL: 'https://res.cloudinary.com/non-linear/image/upload/',
+     },
+     quality: 80,
+     format: ['webp'],
+     screens: {
+         'xs': 320,
+         'sm': 640,
+         'md': 768,
+         'lg': 1024,
+         'xl': 1280,
+         'xxl': 1536,
+         '2xl': 2048
+     },
+},
 
+ umami: {
+   host: 'https://analytics.non-linear.dev',
+   id: '51130bf5-f8f9-47d7-8848-6a54f6017518',
+   domains: ['www.take-me-to-the-internet.com'],
+   ignoreLocalhost: true,
+  //  version: 2,
+ },
 
-	modules: [
-		'@nuxt/content',
-		'@nuxtjs/color-mode',
-		'@nuxt/image',
-		'@vueuse/nuxt',
+ postcss: {
+     plugins: {
+         'postcss-nested': {},
+         autoprefixer: {},
+         cssnano: {}
+     }
+	},
+
+ css: [
+     '@/assets/css/fonts.css',
+     '@/assets/css/variables.css',
+     '@/assets/css/global.css'
 	],
 
-	content: {
-		markdown: {}
+ vite: {
+     plugins: [
+         svgLoader({})
+     ]
 	},
 
-	image: {
-		cloudinary: {
-			baseURL: 'https://res.cloudinary.com/non-linear/image/upload/',
-		},
-		quality: 80,
-		format: ['webp'],
-		screens: {
-			'xs': 320,
-			'sm': 640,
-			'md': 768,
-			'lg': 1024,
-			'xl': 1280,
-			'xxl': 1536,
-			'2xl': 2048
-		},
+ devtools: {
+     enabled: true
 	},
 
-	postcss: {
-		plugins: {
-			'postcss-nested': {},
-			autoprefixer: {},
-			cssnano: {}
-		}
-	},
-
-	css: [
-		'@/assets/css/fonts.css',
-		'@/assets/css/variables.css',
-		'@/assets/css/global.css'
-	],
-
-	vite: {
-		plugins: [
-			svgLoader({})
-		]
-	},
-
-	devtools: {
-		enabled: true
-	}
+ compatibilityDate: '2024-10-25'
 })
