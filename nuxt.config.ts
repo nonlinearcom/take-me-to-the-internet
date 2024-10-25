@@ -5,7 +5,7 @@ export default defineNuxtConfig({
 	extends: ['nuxt-umami'],
 	appConfig: {
 		umami: {
-			host: 'https://analytics.non-linear.com',
+			host: 'https://analytics.non-linear.dev',
 			id: '51130bf5-f8f9-47d7-8848-6a54f6017518',
 			domains: ['www.take-me-to-the-internet.com'],
 			ignoreLocalhost: true,
