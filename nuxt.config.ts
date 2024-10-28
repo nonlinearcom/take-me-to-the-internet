@@ -21,6 +21,7 @@ export default defineNuxtConfig({
   },
   modules: [
     '@nuxt/content',
+    '@nuxtjs/i18n',
     '@nuxtjs/color-mode',
     '@nuxt/image',
     '@vueuse/nuxt',
@@ -29,6 +30,24 @@ export default defineNuxtConfig({
 
   content: {
     markdown: {},
+  },
+
+  i18n: {
+    baseUrl: process.env.NUXT_BASE_URL,
+    strategy: 'no_prefix', // 'prefix_except_default',
+    defaultLocale: 'en',
+    detectBrowserLanguage: {
+      fallbackLocale: 'en',
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      redirectOn: 'root',
+    },
+    langDir: 'locales/',
+    lazy: true,
+    locales: [
+      { code: 'en', file: 'en-US.json', language: 'en-US', name: 'English' },
+      { code: 'it', file: 'it-IT.json', language: 'it-IT', name: 'Italiano' },
+    ],
   },
 
   image: {
