@@ -50,21 +50,28 @@ export default defineNuxtConfig({
     ],
   },
 
+  // image: {
+  //   cloudinary: {
+  //     baseURL: 'https://res.cloudinary.com/non-linear/image/upload/',
+  //   },
+  //   quality: 80,
+  //   format: ['webp'],
+  //   screens: {
+  //     'xs': 320,
+  //     'sm': 640,
+  //     'md': 768,
+  //     'lg': 1024,
+  //     'xl': 1280,
+  //     'xxl': 1536,
+  //     '2xl': 2048,
+  //   },
+  // },
   image: {
-    cloudinary: {
-      baseURL: 'https://res.cloudinary.com/non-linear/image/upload/',
+    directus: {
+      baseURL: `${process.env.NUXT_PUBLIC_DIRECTUS_URL}/assets/`,
+      modifiers: { withoutEnlargement: 'true' },
     },
-    quality: 80,
-    format: ['webp'],
-    screens: {
-      'xs': 320,
-      'sm': 640,
-      'md': 768,
-      'lg': 1024,
-      'xl': 1280,
-      'xxl': 1536,
-      '2xl': 2048,
-    },
+    provider: 'directus',
   },
 
   umami: {

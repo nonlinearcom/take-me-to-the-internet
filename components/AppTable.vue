@@ -3,11 +3,11 @@
     <tbody role="presentation">
       <tr
         v-for="(item, index) in tableData"
-        :key="item.createdAt"
-        :class="{ offline: item.offline }"
+        :key="item.slug"
+        :class="{ offline: item.status === 'archived' }"
         tabindex="0"
         role="row"
-        :aria-disabled="item.offline"
+        :aria-disabled="item.status === 'archived'"
         @click="goToPanel(item)"
         @mouseover="$emit('showCover', item.cover)"
       >
@@ -21,13 +21,13 @@
           {{ item.type }}
         </td>
         <td class="title">
-          <h3 v-if="item.offline">
+          <h3 v-if="item.status === 'archived'">
             {{ item.title }}
           </h3>
           <NuxtLink
             v-else
             class="stretched-link"
-            :to="`/${item.slug}`"
+            :to="`/log/${item.slug}`"
           >
             {{ item.title }}
           </NuxtLink>
@@ -54,12 +54,11 @@ const props = defineProps({
   },
 })
 
-const router = useRouter()
-
 function goToPanel(item) {
-  if (item.offline)
+  if (item.status === 'archived')
     return
-  router.push({ path: `/${item.slug}` })
+  console.log('naviagte to:', `/log/${item.slug}`)
+  return navigateTo(`/log/${item.slug}`)
 }
 
 function getYear(index) {
