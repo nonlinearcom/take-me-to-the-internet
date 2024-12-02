@@ -1,6 +1,9 @@
 import svgLoader from 'vite-svg-loader'
 
 export default defineNuxtConfig({
+  extends: [
+    './layers/flexible-editor',
+  ],
   app: {
     head: {
       htmlAttrs: {

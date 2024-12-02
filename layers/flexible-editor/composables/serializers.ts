@@ -1,3 +1,3 @@
-import extensions from '../components/content/extensions'
+import extensions from '../assets/extensions'
 
 export { extensions as serializers }

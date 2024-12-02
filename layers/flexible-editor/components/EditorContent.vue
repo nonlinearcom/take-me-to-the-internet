@@ -1,7 +1,16 @@
+<template>
+  <RenderNodes
+    v-if="content"
+    :content
+    :serializers
+    :component-serializers
+  />
+</template>
+
 <script setup lang="ts">
 import { type JSONContent, Mark, Node } from '@tiptap/core'
 import RenderNodes, { type Extensions, type VueComponentSerializers } from 'tiptap-render-view/vue'
-import extensions from './extensions'
+import extensions from '../assets/extensions'
 
 const props = defineProps<{
   content: JSONContent
@@ -57,7 +66,3 @@ serializers.push(relationBlockSerializer)
 serializers.push(relationInlineBlockSerializer)
 serializers.push(relationMarkSerializer)
 </script>
-
-<template>
-  <RenderNodes v-if="content" :content :serializers :component-serializers />
-</template>

@@ -1,9 +1,5 @@
 <template>
-  <h1>{{ translation.title }}</h1>
-  <pre>{{ page }}</pre>
-  ---
-
-  <pre>{{ translation.content }}</pre>
+  <h1> {{ translation.title }} </h1>
   <EditorContent
     v-if="translation?.content"
     :content="translation?.content"
@@ -12,7 +8,13 @@
 </template>
 
 <script lang="ts" setup>
-import { EditorImage } from '#components'
+import { EditorGallery, EditorImage } from '#components'
+
+// New editor test
+const relationBlocks: VueRelationNodeSerializers = [
+  { collection: 'gallery', component: EditorGallery },
+  { collection: 'image', component: EditorImage },
+]
 
 const { $directus, $readItem } = useNuxtApp()
 const route = useRoute()
@@ -25,7 +27,27 @@ const languageCode = computed(() => {
 const { data: page } = await useAsyncData('page', () => {
   return $directus.request(
     $readItem('pages', route.params.slug as string, {
-      fields: [{ '*': ['*'] }],
+      fields: [
+        '*',
+        {
+          translations: [
+            '*',
+            {
+              editor_nodes: [
+                '*',
+                {
+                  item: {
+                    image: ['*'],
+                    gallery: [
+                      { content: ['*'] },
+                    ],
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      ],
     }),
   )
 })
@@ -42,14 +64,13 @@ const translation = computed(() => {
     return null
 
   // here we could also set a fallback language
-  return page.value.translations.find(t => t.languages_code === languageCode.value) || null
-})
+  const translation = page.value.translations.find(t => t.languages_code === languageCode.value) || null
+  if (!translation)
+    return null
 
-// New editor test
-const relationBlocks: VueRelationNodeSerializers = [
-  { collection: 'image', component: EditorImage },
-]
-injectDataIntoContent(page.value.editor_nodes, page.value.translations.content)
+  injectDataIntoContent(translation.editor_nodes, translation.content)
+  return translation
+})
 </script>
 
 <style lang="postcss">
