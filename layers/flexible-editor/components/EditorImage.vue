@@ -1,3 +1,12 @@
+<template>
+  <NuxtImg
+    class="image"
+    loading="lazy"
+    :src="data.image"
+    :alt="data.image?.description"
+  />
+</template>
+
 <script setup lang="ts">
 const props = defineProps<{
   id: RelationNodeProps['id']
@@ -6,7 +15,3 @@ const props = defineProps<{
   data?: any
 }>()
 </script>
-
-<template>
-  <pre> {{ data }} </pre>
-</template>

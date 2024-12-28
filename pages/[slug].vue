@@ -10,7 +10,6 @@
 <script lang="ts" setup>
 import { EditorGallery, EditorImage } from '#components'
 
-// New editor test
 const relationBlocks: VueRelationNodeSerializers = [
   { collection: 'gallery', component: EditorGallery },
   { collection: 'image', component: EditorImage },
