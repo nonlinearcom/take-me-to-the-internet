@@ -1,9 +1,14 @@
-import svgLoader from 'vite-svg-loader'
-
 export default defineNuxtConfig({
   extends: [
     './layers/flexible-editor',
+    // ['github:nonlinearcom/non-linear-ui', { install: true, auth: process.env.GITHUB_TOKEN }],
+    ['./layers/ui', { install: true }],
   ],
+
+  experimental: {
+    localLayerAliases: true,
+  },
+
   app: {
     head: {
       htmlAttrs: {
@@ -17,23 +22,13 @@ export default defineNuxtConfig({
     },
   },
 
-  nitro: {
-    prerender: {
-      routes: ['/sitemap.xml'],
-    },
-  },
   modules: [
-    '@nuxt/content',
     '@nuxtjs/i18n',
     '@nuxtjs/color-mode',
     '@nuxt/image',
     '@vueuse/nuxt',
     'nuxt-umami',
   ],
-
-  content: {
-    markdown: {},
-  },
 
   i18n: {
     baseUrl: process.env.NUXT_BASE_URL,
@@ -86,15 +81,20 @@ export default defineNuxtConfig({
     '@/assets/css/global.css',
   ],
 
-  vite: {
-    plugins: [
-      svgLoader({}),
-    ],
-  },
-
   devtools: {
     enabled: true,
   },
+
+  // How to use icons form local assets?
+  // svgTransformer: {
+  //   fallback: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none"><path d="M15.8,12H42l6.2,6v34H15.8L15.8,12z M38.2,12v10h10 M26.5,32l11,11 M37.5,32l-11,11" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" /></svg>',
+  //   svgDir: './assets/icons',
+  //   svg: {
+  //     sizeInherit: true,
+  //     title: true,
+  //   },
+  //   warning: true,
+  // },
 
   compatibilityDate: '2024-10-25',
 })
