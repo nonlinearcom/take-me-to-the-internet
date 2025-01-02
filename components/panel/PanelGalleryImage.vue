@@ -77,7 +77,7 @@ figure {
 
     font-size: var(--text-mini);
 
-    color: var(--color);
+    color: var(--text-color);
     background: rgba(var(--bg-rgb), 0.8);
     padding: 0 10px;
   }

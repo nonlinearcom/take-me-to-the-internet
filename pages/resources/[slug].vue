@@ -1,16 +1,16 @@
 <template>
   <article class="resources-term">
     <header>
-      <NuxtLink
-        class="close text-mini"
+      <UiButton
+        class="close"
+        icon="arrow-left"
+        variant="outline"
+        rounded
+        invert-icon
+        label="BACK"
+        size="sm"
         to="/resources"
-      >
-        <AppIcon
-          name="arrow-left"
-          aria-hidden="true"
-        />
-        BACK
-      </NuxtLink>
+      />
       <pre>{{ page }}</pre>
       <h1> {{ page[0].title }} </h1>
     </header>
@@ -68,9 +68,9 @@ if (!page.value) {
     max-height: 28px;
     padding-left: 4px;
     padding-right: 12px;
-    font-size: var(--font-size-small);
+    font-size: var(--text);
     text-transform: uppercase;
-    border: 1px solid var(--color);
+    border: 1px solid var(--text-color);
     border-radius: 25px;
 
     overflow: hidden;

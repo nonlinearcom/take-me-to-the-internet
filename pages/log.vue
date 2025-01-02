@@ -1,6 +1,5 @@
 <template>
   <article class="log">
-    <!-- <pre>{{ log }}</pre> -->
     <logTable :table-data="logs" />
     <NuxtPage />
   </article>

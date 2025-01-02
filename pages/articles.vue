@@ -1,6 +1,6 @@
 <template>
-  <article class="home">
-    <h1>hello index</h1>
+  <article class="articles">
+    <h1>Articles...</h1>
   </article>
 </template>
 
@@ -9,7 +9,7 @@
 </script>
 
 <style lang="postcss">
-.home {
+.articles {
   position: absolute;
   inset: 0;
   display: grid;

@@ -1,10 +1,12 @@
 <template>
-  <h1> {{ translation.title }} </h1>
-  <EditorContent
-    v-if="translation?.content"
-    :content="translation?.content"
-    :relation-blocks
-  />
+  <article class="page">
+    <h1> {{ translation.title }} </h1>
+    <EditorContent
+      v-if="translation?.content"
+      :content="translation?.content"
+      :relation-blocks
+    />
+  </article>
 </template>
 
 <script lang="ts" setup>
@@ -73,5 +75,10 @@ const translation = computed(() => {
 </script>
 
 <style lang="postcss">
+.page {
+  padding: var(--app-margin-small);
 
+  max-width: 60ch;
+  /* margin: 0 auto; */
+}
 </style>

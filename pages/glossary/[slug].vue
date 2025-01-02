@@ -1,16 +1,16 @@
 <template>
   <article class="glossary-term">
     <header>
-      <NuxtLink
-        class="close text-mini"
+      <UiButton
+        class="close"
+        icon="arrow-left"
+        variant="outline"
+        rounded
+        invert-icon
+        label="BACK"
+        size="sm"
         to="/glossary"
-      >
-        <AppIcon
-          name="arrow-left"
-          aria-hidden="true"
-        />
-        BACK
-      </NuxtLink>
+      />
 
       <h1> {{ translation.term }} </h1>
     </header>
@@ -108,9 +108,9 @@ const translation = computed(() => {
     max-height: 28px;
     padding-left: 4px;
     padding-right: 12px;
-    font-size: var(--font-size-small);
+    font-size: var(--text);
     text-transform: uppercase;
-    border: 1px solid var(--color);
+    border: 1px solid var(--text-color);
     border-radius: 25px;
 
     overflow: hidden;

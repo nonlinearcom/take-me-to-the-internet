@@ -1,6 +1,5 @@
 <template>
   <main class="glossary-page">
-    <h1>Glossary</h1>
     <template
       v-for="item in glossary"
       :key="item.id"
@@ -59,8 +58,8 @@ const { data: glossary } = await useAsyncData('glossary', () => {
 
 <style lang="postcss">
 glossary-page {
+  padding: var(--app-margin);
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
 }
 </style>

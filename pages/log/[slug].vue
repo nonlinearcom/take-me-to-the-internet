@@ -5,23 +5,23 @@
   >
     <div
       class="panel__overlay"
-      @click.self="closeModal()"
+      @click="closeModal()"
     >
       <transition
         name="panel"
         appear
       >
         <article class="panel">
-          <NuxtLink
-            class="close text-mini"
-            to="/log"
-          >
-            <AppIcon
-              name="arrow-left"
-              aria-hidden="true"
-            />
-            BACK
-          </NuxtLink>
+          <UiButton
+            class="close"
+            icon="arrow-left"
+            variant="outline"
+            rounded
+            invert-icon
+            label="BACK"
+            size="sm"
+            @click="closeModal()"
+          />
           <header>
             <h2
               v-if="page.title"
@@ -155,7 +155,7 @@ const pageTitle = computed(() => {
   right: 0;
 
   transform: translateX(100%);
-  background-color: var(--bg);
+  background-color: var(--bg-color);
   width: 50%;
   height: 100vh;
   transition: transform 0.5s ease-out;
@@ -170,28 +170,10 @@ const pageTitle = computed(() => {
 
   pointer-events: all;
 
-  a.close {
+  .close {
     position: absolute;
-    display: flex;
-    align-items: center;
     top: 28px;
     right: var(--app-margin-small);
-    height: 28px;
-    max-height: 28px;
-    padding-left: 4px;
-    padding-right: 12px;
-    font-size: var(--font-size-small);
-    text-transform: uppercase;
-    border: 1px solid var(--color);
-    border-radius: 25px;
-
-    overflow: hidden;
-
-    .icon {
-      transition: transform 0.5s;
-      width: 30px;
-      height: 28px;
-    }
   }
 }
 

@@ -88,6 +88,8 @@ table {
   width: 100%;
   cursor: pointer;
   tr {
+    position: relative;
+
     &:last-child {
       border-bottom: 1px solid var(--border-color);
     }
@@ -154,10 +156,10 @@ table {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    position: relative;
 
     td {
       border-top: none;
-      position: relative;
       padding: 0;
     }
   }

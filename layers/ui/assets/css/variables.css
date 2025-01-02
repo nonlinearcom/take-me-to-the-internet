@@ -3,10 +3,14 @@
   --border-radius-round: 9999px;
 
   /* Typography */
-  --text-large: 21px;
-  --text: 16px;
-  --text-small: 14px;
-  --text-mini: 12px;
+  --font-stack: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+
+  --text-large: 28px;
+  --text: 21px;
+  --text-small: 16px;
+  --text-mini: 14px;
+
+  --regular: 400;
 
   /* Shadow */
   --shadow: 0px 4px 6px var(--black-a2);
@@ -71,8 +75,8 @@
 }
 
 .dark {
-  --bg-color: var(--gray-12);
-  --bg-hover: var(--gray-11);
+  --bg-color: var(--gray-11);
+  --bg-hover: var(--gray-12);
   --bg-secondary: var(--gray-9);
   --border-color: var(--gray-10);
   --text-secondary: var(--gray-5);
@@ -82,4 +86,28 @@
 
   --accent: var(--accent-7);
   --accent-hover: var(--accent-6);
+}
+
+/* TBD: From origial website */
+:root {
+  --app-margin: 48px;
+  --app-margin-small: 24px;
+  --app-margin-mini: 16px;
+}
+
+@media screen and (max-width: 768px) {
+  :root {
+    --app-margin: var(--app-margin-small);
+    --text: 19px;
+    --text-small: 15px;
+    --text-large: 21px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  :root {
+    --app-margin: var(--app-margin-mini);
+    --text: 18px;
+    --font-small: 14px;
+  }
 }

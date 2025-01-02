@@ -24,7 +24,6 @@ export default defineNuxtConfig({
 
   modules: [
     '@nuxtjs/i18n',
-    '@nuxtjs/color-mode',
     '@nuxt/image',
     '@vueuse/nuxt',
     'nuxt-umami',
@@ -77,7 +76,6 @@ export default defineNuxtConfig({
 
   css: [
     '@/assets/css/fonts.css',
-    '@/assets/css/variables.css',
     '@/assets/css/global.css',
   ],
 

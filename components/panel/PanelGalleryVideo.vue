@@ -12,11 +12,11 @@
       :style="moveButton"
       @click="playing = !playing"
     >
-      <AppIcon
+      <UiIcon
         v-if="playing"
         name="pause"
       />
-      <AppIcon
+      <UiIcon
         v-else
         name="play"
       />
@@ -70,8 +70,8 @@ const { elementX, elementY, isOutside } = useMouseInElement(video)
     position: absolute;
     top: 0;
     left: 0;
-    color: var(--color);
-    background-color: var(--bg);
+    color: var(--text-color);
+    background-color: var(--bg-color);
     border-radius: 50%;
     cursor: none;
 

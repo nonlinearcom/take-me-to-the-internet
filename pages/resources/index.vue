@@ -1,10 +1,6 @@
 <template>
-  <main class="resources-page">
-    <h1>Resources</h1>
-
-    <h3>filters...</h3>
-
-    <table>
+  <article class="resources-page">
+    <table class="resources-table">
       <thead v-if="headers">
         <tr>
           <th
@@ -31,14 +27,24 @@
           <td>{{ item.type }}</td>
           <td>{{ item.year }}</td>
           <td>
-            <template v-for="author in item.people">
-              {{ author.people_id.name }}
-            </template>
+            <UiDialog
+              v-for="author in item.people"
+              :key="author.people_id.name"
+              title="Dialog title"
+            >
+              <template #trigger>
+                <UiButton
+                  variant="ghost"
+                  :label="author.people_id.name"
+                />
+              </template>
+              Dialog test
+            </UiDialog>
           </td>
         </tr>
       </tbody>
     </table>
-  </main>
+  </article>
 </template>
 
 <script lang="ts" setup>
@@ -83,20 +89,14 @@ const headers = false // ['link', 'title', 'type', 'year']
 .resources-page {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
 }
 
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-thead {
-}
-
-th,
-td {
-  padding: 8px 12px;
-  border-bottom: 1px solid var(--border-color);
+table.resources-table {
+  button {
+    font-size: inherit !important;
+  }
+  td {
+    vertical-align: middle;
+  }
 }
 </style>

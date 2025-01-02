@@ -66,7 +66,7 @@ const linkProps = computed(() => getNuxtLinkProps(props))
   justify-content: center;
   align-items: center;
   line-height: 1;
-  color: var(--color);
+  color: var(--text-color);
   background-color: var(--background-color);
   border: 1px solid transparent;
   border-radius: var(--border-radius);
@@ -77,7 +77,7 @@ const linkProps = computed(() => getNuxtLinkProps(props))
 
   @media (hover) {
     &:hover {
-      color: var(--color-hover, var(--color));
+      color: var(--color-hover, var(--text-color));
       background-color: var(--background-color-hover, var(--background-color));
     }
   }
@@ -91,7 +91,7 @@ const linkProps = computed(() => getNuxtLinkProps(props))
   }
 
   &:is(:disabled, [disabled]) {
-    color: var(--color) !important;
+    color: var(--text-color) !important;
     background-color: var(--background-color) !important;
     cursor: not-allowed;
     opacity: 0.75;
