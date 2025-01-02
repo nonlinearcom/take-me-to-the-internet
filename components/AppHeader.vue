@@ -74,7 +74,6 @@ const toggleDark = useToggle(isDark)
       padding: 0 8px;
       transition: background-color 0.3s;
       background-color: var(--bg-color);
-      z-index: 2;
 
       &:first-child {
         padding-left: 0;
@@ -84,9 +83,9 @@ const toggleDark = useToggle(isDark)
         padding-right: 0;
       }
     }
-    &:after {
+    &:before {
       content: '';
-      z-index: 1;
+      z-index: -1;
       position: absolute;
       display: block;
       height: 2px;
