@@ -1,6 +1,10 @@
 <template>
   <article class="home">
-    <h1>hello index</h1>
+    <iframe
+      class="home__iframe"
+      allow="autoplay; camera; microphone"
+      src="./patches/cover/index.html"
+    />
   </article>
 </template>
 
@@ -16,5 +20,12 @@
   place-items: center;
   height: 100vh;
   pointer-events: none;
+
+  .home__iframe {
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    border: 0px;
+  }
 }
 </style>
