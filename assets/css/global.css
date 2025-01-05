@@ -52,8 +52,7 @@ a {
   content: '';
 }
 
-h1,
-.title--h1 {
+h1.title {
   font-size: var(--text-large);
   line-height: 1.2;
   font-weight: var(--regular);

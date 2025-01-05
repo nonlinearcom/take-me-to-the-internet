@@ -59,7 +59,6 @@ const toggleDark = useToggle(isDark)
   grid-template-columns: 50% 1fr 1fr 40px;
   gap: 32px;
   padding: var(--app-margin-small);
-
   .main-menu {
     grid-column: 3;
     display: flex;

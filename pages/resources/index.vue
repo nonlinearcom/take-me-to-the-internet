@@ -17,12 +17,29 @@
           :key="index"
         >
           <td>
-            <NuxtLink
-              :to="item.link"
-              target="_blank"
-            >
-              {{ item.title }}
-            </NuxtLink>
+            <span>
+
+              <UiDialog
+                side="right"
+                :aria-label="`Resource ${item.title}`"
+              >
+                <template #trigger>
+                  <UiButton
+                    variant="ghost"
+                    :label="item.title"
+                  />
+                </template>
+                <ResourceCard :resource="item" />
+              </UiDialog>
+
+              <UiButton
+                icon="external-link"
+                variant="ghost"
+                size="sm"
+                :to="item.link"
+                target="_blank"
+              />
+            </span>
           </td>
           <td>{{ item.type }}</td>
           <td>{{ item.year }}</td>
@@ -30,7 +47,8 @@
             <UiDialog
               v-for="author in item.people"
               :key="author.people_id.name"
-              title="Dialog title"
+              :title="author.people_id.name"
+              :description="author.people_id.description"
             >
               <template #trigger>
                 <UiButton
@@ -38,7 +56,7 @@
                   :label="author.people_id.name"
                 />
               </template>
-              Dialog test
+              <PeopleCard :author=" author.people_id" />
             </UiDialog>
           </td>
         </tr>
@@ -50,20 +68,6 @@
 <script lang="ts" setup>
 const { $directus, $readItems } = useNuxtApp()
 
-interface Resource {
-  id: number
-  title: string
-  slug: string
-  year: number
-  type: string
-  link: string
-  description?: string
-  cover?: string
-  people: { people_id: { name: string } }[]
-  tags?: { tags_id: { title: string } }[]
-  topics?: { topics_id: { title: string } }[]
-}
-
 const { data: resourcesData } = await useAsyncData('resources', () => {
   return $directus.request<Resource[]>(
     $readItems('resources', {
@@ -74,9 +78,11 @@ const { data: resourcesData } = await useAsyncData('resources', () => {
       },
       fields: [
         '*',
-        'people.people_id.name',
+        'people.people_id.*',
         'tags.tags_id.title',
+        'tags.tags_id.slug',
         'topics.topics_id.title',
+        'topics.topics_id.slug',
       ],
     }),
   )

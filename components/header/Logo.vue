@@ -17,7 +17,7 @@
   display: flex;
   justify-content: space-between;
   gap: 6px;
-  font-size: var(--title);
+  font-size: var(--text-large);
   transition: background-color 0.3s;
 
   .dash {
