@@ -114,7 +114,7 @@ const forwarded = useForwardPropsEmits(reactivePick(props, 'defaultOpen', 'modal
   border-radius: var(--border-radius);
   box-shadow: var(--shadow);
   transform: translate(-50%, -50%);
-
+  overflow-y: auto;
   &[data-state='open'] {
     animation: dialogAnimateIn 200ms ease-out;
   }

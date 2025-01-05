@@ -73,7 +73,7 @@ const linkProps = computed(() => getNuxtLinkProps(props))
   transition-duration: 200ms;
   transition-property: color, background-color, border-color, opacity, transform;
   box-sizing: border-box;
-  white-space: nowrap;
+  /* white-space: nowrap; */
 
   @media (hover) {
     &:hover {
