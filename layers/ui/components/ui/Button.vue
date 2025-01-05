@@ -74,7 +74,9 @@ const linkProps = computed(() => getNuxtLinkProps(props))
   transition-property: color, background-color, border-color, opacity, transform;
   box-sizing: border-box;
   /* white-space: nowrap; */
-
+  span {
+    text-align: left;
+  }
   @media (hover) {
     &:hover {
       color: var(--color-hover, var(--text-color));
