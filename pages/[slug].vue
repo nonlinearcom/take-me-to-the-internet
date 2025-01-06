@@ -3,6 +3,7 @@
     <h1> {{ translation.title }} </h1>
     <EditorContent
       v-if="translation?.content"
+      class="flexible-editor"
       :content="translation?.content"
       :relation-blocks
     />

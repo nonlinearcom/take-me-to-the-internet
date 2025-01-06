@@ -86,7 +86,7 @@ const props = defineProps<{
 .resource-card {
   display: flex;
   flex-direction: column;
-  padding: 0 var(--app-margin-small);
+  padding: var(--app-margin-small);
   gap: var(--text);
 
   .title {

@@ -26,22 +26,43 @@
       >
         About
       </NuxtLink>
-      <NuxtLink
+      <!-- <NuxtLink
         to="/log"
         class="line"
       >
         Log
-      </NuxtLink>
+      </NuxtLink> -->
     </nav>
 
-    <UiButton
-      class="mode-toggle"
-      :icon="isDark ? 'moon' : 'sun'"
-      aria-label="Toggle dark mode"
-      variant="outline"
-      rounded
-      @click="toggleDark()"
-    />
+    <span class="mode-settings">
+      <UiButton
+        class="mode-toggle"
+        :icon="isDark ? 'moon' : 'sun'"
+        aria-label="Toggle dark mode"
+        variant="outline"
+        rounded
+        @click="toggleDark()"
+      />
+      <!-- TODO: check why this does not work -->
+      <!-- <UiButton
+        class="lang-toggle"
+        :label="locale.code"
+        aria-label="Toggle language"
+        variant="outline"
+        rounded
+        @click.prevent.stop="setLocale(locale.code)"
+      /> -->
+
+      <NuxtLink
+        v-for="locale in availableLocales"
+        :key="locale.code"
+        class="lang-toggle"
+        href="#"
+        @click.prevent.stop="setLocale(locale.code)"
+      >
+        {{ locale.code }}
+      </NuxtLink>
+    </span>
   </header>
 </template>
 
@@ -51,6 +72,13 @@ defineOptions({
 })
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
+
+const { locale, locales, setLocale } = useI18n()
+const switchLocalePath = useSwitchLocalePath()
+
+const availableLocales = computed(() => {
+  return locales.value.filter(i => i.code !== locale.value)
+})
 </script>
 
 <style lang="postcss">
@@ -70,9 +98,24 @@ const toggleDark = useToggle(isDark)
     gap: 4px;
   }
 
-  .mode-toggle {
+  .mode-settings {
     grid-column: 4;
     align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  /* temp lang switcher button */
+  .lang-toggle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--text-mini);
+    text-transform: uppercase;
+    border-radius: 50%;
+    border: 1px solid var(--border-color);
+    width: 38px;
+    height: 38px;
   }
 }
 
@@ -101,7 +144,7 @@ const toggleDark = useToggle(isDark)
       grid-row: 2;
     }
 
-    .mode-toggle {
+    .mode-settings {
       justify-self: flex-end;
       grid-column: 1;
       grid-row: 2;

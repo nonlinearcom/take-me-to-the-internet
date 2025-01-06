@@ -71,6 +71,16 @@ p {
   margin-bottom: 21px !important;
 }
 
+h1 {
+  font-size: var(--text-large) !important;
+}
+
+.flexible-editor {
+  h2 {
+    font-size: var(--text-large);
+  }
+}
+
 /* Functional */
 .responsive {
   width: 100%;

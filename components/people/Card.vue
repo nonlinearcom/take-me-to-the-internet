@@ -58,7 +58,7 @@ const props = defineProps<{
   gap: var(--text);
 
   .title {
-    margin-top: 8px !important;
+    margin-top: 0px !important;
     margin-bottom: 8px !important;
     font-size: var(--text-large);
   }
