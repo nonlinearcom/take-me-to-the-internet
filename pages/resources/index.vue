@@ -17,8 +17,15 @@
           :key="index"
         >
           <td>
-            <span>
-
+            <span class="resource">
+              <UiButton
+                icon="external-link"
+                variant="ghost"
+                padded
+                size="sm"
+                :to="item.link"
+                target="_blank"
+              />
               <UiDialog
                 side="right"
                 :aria-label="`Resource ${item.title}`"
@@ -26,19 +33,14 @@
                 <template #trigger>
                   <UiButton
                     variant="ghost"
+                    size="sm"
+                    padded
                     :label="item.title"
                   />
                 </template>
                 <ResourceCard :resource="item" />
               </UiDialog>
 
-              <UiButton
-                icon="external-link"
-                variant="ghost"
-                size="sm"
-                :to="item.link"
-                target="_blank"
-              />
             </span>
           </td>
           <td>{{ item.type }}</td>
@@ -47,11 +49,10 @@
             <UiDialog
               v-for="author in item.people"
               :key="author.people_id.name"
-              :title="author.people_id.name"
-              :description="author.people_id.description"
             >
               <template #trigger>
                 <UiButton
+                  class="author"
                   variant="ghost"
                   :label="author.people_id.name"
                 />
@@ -79,6 +80,8 @@ const { data: resourcesData } = await useAsyncData('resources', () => {
       fields: [
         '*',
         'people.people_id.*',
+        'people.people_id.*.resources_id.title',
+        'people.people_id.*.resources_id.link',
         'tags.tags_id.title',
         'tags.tags_id.slug',
         'topics.topics_id.title',
@@ -103,6 +106,14 @@ table.resources-table {
   }
   td {
     vertical-align: middle;
+  }
+  .resource {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .author {
+    z-index: 20;
   }
 }
 </style>

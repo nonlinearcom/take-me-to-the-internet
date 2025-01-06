@@ -57,8 +57,10 @@ const toggleDark = useToggle(isDark)
 .app-header {
   display: grid;
   grid-template-columns: 50% 1fr 1fr 40px;
+  align-items: start;
   gap: 32px;
   padding: var(--app-margin-small);
+  min-height: 50vh;
   .main-menu {
     grid-column: 3;
     display: flex;

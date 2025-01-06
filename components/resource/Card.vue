@@ -113,7 +113,6 @@ const props = defineProps<{
     font-size: var(--text-mini);
     color: var(--text-secondary);
     dt {
-      margin-bottom: 6px;
       color: var(--text-color);
     }
     .tag:hover {

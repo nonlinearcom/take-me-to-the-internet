@@ -3,19 +3,26 @@
     <header>
       <UiButton
         class="close"
-        icon="arrow-left"
+        label="Glossary"
         variant="outline"
         rounded
-        invert-icon
-        label="BACK"
-        size="sm"
+        size="xs"
         to="/glossary"
       />
-
-      <h1> {{ translation.term }} </h1>
+      <h1 class="title">
+        {{ translation.term }}
+      </h1>
+      <!-- <UiButton
+        class="close"
+        icon="close"
+        variant="outline"
+        rounded
+        to="/glossary"
+      /> -->
     </header>
     <EditorContent
       v-if="translation?.description"
+      class="glossary-content"
       :content="translation?.description"
       :relation-blocks
     />
@@ -86,7 +93,7 @@ if (!page.value) {
 const translation = computed(() => {
   if (!page.value)
     return null
-  console.log('page.value: ', page.value)
+  // console.log('page.value: ', page.value)
   const translation = page.value[0].translations.find(t => t.languages_code === languageCode.value) || 0
   if (!translation)
     return null
@@ -98,36 +105,20 @@ const translation = computed(() => {
 
 <style lang="postcss">
 .glossary-term {
-  a.close {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    top: 28px;
-    right: var(--app-margin-small);
-    height: 28px;
-    max-height: 28px;
-    padding-left: 4px;
-    padding-right: 12px;
-    font-size: var(--text);
-    text-transform: uppercase;
-    border: 1px solid var(--text-color);
-    border-radius: 25px;
+  position: relative;
+  margin: var(--app-margin-small);
 
-    overflow: hidden;
-
-    .icon {
-      transition: transform 0.5s;
-      width: 30px;
-      height: 28px;
+  header {
+    margin-bottom: 96px;
+    text-align: center;
+    h1 {
+      font-size: var(--text-large);
     }
   }
 
-  header {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-gap: calc(var(--app-margin) / 2);
-
-    margin: var(--app-margin-small);
+  .glossary-content {
+    max-width: 68ch;
+    margin: 0 auto;
   }
 }
 @media (max-width: 1440px) {

@@ -41,6 +41,10 @@ a {
   }
 }
 
+.router-link-exact-active:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
 .stretched-link::after {
   position: absolute;
   top: 0;
