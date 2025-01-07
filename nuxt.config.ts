@@ -28,6 +28,7 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     '@nuxt/image',
     '@vueuse/nuxt',
+    'nuxt-swiper',
     'nuxt-umami',
   ],
 

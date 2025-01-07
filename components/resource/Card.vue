@@ -1,5 +1,5 @@
 <template>
-  <Article class="resource-card">
+  <article class="resource-card">
     <span>
       <div class="chips">
         <UiChip
@@ -73,7 +73,7 @@
       :to="resource.link"
       target="_blank"
     />
-  </Article>
+  </article>
 </template>
 
 <script lang="ts" setup>
