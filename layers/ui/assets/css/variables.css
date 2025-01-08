@@ -1,0 +1,113 @@
+:root {
+  --border-radius: 6px;
+  --border-radius-round: 9999px;
+
+  /* Typography */
+  --font-stack: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+
+  --text-large: 28px;
+  --text: 19px;
+  --text-small: 16px;
+  --text-mini: 12px;
+
+  --regular: 400;
+
+  /* Shadow */
+  --shadow: 0px 4px 6px var(--black-a2);
+
+  /* Colors */
+  /* Gray */
+  --gray-1: #fcfcfc;
+  --gray-2: #f9f9f9;
+  --gray-3: #f0f0f0;
+  --gray-4: #e8e8e8;
+  --gray-5: #e0e0e0;
+  --gray-6: #d9d9d9;
+  --gray-7: #b4b4b4;
+  --gray-8: #747474;
+  --gray-9: #525252;
+  --gray-10: #313131;
+  --gray-11: #222222;
+  --gray-12: #0a0a0a;
+
+  /* Accent */
+  --accent-1: #f5f3ff;
+  --accent-2: #f3f0ff;
+  --accent-3: #e3dbff;
+  --accent-4: #d4c7ff;
+  --accent-5: #bda0ff;
+  --accent-6: #8b5cf6;
+  --accent-7: #7c3aed;
+  --accent-8: #704cc5;
+  --accent-9: #5a3d9e;
+  --accent-10: #4a2f87;
+  --accent-11: #3f2477;
+  --accent-12: #2e1065;
+
+  /* Black alpha */
+  --black-a1: rgba(0, 0, 0, 0.05);
+  --black-a2: rgba(0, 0, 0, 0.1);
+  --black-a3: rgba(0, 0, 0, 0.15);
+  --black-a4: rgba(0, 0, 0, 0.2);
+  --black-a5: rgba(0, 0, 0, 0.3);
+  --black-a6: rgba(0, 0, 0, 0.4);
+  --black-a7: rgba(0, 0, 0, 0.5);
+  --black-a8: rgba(0, 0, 0, 0.6);
+  --black-a9: rgba(0, 0, 0, 0.7);
+  --black-a10: rgba(0, 0, 0, 0.8);
+  --black-a11: rgba(0, 0, 0, 0.9);
+  --black-a12: rgba(0, 0, 0, 0.95);
+}
+
+:root,
+.light {
+  --bg-color: var(--gray-1);
+  --bg-hover: var(--gray-2);
+  --bg-secondary: var(--gray-4);
+  --border-color: var(--gray-5);
+  --text-secondary: var(--gray-8);
+  --text-secondary-hover: var(--gray-9);
+  --text-color: var(--gray-11);
+  --text-hover: var(--gray-12);
+
+  --accent: var(--accent-7);
+  --accent-hover: var(--accent-8);
+}
+
+.dark {
+  --bg-color: var(--gray-11);
+  --bg-hover: var(--gray-12);
+  --bg-secondary: var(--gray-9);
+  --border-color: var(--gray-10);
+  --text-secondary: var(--gray-5);
+  --text-secondary-hover: var(--gray-4);
+  --text-color: var(--gray-2);
+  --text-hover: var(--gray-1);
+
+  --accent: var(--accent-7);
+  --accent-hover: var(--accent-6);
+}
+
+/* TBD: From origial website */
+:root {
+  --app-margin: 48px;
+  --app-margin-small: 24px;
+  --app-margin-mini: 16px;
+}
+
+@media screen and (max-width: 768px) {
+  :root {
+    --app-margin: var(--app-margin-small);
+    --text: 19px;
+    --text-small: 15px;
+    --text-large: 21px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  :root {
+    --app-margin: var(--app-margin-mini);
+    --text: 18px;
+    --font-small: 14px;
+  }
+}

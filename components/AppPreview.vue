@@ -1,10 +1,11 @@
 <template>
-  <nuxt-img
-    loading="lazy"
-    provider="cloudinary"
+  <NuxtImg
     class="previewCover"
+    loading="lazy"
     :src="cover"
-    alt="Take me to the internet"
+    alt=""
+    format="webp"
+    sizes="xs:320 sm:640 md:768 lg:1024 xl:1280 xxl:1920"
     :style="{ transform: translatePosition }"
   />
 </template>
