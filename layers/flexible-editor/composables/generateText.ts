@@ -1,9 +1,17 @@
 import type { JSONContent } from 'tiptap-render-view/vue'
-import { generateHTML } from '@tiptap/html'
+import { generateText } from '@tiptap/core'
 import serializers from '../assets/extensions'
 
-export default (doc: JSONContent) => {
-  doc.content = doc?.content?.filter(({ type }) => type !== 'relation-block')
+export default (document: JSONContent) => {
+  if (!document?.content)
+    return
 
-  return stripHTMLTags(generateHTML(doc, serializers))
+  let { content } = document
+  // TODO: Get text from relation blocks, inline-blocks and marks too
+  content = content?.filter(({ type }) => type !== 'relation-block' && type !== 'relation-inline-block' && type !== 'relation-mark')
+
+  return generateText({
+    type: 'doc',
+    content,
+  }, serializers)
 }

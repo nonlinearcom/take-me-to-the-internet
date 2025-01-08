@@ -13,9 +13,11 @@
             class="stretced-link"
             :to="`/glossary/${item.slug}`"
           >
-            <h2>{{ item.translations[languageCode].term }}</h2>
+            <h2>
+              {{ item.translations[0]?.term }}
+            </h2>
             <p class="description">
-              {{ item.translations[languageCode].description.content[0].content[0].text }}
+              {{ truncate(generateText(item.translations[0].description), 150) }}
             </p>
           </NuxtLink>
         </article>
@@ -26,12 +28,7 @@
 
 <script lang="ts" setup>
 const { $directus, $readItems } = useNuxtApp()
-const { locale } = useI18n()
-
-// test
-const languageCode = computed(() => {
-  return locale.value === 'it' ? 1 : 0
-})
+const { locale, localeProperties } = useI18n()
 
 const { data: glossary } = await useAsyncData('glossary', () => {
   return $directus.request(
@@ -63,8 +60,19 @@ const { data: glossary } = await useAsyncData('glossary', () => {
           ],
         },
       ],
+      deep: {
+        translations: {
+          _filter: {
+            languages_code: {
+              _eq: localeProperties.value.language,
+            },
+          },
+        },
+      },
     }),
   )
+}, {
+  watch: [locale],
 })
 
 // Check if the current term starts a new row
@@ -72,8 +80,8 @@ function isNewGroup(index: number) {
   if (index === 0)
     return true // Always mark the first term as a new group
 
-  const currentTerm = glossary.value[index]?.translations[languageCode.value].term
-  const previousTerm = glossary.value[index - 1]?.translations[languageCode.value].term
+  const currentTerm = glossary.value?.[index]?.translations[0].term
+  const previousTerm = glossary.value?.[index - 1]?.translations[0].term
 
   // Compare the first letters of the current and previous terms
   return currentTerm[0]?.toLowerCase() !== previousTerm[0]?.toLowerCase()

@@ -1,5 +1,8 @@
 <template>
-  <article class="resources-term">
+  <article
+    v-if="page"
+    class="resources-term"
+  >
     <header>
       <UiButton
         class="close"

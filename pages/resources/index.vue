@@ -1,6 +1,18 @@
 <template>
   <article class="resources-page">
-    <table class="resources-table">
+    <transition name="fade">
+      <AppPreview
+        v-if="!isOutside && isLaptop && currentCover !== null"
+        :cover="currentCover"
+        :x-pos="xPos"
+        :y-pos="yPos"
+      />
+    </transition>
+
+    <table
+      ref="table"
+      class="resources-table"
+    >
       <thead v-if="headers">
         <tr>
           <th
@@ -24,6 +36,7 @@
         <tr
           v-for="(item, index) in sortedResources"
           :key="index"
+          @mouseover="getCoverUrl(item?.cover)"
         >
           <td>
             <span class="resource">
@@ -157,6 +170,16 @@ const sortedResources = computed(() => {
 const isSortedBy = (key: string, direction: 'asc' | 'desc') => {
   return sortKey.value === key && sortDirection.value === direction
 }
+
+const table = ref(null)
+const currentCover = ref()
+const { isLaptop } = useMyBreakpoints()
+
+function getCoverUrl(url?: string) {
+  currentCover.value = url
+}
+
+const { isOutside, xPos, yPos } = useFollowMe(table)
 </script>
 
 <style lang="postcss" scoped>

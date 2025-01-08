@@ -34,8 +34,13 @@ const containerRef = ref(null)
 </script>
 
 <style lang="postcss" scoped>
+swiper-container {
+  width: calc(100vw - var(--app-margin-small) * 2);
+}
+
 swiper-slide {
   width: auto;
+  max-width: 100%;
 
   img {
     max-height: 360px;

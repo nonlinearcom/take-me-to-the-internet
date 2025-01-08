@@ -37,6 +37,7 @@ const videoSrc = computed(() => `https://res.cloudinary.com/non-linear/video/upl
 
 const { isTablet } = useMyBreakpoints()
 
+const { elementX, elementY, isOutside } = useMouseInElement(video)
 const moveButton = computed(() => {
   return (isTablet.value)
     ? ''
@@ -50,8 +51,6 @@ const moveButton = computed(() => {
 const { playing } = useMediaControls(video, {
   src: videoSrc,
 })
-
-const { elementX, elementY, isOutside } = useMouseInElement(video)
 </script>
 
 <style lang="postcss">

@@ -54,13 +54,13 @@
       /> -->
 
       <NuxtLink
-        v-for="locale in availableLocales"
-        :key="locale.code"
+        v-for="loc in availableLocales"
+        :key="loc.code"
         class="lang-toggle"
         href="#"
-        @click.prevent.stop="setLocale(locale.code)"
+        @click.prevent.stop="setLocale(loc.code)"
       >
-        {{ locale.code }}
+        {{ loc.code }}
       </NuxtLink>
     </span>
   </header>

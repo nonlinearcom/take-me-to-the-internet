@@ -1,13 +1,15 @@
 <template>
-  <SvgIcon
+  <Icon
     class="ui-icon"
-    :name="(name as SvgName)"
-    reactive
+    :name="`${collection}:${name}`"
     aria-hidden
   />
 </template>
 
 <script setup lang="ts">
 defineOptions({ name: 'UiIcon' })
-defineProps<{ name: string }>()
+withDefaults(defineProps<{
+  name: string
+  collection?: string
+}>(), { collection: 'ui' })
 </script>

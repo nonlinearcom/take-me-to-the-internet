@@ -41,10 +41,6 @@ const { $directus, $readItems } = useNuxtApp()
 const route = useRoute()
 const { locale } = useI18n()
 
-const languageCode = computed(() => {
-  return locale.value === 'en' ? 'en-US' : 'it-IT'
-})
-
 // Don’t Use Slugs as a Primary Key
 // https://docs.directus.io/blog/directus-seo-tips-tricks.html#don-t-use-slugs-as-a-primary-key
 const slug = route.params.slug as string
@@ -93,8 +89,8 @@ if (!page.value) {
 const translation = computed(() => {
   if (!page.value)
     return null
-  // console.log('page.value: ', page.value)
-  const translation = page.value[0].translations.find(t => t.languages_code === languageCode.value) || 0
+
+  const translation = page.value[0].translations.find(t => t.languages_code.startsWith(locale.value)) || 0
   if (!translation)
     return null
 
