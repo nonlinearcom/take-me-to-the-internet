@@ -19,6 +19,7 @@
   gap: 6px;
   font-size: var(--text-large);
   transition: background-color 0.3s;
+  pointer-events: all;
 
   .dash {
     height: 2px;

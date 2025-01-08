@@ -3,7 +3,7 @@
     <iframe
       class="home__iframe"
       allow="autoplay; camera; microphone"
-      src="./patches/cover/index.html"
+      src="./patches/cover2/index.html"
     />
   </article>
 </template>
@@ -22,10 +22,11 @@
   pointer-events: none;
 
   .home__iframe {
-    z-index: -2;
+    z-index: -1;
     width: 100%;
     height: 100%;
     border: 0px;
+    pointer-events: all;
   }
 }
 </style>
