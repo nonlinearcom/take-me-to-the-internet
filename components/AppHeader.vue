@@ -88,7 +88,7 @@ const availableLocales = computed(() => {
   align-items: start;
   gap: 32px;
   padding: var(--app-margin-small);
-  min-height: 50vh;
+  pointer-events: none;
   .main-menu {
     grid-column: 3;
     display: flex;
@@ -96,6 +96,7 @@ const availableLocales = computed(() => {
     justify-content: flex-start;
     align-items: flex-start;
     gap: 4px;
+    pointer-events: all;
   }
 
   .mode-settings {
@@ -104,6 +105,7 @@ const availableLocales = computed(() => {
     display: flex;
     flex-direction: column;
     gap: 4px;
+    pointer-events: all;
   }
   /* temp lang switcher button */
   .lang-toggle {
