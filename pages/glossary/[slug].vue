@@ -2,23 +2,17 @@
   <article class="glossary-term">
     <header>
       <UiButton
-        class="close"
+        class="glossary-close"
         label="Glossary"
         variant="outline"
         rounded
+        padded
         size="xs"
         to="/glossary"
       />
       <h1 class="title">
         {{ translation.term }}
       </h1>
-      <!-- <UiButton
-        class="close"
-        icon="close"
-        variant="outline"
-        rounded
-        to="/glossary"
-      /> -->
     </header>
     <EditorContent
       v-if="translation?.description"
@@ -112,6 +106,11 @@ const translation = computed(() => {
     }
   }
 
+  .glossary-close {
+    height: 100px;
+    width: 100px;
+    margin: var(--app-margin-small);
+  }
   .glossary-content {
     max-width: 68ch;
     margin: 0 auto;
