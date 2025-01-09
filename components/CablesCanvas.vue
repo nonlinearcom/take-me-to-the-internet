@@ -21,6 +21,8 @@
     },
   })
   
+
+
   const src = computed(() => props.patchDir + '/js/patch.js')
     
   const mergedPatchOptions = computed(() => {
@@ -59,11 +61,24 @@
     if (!patchOptions.onPatchLoaded) patchOptions.onPatchLoaded = _patchInitialized;
     if (!patchOptions.onFinishedLoading) patchOptions.onFinishedLoading = _patchFinishedLoading;
     CABLES.patch = new CABLES.Patch(patchOptions);
+    
+    const rootElement = getComputedStyle(document.documentElement);
+    const darkColor = rootElement.getPropertyValue('--gray-11');
+    const lightColor = rootElement.getPropertyValue('--gray-1');
 
     const clearColor = CABLES.patch.getVar("clearColor");
-    if (clearColor) {
-      clearColor.setValue("747474");
-    }
+
+
+    const isDark = useDark({
+    onChanged(dark) {
+      if (dark) {
+        clearColor.setValue(darkColor);
+      } else {
+        clearColor.setValue(lightColor);
+      }
+    },
+  })
+
 
   })
   
