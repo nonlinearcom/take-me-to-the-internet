@@ -1,3 +1,0 @@
-All cables core code is licenced under the MIT licence
-
-Some ops may be using code from contributors or external libraries under different licences.
