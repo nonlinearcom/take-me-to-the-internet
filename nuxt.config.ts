@@ -24,6 +24,7 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     'nuxt-swiper',
     'nuxt-umami',
+    '@nuxt/scripts',
   ],
 
   i18n: {

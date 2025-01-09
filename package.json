@@ -29,6 +29,7 @@
     "@nuxt/devtools": "^1.7.0",
     "@nuxt/eslint": "^0.7.4",
     "@nuxt/image": "^1.8.1",
+    "@nuxt/scripts": "0.9.5",
     "@nuxtjs/i18n": "^9.1.1",
     "@vueuse/core": "^12.3.0",
     "@vueuse/nuxt": "^12.3.0",
