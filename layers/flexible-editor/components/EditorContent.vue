@@ -28,7 +28,7 @@ const relationBlockSerializer = Node.create({
     if (props.relationBlocks) {
       for (const { collection, component } of props.relationBlocks) {
         if (HTMLAttributes.collection === collection)
-          return [component, { ...HTMLAttributes, class: 'relation-block' }, 0] as any
+          return [component, { ...HTMLAttributes }, 0] as any
       }
     }
 
@@ -41,7 +41,7 @@ const relationInlineBlockSerializer = Node.create({
     if (props.relationInlineBlocks) {
       for (const { collection, component } of props.relationInlineBlocks) {
         if (HTMLAttributes.collection === collection)
-          return [component, { ...HTMLAttributes, class: 'relation-inline-block' }, 0] as any
+          return [component, { ...HTMLAttributes }, 0] as any
       }
     }
 
@@ -54,7 +54,7 @@ const relationMarkSerializer = Mark.create({
     if (props.relationMarks) {
       for (const { collection, component } of props.relationMarks) {
         if (HTMLAttributes.collection === collection)
-          return [component, { ...HTMLAttributes, class: 'relation-mark' }, 0] as any
+          return [component, { ...HTMLAttributes }, 0] as any
       }
     }
 

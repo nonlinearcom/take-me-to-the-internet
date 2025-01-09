@@ -4,8 +4,9 @@
     appear
   >
     <div
+      v-if="page"
       class="panel__overlay"
-      @click="closeModal()"
+      @click.self="closeModal()"
     >
       <transition
         name="panel"
@@ -32,10 +33,12 @@
                 <br>{{ page.subtitle }}
               </template>
             </h2>
-            <div class="description">
-              <!-- <ContentRenderer :value="page" /> -->
-              lorem ipsum
-            </div>
+            <EditorContent
+              v-if="page.content"
+              class="description"
+              :content="page.content"
+              :relation-blocks
+            />
             <aside
               v-if="page.role"
               class="meta"
@@ -46,7 +49,7 @@
               <h3>{{ page.location }}, {{ page.year }}</h3>
 
               <template v-if="page.assistant">
-                <h3><br>Teaching assistant <br>{{ page.assistant }}</h3>
+                <h3><br>Teaching assistant <br>{{ page.assistant.join(', ') }}</h3>
               </template>
             </aside>
           </header>
@@ -76,7 +79,14 @@
   </transition>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import { EditorGallery, EditorMedia } from '#components'
+
+const relationBlocks: VueRelationNodeSerializers = [
+  { collection: 'gallery', component: EditorGallery },
+  { collection: 'media', component: EditorMedia },
+]
+
 const route = useRoute()
 const isPanelOpen = ref(false)
 
@@ -85,15 +95,40 @@ const { $directus, $readItem } = useNuxtApp()
 const { data: page, error } = await useAsyncData(
   'log-page',
   () => {
-    console.log('route.params.slug: ', route.params.slug)
     return $directus.request(
-      $readItem('log', route.params.slug, {
-        fields: ['*', { '*': ['*'] }],
+      $readItem('log', String(route.params.slug), {
+        fields: [
+          '*', 
+          {
+            '*': ['*'],
+          },
+          {
+            editor_nodes: [
+              '*',
+              {
+                item: {
+                  gallery: [
+                    { content: ['*'] },
+                  ],
+                  media: [{ file: ['*'] }],
+                },
+              },
+            ],
+          },
+        ],
       }),
     )
   },
+  {
+    transform: (data) => {
+      if (!data)
+        return null
+
+      injectDataIntoContent(data.editor_nodes, data.content)
+      return data
+    },
+  },
 )
-console.log('page', page.value)
 
 if (!page.value) {
   throw createError({

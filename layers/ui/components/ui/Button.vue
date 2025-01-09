@@ -92,7 +92,7 @@ const linkProps = computed(() => getNuxtLinkProps(props))
     }
   }
 
-  &:is(:disabled, [disabled]) {
+  &:is(:disabled, [disabled='true']) {
     color: var(--text-color) !important;
     background-color: var(--background-color) !important;
     cursor: not-allowed;

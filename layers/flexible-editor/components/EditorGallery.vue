@@ -35,6 +35,7 @@ const containerRef = ref(null)
 
 <style lang="postcss" scoped>
 swiper-container {
+  --swiper-navigation-color: currentColor;
   width: calc(100vw - var(--app-margin-small) * 2);
 }
 

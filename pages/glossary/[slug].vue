@@ -24,11 +24,11 @@
 </template>
 
 <script lang="ts" setup>
-import { EditorGallery, EditorImage } from '#components'
+import { EditorGallery, EditorMedia } from '#components'
 
 const relationBlocks: VueRelationNodeSerializers = [
   { collection: 'gallery', component: EditorGallery },
-  { collection: 'image', component: EditorImage },
+  { collection: 'media', component: EditorMedia },
 ]
 
 const { $directus, $readItems } = useNuxtApp()
