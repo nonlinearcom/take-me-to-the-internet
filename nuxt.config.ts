@@ -54,12 +54,20 @@ export default defineNuxtConfig({
     provider: 'directus',
   },
 
+  runtimeConfig: {
+    public: {
+      directus: {
+        url: process.env.NUXT_PUBLIC_DIRECTUS_URL || 'http://localhost:8055',
+      },
+    },
+  },
+
   umami: {
     host: 'https://analytics.non-linear.dev',
     id: '51130bf5-f8f9-47d7-8848-6a54f6017518',
     domains: ['www.take-me-to-the-internet.com'],
     ignoreLocalhost: true,
-    //  version: 2,
+    // version: 2,
   },
 
   css: [
