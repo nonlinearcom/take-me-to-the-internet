@@ -26,12 +26,12 @@
       >
         About
       </NuxtLink>
-      <!-- <NuxtLink
+      <NuxtLink
         to="/log"
         class="line"
       >
         Log
-      </NuxtLink> -->
+      </NuxtLink>
     </nav>
 
     <span class="mode-settings">
