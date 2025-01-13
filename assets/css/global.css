@@ -79,6 +79,17 @@ h1 {
   h2 {
     font-size: var(--text-large);
   }
+
+  pre,
+  code {
+    background-color: var(--bg-secondary);
+  }
+
+  pre {
+    margin: var(--app-margin-mini) 0;
+    padding: var(--app-margin-small);
+    white-space: pre-wrap;
+  }
 }
 
 /* Functional */
