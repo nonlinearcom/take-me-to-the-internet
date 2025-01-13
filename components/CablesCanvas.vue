@@ -1,9 +1,6 @@
 <template>
   <div>
-    <canvas
-      :id="canvasId"
-      tabIndex="1"
-    />
+    <canvas :id="canvasId" tabIndex="1" />
   </div>
 </template>
 
@@ -54,32 +51,34 @@ const { proxy, onLoaded } = useScript(src.value, {
   },
 })
 
-onLoaded(() => {
-  const patchOptions = mergedPatchOptions.value
-  if (!patchOptions.patch)
-    patchOptions.patch = CABLES.exportedPatch
-  if (!patchOptions.onPatchLoaded)
-    patchOptions.onPatchLoaded = _patchInitialized
-  if (!patchOptions.onFinishedLoading)
-    patchOptions.onFinishedLoading = _patchFinishedLoading
-  CABLES.patch = new CABLES.Patch(patchOptions)
+onMounted(() =>
+  onLoaded(() => {
+    const patchOptions = mergedPatchOptions.value
+    if (!patchOptions.patch)
+      patchOptions.patch = CABLES.exportedPatch
+    if (!patchOptions.onPatchLoaded)
+      patchOptions.onPatchLoaded = _patchInitialized
+    if (!patchOptions.onFinishedLoading)
+      patchOptions.onFinishedLoading = _patchFinishedLoading
+    CABLES.patch = new CABLES.Patch(patchOptions)
 
-  // const rootElement = getComputedStyle(document.documentElement)
-  // const darkColor =  rootElement.getPropertyValue('--gray-11');
-  // const lightColor = rootElement.getPropertyValue('--gray-1')
+    // const rootElement = getComputedStyle(document.documentElement)
+    // const darkColor =  rootElement.getPropertyValue('--gray-11');
+    // const lightColor = rootElement.getPropertyValue('--gray-1')
 
-  const clearColor = CABLES.patch.getVar('clearColor')
+    const clearColor = CABLES.patch.getVar('clearColor')
 
-  const isDark = useDark({
-    onChanged(dark) {
-      if (dark) {
-        clearColor.setValue('#222222')
-      } else {
-        clearColor.setValue('#fcfcfc')
-      }
-    },
-  })
-})
+    const isDark = useDark({
+      onChanged(dark) {
+        if (dark) {
+          clearColor.setValue('#222222')
+        } else {
+          clearColor.setValue('#fcfcfc')
+        }
+      },
+    })
+  }),
+)
 
 function onTest(e) {
 }
@@ -88,4 +87,4 @@ function testHover(e) {
 }
 </script>
 
-  <style></style>
+<style></style>
