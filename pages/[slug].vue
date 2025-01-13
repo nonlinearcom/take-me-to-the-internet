@@ -11,9 +11,12 @@
 </template>
 
 <script lang="ts" setup>
-import { EditorGallery, EditorMedia } from '#components'
+import { EditorCables, EditorGallery, EditorMedia } from '#components'
+import hljs from 'highlight.js'
+import 'highlight.js/styles/stackoverflow-light.min.css'
 
 const relationBlocks: VueRelationNodeSerializers = [
+  { collection: 'cables', component: EditorCables },
   { collection: 'gallery', component: EditorGallery },
   { collection: 'media', component: EditorMedia },
 ]
@@ -39,6 +42,7 @@ const { data: page } = await useAsyncData('page', () => {
                 '*',
                 {
                   item: {
+                    cables: ['*'],
                     gallery: [
                       { content: ['*'] },
                     ],
@@ -72,6 +76,17 @@ const translation = computed(() => {
 
   injectDataIntoContent(translation.editor_nodes, translation.content)
   return translation
+})
+
+onMounted(async () => {
+  await nextTick()
+  document.querySelectorAll('pre').forEach((block) => {
+    const html = block.textContent
+    if (html) {
+      block.classList.add('hljs')
+      block.setHTMLUnsafe(hljs.highlightAuto(html).value)
+    }
+  })
 })
 </script>
 

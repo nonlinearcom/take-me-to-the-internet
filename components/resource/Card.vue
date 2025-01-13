@@ -10,7 +10,7 @@
         />
         <UiChip
           v-if="resource.year"
-          :label="resource.year"
+          :label="String(resource.year)"
           variant="outline"
           size="xs"
         />
@@ -41,12 +41,12 @@
         <dt>TOPICS</dt>
         <dd>
           <NuxtLink
-            v-for="topic in resource.topics"
-            :key="topic.topics_id.id"
+            v-for="({ topics_id }) in resource.topics.filter(({ topics_id }) => topics_id)"
+            :key="topics_id.id"
             class="tag"
-            :to="`/topics/${topic.topics_id.slug}`"
+            :to="`/topics/${topics_id.slug}`"
           >
-            {{ topic.topics_id.title }}
+            {{ topics_id.title }}
           </NuxtLink>
         </dd>
       </template>
@@ -54,12 +54,12 @@
         <dt>TAGS</dt>
         <dd>
           <NuxtLink
-            v-for="tag in resource.tags"
-            :key="tag.tags_id.id"
+            v-for="({ tags_id }) in resource.tags.filter(({ tags_id }) => tags_id)"
+            :key="tags_id.id"
             class="tag"
-            :to="`/tags/${tag.tags_id.slug}`"
+            :to="`/tags/${tags_id.slug}`"
           >
-            {{ tag.tags_id.title }}
+            {{ tags_id.title }}
           </NuxtLink>
         </dd>
       </template>
