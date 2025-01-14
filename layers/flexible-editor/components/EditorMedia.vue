@@ -57,6 +57,7 @@ const { playing } = useMediaControls(video, { src })
 
   video {
     display: block;
+    width: 100%;
   }
 }
 

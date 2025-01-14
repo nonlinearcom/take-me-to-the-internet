@@ -37,6 +37,6 @@ const { isOutside, xPos, yPos } = useFollowMe(table)
 
 <style lang="postcss">
 .log-table {
-  margin: 25vh 0 50px 0;
+  margin: 25vh 0 50px;
 }
 </style>
