@@ -10,16 +10,15 @@
           :class="{ 'group-start': isNewGroup(index) }"
         >
           <NuxtLink
-            class="stretced-link"
+            class="stretched-link"
             :to="`/glossary/${item.slug}`"
-          >
-            <h2>
-              {{ item.translations[0]?.term }}
-            </h2>
-            <p class="description">
-              {{ truncate(generateText(item.translations[0].description), 150) }}
-            </p>
-          </NuxtLink>
+          />
+          <h2>
+            {{ item.translations[0]?.term }}
+          </h2>
+          <p class="description">
+            {{ truncate(generateText(item.translations[0].description), 150) }}
+          </p>
         </article>
       </template>
     </div>
@@ -35,7 +34,7 @@ const { data: glossary } = await useAsyncData('glossary', () => {
     $readItems('glossary', {
       filter: {
         status: {
-          _neq: 'draft',
+          _eq: 'published',
         },
       },
       sort: ['slug'],
