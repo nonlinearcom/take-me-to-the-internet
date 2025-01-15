@@ -75,20 +75,21 @@ h1 {
   font-size: var(--text-large) !important;
 }
 
+pre,
+code {
+  background-color: var(--bg-hover);
+}
+
+pre {
+  margin: var(--app-margin-mini) 0;
+  padding: var(--app-margin-small);
+  white-space: pre-wrap;
+  border-radius: 4px;
+}
+
 .flexible-editor {
   h2 {
     font-size: var(--text-large);
-  }
-
-  pre,
-  code {
-    background-color: var(--bg-secondary);
-  }
-
-  pre {
-    margin: var(--app-margin-mini) 0;
-    padding: var(--app-margin-small);
-    white-space: pre-wrap;
   }
 }
 

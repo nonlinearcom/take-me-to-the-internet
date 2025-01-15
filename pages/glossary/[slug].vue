@@ -91,6 +91,8 @@ const translation = computed(() => {
   injectDataIntoContent(translation.editor_nodes, translation.description)
   return translation
 })
+
+useHighlight()
 </script>
 
 <style lang="postcss">
