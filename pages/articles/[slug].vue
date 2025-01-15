@@ -20,24 +20,7 @@
 
 <script lang="ts" setup>
 import { EditorCables, EditorCodeLink, EditorGallery, EditorMedia } from '#components'
-import hljs from 'highlight.js'
 import { footerPages } from '~/assets/footerPages'
-
-const isDark = useDark()
-useHead({
-  link: [
-    {
-      rel: 'stylesheet',
-      href: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/stackoverflow-light.min.css',
-    },
-  ],
-})
-
-useHead({
-  link: () => isDark.value
-    ? [{ rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/stackoverflow-dark.min.css' }]
-    : [{ rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/stackoverflow-light.min.css' }],
-})
 
 const relationBlocks: VueRelationNodeSerializers = [
   { collection: 'cables', component: EditorCables },
@@ -108,16 +91,7 @@ const translation = computed(() => {
   return translation
 })
 
-onMounted(async () => {
-  await nextTick()
-  document.querySelectorAll('pre').forEach((block) => {
-    const html = block.textContent
-    if (html) {
-      block.classList.add('hljs')
-      block.setHTMLUnsafe(hljs.highlightAuto(html).value)
-    }
-  })
-})
+useHighlight()
 </script>
 
 <style lang="postcss" scoped>
