@@ -75,21 +75,26 @@ h1 {
   font-size: var(--text-large) !important;
 }
 
-pre,
-code {
-  background-color: var(--bg-hover);
-}
-
-pre {
-  margin: var(--app-margin-mini) 0;
-  padding: var(--app-margin-small);
-  white-space: pre-wrap;
-  border-radius: 4px;
-}
-
-.flexible-editor {
+.prose {
   h2 {
     font-size: var(--text-large);
+  }
+
+  a {
+    text-underline-offset: 2px;
+    text-decoration: underline;
+  }
+
+  pre,
+  code {
+    background-color: var(--bg-hover);
+  }
+
+  pre {
+    margin: var(--app-margin-mini) 0;
+    padding: var(--app-margin-small);
+    white-space: pre-wrap;
+    border-radius: 4px;
   }
 }
 

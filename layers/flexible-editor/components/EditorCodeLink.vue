@@ -15,12 +15,7 @@ defineProps<{
 
 <style lang="postcss" scoped>
 code {
-  position: relative;
-
-  @media (hover) {
-    &:hover {
-      text-decoration: underline;
-    }
-  }
+  font-size: calc(var(--text) - 2px);
+  padding: 1px;
 }
 </style>
