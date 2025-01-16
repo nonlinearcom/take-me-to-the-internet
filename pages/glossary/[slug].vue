@@ -16,7 +16,7 @@
     </header>
     <EditorContent
       v-if="translation?.description"
-      class="glossary-content"
+      class="prose glossary-content"
       :content="translation?.description"
       :relation-blocks
     />

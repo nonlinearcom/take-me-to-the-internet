@@ -10,7 +10,7 @@
     </time>
     <EditorContent
       v-if="translation?.content"
-      class="flexible-editor"
+      class="prose"
       :content="translation?.content"
       :relation-blocks
       :relation-inline-blocks

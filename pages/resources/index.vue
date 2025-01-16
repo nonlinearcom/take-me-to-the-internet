@@ -9,6 +9,44 @@
       />
     </transition>
 
+    <section class="resources-filters">
+      <h5>Filter by:</h5>
+      <h5>Topics</h5>
+      <UiToggleGroup
+        v-model="filters.topics"
+        size="sm"
+      >
+        <UiToggleGroupItem
+          v-for="value in arrayUnion(resourcesData?.flatMap(({ topics }) => topics).map(({ topics_id }) => topics_id.title))"
+          :key="value"
+          :value
+          :disabled="!!isDisabled({ topic: value })"
+        >
+          {{ value }}
+        </UiToggleGroupItem>
+      </UiToggleGroup>
+
+      <h5>Tags</h5>
+      <UiToggleGroup
+        v-model="filters.tags"
+        size="sm"
+      >
+        <UiToggleGroupItem
+          v-for="value in arrayUnion(resourcesData?.flatMap(({ tags }) => tags).map(({ tags_id }) => tags_id.title))"
+          :key="value"
+          :value
+          :disabled="!!isDisabled({ tag: value })"
+        >
+          {{ value }}
+        </UiToggleGroupItem>
+      </UiToggleGroup>
+
+      <UiInput
+        v-model="search"
+        placeholder="Search…"
+      />
+    </section>
+
     <table
       ref="table"
       class="resources-table"
@@ -116,6 +154,13 @@ const { data: resourcesData } = await useAsyncData('resources', () => {
   )
 })
 
+const filters = ref<{ topics: string[], tags: string[] }>({
+  topics: [],
+  tags: [],
+})
+const search = ref<string | undefined>()
+const searchDebounced = refDebounced(search, 1000)
+
 const headers = [
   { key: 'slug', label: 'Title' },
   { key: 'type', label: 'Type' },
@@ -139,14 +184,39 @@ const toggleSort = (key: string) => {
   }
 }
 
+const filteredResources = computed(() => {
+  let res = resourcesData.value ?? undefined
+  if (filters.value.topics?.length)
+    res = res?.filter(({ topics }) => filters.value.topics.some(r => topics?.map(({ topics_id }) => topics_id.title)?.includes(r)))
+  if (filters.value.tags?.length)
+    res = res?.filter(({ tags }) => filters.value.tags.some(r => tags?.map(({ tags_id }) => tags_id.title)?.includes(r)))
+  if (searchDebounced.value) {
+    res = res?.filter((item) => {
+      const title = item.title.toLowerCase()
+      const description = item.description?.toLowerCase()
+      const people = item.people.map(({ people_id }) => people_id.name.trim()).join(', ').toLowerCase()
+      return `${title} ${description} ${people}`.includes(searchDebounced.value?.toLowerCase())
+    })
+  }
+
+  return res
+})
+
+const isDisabled = ({ tag, topic }: { tag?: string, topic?: string }) => {
+  if (tag)
+    return !filteredResources.value?.some(({ tags }) => tags?.map(({ tags_id }) => tags_id.title).includes(tag))
+  if (topic)
+    return !filteredResources.value?.some(({ topics }) => topics?.map(({ topics_id }) => topics_id.title).includes(topic))
+}
+
 // Computed property to get sorted resources
 const sortedResources = computed(() => {
-  if (!resourcesData.value || !sortKey.value || !sortDirection.value) {
-    return resourcesData.value || []
+  if (!filteredResources.value || !sortKey.value || !sortDirection.value) {
+    return filteredResources.value || []
   }
-  console.log(resourcesData.value)
+  console.log(filteredResources.value)
   // Sort based on the active sort key and direction
-  return [...resourcesData.value].sort((a, b) => {
+  return [...filteredResources.value].sort((a, b) => {
     const key = sortKey.value as keyof Resource
 
     // Handle nested keys for 'author' sorting
@@ -186,6 +256,38 @@ const { isOutside, xPos, yPos } = useFollowMe(table)
 .resources-page {
   display: flex;
   flex-direction: column;
+  margin: 25vh 0 50px;
+}
+
+.resources-filters {
+  display: grid;
+  gap: var(--app-margin-mini);
+  margin-bottom: var(--app-margin);
+  padding: var(--app-margin-small);
+
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 3fr;
+
+    .ui-input {
+      max-width: 480px;
+      grid-column: 2 / span 1;
+      margin: var(--app-margin-small) 0 var(--app-margin-mini);
+    }
+  }
+
+  h5 {
+    font-weight: 500;
+    font-size: var(--text-small);
+    grid-column: 1 / span 1;
+  }
+
+  .ToggleGroup {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .ToggleGroupItem {
+    padding: 8px 12px;
+  }
 }
 
 .resources-table {
