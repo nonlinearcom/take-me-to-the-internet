@@ -123,6 +123,12 @@
               <PeopleCard :author="author.people_id" />
             </UiDialog>
           </td>
+          <td class="open">
+            <span
+              v-if="item.open"
+              class="dot is-open"
+            />
+          </td>
         </tr>
       </tbody>
     </table>
@@ -166,6 +172,7 @@ const headers = [
   { key: 'type', label: 'Type' },
   { key: 'year', label: 'Year' },
   { key: 'author', label: 'Author' },
+  { key: 'open', label: 'Open' },
 ]
 
 // Sorting state
@@ -256,7 +263,7 @@ const { isOutside, xPos, yPos } = useFollowMe(table)
 .resources-page {
   display: flex;
   flex-direction: column;
-  margin: 25vh 0 50px;
+  margin: 25vh 0 25vh;
 }
 
 .resources-filters {
@@ -301,6 +308,8 @@ const { isOutside, xPos, yPos } = useFollowMe(table)
 
     &:last-child {
       border-bottom: 1px solid var(--border-color);
+      /*isOpen */
+      text-align: center;
     }
   }
   .resource {
@@ -310,6 +319,17 @@ const { isOutside, xPos, yPos } = useFollowMe(table)
   }
   .author {
     z-index: 20;
+  }
+
+  .dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    text-align: right;
+    &.is-open {
+      background-color: var(--text-color);
+    }
   }
   /* sorting */
   thead {

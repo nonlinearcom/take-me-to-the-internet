@@ -3,8 +3,9 @@ declare interface Resource {
   title: string
   slug: string
   year: number
-  type: 'article' | 'book' | 'podcast' | string
+  type: 'Article' | 'Book' | 'Podcast' | 'Talk' | 'Website' | string
   link: string
+  open: boolean
   description?: string
   cover?: string
   people: { people_id: Person }[] // Nested relationship
