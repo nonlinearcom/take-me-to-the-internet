@@ -126,7 +126,7 @@
           <td class="open">
             <span
               v-if="item.open"
-              class="dot is-open"
+              class="dot"
             />
           </td>
         </tr>
@@ -321,16 +321,6 @@ const { isOutside, xPos, yPos } = useFollowMe(table)
     z-index: 20;
   }
 
-  .dot {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    border-radius: 5px;
-    text-align: right;
-    &.is-open {
-      background-color: var(--text-color);
-    }
-  }
   /* sorting */
   thead {
     height: 54px;

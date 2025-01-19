@@ -41,3 +41,18 @@ declare interface Topic {
   parent_topic?: number
   resources: { resources_id: Resource }[]
 };
+
+declare interface GlossaryItem {
+  id: number
+  slug: string
+  date_created: string
+  date_updated: string
+  translations: { translation_id: any }[]
+};
+
+// declare interface GlossaryTranslation {
+//   id: number
+//   language_code: string
+//   term: string
+//   description: string
+// }
