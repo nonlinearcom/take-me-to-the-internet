@@ -34,7 +34,7 @@ export default {
 
   computed: {
     translatePosition() {
-      return `translate(${this.xPos}px, ${this.yPos - 130}px)`
+      return `translate(${this.xPos}px, ${this.yPos - 120}px)`
     },
   },
 }
@@ -42,12 +42,27 @@ export default {
 
 <style lang="postcss">
 .previewCover {
-  position: absolute;
-  /* transition: all 2s; */
-  max-height: 260px;
-  width: auto;
-  /* height: auto; */
+  /* position: absolute;
+  width: 260px;
+  height: 260px;
+  object-fit: contain;
   z-index: 5;
   pointer-events: none;
+ */
+
+  /* this solution allows border-radius  */
+  position: absolute;
+  width: auto;
+  height: auto;
+  max-width: 260px;
+  max-height: 260px;
+  object-fit: contain;
+  object-position: center center;
+  border-radius: var(--border-radius);
+  pointer-events: none;
+  z-index: 5;
+  box-shadow:
+    rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
+    rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
 }
 </style>

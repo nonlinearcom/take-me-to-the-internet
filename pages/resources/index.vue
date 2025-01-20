@@ -263,13 +263,13 @@ const { isOutside, xPos, yPos } = useFollowMe(table)
 .resources-page {
   display: flex;
   flex-direction: column;
-  margin: 25vh 0 25vh;
+  margin: 0 0 25vh;
 }
 
 .resources-filters {
   display: grid;
   gap: var(--app-margin-mini);
-  margin-bottom: var(--app-margin);
+  /* margin-bottom: var(--app-margin); */
   padding: var(--app-margin-small);
 
   @media (min-width: 768px) {

@@ -1,13 +1,16 @@
+import { useMouseInElement, useRafFn } from '@vueuse/core'
+
 export default function useFollowMe(el) {
   // const el = ref(null)
-  const { elementX, elementY, isOutside } = useMouseInElement(el)
-  const xOffset = 60
-  const yOffset = 0
+  const { elementX, elementY, elementPositionY, isOutside } = useMouseInElement(el)
+  const xOffset = 40
+  const yOffset = -200 // header height
+
   const state = reactive({
     xPos: 0,
     yPos: 0,
     dX: computed(() => elementX.value - state.xPos + xOffset),
-    dY: computed(() => elementY.value - state.yPos + yOffset),
+    dY: computed(() => elementPositionY.value + elementY.value - state.yPos + yOffset),
   })
 
   function updatePosition() {
