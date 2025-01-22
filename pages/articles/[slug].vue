@@ -3,11 +3,17 @@
     v-if="page"
     class="page"
   >
-    <h1> {{ translation.title }} </h1>
-    <time :datetime="page.date_updated.split('T')[0]">
-      Last updated: <br>
-      {{ formatDate(page.date_updated, { locale: languageCode }) }}
-    </time>
+    <header>
+      <h1 class="title">
+        {{ translation.title }}
+      </h1>
+      <time
+        class="updated-on"
+        :datetime="page.date_updated.split('T')[0]"
+      >
+        Updated on {{ formatDate(page.date_updated, { locale: languageCode }) }}
+      </time>
+    </header>
     <EditorContent
       v-if="translation?.content"
       class="prose"
@@ -99,18 +105,19 @@ useHighlight()
   position: relative;
   padding: var(--app-margin-small);
 
-  max-width: 60ch;
-  /* margin: 0 auto; */
+  max-width: 65ch;
+  margin: 0 auto;
 
-  time {
-    width: 16ch;
-    color: var(--text-secondary);
-    font-size: var(--text-small);
-    text-transform: capitalize;
+  header {
+    margin-bottom: 92px;
 
-    @media (min-width: 1024px) {
-      position: absolute;
-      left: 100%;
+    .title {
+      font-size: var(--text-large) !important;
+      margin-bottom: 0 !important;
+    }
+    time {
+      color: var(--text-secondary);
+      font-size: var(--text-small);
     }
   }
 }

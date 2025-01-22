@@ -75,9 +75,11 @@ h1 {
   font-size: var(--text-large) !important;
 }
 
+/* Flexible Editor Styles */
+
 .prose {
   h2 {
-    font-size: var(--text-large);
+    margin-top: var(--app-margin);
   }
 
   a {
@@ -87,14 +89,39 @@ h1 {
 
   pre,
   code {
-    background-color: var(--bg-hover);
+    background-color: var(--border-color);
+    border-radius: var(--border-radius);
   }
 
   pre {
-    margin: var(--app-margin-mini) 0;
-    padding: var(--app-margin-small);
     white-space: pre-wrap;
-    border-radius: 4px;
+    margin: var(--app-margin) 0;
+    padding: 24px;
+    font-size: 14px;
+
+    @media (min-width: 1024px) {
+      margin-left: -24px !important;
+      margin-right: -24px !important;
+    }
+  }
+
+  pre + pre {
+    margin: 8px;
+  }
+
+  pre + p {
+    margin: var(--app-margin) 0;
+  }
+
+  img {
+    display: block !important;
+    width: 100% !important;
+    margin: var(--app-margin) 0;
+    border-radius: var(--border-radius);
+    @media (min-width: 1024px) {
+      margin-left: -24px !important;
+      margin-right: -24px !important;
+    }
   }
 }
 
