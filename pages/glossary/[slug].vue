@@ -11,15 +11,15 @@
 
     <div class="nav-buttons">
       <NuxtLink class="previous-button" :to="`/glossary/${previousPage.slug}`">
-        {{ previousButtonTranslation.term }}
+        {{ getTranslation(nextPage).term }}
       </NuxtLink>
 
       <NuxtLink class="next-button" :to="`/glossary/${nextPage.slug}`">
-        {{ nextButtonTranslation.term }}
+        {{ getTranslation(previousPage).term }}
       </NuxtLink>
     </div>
     <!-- <pre>
-    {{ previousPage }}
+    {{ nextPage }}
     </pre> -->
   </article>
 </template>
@@ -78,22 +78,7 @@ const { data: pageData } = await useAsyncData('glossary-page', async () => {
         fields: [
           '*',
           {
-            translations: [
-              '*',
-              {
-                editor_nodes: [
-                  '*',
-                  {
-                    item: {
-                      image: ['*'],
-                      gallery: [
-                        { content: ['*'] },
-                      ],
-                    },
-                  },
-                ],
-              },
-            ],
+            translations: ['*'],
           },
         ],
       }),
@@ -103,11 +88,25 @@ const { data: pageData } = await useAsyncData('glossary-page', async () => {
   return { page, pageList }
 })
 
-const page = ref(pageData.value?.page)
+const page = ref(pageData.value?.page[0])
 const pageList = ref(pageData.value?.pageList)
-const currentPage = computed(() => pageList.value?.findIndex(page => page.slug === slug))
-const nextPage = computed(() => pageList?.value[currentPage?.value + 1])
-const previousPage = computed(() => pageList?.value[currentPage?.value - 1])
+pageList.value?.sort((a, b) => a.slug.localeCompare(b.slug))
+const currentPageIndex = computed(() => pageList.value?.findIndex(page => page.slug === slug))
+
+const nextPage = computed(() => {
+  if (!pageList.value || !currentPageIndex.value)
+    return null
+  const index = currentPageIndex.value === pageList.value.length - 1 ? pageList?.value[0] : pageList?.value[currentPageIndex.value + 1]
+  return index
+})
+
+// const previousPage = computed(() => currentPage.value == 0 ? pageList?.value[pageList.value.length - 1] : pageList?.value[currentPage?.value - 1])
+const previousPage = computed(() => {
+  if (!pageList.value || !currentPageIndex.value)
+    return null
+  const index = currentPageIndex.value === 0 ? pageList?.value[pageList.value.length - 1] : pageList?.value[currentPageIndex?.value - 1]
+  return index
+})
 
 if (!page.value) {
   throw createError({
@@ -127,37 +126,20 @@ function getTranslation(item: any) {
 }
 
 const translation = computed(() => {
-  if (!page.value)
-    return null
-
-  const translation = page.value[0].translations.find(t => t.languages_code.startsWith(locale.value)) || 0
-  if (!translation)
-    return null
-
-  injectDataIntoContent(translation.editor_nodes, translation.description)
-  return translation
+  return getTranslation(page.value)
 })
 
-// const previousTranslation = computed(() => {
-//   if (!previousPage.value)
+// const translation = computed(() => {
+//   if (!page.value)
 //     return null
 
-//   const previousTranslation = previousPage.value.translations.find(t => t.languages_code.startsWith(locale.value)) || 0
-//   if (!previousTranslation)
+//   const translation = page.value[0].translations.find(t => t.languages_code.startsWith(locale.value)) || 0
+//   if (!translation)
 //     return null
 
-//   injectDataIntoContent(previousTranslation.editor_nodes, previousTranslation.description)
-//   return previousTranslation
+//   injectDataIntoContent(translation.editor_nodes, translation.description)
+//   return translation
 // })
-
-const previousButtonTranslation = computed(() => {
-  return getTranslation(previousPage.value)
-})
-
-const nextButtonTranslation = computed(() => {
-  return getTranslation(nextPage.value)
-})
-// const previousTranslation = getTranslation(previousPage.value)
 
 useHighlight()
 </script>
