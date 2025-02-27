@@ -1,25 +1,23 @@
 <template>
   <article class="glossary-term">
     <header>
-      <UiButton
-        class="glossary-close"
-        label="Glossary"
-        variant="outline"
-        rounded
-        padded
-        size="xs"
-        to="/glossary"
-      />
+      <UiButton class="glossary-close" label="Glossary" variant="outline" rounded padded size="xs" to="/glossary" />
       <h1 class="title">
         {{ translation.term }}
       </h1>
     </header>
-    <EditorContent
-      v-if="translation?.description"
-      class="prose glossary-content"
-      :content="translation?.description"
-      :relation-blocks
-    />
+    <EditorContent v-if="translation?.description" class="prose glossary-content" :content="translation?.description"
+      :relation-blocks />
+
+    <div class="glossary-navigation">
+      <NuxtLink class="previous-button" :to="`/glossary/${previousPage.slug}`">
+        {{ getTranslation(previousPage).term }}
+      </NuxtLink>
+
+      <NuxtLink class="next-button" :to="`/glossary/${nextPage.slug}`">
+        {{ getTranslation(nextPage).term }}
+      </NuxtLink>
+    </div>
   </article>
 </template>
 
@@ -35,9 +33,9 @@ const { $directus, $readItems } = useNuxtApp()
 const route = useRoute()
 const { locale } = useI18n()
 
-// Don’t Use Slugs as a Primary Key
-// https://docs.directus.io/blog/directus-seo-tips-tricks.html#don-t-use-slugs-as-a-primary-key
 const slug = route.params.slug as string
+
+const { list } = useGlossary()
 
 const { data: page } = await useAsyncData('glossary-page', () => {
   return $directus.request(
@@ -58,7 +56,7 @@ const { data: page } = await useAsyncData('glossary-page', () => {
                 '*',
                 {
                   item: {
-                    image: ['*'],
+                    media: ['id', { file: ['*'] }],
                     gallery: [
                       { content: ['*'] },
                     ],
@@ -71,6 +69,26 @@ const { data: page } = await useAsyncData('glossary-page', () => {
       ],
     }),
   )
+}, { lazy: true })
+
+// const page = ref(pageData.value?.page[0])
+const currentPageIndex = computed(() => list.value?.findIndex(page => page.slug === slug))
+
+const nextPage = computed(() => {
+  if (!list.value || currentPageIndex.value == null)
+    return null
+  const page = currentPageIndex.value === list.value.length - 1 ? list?.value[0] : list?.value[currentPageIndex.value + 1]
+
+  return page
+})
+
+// const previousPage = computed(() => currentPage.value == 0 ? list?.value[list.value.length - 1] : list?.value[currentPage?.value - 1])
+const previousPage = computed(() => {
+  if (!list.value || currentPageIndex.value == null)
+    return null
+
+  const page = currentPageIndex.value === 0 ? list?.value[list.value.length - 1] : list?.value[currentPageIndex?.value - 1]
+  return page
 })
 
 if (!page.value) {
@@ -80,11 +98,15 @@ if (!page.value) {
   })
 }
 
+function getTranslation(item: any) {
+  return item.translations?.find(t => t.languages_code.startsWith(locale.value)) || 0
+}
+
 const translation = computed(() => {
   if (!page.value)
     return null
 
-  const translation = page.value[0].translations.find(t => t.languages_code.startsWith(locale.value)) || 0
+  const translation = getTranslation(page.value[0])
   if (!translation)
     return null
 
@@ -103,6 +125,7 @@ useHighlight()
   header {
     margin-bottom: 96px;
     text-align: center;
+
     h1 {
       font-size: var(--text-large);
     }
@@ -113,11 +136,20 @@ useHighlight()
     width: 100px;
     margin: var(--app-margin-small);
   }
+
   .glossary-content {
     max-width: 68ch;
     margin: 0 auto;
   }
+
+  .glossary-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    margin-top: 100px;
+    max-width: 68ch;
+  }
 }
-@media (max-width: 1440px) {
-}
+
+@media (max-width: 1440px) {}
 </style>
