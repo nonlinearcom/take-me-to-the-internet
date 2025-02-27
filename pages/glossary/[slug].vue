@@ -9,18 +9,15 @@
     <EditorContent v-if="translation?.description" class="prose glossary-content" :content="translation?.description"
       :relation-blocks />
 
-    <div class="nav-buttons">
+    <div class="glossary-navigation">
       <NuxtLink class="previous-button" :to="`/glossary/${previousPage.slug}`">
-        {{ getTranslation(nextPage).term }}
+        {{ getTranslation(previousPage).term }}
       </NuxtLink>
 
       <NuxtLink class="next-button" :to="`/glossary/${nextPage.slug}`">
-        {{ getTranslation(previousPage).term }}
+        {{ getTranslation(nextPage).term }}
       </NuxtLink>
     </div>
-    <!-- <pre>
-    {{ nextPage }}
-    </pre> -->
   </article>
 </template>
 
@@ -36,76 +33,62 @@ const { $directus, $readItems } = useNuxtApp()
 const route = useRoute()
 const { locale } = useI18n()
 
-// Don’t Use Slugs as a Primary Key
-// https://docs.directus.io/blog/directus-seo-tips-tricks.html#don-t-use-slugs-as-a-primary-key
 const slug = route.params.slug as string
 
-const { data: pageData } = await useAsyncData('glossary-page', async () => {
-  const [page, pageList] = await Promise.all([
-    $directus.request(
-      $readItems('glossary', {
-        filter: {
-          slug: {
-            _eq: slug,
-          },
+const { list } = useGlossary()
+
+const { data: page } = await useAsyncData('glossary-page', () => {
+  return $directus.request(
+    $readItems('glossary', {
+      filter: {
+        slug: {
+          _eq: slug,
         },
-        limit: 1,
-        fields: [
-          '*',
-          {
-            translations: [
-              '*',
-              {
-                editor_nodes: [
-                  '*',
-                  {
-                    item: {
-                      image: ['*'],
-                      gallery: [
-                        { content: ['*'] },
-                      ],
-                    },
+      },
+      limit: 1,
+      fields: [
+        '*',
+        {
+          translations: [
+            '*',
+            {
+              editor_nodes: [
+                '*',
+                {
+                  item: {
+                    media: ['id', { file: ['*'] }],
+                    gallery: [
+                      { content: ['*'] },
+                    ],
                   },
-                ],
-              },
-            ],
-          },
-        ],
-      }),
-    ),
-    $directus.request(
-      $readItems('glossary', {
-        fields: [
-          '*',
-          {
-            translations: ['*'],
-          },
-        ],
-      }),
-    ),
-  ])
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    }),
+  )
+}, { lazy: true })
 
-  return { page, pageList }
-})
-
-const page = ref(pageData.value?.page[0])
-const pageList = ref(pageData.value?.pageList)
-pageList.value?.sort((a, b) => a.slug.localeCompare(b.slug))
-const currentPageIndex = computed(() => pageList.value?.findIndex(page => page.slug === slug))
+// const page = ref(pageData.value?.page[0])
+const currentPageIndex = computed(() => list.value?.findIndex(page => page.slug === slug))
 
 const nextPage = computed(() => {
-  if (!pageList.value || !currentPageIndex.value)
+  if (!list.value || currentPageIndex.value == null)
     return null
-  const index = currentPageIndex.value === pageList.value.length - 1 ? pageList?.value[0] : pageList?.value[currentPageIndex.value + 1]
-  return index
+  const page = currentPageIndex.value === list.value.length - 1 ? list?.value[0] : list?.value[currentPageIndex.value + 1]
+
+  return page
 })
 
-// const previousPage = computed(() => currentPage.value == 0 ? pageList?.value[pageList.value.length - 1] : pageList?.value[currentPage?.value - 1])
+// const previousPage = computed(() => currentPage.value == 0 ? list?.value[list.value.length - 1] : list?.value[currentPage?.value - 1])
 const previousPage = computed(() => {
-  if (!pageList.value || !currentPageIndex.value)
+  if (!list.value || currentPageIndex.value == null)
     return null
-  const index = currentPageIndex.value === 0 ? pageList?.value[pageList.value.length - 1] : pageList?.value[currentPageIndex?.value - 1]
-  return index
+
+  const page = currentPageIndex.value === 0 ? list?.value[list.value.length - 1] : list?.value[currentPageIndex?.value - 1]
+  return page
 })
 
 if (!page.value) {
@@ -116,30 +99,20 @@ if (!page.value) {
 }
 
 function getTranslation(item: any) {
-  console.log(item.translations)
-  const translation = item.translations.find(t => t.languages_code.startsWith(locale.value)) || 0
+  return item.translations?.find(t => t.languages_code.startsWith(locale.value)) || 0
+}
+
+const translation = computed(() => {
+  if (!page.value)
+    return null
+
+  const translation = getTranslation(page.value[0])
   if (!translation)
     return null
 
   injectDataIntoContent(translation.editor_nodes, translation.description)
   return translation
-}
-
-const translation = computed(() => {
-  return getTranslation(page.value)
 })
-
-// const translation = computed(() => {
-//   if (!page.value)
-//     return null
-
-//   const translation = page.value[0].translations.find(t => t.languages_code.startsWith(locale.value)) || 0
-//   if (!translation)
-//     return null
-
-//   injectDataIntoContent(translation.editor_nodes, translation.description)
-//   return translation
-// })
 
 useHighlight()
 </script>
@@ -169,7 +142,7 @@ useHighlight()
     margin: 0 auto;
   }
 
-  .nav-buttons {
+  .glossary-navigation {
     display: flex;
     justify-content: space-between;
     margin: 0 auto;
