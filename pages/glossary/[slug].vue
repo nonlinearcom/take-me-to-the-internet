@@ -32,12 +32,13 @@ const relationBlocks: VueRelationNodeSerializers = [
 const { $directus, $readItems } = useNuxtApp()
 const route = useRoute()
 const { locale } = useI18n()
+const isLazy = useState('isLazy', () => false)
 
 const slug = route.params.slug as string
 
 const { list } = useGlossary()
 
-const { data: page } = await useAsyncData('glossary-page', () => {
+const { data: page, error } = await useAsyncData('glossary-page', () => {
   return $directus.request(
     $readItems('glossary', {
       filter: {
@@ -69,7 +70,19 @@ const { data: page } = await useAsyncData('glossary-page', () => {
       ],
     }),
   )
-}, { lazy: true })
+}, { lazy: isLazy.value })
+
+// workaround for the lazy loading after first fetch
+if (!isLazy.value) {
+  isLazy.value = true
+}
+
+if (!page.value) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Page Not Found',
+  })
+}
 
 // const page = ref(pageData.value?.page[0])
 const currentPageIndex = computed(() => list.value?.findIndex(page => page.slug === slug))
