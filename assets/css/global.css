@@ -113,14 +113,38 @@ h1 {
     margin: var(--app-margin) 0;
   }
 
-  img {
+  img,
+  svg {
     display: block !important;
-    width: 100% !important;
-    margin: var(--app-margin) 0;
+    max-width: 100% !important;
     border-radius: var(--border-radius);
     @media (min-width: 1024px) {
+      max-width: 106% !important;
       margin-left: -24px !important;
-      margin-right: -24px !important;
+      /* margin-right: -24px !important; */
+    }
+  }
+
+  svg {
+    height: auto !important;
+    background-color: var(--border-color);
+  }
+
+  figure {
+    margin: var(--app-margin) 0;
+  }
+
+  figcaption {
+    margin-top: 10px;
+    font-size: var(--text-small);
+  }
+}
+
+.prose-external {
+  img {
+    @media (min-width: 1024px) {
+      max-width: 100% !important;
+      margin-left: 0 !important;
     }
   }
 }

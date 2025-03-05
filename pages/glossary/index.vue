@@ -1,24 +1,12 @@
 <template>
   <main class="glossary-page">
     <div class="terms-grid">
-      <template
-        v-for="(item, index) in glossary"
-        :key="item.id"
-      >
-        <article
-          class="term"
-          :class="{ 'group-start': isNewGroup(index) }"
-        >
-          <NuxtLink
-            class="stretched-link"
-            :to="`/glossary/${item.slug}`"
-          />
+      <template v-for="(item, index) in glossary" :key="item.id">
+        <article class="term" :class="{ 'group-start': isNewGroup(index) }">
+          <NuxtLink class="stretched-link" :to="`/glossary/${item.slug}`" />
           <h2 class="term-title">
             {{ item.translations[0]?.term }}
-            <span
-              v-if="recetlyUpdated(item)"
-              class="dot"
-            />
+            <span v-if="recetlyUpdated(item)" class="dot" />
           </h2>
           <p class="description">
             {{ truncate(generateText(item.translations[0].description), 150) }}
@@ -104,33 +92,41 @@ function recetlyUpdated(item: GlossaryItem) {
   padding: var(--app-margin-small);
   display: flex;
   flex-direction: column;
+  align-items: center;
 
   .terms-grid {
-    margin-left: 25vw;
+    //margin-left: 25vw;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 16px;
+    width: 100%;
+    /* max 4 columns */
+    max-width: 1200px;
   }
 
   .term {
     position: relative;
     border-top: 1px solid var(--border-color);
     padding: 8px 4px;
-    /* background-color: red; */
 
     &.group-start {
       /* Force this item to the next row */
-      grid-column: 1; /* Starts on the first column */
-      grid-row: span 1; /* Jumps to the next row */
+      grid-column: 1;
+      /* Starts on the first column */
+      grid-row: span 1;
+      /* Jumps to the next row */
     }
+
     .term-title {
       display: flex;
       align-items: center;
       gap: 12px;
     }
   }
+
   .description {
     font-size: var(--text-small);
+    max-width: 450px;
   }
 }
 </style>

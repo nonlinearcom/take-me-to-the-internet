@@ -3,7 +3,7 @@
     <h1> {{ translation.title }} </h1>
     <EditorContent
       v-if="translation?.content"
-      class="prose"
+      class="prose prose-external"
       :content="translation?.content"
       :relation-blocks
     />

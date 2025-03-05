@@ -1,7 +1,6 @@
 <template>
   <article class="glossary-term">
     <header>
-      <UiButton class="glossary-close" label="Glossary" variant="outline" rounded padded size="xs" to="/glossary" />
       <h1 class="title">
         {{ translation.term }}
       </h1>
@@ -11,11 +10,13 @@
 
     <div class="glossary-navigation">
       <NuxtLink class="previous-button" :to="`/glossary/${previousPage.slug}`">
+        <UiIcon name="chevron-left" />
         {{ getTranslation(previousPage).term }}
       </NuxtLink>
 
       <NuxtLink class="next-button" :to="`/glossary/${nextPage.slug}`">
         {{ getTranslation(nextPage).term }}
+        <UiIcon name="chevron-right" />
       </NuxtLink>
     </div>
   </article>
@@ -161,6 +162,12 @@ useHighlight()
     margin: 0 auto;
     margin-top: 100px;
     max-width: 68ch;
+  }
+
+  .previous-button,
+  .next-button {
+    display: flex;
+    align-items: center;
   }
 }
 
