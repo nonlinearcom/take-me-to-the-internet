@@ -230,7 +230,8 @@ onUnmounted(() => {
 
     img,
     .video,
-    ul {
+    ul,
+    figure {
       grid-column: 1 / span 2;
     }
 
