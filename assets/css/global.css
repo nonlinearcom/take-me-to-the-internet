@@ -45,16 +45,16 @@ a {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
-.stretched-link::after {
+/* .stretched-link::after {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   z-index: 1;
-  /* pointer-events: auto; */
+
   content: '';
-}
+} */
 
 h1.title {
   font-size: var(--text-large);

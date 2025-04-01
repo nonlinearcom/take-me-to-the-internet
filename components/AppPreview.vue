@@ -51,7 +51,7 @@ export default {
  */
 
   /* this solution allows border-radius  */
-  position: absolute;
+  position: absolute !important;
   width: auto;
   height: auto;
   max-width: 260px;

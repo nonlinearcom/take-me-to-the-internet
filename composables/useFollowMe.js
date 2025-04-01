@@ -4,7 +4,8 @@ export default function useFollowMe(el) {
   // const el = ref(null)
   const { elementX, elementY, elementPositionY, isOutside } = useMouseInElement(el)
   const xOffset = 40
-  const yOffset = -200 // header height
+  // const yOffset = -200 // header height
+  const yOffset = -400
 
   const state = reactive({
     xPos: 0,

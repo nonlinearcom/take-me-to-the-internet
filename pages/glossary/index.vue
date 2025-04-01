@@ -1,12 +1,24 @@
 <template>
   <main class="glossary-page">
     <div class="terms-grid">
-      <template v-for="(item, index) in glossary" :key="item.id">
-        <article class="term" :class="{ 'group-start': isNewGroup(index) }">
-          <NuxtLink class="stretched-link" :to="`/glossary/${item.slug}`" />
+      <template
+        v-for="(item, index) in glossary"
+        :key="item.id"
+      >
+        <article
+          class="term"
+          :class="{ 'group-start': isNewGroup(index) }"
+        >
+          <NuxtLink
+            class="stretched-link"
+            :to="`/glossary/${item.slug}`"
+          />
           <h2 class="term-title">
             {{ item.translations[0]?.term }}
-            <span v-if="recetlyUpdated(item)" class="dot" />
+            <span
+              v-if="recetlyUpdated(item)"
+              class="dot"
+            />
           </h2>
           <p class="description">
             {{ truncate(generateText(item.translations[0].description), 150) }}
@@ -127,6 +139,16 @@ function recetlyUpdated(item: GlossaryItem) {
   .description {
     font-size: var(--text-small);
     max-width: 450px;
+  }
+
+  .stretched-link::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    content: '';
   }
 }
 </style>
