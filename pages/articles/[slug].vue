@@ -5,7 +5,7 @@
   >
     <header>
       <h1 class="title">
-        {{ translation.title }}
+        {{ translation?.title }}
       </h1>
       <time
         class="updated-on"
@@ -21,20 +21,27 @@
       :relation-blocks
       :relation-inline-blocks
     />
+    <EditorFootNotes
+      v-if="translation?.content"
+      class="prose"
+      :data="translation?.content"
+    />
   </article>
 </template>
 
 <script lang="ts" setup>
-import { EditorCables, EditorCodeLink, EditorGallery, EditorMedia } from '#components'
+import { EditorCables, EditorCodeLink, EditorFootNotes, EditorGallery, EditorMedia, EditorSideNote } from '#components'
 import { footerPages } from '~/assets/footerPages'
 
 const relationBlocks: VueRelationNodeSerializers = [
   { collection: 'cables', component: EditorCables },
   { collection: 'gallery', component: EditorGallery },
   { collection: 'media', component: EditorMedia },
+
 ]
 const relationInlineBlocks: VueRelationNodeSerializers = [
   { collection: 'code_link', component: EditorCodeLink },
+  { collection: 'sidenote', component: EditorSideNote },
 ]
 
 const route = useRoute()
@@ -47,35 +54,173 @@ const languageCode = computed(() => {
 })
 
 const { $directus, $readItem } = useNuxtApp()
-const { data: page } = await useAsyncData('page', () => {
-  return $directus.request(
-    $readItem('pages', route.params.slug as string, {
-      fields: [
-        '*',
-        {
-          translations: [
-            '*',
+const page = ref(
+  {
+    slug: 'working-with-api-in-cables',
+    status: 'published',
+    sort: 3,
+    user_created: 'a5a30640-aae3-4761-bdd2-cc69a6fda26c',
+    date_created: '2025-01-15T10:54:25.810Z',
+    user_updated: 'a5a30640-aae3-4761-bdd2-cc69a6fda26c',
+    date_updated: '2025-01-23T10:16:13.002Z',
+    translations: [
+      {
+        id: 13,
+        pages_slug: 'working-with-api-in-cables',
+        languages_code: 'en-US',
+        title: 'Getting data from the Are.na API',
+        content: {
+          type: 'doc',
+          content: [
             {
-              editor_nodes: [
-                '*',
+              type: 'paragraph',
+              attrs: {
+                textAlign: 'left',
+              },
+              content: [
                 {
-                  item: {
-                    cables: ['*'],
-                    code_link: ['*'],
-                    gallery: [
-                      { content: ['*'] },
-                    ],
-                    media: [{ file: ['*'] }],
+                  type: 'text',
+                  text: 'Cables includes among its various nodes the operator ',
+                },
+                {
+                  type: 'relation-inline-block',
+                  attrs: {
+                    id: 'my-note-1',
+                    junction: 'pages_editor_nodes',
+                    collection: 'sidenote',
+                    data: {
+                      id: '1',
+                      noteHtml: ' Request a json file and output an object (ajax, url, json)<img src="" width="100%">',
+                      link: 'https://cables.gl/op/Ops.Json.HttpRequest_v3',
+                      linkText: 'HTTPRequest',
+                      title: 'What is an HTTP Request?',
+                    },
                   },
+                },
+                {
+                  type: 'text',
+                  text: ' which simplifies the use of HTTP requests to communicate with external ',
+                },
+                {
+                  type: 'relation-inline-block',
+                  attrs: {
+                    id: 'my-note-2',
+                    junction: 'pages_editor_nodes',
+                    collection: 'sidenote',
+                    data: {
+                      id: '2',
+                      noteHtml: 'An API (short for Application Programming Interface) is a set of rules and protocols that allows different software applications to communicate with each other. In other words, it is an interface that allows one application to access functionality or data provided by another application or service.',
+                      href: '/glossary/api',
+                      linkText: 'API',
+                    },
+                  },
+                },
+                {
+                  type: 'text',
+                  text: ' and servers.  In this article, we will explore how to use the operator to retrieve images from the',
+                },
+                {
+                  type: 'text',
+                  marks: [
+                    {
+                      type: 'link',
+                      attrs: {
+                        href: 'https://dev.are.na/documentation/channels',
+                        target: '_blank',
+                        rel: 'noopener noreferrer nofollow',
+                        class: null,
+                      },
+                    },
+                  ],
+                  text: ' Are.na',
+                },
+                {
+                  type: 'text',
+                  text: ' ',
+                },
+                {
+                  type: 'text',
+                  marks: [
+                    {
+                      type: 'link',
+                      attrs: {
+                        href: '/glossary/api',
+                        target: null,
+                        rel: 'noopener noreferrer nofollow',
+                        class: null,
+                      },
+                    },
+                  ],
+                  text: 'API',
+                },
+                {
+                  type: 'text',
+                  text: '.',
                 },
               ],
             },
           ],
         },
-      ],
-    }),
-  )
-})
+        editor_nodes: [
+          {
+            id: 'my-note-1',
+            pages_translations_id: 13,
+            collection: 'sidenote',
+            item: {
+              id: '1',
+              noteHtml: ' Request a json file and output an object (ajax, url, json)',
+              href: 'https://cables.gl/op/Ops.Json.HttpRequest_v3',
+              linkText: 'HTTPRequest',
+            },
+          },
+          {
+            id: 'my-note-2',
+            pages_translations_id: 13,
+            collection: 'sidenote',
+            item: {
+              id: '2',
+              noteHtml: 'An API (short for Application Programming Interface) is a set of rules and protocols that allows different software applications to communicate with each other. In other words, it is an interface that allows one application to access functionality or data provided by another application or service.',
+              href: '/glossary/api',
+              linkText: 'API',
+              linkImage: 'https://www.akamai.com/site/it/images/article/2024/how-a-web-api-works.png',
+            },
+          },
+
+        ],
+      },
+    ],
+  },
+)
+
+// const { data: page } = await useAsyncData('page', () => {
+//   return $directus.request(
+//     $readItem('pages', route.params.slug as string, {
+//       fields: [
+//         '*',
+//         {
+//           translations: [
+//             '*',
+//             {
+//               editor_nodes: [
+//                 '*',
+//                 {
+//                   item: {
+//                     cables: ['*'],
+//                     code_link: ['*'],
+//                     gallery: [
+//                       { content: ['*'] },
+//                     ],
+//                     media: [{ file: ['*'] }],
+//                   },
+//                 },
+//               ],
+//             },
+//           ],
+//         },
+//       ],
+//     }),
+//   )
+// })
 
 if (!page.value) {
   throw createError({

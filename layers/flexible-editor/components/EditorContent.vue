@@ -62,6 +62,14 @@ const relationMarkSerializer = Mark.create({
   },
 })
 
+// const sidenoteSerializer = Node.create({
+//   name: 'sidenote',
+//   renderHTML({ HTMLAttributes }) {
+//     return ['aside', HTMLAttributes, 0] as any
+//   },
+// })
+
+// serializers.push(sidenoteSerializer)
 serializers.push(relationBlockSerializer)
 serializers.push(relationInlineBlockSerializer)
 serializers.push(relationMarkSerializer)
