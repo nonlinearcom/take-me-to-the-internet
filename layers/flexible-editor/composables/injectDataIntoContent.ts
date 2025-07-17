@@ -8,6 +8,8 @@ export default (
   primaryKeyField = 'id',
   itemField = 'item',
 ) => {
+  let sidenoteCounter = 0
+
   return toContentWithInjectedData(content)
 
   function toContentWithInjectedData(content: JSONContent) {
@@ -30,6 +32,13 @@ export default (
         const relatedNode = data.find(node => node[primaryKeyField] === mark.attrs!.id)
 
         mark.attrs.data = relatedNode?.[itemField]
+
+        if (mark.attrs.collection === 'sidenote') {
+          sidenoteCounter++
+          mark.attrs.data.number = sidenoteCounter
+          mark.attrs.data.text = content.text
+          return mark
+        }
 
         return mark
       })

@@ -41,8 +41,6 @@
       {{ data.file?.description }}
     </figcaption>
   </figure>
-
-  <!-- <pre> {{ data }}</pre> -->
 </template>
 
 <script setup lang="ts">

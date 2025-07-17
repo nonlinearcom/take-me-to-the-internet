@@ -4,10 +4,10 @@
       <NuxtLink
         v-for="(article, key) in data"
         :key
-        :to="`/articles/${article.slug}`"
+        :to="`/articles/${article?.slug}`"
       >
         <h2 class="line">
-          {{ article.translations[0]?.title }}
+          {{ article?.translations[0]?.title }}
         </h2>
         <time :datetime="article.date_updated.split('T')[0]">
           {{ formatDate(article.date_updated, { locale: languageCode }) }}

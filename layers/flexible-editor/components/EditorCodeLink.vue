@@ -1,6 +1,6 @@
 <template>
-  <NuxtLink :to="data.link">
-    <code> {{ data.code }} </code>
+  <NuxtLink :to="data?.link">
+    <code> {{ data?.code }} </code>
   </NuxtLink>
 </template>
 

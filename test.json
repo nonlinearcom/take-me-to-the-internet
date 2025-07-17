@@ -1,0 +1,210 @@
+{
+  "slug": "working-with-api-in-cables",
+  "status": "published",
+  "sort": 3,
+  "user_created": "a5a30640-aae3-4761-bdd2-cc69a6fda26c",
+  "date_created": "2025-01-15T10:54:25.810Z",
+  "user_updated": "a5a30640-aae3-4761-bdd2-cc69a6fda26c",
+  "date_updated": "2025-01-23T10:16:13.002Z",
+  "translations": [
+    {
+      "id": 13,
+      "pages_slug": "working-with-api-in-cables",
+      "languages_code": "en-US",
+      "title": "Getting data from the Are.na API",
+      "content": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": "left"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Cables includes among its various nodes the operator "
+              },
+              {
+                "type": "relation-inline-block",
+                "attrs": {
+                  "id": "4cd3947a-3863-4277-8ef1-c1aad73790ef",
+                  "junction": "pages_editor_nodes",
+                  "collection": "code_link",
+                  "data": {
+                    "id": "35c5e34c-e9d4-4ce8-a508-0404961baffa",
+                    "code": "HTTPRequest",
+                    "link": "https://cables.gl/op/Ops.Json.HttpRequest_v3"
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "text": " which simplifies the use of HTTP requests to communicate with external "
+              },
+              {
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "link",
+                    "attrs": {
+                      "href": "/glossary/api",
+                      "target": null,
+                      "rel": "noopener noreferrer nofollow",
+                      "class": null
+                    }
+                  }
+                ],
+                "text": "APIs"
+              },
+              {
+                "type": "text",
+                "text": " and servers.  In this article, we will explore how to use the operator to retrieve images from the"
+              },
+              {
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "link",
+                    "attrs": {
+                      "href": "https://dev.are.na/documentation/channels",
+                      "target": "_blank",
+                      "rel": "noopener noreferrer nofollow",
+                      "class": null
+                    }
+                  }
+                ],
+                "text": " Are.na"
+              },
+              {
+                "type": "text",
+                "text": " "
+              },
+              {
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "link",
+                    "attrs": {
+                      "href": "/glossary/api",
+                      "target": null,
+                      "rel": "noopener noreferrer nofollow",
+                      "class": null
+                    }
+                  }
+                ],
+                "text": "API"
+              },
+              {
+                "type": "text",
+                "text": "."
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": "left"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "When working with "
+              },
+              {
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "link",
+                    "attrs": {
+                      "href": "/glossary/api",
+                      "target": null,
+                      "rel": "noopener noreferrer nofollow",
+                      "class": null
+                    }
+                  }
+                ],
+                "text": "APIs"
+              },
+              {
+                "type": "text",
+                "text": " in Cables there are generally two steps, creating the request and handling the response."
+              }
+            ]
+          },
+          {
+            "type": "heading",
+            "attrs": {
+              "textAlign": "left",
+              "level": 2
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Creating the request"
+              }
+            ]
+          },
+          {
+            "type": "relation-block",
+            "attrs": {
+              "id": "685b6b87-8b3a-4011-9244-aa56e7921f32",
+              "junction": "pages_editor_nodes",
+              "collection": "cables",
+              "data": {
+                "id": "984f8ed3-7322-4d3c-8f32-ef76744cc5f3",
+                "iframe": "<iframe style=\"width:100%;height:100%;border:0px;\" allow=\"autoplay; camera; microphone\" src=\"https://cables.gl/view/j6Oa2A\"></iframe>"
+              }
+            }
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": "left"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "To create a request to the Are.na API via "
+              },
+              {
+                "type": "relation-inline-block",
+                "attrs": {
+                  "id": "171269fd-8a50-408c-823f-0ec03bbce173",
+                  "junction": "pages_editor_nodes",
+                  "collection": "code_link",
+                  "data": {
+                    "id": "35c5e34c-e9d4-4ce8-a508-0404961baffa",
+                    "code": "HTTPRequest",
+                    "link": "https://cables.gl/op/Ops.Json.HttpRequest_v3"
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "text": " we must first define the URL of the API. So that we define the channel from which we want to get the images(The requested channel will have to be public). This will be done by entering the correct address to request. Then enter in the URL field of "
+              },
+              {
+                "type": "relation-inline-block",
+                "attrs": {
+                  "id": "3f88570a-cc5a-4303-a037-87863d8443af",
+                  "junction": "pages_editor_nodes",
+                  "collection": "code_link",
+                  "data": {
+                    "id": "35c5e34c-e9d4-4ce8-a508-0404961baffa",
+                    "code": "HTTPRequest",
+                    "link": "https://cables.gl/op/Ops.Json.HttpRequest_v3"
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "text": " this link: "
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

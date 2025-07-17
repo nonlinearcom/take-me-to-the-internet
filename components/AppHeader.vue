@@ -35,14 +35,16 @@
     </nav>
 
     <span class="mode-settings">
-      <UiButton
-        class="mode-toggle"
-        :icon="isDark ? 'moon' : 'sun'"
-        aria-label="Toggle dark mode"
-        variant="outline"
-        rounded
-        @click="toggleDark()"
-      />
+      <ClientOnly>
+        <UiButton
+          class="mode-toggle"
+          :icon="isDark ? 'moon' : 'sun'"
+          aria-label="Toggle dark mode"
+          variant="outline"
+          rounded
+          @click="toggleDark()"
+        />
+      </ClientOnly>
       <!-- TODO: check why this does not work -->
       <!-- <UiButton
         class="lang-toggle"

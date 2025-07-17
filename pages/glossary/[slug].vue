@@ -5,16 +5,26 @@
         {{ translation.term }}
       </h1>
     </header>
-    <EditorContent v-if="translation?.description" class="prose glossary-content" :content="translation?.description"
-      :relation-blocks />
+    <EditorContent
+      v-if="translation?.description"
+      class="prose glossary-content"
+      :content="translation?.description"
+      :relation-blocks
+    />
 
     <div class="glossary-navigation">
-      <NuxtLink class="previous-button" :to="`/glossary/${previousPage.slug}`">
+      <NuxtLink
+        class="previous-button"
+        :to="`/glossary/${previousPage.slug}`"
+      >
         <UiIcon name="chevron-left" />
         {{ getTranslation(previousPage).term }}
       </NuxtLink>
 
-      <NuxtLink class="next-button" :to="`/glossary/${nextPage.slug}`">
+      <NuxtLink
+        class="next-button"
+        :to="`/glossary/${nextPage.slug}`"
+      >
         {{ getTranslation(nextPage).term }}
         <UiIcon name="chevron-right" />
       </NuxtLink>
@@ -23,13 +33,18 @@
 </template>
 
 <script lang="ts" setup>
-import { EditorGallery, EditorMedia } from '#components'
+import { EditorCables, EditorCodeLink, EditorGallery, EditorMedia, EditorSideNote } from '#components'
 
 const relationBlocks: VueRelationNodeSerializers = [
+  { collection: 'cables', component: EditorCables },
   { collection: 'gallery', component: EditorGallery },
   { collection: 'media', component: EditorMedia },
-]
 
+]
+const relationInlineBlocks: VueRelationNodeSerializers = [
+  { collection: 'code_link', component: EditorCodeLink },
+  { collection: 'sidenote', component: EditorSideNote },
+]
 const { $directus, $readItems } = useNuxtApp()
 const route = useRoute()
 const { locale } = useI18n()
@@ -171,5 +186,6 @@ useHighlight()
   }
 }
 
-@media (max-width: 1440px) {}
+@media (max-width: 1440px) {
+}
 </style>

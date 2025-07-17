@@ -119,8 +119,8 @@ h1 {
     max-width: 100% !important;
     border-radius: var(--border-radius);
     @media (min-width: 1024px) {
-      max-width: 106% !important;
-      margin-left: -24px !important;
+      max-width: 106%;
+      /* margin-left: -24px; */
       /* margin-right: -24px !important; */
     }
   }
