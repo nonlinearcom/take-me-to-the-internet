@@ -8,19 +8,27 @@
     <ol>
       <li
         v-for="footnote in footnotes"
-        :id="`sidenote-${footnote.attrs?.id}`"
-        :key="footnote.attrs?.id"
+        :id="`sidenote-${footnote.attrs?.number}`"
+        :key="footnote.attrs?.number"
       >
         <div class="footnote_content">
-          <span>{{ footnote?.attrs?.data?.id }}</span>
-          <div v-html="footnote.attrs?.data?.noteHtml" />
+          <span> <a
+            :href="`#sidenote-${footnote.attrs?.data?.number}`"
+            class="reversefootnote"
+            role="doc-backlink"
+            @click="highlightNote(footnote.attrs?.data?.number)"
+          >{{ footnote?.attrs?.data?.number }}</a></span>
+          <div
+            class="content"
+            v-html="footnote.attrs?.data?.content"
+          />
+          <!-- <a
+            :href="`#sidenote-${footnote.attrs?.data.number}`"
+            class="reversefootnote"
+            role="doc-backlink"
+            @click="highlightNote(footnote.attrs?.data.number)"
+          >↩︎</a> -->
         </div>
-        <a
-          :href="`#sidenote-${footnote.attrs?.data.id}`"
-          class="reversefootnote"
-          role="doc-backlink"
-          @click="highlightNote(footnote.attrs?.data.id)"
-        >↩︎</a>
       </li>
     </ol>
   </div>
@@ -39,7 +47,7 @@ function extractFootNotes(data: any): any[] {
       obj.forEach(item => traverse(item))
     } else if (obj && typeof obj === 'object') {
       // Check if this object is a relation-inline-block with sidenote collection
-      if (obj.type === 'relation-inline-block' && obj.attrs?.collection === 'sidenote') {
+      if (obj.type === 'relation-mark' && obj.attrs?.collection === 'sidenote') {
         footnotes.push(obj)
       }
       // Recursively traverse all object properties
@@ -62,43 +70,47 @@ function highlightNote(id: string) {
 }
 </script>
 
-<style lang="postcss" scoped>
-.footnote_content {
-  display: inline-flex;
-  gap: 10px;
-}
-
-a {
-  text-decoration: none;
-}
-
-.note_html {
-  display: inline-flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
+<style lang="postcss">
 .footnotes {
   margin-top: 15ch;
-}
+  font-size: small;
+  color: var(--text-secondary);
 
-.footnotes {
-  ol {
-    padding: 0;
+  img {
+    max-width: 5% !important;
+    display: none !important;
   }
   li {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    margin-top: 30px;
+    margin-top: 32px;
+  }
 
-    p {
-      margin: 0;
-      max-width: 500px;
-    }
-    span {
-      font-size: 13px;
-    }
+  .footnote_content {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .content_container {
+    display: flex;
+    gap: 10px;
+  }
+
+  .content p {
+    display: inline-flex;
+    width: fit-content;
+    margin: 0 !important;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  .note_html {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 20px;
   }
 }
 </style>

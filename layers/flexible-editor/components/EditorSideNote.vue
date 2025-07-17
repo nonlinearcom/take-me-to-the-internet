@@ -2,42 +2,31 @@
   <span class="sidenote">
     <label
       :tabindex="0"
-      :title="data?.title"
-      :aria-describedby="`sidenote-${data?.id}`"
-      :for="`sidenote__checkbox--${data?.id}`"
+      :aria-describedby="`sidenote-${data?.number}`"
+      :for="`sidenote__checkbox--${data?.number}`"
       class="sidenote__label"
+      :class="{ active: activeNoteId === data?.number }"
     >
-      <a
-        v-if="data?.href"
-        :href="data?.href"
-        :target="data?.target"
-        :rel="data?.rel"
-        :class="{ active: activeNoteId === data.id }"
-      >{{ data?.linkText }}</a>
+      {{ data.text }}
     </label>
 
     <input
-      :id="`sidenote__checkbox--${data?.id}`"
+      :id="`sidenote__checkbox--${data?.number}`"
       aria-label="Show sidenote"
       type="checkbox"
       class="sidenote__checkbox"
-      :data-sidenote-number="data?.id"
+      :data-sidenote-number="data?.number"
     >
 
     <small
-      :id="`sidenote-${data?.id}`"
+      :id="`sidenote-${data?.number}`"
       class="sidenote__content "
     >
-      <span class="sidenote_number">{{ data?.id }}</span>
+      <span class="sidenote_number">{{ data?.number }}</span>
       <div
         class="note_html"
-        v-html="data?.noteHtml"
+        v-html="data?.content"
       />
-      <img
-        v-if="data?.linkImage"
-        :src="data?.linkImage"
-        :alt="data?.title"
-      >
     </small>
   </span>
 </template>
@@ -51,8 +40,6 @@ const props = defineProps<{
 }>()
 
 const { activeNoteId } = useFootNotes()
-
-console.log('noteHtml', props)
 
 // Example: Add any additional logic if needed
 </script>
@@ -79,19 +66,23 @@ console.log('noteHtml', props)
 }
 
 .sidenote_number {
+  display: inline;
   margin-left: -25px;
   margin-right: 15px;
-  display: inline;
+  vertical-align: top;
+  font-size: small;
 }
 .sidenote__content {
-  padding: 15px 90px 15px 40px;
+  padding: 16px 90px 0px 40px;
+  margin-top: 16px;
   min-width: 100%;
+  color: var(--text-secondary);
 }
 
 .note_html {
   display: inline-flex;
   flex-direction: column;
-  gap: 20px;
+  /* gap: 20px; */
 }
 
 span a {
@@ -113,10 +104,10 @@ small img {
 
 @supports (-webkit-appearance: none) or (-moz-appearance: none) {
   input[type='checkbox'] {
-    --active: #fcfcfc;
+    --active: var(--bg-secondary);
     --active-inner: #fff;
     --focus: 2px rgba(39, 94, 254, 0.3);
-    --border: #bbc1e1;
+    --border: var(--bg-secondary);
     --border-hover: #275efe;
     --background: rgba();
     --disabled: #f6f8ff;
@@ -149,18 +140,18 @@ small img {
     position: absolute;
     left: 2.5px;
     top: -0.68px;
-    color: white;
+    color: var(--text-secondary);
     font-size: 9px;
   }
   input[type='checkbox']:hover {
     --b: var(--active);
   }
   input[type='checkbox']:checked::after {
-    color: #222222;
+    color: var(--text-secondary);
   }
 
   input[type='checkbox']:hover::after {
-    color: #222222;
+    color: var(--text-secondary);
   }
 }
 </style>

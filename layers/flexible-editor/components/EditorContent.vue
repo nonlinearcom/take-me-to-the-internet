@@ -62,6 +62,8 @@ const relationMarkSerializer = Mark.create({
   },
 })
 
+console.log('mark', relationMarkSerializer)
+
 // const sidenoteSerializer = Node.create({
 //   name: 'sidenote',
 //   renderHTML({ HTMLAttributes }) {
