@@ -57,7 +57,7 @@
             v-for="header in headers"
             :key="header.key"
             class="sortable"
-            :class="{ 'sorted-asc': isSortedBy(header.key, 'asc'), 'sorted-desc': isSortedBy(header.key, 'desc') }"
+            :class="[header.key, { 'sorted-asc': isSortedBy(header.key, 'asc'), 'sorted-desc': isSortedBy(header.key, 'desc'), 'table-year': header.key === 'year' }]"
             @click="toggleSort(header.key)"
           >
             {{ header.label }}
@@ -76,7 +76,7 @@
           :key="index"
           @mouseover="getCoverUrl(item?.cover)"
         >
-          <td>
+          <td class="slug">
             <span class="resource">
               <UiButton
                 icon="external-link"
@@ -104,9 +104,13 @@
               </UiDialog>
             </span>
           </td>
-          <td>{{ item.type }}</td>
-          <td>{{ item.year }}</td>
-          <td>
+          <td class="type">
+            {{ item.type }}
+          </td>
+          <td class="table-year">
+            {{ item.year }}
+          </td>
+          <td class="author">
             <UiDialog
               v-for="author in item.people"
               :key="author.people_id.name"
@@ -297,20 +301,32 @@ const { isOutside, xPos, yPos } = useFollowMe(table)
   }
 }
 
+table tr td {
+  border: none;
+}
+
 .resources-table {
   button {
     font-size: inherit !important;
   }
+
+  tbody tr {
+    border-top: 1px solid var(--border-color);
+  }
+
+  thead tr {
+    border: none;
+  }
+
   td {
     font-size: var(--text-small);
     vertical-align: middle;
-    border-top: 1px solid var(--border-color);
 
-    &:last-child {
+    /*isOpen */
+    /* &:last-child {
       border-bottom: 1px solid var(--border-color);
-      /*isOpen */
       text-align: center;
-    }
+    } */
   }
   .resource {
     display: flex;
@@ -335,9 +351,75 @@ const { isOutside, xPos, yPos } = useFollowMe(table)
       cursor: pointer;
       user-select: none;
     }
-
     th.sorted-asc,
     th.sorted-desc {
+    }
+  }
+
+  .ui-button {
+    line-height: 1.2;
+    flex-shrink: 1;
+  }
+
+  tr {
+    width: 100%;
+    display: flex;
+
+    align-items: center;
+    position: relative;
+  }
+
+  td,
+  th {
+    border-top: 1px solid rgba(var(--current-gray-rgb-inverted), 0.25);
+    &.table-year {
+      flex: 0 1 10%;
+      max-width: 100px;
+    }
+
+    &.type {
+      flex: 0 1 10%;
+      max-width: 150px;
+    }
+
+    &.open {
+      flex: 0 1 5%;
+      max-width: 70px;
+    }
+
+    &.slug {
+      flex: 0 1 40%;
+    }
+
+    &.author {
+      flex: 1 0 30%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    td,
+    th {
+      &.slug {
+        flex: 1 0 80%;
+      }
+      &.type {
+        display: none;
+      }
+      &.table-year {
+        display: none;
+      }
+      &.author {
+        display: none;
+      }
+      &.open {
+        flex: 0 1 10%;
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    .open {
+      display: none;
     }
   }
 }
