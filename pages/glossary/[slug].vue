@@ -12,9 +12,9 @@
       :relation-blocks
       :relation-marks
     />
-    <!-- <pre>{{ translation }}</pre> -->
     <EditorFootNotes
       v-if="translation"
+      :key="translation?.id"
       class="prose"
       :data="translation"
     />
@@ -163,6 +163,8 @@ useHighlight()
 .glossary-term {
   position: relative;
   margin: var(--app-margin-small);
+  max-width: 68ch;
+  margin: 0 auto;
 
   header {
     margin-bottom: 96px;
@@ -180,8 +182,6 @@ useHighlight()
   }
 
   .glossary-content {
-    max-width: 68ch;
-    margin: 0 auto;
   }
 
   .glossary-navigation {
@@ -196,6 +196,7 @@ useHighlight()
   .next-button {
     display: flex;
     align-items: center;
+    margin-bottom: 64px;
   }
 }
 
