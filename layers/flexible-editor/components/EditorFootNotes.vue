@@ -4,7 +4,6 @@
     class="footnotes"
     role="doc-endnotes"
   >
-    <hr>
     <ol>
       <li
         v-for="footnote in footnotes"
@@ -75,6 +74,10 @@ function highlightNote(id: string) {
   margin-top: 15ch;
   font-size: small;
   color: var(--text-secondary);
+
+  ol {
+    border-top: 1px solid var(--text-secondary);
+  }
 
   img {
     max-width: 5% !important;

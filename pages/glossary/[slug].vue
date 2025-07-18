@@ -10,6 +10,13 @@
       class="prose glossary-content"
       :content="translation?.description"
       :relation-blocks
+      :relation-marks
+    />
+    <!-- <pre>{{ translation }}</pre> -->
+    <EditorFootNotes
+      v-if="translation"
+      class="prose"
+      :data="translation"
     />
 
     <div class="glossary-navigation">
@@ -43,6 +50,9 @@ const relationBlocks: VueRelationNodeSerializers = [
 ]
 const relationInlineBlocks: VueRelationNodeSerializers = [
   { collection: 'code_link', component: EditorCodeLink },
+
+]
+const relationMarks: VueRelationNodeSerializers = [
   { collection: 'sidenote', component: EditorSideNote },
 ]
 const { $directus, $readItems } = useNuxtApp()
@@ -73,6 +83,9 @@ const { data: page, error } = await useAsyncData('glossary-page', () => {
                 '*',
                 {
                   item: {
+                    cables: ['*'],
+                    code_link: ['*'],
+                    sidenote: ['*'],
                     media: ['id', { file: ['*'] }],
                     gallery: [
                       { content: ['*'] },
