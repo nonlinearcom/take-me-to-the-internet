@@ -13,14 +13,15 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@directus/sdk": "^18.0.3",
+    "@directus/sdk": "^20.0.0",
     "@nuxt/icon": "^1.10.3",
-    "@tiptap/core": "^2.11.0",
-    "@tiptap/pm": "^2.11.0",
+    "@tiptap/core": "^3.0.7",
+    "@tiptap/pm": "^3.0.7",
     "highlight.js": "^11.11.1",
+    "nuxt": "^4.0.0",
     "nuxt-swiper": "^2.0.0",
     "nuxt-umami": "^3.1.1",
-    "radix-vue": "^1.9.12",
+    "reka-ui": "^2.3.2",
     "tiptap-render-view": "^1.0.2",
     "unplugin-svg-transformer": "^1.0.32",
     "vite-svg-loader": "^5.1.0"
@@ -30,17 +31,13 @@
     "@nuxt/devtools": "^2.1.1",
     "@nuxt/eslint": "^1.1.0",
     "@nuxt/image": "^1.8.1",
-    "@nuxt/scripts": "^0.10.5",
-    "@nuxtjs/i18n": "^9.1.1",
-    "@vueuse/core": "^12.3.0",
-    "@vueuse/nuxt": "^12.3.0",
+    "@nuxt/scripts": "^0.11.10",
+    "@nuxtjs/i18n": "^10.0.0",
+    "@vueuse/core": "^13.5.0",
+    "@vueuse/nuxt": "^13.5.0",
     "eslint": "^9.17.0",
     "eslint-plugin-format": "^1.0.1",
-    "nuxt": "^3.15.1",
     "postcss-nested": "^7.0.2",
     "typescript": "^5.7.2"
-  },
-  "resolutions": {
-    "**/nitropack": "2.9.7"
   }
 }

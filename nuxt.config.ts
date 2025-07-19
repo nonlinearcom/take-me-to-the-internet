@@ -1,7 +1,4 @@
 export default defineNuxtConfig({
-  experimental: {
-    localLayerAliases: true,
-  },
 
   app: {
     head: {
@@ -19,12 +16,15 @@ export default defineNuxtConfig({
   },
 
   modules: [
+    '@nuxt/eslint',
     '@nuxtjs/i18n',
+    '@nuxt/icon',
     '@nuxt/image',
+    '@nuxt/scripts',
     '@vueuse/nuxt',
     'nuxt-swiper',
     'nuxt-umami',
-    '@nuxt/scripts',
+    'reka-ui/nuxt',
   ],
 
   i18n: {
@@ -37,7 +37,6 @@ export default defineNuxtConfig({
       cookieKey: 'i18n_redirected',
       redirectOn: 'root',
     },
-    lazy: true,
     locales: [
       { code: 'en', file: 'en-US.json', language: 'en-US', name: 'English' },
       { code: 'it', file: 'it-IT.json', language: 'it-IT', name: 'Italiano' },
@@ -72,15 +71,32 @@ export default defineNuxtConfig({
   },
 
   css: [
-    '@/assets/css/fonts.css',
-    '@/assets/css/global.css',
+    '@/assets/styles/fonts.css',
+    '@/assets/styles/global.css',
   ],
 
   compatibilityDate: '2024-10-25',
 
   icon: {
+    clientBundle: {
+      includeCustomCollections: true,
+      scan: true,
+    },
+    size: '24px',
+    mode: 'svg',
     customCollections: [
-      { prefix: 'ui', dir: './assets/icons' },
+      { prefix: 'app', dir: './app/assets/icons' },
     ],
+  },
+
+  eslint: {
+    config: {
+      stylistic: {
+        indent: 2,
+        quotes: 'single',
+        semi: false,
+        // ...
+      },
+    },
   },
 })

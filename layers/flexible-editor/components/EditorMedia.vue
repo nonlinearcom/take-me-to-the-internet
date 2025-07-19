@@ -28,9 +28,9 @@
         <source :src>
       </video>
       <button
-        v-if="!isOutside || isTablet"
+        v-if="!isOutside || isMediumScreen"
         class="followCursor"
-        :class="{ mobile: isTablet }"
+        :class="{ mobile: isMediumScreen }"
         :style="`transform: translate(${elementX - 25}px, ${elementY - 25}px)`"
         @click="playing = !playing"
       >
@@ -54,8 +54,7 @@ const props = defineProps<{
 const { fileUrl } = useFiles()
 const src = fileUrl(props.data.file)
 
-const breakpoints = useBreakpoints({ tablet: 1024 })
-const isTablet = breakpoints.smaller('tablet')
+const { isMediumScreen } = useApp()
 
 const video = ref()
 const { elementX, elementY, isOutside } = useMouseInElement(video)
