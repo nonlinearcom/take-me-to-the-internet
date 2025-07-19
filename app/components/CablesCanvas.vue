@@ -1,6 +1,9 @@
 <template>
   <div>
-    <canvas :id="canvasId" tabIndex="1" />
+    <canvas
+      :id="canvasId"
+      tabIndex="1"
+    />
   </div>
 </template>
 
@@ -43,7 +46,7 @@ const _patchFinishedLoading = (patch) => {
   console.log(`${props.patchDir} finished loading`)
 }
 
-const { proxy, onLoaded } = useScript(src.value, {
+const { onLoaded } = useScript(src.value, {
   async: true,
   defer: true,
   use() {
@@ -79,12 +82,6 @@ onMounted(() =>
     })
   }),
 )
-
-function onTest(e) {
-}
-
-function testHover(e) {
-}
 </script>
 
 <style></style>

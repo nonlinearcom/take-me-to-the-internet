@@ -1,8 +1,7 @@
 <template>
   <div class="ui-input">
-    <!-- :id="inputId" -->
     <input
-      :id
+      :id="inputId"
       ref="input"
       :name
       :value="modelValue"
@@ -48,10 +47,7 @@
 <script setup lang="ts">
 import { defu } from 'defu'
 
-defineOptions({
-  name: 'UiInput',
-  inheritAttrs: false,
-})
+defineOptions({ name: 'UiInput', inheritAttrs: false })
 const props = withDefaults(defineProps<Input>(), {
   type: 'text',
   required: false,
@@ -65,7 +61,7 @@ const props = withDefaults(defineProps<Input>(), {
 const emit = defineEmits(['update:modelValue', 'blur'])
 const slots = useSlots()
 
-// const { emitFormBlur, emitFormInput, inputId, name } = useFormGroup(props)
+const { emitFormBlur, emitFormInput, inputId, name } = useFormGroup(props)
 
 const isLeading = computed(() => props.icon || slots.leading)
 const isTrailing = computed(() => slots.trailing)
@@ -84,7 +80,7 @@ function updateInput(value: string) {
     value = looseToNumber(value)
 
   emit('update:modelValue', value)
-  // emitFormInput()
+  emitFormInput()
 }
 
 function onInput(event: Event) {
@@ -102,7 +98,7 @@ function onChange(event: Event) {
 }
 
 function onBlur(event: FocusEvent) {
-  // emitFormBlur()
+  emitFormBlur()
   emit('blur', event)
 }
 
@@ -208,8 +204,8 @@ export interface Input {
     bottom: 0;
     display: flex;
     align-items: center;
-    padding-left: 12px;
-    padding-right: 12px;
+    padding-left: 4px;
+    padding-right: 4px;
 
     .ui-icon {
       flex-shrink: 0;

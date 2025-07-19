@@ -9,7 +9,8 @@
 </template>
 
 <script setup lang="ts">
-import { ToggleGroupRoot, type ToggleGroupRootEmits, type ToggleGroupRootProps, useForwardPropsEmits } from 'radix-vue'
+import type { ToggleGroupRootEmits, ToggleGroupRootProps } from 'reka-ui'
+import { ToggleGroupRoot, useForwardPropsEmits } from 'reka-ui'
 
 defineOptions({ name: 'UiToggleGroup' })
 const props = defineProps<{
@@ -29,6 +30,7 @@ provide(toggleGroupInjectionKey, computed(() => ({
 
 <style lang="postcss" scoped>
 .ToggleGroup {
+  position: relative;
   display: inline-flex;
   border-radius: var(--border-radius);
 }

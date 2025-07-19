@@ -2,8 +2,8 @@
   <component
     :is="as"
     v-if="!to"
-    :type
-    :disabled
+    :type="type"
+    :disabled="disabled"
     :class="active ? activeClass : undefined"
   >
     <slot v-bind="{ isActive: active }" />
@@ -19,9 +19,9 @@
       :href="!disabled ? href : undefined"
       :aria-disabled="disabled ? 'true' : undefined"
       :role="disabled ? 'link' : undefined"
-      :rel
-      :target="isExternal ? '_blank' : target"
-      :class="[active ? activeClass : resolveLinkClass(route, $route, { isActive, isExactActive }), { underline, external: isExternal }]"
+      :rel="rel"
+      :target="isExternal ? '_blank' : target || undefined"
+      :class="[active ? activeClass : resolveLinkClass(route as RouteLocation, $route, { isActive, isExactActive }), { underline, external: isExternal }]"
       @click="(e) => (!isExternal && !disabled) && navigate(e)"
     >
       <slot v-bind="{ isActive: active !== undefined ? active : (exact ? isExactActive : isActive) }" />
@@ -30,17 +30,18 @@
 </template>
 
 <script lang="ts" setup>
+import type { Link } from '@/types/ui'
 import type { RouteLocation, RouteLocationNormalizedLoaded } from 'vue-router'
-import type { Link } from '../../types/link'
 import { isEqual } from 'ohash'
 
 defineOptions({ name: 'UiLink' })
+
 const props = defineProps({
   ...nuxtLinkProps,
   as: { type: String, default: 'button' },
   type: { type: String, default: 'button' },
   underline: { type: Boolean, default: true },
-  disabled: { type: Boolean, default: null },
+  disabled: { type: Boolean, default: false },
   active: { type: Boolean, default: undefined },
   exact: { type: Boolean, default: true },
   exactQuery: { type: Boolean, default: false },

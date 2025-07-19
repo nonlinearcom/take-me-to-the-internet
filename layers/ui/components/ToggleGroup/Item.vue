@@ -2,7 +2,7 @@
   <ToggleGroupItem
     class="ToggleGroupItem"
     :class="size"
-    v-bind="{ asChild, defaultValue, disabled, pressed, value }"
+    v-bind="{ asChild, value }"
     :aria-label="value"
   >
     <slot>
@@ -10,16 +10,21 @@
         v-if="icon"
         :name="icon"
       />
+      <span v-else-if="label">
+        {{ label }}
+      </span>
     </slot>
   </ToggleGroupItem>
 </template>
 
 <script setup lang="ts">
-import { ToggleGroupItem, type ToggleGroupItemProps } from 'radix-vue'
+import type { ToggleGroupItemProps } from 'reka-ui'
+import { ToggleGroupItem } from 'reka-ui'
 
 defineOptions({ name: 'UiToggleGroupItem' })
 const props = defineProps<{
   icon?: string
+  label?: string
   // rounded?: boolean
   size?: ButtonSize
   // variant?: ButtonVariant
@@ -42,6 +47,7 @@ const size = computed(() => toggleGroupSize.value ?? 'lg')
   background-color: var(--bg-color);
   border: 1px solid var(--border-color);
   cursor: pointer;
+  padding: 4px;
 
   &:first-child {
     margin-left: 0;
@@ -71,9 +77,6 @@ const size = computed(() => toggleGroupSize.value ?? 'lg')
   }
 
   &[data-disabled] {
-    color: var(--text-color) !important;
-    background-color: var(--background-color) !important;
-    cursor: not-allowed;
     opacity: 0.75;
   }
 
@@ -91,8 +94,8 @@ const size = computed(() => toggleGroupSize.value ?? 'lg')
     font-size: var(--text-mini);
 
     & > .ui-icon {
-      width: 12px;
-      height: 12px;
+      width: 16px;
+      height: 16px;
     }
   }
 
@@ -102,8 +105,8 @@ const size = computed(() => toggleGroupSize.value ?? 'lg')
     font-size: var(--text-small);
 
     & > .ui-icon {
-      width: 16px;
-      height: 16px;
+      width: 18px;
+      height: 18px;
     }
   }
 

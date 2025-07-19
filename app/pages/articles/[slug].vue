@@ -10,7 +10,7 @@
         </h1>
         <time
           class="updated-on"
-          :datetime="page.date_updated.split('T')[0]"
+          :datetime="page.date_updated?.split('T')[0]"
         >
           Updated on {{ formatDate(page.date_updated, { locale: languageCode }) }}
         </time>

@@ -12,9 +12,9 @@
       <DialogContent
         class="DialogContent"
         :class="side"
+        :style="{ '--ui-dialog-max-width': maxWidth }"
         v-bind="$attrs"
         trap-focus
-        :style="{ maxWidth: side !== 'top' && side !== 'bottom' ? `${maxWidth}px` : 'none' }"
         :aria-describedby="!description && !$slots?.description ? undefined : description!"
       >
         <VisuallyHidden v-if="hideTitle">
@@ -40,11 +40,12 @@
           as-child
         >
           <UiButton
+            ref="closeRef"
             class="DialogClose"
             color="black"
             variant="link"
             icon="close"
-            aria-label="Close"
+            :aria-label="$t('close')"
           />
         </DialogClose>
       </DialogContent>
@@ -53,6 +54,7 @@
 </template>
 
 <script setup lang="ts">
+import type { DialogRootEmits, DialogRootProps } from 'reka-ui'
 import { reactivePick } from '@vueuse/core'
 import {
   DialogClose,
@@ -61,32 +63,31 @@ import {
   DialogOverlay,
   DialogPortal,
   DialogRoot,
-  type DialogRootEmits,
-  type DialogRootProps,
   DialogTitle,
   DialogTrigger,
   useForwardPropsEmits,
   VisuallyHidden,
-} from 'radix-vue'
+} from 'reka-ui'
 
-defineOptions({
-  name: 'UiDialog',
-  inheritAttrs: false,
-})
+defineOptions({ name: 'UiDialog', inheritAttrs: false })
 const props = withDefaults(defineProps<{
   title: string
   description?: string
   hideTitle?: boolean
   hideClose?: boolean
-  maxWidth?: number
+  maxWidth?: string
   side?: 'top' | 'left' | 'right' | 'bottom'
 } & DialogRootProps>(), {
   modal: true,
   description: '',
-  maxWidth: 480,
+  maxWidth: '50vw',
 })
 const emits = defineEmits<DialogRootEmits>()
 const forwarded = useForwardPropsEmits(reactivePick(props, 'defaultOpen', 'modal', 'open'), emits)
+
+// Prevent auto-focus on other elements in the dialog
+const closeRef = ref()
+const { focused } = useFocus(closeRef, { initialValue: true })
 </script>
 
 <style lang="postcss">
@@ -96,8 +97,8 @@ const forwarded = useForwardPropsEmits(reactivePick(props, 'defaultOpen', 'modal
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: var(--black-a1);
-  backdrop-filter: blur(8px);
+  background-color: var(--black-a6);
+  /* backdrop-filter: blur(8px); */
   cursor: pointer;
   transition: background-color 200ms ease-out;
   animation: fadeIn 200ms ease-out;
@@ -107,22 +108,18 @@ const forwarded = useForwardPropsEmits(reactivePick(props, 'defaultOpen', 'modal
   position: fixed;
   top: 50%;
   left: 50%;
-  width: 90vw;
+  width: calc(100vw - var(--app-padding));
   max-height: 85vh;
-  padding: 4px;
+  max-width: var(--ui-dialog-max-width, 50vw);
+
+  /* padding: 4px; */
   background-color: var(--bg-color);
+  border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
   box-shadow: var(--shadow);
   transform: translate(-50%, -50%);
+  animation: dialogAnimateIn 200ms ease-out;
   overflow-y: auto;
-  &[data-state='open'] {
-    animation: dialogAnimateIn 200ms ease-out;
-  }
-
-  &[data-state='closed'] {
-    animation: dialogAnimateOut 100ms ease-out;
-  }
-
   &.top,
   &.right,
   &.left,
@@ -149,8 +146,11 @@ const forwarded = useForwardPropsEmits(reactivePick(props, 'defaultOpen', 'modal
 
   &.right,
   &.left {
-    height: 100vh;
+    height: var(--unit-100vh);
     max-height: none;
+    @media (max-width: 1024px) {
+      max-width: 100vw;
+    }
   }
 
   &.top {
@@ -201,27 +201,27 @@ const forwarded = useForwardPropsEmits(reactivePick(props, 'defaultOpen', 'modal
     outline: none;
   }
 
-  header {
-    margin-bottom: 8px;
-    padding: 8px;
-
+  > header {
+    padding: 16px;
+    border-bottom: 1px solid var(--border-color);
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
     .DialogTitle {
-      padding-right: 24px;
-      font-size: var(--text-large);
-      font-weight: 500;
+      font-size: var(--text);
+      font-weight: var(--bold);
     }
 
     .DialogDescription {
-      margin-top: 2px;
-      padding-right: 24px;
+      margin-top: 8px;
       font-size: var(--text-small);
     }
   }
 
   .DialogClose {
     position: absolute;
-    top: 4px;
-    right: 4px;
+    top: 8px;
+    right: 8px;
   }
 }
 
@@ -240,18 +240,6 @@ const forwarded = useForwardPropsEmits(reactivePick(props, 'defaultOpen', 'modal
   to {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
-  }
-}
-
-@keyframes dialogAnimateOut {
-  from {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-
-  to {
-    opacity: 0;
-    transform: translate(-50%, -48%) scale(0.96);
   }
 }
 </style>

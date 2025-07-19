@@ -1,46 +1,28 @@
+// https://github.com/nuxt/icon/issues/351#issuecomment-2633510998
+import { dirname, join } from 'node:path'
+
+import { fileURLToPath } from 'node:url'
 // UI layer
 import { createResolver } from '@nuxt/kit'
+
+const currentDir = dirname(fileURLToPath(import.meta.url))
 
 const { resolve } = createResolver(import.meta.url)
 
 export default defineNuxtConfig({
-  modules: [
-    '@nuxt/eslint',
-    '@nuxt/icon',
-    '@vueuse/nuxt',
-    'radix-vue/nuxt',
-    // 'unplugin-svg-transformer/nuxt',
-  ],
 
-  devtools: {
-    enabled: true,
+  components: [
+    { path: './components', prefix: 'Ui' },
+  ],
+  icon: {
+    customCollections: [
+      { prefix: 'ui', dir: join(currentDir, 'assets/icons') },
+    ],
   },
 
   css: [
-    '@layer/assets/css/preflight.css',
-    '@layer/assets/css/transitions.css',
-    '@layer/assets/css/variables.css',
+    '#layers/ui/assets/styles/preflight.css',
+    '#layers/ui/assets/styles/transitions.css',
+    '#layers/ui/assets/styles/variables.css',
   ],
-
-  alias: {
-    '@layer': resolve('./'),
-  },
-
-  typescript: {
-    includeWorkspace: true,
-  },
-
-  postcss: {
-    plugins: {
-      'postcss-nested': {},
-      'autoprefixer': {},
-    },
-  },
-
-  eslint: {
-    config: {
-      stylistic: true,
-      standalone: false,
-    },
-  },
 })

@@ -22,37 +22,38 @@
     >
       <UiIcon
         v-if="icon || loading"
-        :name="loading ? 'loading' : icon"
+        :name="loading ? 'loading' : (icon || '')"
       />
     </slot>
   </UiLink>
 </template>
 
 <script setup lang="ts">
-import type { Button } from '../../types/button'
+import type { Button } from '../types/ui'
 
 defineOptions({
   name: 'UiButton',
   inheritAttrs: false,
 })
-const props = defineProps({
-  ...nuxtLinkProps,
-  ariaLabel: { type: String, default: null },
-  type: { type: String, default: 'button' },
-  block: { type: Boolean, default: false },
-  label: { type: String, default: null },
-  loading: { type: Boolean, default: false },
-  disabled: { type: Boolean, default: false },
-  rounded: { type: Boolean, default: false },
-  padded: { type: Boolean, default: true },
-  size: { type: String as PropType<ButtonSize>, default: 'lg' },
-  variant: { type: String as PropType<ButtonVariant>, default: 'primary' },
-  icon: { type: String, default: null },
-  invertIcon: { type: Boolean, default: false },
-  truncate: { type: Boolean, default: false },
-}) as Button
-const slots = useSlots()
 
+const props = withDefaults(defineProps<Button>(), {
+  type: 'button',
+  block: false,
+  label: null,
+  loading: false,
+  disabled: false,
+  rounded: false,
+  padded: true,
+  size: 'md',
+  variant: 'primary',
+  icon: null,
+  invertIcon: false,
+  truncate: false,
+  ariaLabel: undefined,
+})
+
+const $attrs = useAttrs()
+const slots = useSlots()
 const isSquare = computed(() => !slots.default && !props.label)
 
 const linkProps = computed(() => getNuxtLinkProps(props))
@@ -61,25 +62,22 @@ const linkProps = computed(() => getNuxtLinkProps(props))
 <style lang="postcss">
 .ui-button {
   flex-shrink: 0;
-  /* TODO: Think about this */
-  font-weight: 500;
+  font-weight: var(--regular);
   justify-content: center;
   align-items: center;
   line-height: 1;
-  color: var(--text-color);
+  color: var(--color);
   background-color: var(--background-color);
   border: 1px solid transparent;
   border-radius: var(--border-radius);
   transition-duration: 200ms;
   transition-property: color, background-color, border-color, opacity, transform;
   box-sizing: border-box;
-  /* white-space: nowrap; */
-  span {
-    text-align: left;
-  }
+  white-space: nowrap;
+
   @media (hover) {
     &:hover {
-      color: var(--color-hover, var(--text-color));
+      color: var(--color-hover, var(--color));
       background-color: var(--background-color-hover, var(--background-color));
     }
   }
@@ -93,7 +91,7 @@ const linkProps = computed(() => getNuxtLinkProps(props))
   }
 
   &:is(:disabled, [disabled='true']) {
-    color: var(--text-color) !important;
+    color: var(--color) !important;
     background-color: var(--background-color) !important;
     cursor: not-allowed;
     opacity: 0.75;
@@ -122,33 +120,52 @@ const linkProps = computed(() => getNuxtLinkProps(props))
 
   &.xs {
     font-size: var(--text-mini);
-    column-gap: 3px;
+    column-gap: 4px;
 
     &.padded {
-      min-height: 20px;
-      padding: 3px 4px;
+      height: 24px;
+      padding: 4px 8px;
 
       &.square {
-        padding: 3px;
+        padding: 4px;
       }
     }
 
     & > .ui-icon {
-      width: 12px;
-      height: 12px;
+      width: 16px;
+      height: 16px;
     }
   }
 
   &.sm {
     font-size: var(--text-small);
-    column-gap: 5px;
+    column-gap: 6px;
 
     &.padded {
-      min-height: 30px;
-      padding: 5px 8px;
+      height: 28px;
+      padding: 6px 10px;
 
       &.square {
-        padding: 5px;
+        padding: 6px;
+      }
+    }
+
+    & > .ui-icon {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  &.md {
+    font-size: var(--text-small);
+    column-gap: 6px;
+
+    &.padded {
+      height: 32px;
+      padding: 6px 10px;
+
+      &.square {
+        padding: 6px;
       }
     }
 
@@ -160,10 +177,10 @@ const linkProps = computed(() => getNuxtLinkProps(props))
 
   &.lg {
     font-size: var(--text);
-    column-gap: 8px;
+    column-gap: 6px;
 
     &.padded {
-      min-height: 38px;
+      height: 36px;
       padding: 8px 12px;
 
       &.square {
@@ -179,20 +196,20 @@ const linkProps = computed(() => getNuxtLinkProps(props))
 
   &.xl {
     font-size: var(--text-large);
-    column-gap: 12px;
+    column-gap: 8px;
 
     &.padded {
-      min-height: 52px;
-      padding: 12px 16px;
+      height: 40px;
+      padding: 8px 12px;
 
       &.square {
-        padding: 12px;
+        padding: 8px;
       }
     }
 
     & > .ui-icon {
-      width: 28px;
-      height: 28px;
+      width: 24px;
+      height: 24px;
     }
   }
 
