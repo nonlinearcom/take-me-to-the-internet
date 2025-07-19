@@ -8,8 +8,10 @@
 </template>
 
 <script setup lang="ts">
-import { type JSONContent, Mark, Node } from '@tiptap/core'
-import RenderNodes, { type Extensions, type VueComponentSerializers } from 'tiptap-render-view/vue'
+import type { JSONContent } from '@tiptap/core'
+import type { Extensions, VueComponentSerializers } from 'tiptap-render-view/vue'
+import { Mark, Node } from '@tiptap/core'
+import RenderNodes from 'tiptap-render-view/vue'
 import extensions from '../assets/extensions'
 
 const props = defineProps<{

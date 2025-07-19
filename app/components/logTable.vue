@@ -2,7 +2,7 @@
   <section class="log-table">
     <transition name="fade">
       <AppPreview
-        v-if="!isOutside && isLaptop && currentCover !== null"
+        v-if="!isOutside && isLargeScreen && currentCover !== null"
         :cover="currentCover"
         :x-pos="xPos"
         :y-pos="yPos"
@@ -24,10 +24,10 @@ const props = defineProps({
     default: () => [],
   },
 })
+const { isLargeScreen } = useApp()
+
 const table = ref(null)
 const currentCover = ref(null)
-const { isLaptop } = useMyBreakpoints()
-
 function getCoverUrl(url) {
   currentCover.value = url
 }

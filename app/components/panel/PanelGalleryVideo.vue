@@ -6,9 +6,9 @@
     />
 
     <button
-      v-if="!isOutside || isTablet"
+      v-if="!isOutside || isMediumScreen"
       class="followCursor"
-      :class="{ mobile: isTablet }"
+      :class="{ mobile: isMediumScreen }"
       :style="moveButton"
       @click="playing = !playing"
     >
@@ -35,11 +35,11 @@ const props = defineProps({
 const video = ref()
 const videoSrc = computed(() => `https://res.cloudinary.com/non-linear/video/upload/v1/${props.item.media}`)
 
-const { isTablet } = useMyBreakpoints()
+const { isMediumScreen } = useApp()
 
 const { elementX, elementY, isOutside } = useMouseInElement(video)
 const moveButton = computed(() => {
-  return (isTablet.value)
+  return (isMediumScreen.value)
     ? ''
     : `transform: translate(${elementX.value - 25}px, ${elementY.value - 25}px)`
 })

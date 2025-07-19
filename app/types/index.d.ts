@@ -47,12 +47,26 @@ declare interface GlossaryItem {
   slug: string
   date_created: string
   date_updated: string
-  translations: { translation_id: any }[]
+  translations: GlossaryTranslation[]
 };
 
-// declare interface GlossaryTranslation {
-//   id: number
-//   language_code: string
-//   term: string
-//   description: string
-// }
+declare interface GlossaryTranslation {
+  id: number
+  languages_code: string
+  term: string
+  description: any
+}
+
+declare interface Page {
+  id: number
+  slug: string
+  date_updated: string
+  translations: PageTranslation[]
+}
+
+declare interface PageTranslation {
+  languages_code: string
+  title: string
+  content: any // Or a more specific type for tiptap content
+  editor_nodes: any[]
+}

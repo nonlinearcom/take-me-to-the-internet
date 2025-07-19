@@ -15,9 +15,9 @@
         to="/resources"
       />
       <pre>{{ page }}</pre>
-      <h1> {{ page[0].title }} </h1>
+      <h1> {{ page[0]?.title }} </h1>
     </header>
-    <div v-html="page[0].description" />
+    <div v-html="page[0]?.description || ''" />
   </article>
 </template>
 
@@ -29,7 +29,7 @@ const route = useRoute()
 // https://docs.directus.io/blog/directus-seo-tips-tricks.html#don-t-use-slugs-as-a-primary-key
 const slug = route.params.slug as string
 
-const { data: page } = await useAsyncData('resources-page', () => {
+const { data: page } = await useAsyncData(`resource-${slug}`, () => {
   return $directus.request(
     $readItems('resources', {
       filter: {

@@ -11,7 +11,7 @@
 const props = defineProps({
   patchDir: {
     type: String,
-    default: '/patches/cover2/patch/',
+    default: '/patches/cover2/patch',
   },
   canvasId: {
     type: String,

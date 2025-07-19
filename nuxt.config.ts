@@ -16,12 +16,15 @@ export default defineNuxtConfig({
   },
 
   modules: [
+    '@nuxt/eslint',
     '@nuxtjs/i18n',
+    '@nuxt/icon',
     '@nuxt/image',
+    '@nuxt/scripts',
     '@vueuse/nuxt',
     'nuxt-swiper',
     'nuxt-umami',
-    '@nuxt/scripts',
+    'reka-ui/nuxt',
   ],
 
   i18n: {
@@ -75,8 +78,14 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-10-25',
 
   icon: {
+    clientBundle: {
+      includeCustomCollections: true,
+      scan: true,
+    },
+    size: '24px',
+    mode: 'svg',
     customCollections: [
-      { prefix: 'ui', dir: './assets/icons' },
+      { prefix: 'app', dir: './app/assets/icons' },
     ],
   },
 

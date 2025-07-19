@@ -18,8 +18,6 @@
 </template>
 
 <script lang="ts" setup>
-import { footerPages } from '~/assets/footerPages'
-
 const { $directus, $readItems } = useNuxtApp()
 const { locale, localeProperties } = useI18n()
 
@@ -27,7 +25,7 @@ const languageCode = computed(() => {
   return locale.value === 'en' ? 'en-US' : 'it-IT'
 })
 
-const { data } = await useAsyncData('page', () => {
+const { data } = await useAsyncData('page-articles', () => {
   return $directus.request(
     $readItems('pages', {
       filter: {
@@ -35,7 +33,7 @@ const { data } = await useAsyncData('page', () => {
           _eq: 'published',
         },
         slug: {
-          _nin: footerPages,
+          _nin: ['privacy', 'terms', 'about'],
         },
       },
       fields: [

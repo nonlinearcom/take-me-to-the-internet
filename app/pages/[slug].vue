@@ -12,16 +12,13 @@
 
 <script lang="ts" setup>
 import { EditorGallery, EditorMedia } from '#components'
-import { footerPages } from '~/assets/footerPages'
 
-const relationBlocks: VueRelationNodeSerializers = [
+const relationBlocks = [
   { collection: 'gallery', component: EditorGallery },
   { collection: 'media', component: EditorMedia },
 ]
 
 const route = useRoute()
-if (!footerPages.includes(route.params.slug as string))
-  await navigateTo(`/articles/${route.params.slug as string}`)
 
 const { locale } = useI18n()
 const languageCode = computed(() => {
@@ -29,7 +26,7 @@ const languageCode = computed(() => {
 })
 
 const { $directus, $readItem } = useNuxtApp()
-const { data: page } = await useAsyncData('page', () => {
+const { data: page } = await useAsyncData(`page-${route.params.slug}`, () => {
   return $directus.request(
     $readItem('pages', route.params.slug as string, {
       fields: [

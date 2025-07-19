@@ -34,25 +34,22 @@
 
 <script lang="ts" setup>
 import { EditorCables, EditorCodeLink, EditorFootNotes, EditorGallery, EditorMedia, EditorSideNote } from '#components'
-import { footerPages } from '~/assets/footerPages'
 
-const relationBlocks: VueRelationNodeSerializers = [
+const relationBlocks = [
   { collection: 'cables', component: EditorCables },
   { collection: 'gallery', component: EditorGallery },
   { collection: 'media', component: EditorMedia },
 
 ]
-const relationInlineBlocks: VueRelationNodeSerializers = [
+const relationInlineBlocks = [
   { collection: 'code_link', component: EditorCodeLink },
 ]
 
-const relationMarks: VueRelationNodeSerializers = [
+const relationMarks = [
   { collection: 'sidenote', component: EditorSideNote },
 ]
 
 const route = useRoute()
-if (footerPages.includes(route.params.slug as string))
-  await navigateTo(`/${route.params.slug as string}`)
 
 const { locale } = useI18n()
 const languageCode = computed(() => {
@@ -61,7 +58,7 @@ const languageCode = computed(() => {
 
 const { $directus, $readItem } = useNuxtApp()
 
-const { data: page } = await useAsyncData('page', () => {
+const { data: page } = await useAsyncData(`article-${route.params.slug}`, () => {
   return $directus.request(
     $readItem('pages', route.params.slug as string, {
       fields: [

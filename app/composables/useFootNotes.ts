@@ -1,5 +1,3 @@
-import { set } from '@vueuse/core'
-
 const activeNoteId = ref<string | null>(null)
 
 export default function () {

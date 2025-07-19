@@ -54,6 +54,8 @@ const props = defineProps({
   },
 })
 
+const emit = defineEmits(['showCover'])
+
 function goToPanel(item) {
   if (item.status === 'archived')
     return

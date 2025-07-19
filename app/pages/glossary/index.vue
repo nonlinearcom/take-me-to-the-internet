@@ -21,7 +21,7 @@
             />
           </h2>
           <p class="description">
-            {{ truncate(generateText(item.translations[0].description), 150) }}
+            {{ truncate(generateText(item.translations?.[0]?.description), 150) }}
           </p>
         </article>
       </template>
@@ -33,7 +33,7 @@
 const { $directus, $readItems } = useNuxtApp()
 const { locale, localeProperties } = useI18n()
 
-const { data: glossary } = await useAsyncData('glossary', () => {
+const { data: glossary } = await useAsyncData('glossary-page', () => {
   return $directus.request<GlossaryItem[]>(
     $readItems('glossary', {
       filter: {
@@ -83,11 +83,11 @@ function isNewGroup(index: number) {
   if (index === 0)
     return true // Always mark the first term as a new group
 
-  const currentTerm = glossary.value?.[index]?.translations[0].term
-  const previousTerm = glossary.value?.[index - 1]?.translations[0].term
+  const currentTerm = glossary.value?.[index]?.translations?.[0]?.term
+  const previousTerm = glossary.value?.[index - 1]?.translations?.[0]?.term
 
   // Compare the first letters of the current and previous terms
-  return currentTerm[0]?.toLowerCase() !== previousTerm[0]?.toLowerCase()
+  return currentTerm?.[0]?.toLowerCase() !== previousTerm?.[0]?.toLowerCase()
 }
 
 function recetlyUpdated(item: GlossaryItem) {

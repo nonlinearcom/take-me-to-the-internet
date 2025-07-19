@@ -30,7 +30,7 @@
                 variant="outline"
                 rounded
                 invert-icon
-                :label="!isMobile ? 'BACK' : undefined"
+                :label="!isSmallScreen ? 'BACK' : undefined"
                 size="sm"
                 @click="closeModal()"
               />
@@ -87,7 +87,7 @@
 <script setup lang="ts">
 import { EditorGallery, EditorMedia } from '#components'
 
-const relationBlocks: VueRelationNodeSerializers = [
+const relationBlocks = [
   { collection: 'gallery', component: EditorGallery },
   { collection: 'media', component: EditorMedia },
 ]
@@ -147,8 +147,7 @@ function closeModal() {
   navigateTo('/log')
 }
 
-const breakpoints = useBreakpoints({ mobile: 768 })
-const isMobile = breakpoints.smaller('mobile')
+const { isSmallScreen } = useApp()
 
 onBeforeMount(() => {
   isPanelOpen.value = true

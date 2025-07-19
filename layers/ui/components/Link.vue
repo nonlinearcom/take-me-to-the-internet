@@ -30,8 +30,8 @@
 </template>
 
 <script lang="ts" setup>
-import type { Link } from '@/types/ui'
 import type { RouteLocation, RouteLocationNormalizedLoaded } from 'vue-router'
+import type { Link } from '@/types/ui'
 import { isEqual } from 'ohash'
 
 defineOptions({ name: 'UiLink' })

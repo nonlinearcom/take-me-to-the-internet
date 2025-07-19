@@ -2,7 +2,7 @@
   <article class="resources-page">
     <transition name="fade">
       <AppPreview
-        v-if="!isOutside && isLaptop && currentCover !== null"
+        v-if="!isOutside && isLargeScreen && currentCover !== null"
         :cover="currentCover"
         :x-pos="xPos"
         :y-pos="yPos"
@@ -17,7 +17,7 @@
         size="sm"
       >
         <UiToggleGroupItem
-          v-for="value in arrayUnion(resourcesData?.flatMap(({ topics }) => topics).map(({ topics_id }) => topics_id.title))"
+          v-for="value in arrayUnion(resourcesData?.flatMap(({ topics }) => topics ?? []).map(({ topics_id }) => topics_id.title))"
           :key="value"
           :value
           :disabled="!!isDisabled({ topic: value })"
@@ -32,7 +32,7 @@
         size="sm"
       >
         <UiToggleGroupItem
-          v-for="value in arrayUnion(resourcesData?.flatMap(({ tags }) => tags).map(({ tags_id }) => tags_id.title))"
+          v-for="value in arrayUnion(resourcesData?.flatMap(({ tags }) => tags ?? []).map(({ tags_id }) => tags_id.title))"
           :key="value"
           :value
           :disabled="!!isDisabled({ tag: value })"
@@ -140,9 +140,11 @@
 </template>
 
 <script lang="ts" setup>
+const { isLargeScreen } = useApp()
+
 const { $directus, $readItems } = useNuxtApp()
 
-const { data: resourcesData } = await useAsyncData('resources', () => {
+const { data: resourcesData } = await useAsyncData('page-resources', () => {
   return $directus.request<Resource[]>(
     $readItems('resources', {
       filter: {
@@ -171,7 +173,7 @@ const filters = ref<{ topics: string[], tags: string[] }>({
 const search = ref<string | undefined>()
 const searchDebounced = refDebounced(search, 1000)
 
-const headers = [
+const headers: { key: ResourceSortKey, label: string }[] = [
   { key: 'slug', label: 'Title' },
   { key: 'type', label: 'Type' },
   { key: 'year', label: 'Year' },
@@ -179,12 +181,14 @@ const headers = [
   { key: 'open', label: 'Open' },
 ]
 
+type ResourceSortKey = keyof Resource | 'author'
+
 // Sorting state
-const sortKey = ref<string | null>(null)
+const sortKey = ref<ResourceSortKey | null>(null)
 const sortDirection = ref<'asc' | 'desc' | null>(null)
 
 // Toggle sorting when a header is clicked
-const toggleSort = (key: string) => {
+const toggleSort = (key: ResourceSortKey) => {
   if (sortKey.value === key) {
     // Toggle between 'asc' and 'desc'
     sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc'
@@ -206,7 +210,7 @@ const filteredResources = computed(() => {
       const title = item.title.toLowerCase()
       const description = item.description?.toLowerCase()
       const people = item.people.map(({ people_id }) => people_id.name.trim()).join(', ').toLowerCase()
-      return `${title} ${description} ${people}`.includes(searchDebounced.value?.toLowerCase())
+      return `${title} ${description} ${people}`.includes(searchDebounced.value?.toLowerCase() ?? '')
     })
   }
 
@@ -228,11 +232,11 @@ const sortedResources = computed(() => {
   console.log(filteredResources.value)
   // Sort based on the active sort key and direction
   return [...filteredResources.value].sort((a, b) => {
-    const key = sortKey.value as keyof Resource
+    const key = sortKey.value as ResourceSortKey
 
     // Handle nested keys for 'author' sorting
-    const valueA = key === 'author' ? a.people[0]?.people_id.name : a[key]
-    const valueB = key === 'author' ? b.people[0]?.people_id.name : b[key]
+    const valueA = key === 'author' ? a.people[0]?.people_id.name : a[key as keyof Resource]
+    const valueB = key === 'author' ? b.people[0]?.people_id.name : b[key as keyof Resource]
 
     if (!valueA || !valueB)
       return 0
@@ -254,7 +258,6 @@ const isSortedBy = (key: string, direction: 'asc' | 'desc') => {
 
 const table = ref(null)
 const currentCover = ref()
-const { isLaptop } = useMyBreakpoints()
 
 function getCoverUrl(url?: string) {
   currentCover.value = url

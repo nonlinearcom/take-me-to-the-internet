@@ -1,5 +1,8 @@
 <template>
-  <article class="glossary-term">
+  <article
+    v-if="translation"
+    class="glossary-term"
+  >
     <header>
       <h1 class="title">
         {{ translation.term }}
@@ -11,6 +14,7 @@
       :content="translation?.description"
       :relation-blocks
       :relation-marks
+      :relation-inline-blocks
     />
     <EditorFootNotes
       v-if="translation"
@@ -21,18 +25,20 @@
 
     <div class="glossary-navigation">
       <NuxtLink
+        v-if="previousPage"
         class="previous-button"
         :to="`/glossary/${previousPage.slug}`"
       >
         <UiIcon name="chevron-left" />
-        {{ getTranslation(previousPage).term }}
+        {{ getTranslation(previousPage)?.term }}
       </NuxtLink>
 
       <NuxtLink
+        v-if="nextPage"
         class="next-button"
         :to="`/glossary/${nextPage.slug}`"
       >
-        {{ getTranslation(nextPage).term }}
+        {{ getTranslation(nextPage)?.term }}
         <UiIcon name="chevron-right" />
       </NuxtLink>
     </div>
@@ -42,30 +48,29 @@
 <script lang="ts" setup>
 import { EditorCables, EditorCodeLink, EditorGallery, EditorMedia, EditorSideNote } from '#components'
 
-const relationBlocks: VueRelationNodeSerializers = [
+const relationBlocks = [
   { collection: 'cables', component: EditorCables },
   { collection: 'gallery', component: EditorGallery },
   { collection: 'media', component: EditorMedia },
 
 ]
-const relationInlineBlocks: VueRelationNodeSerializers = [
+const relationInlineBlocks = [
   { collection: 'code_link', component: EditorCodeLink },
 
 ]
-const relationMarks: VueRelationNodeSerializers = [
+const relationMarks = [
   { collection: 'sidenote', component: EditorSideNote },
 ]
 const { $directus, $readItems } = useNuxtApp()
 const route = useRoute()
 const { locale } = useI18n()
-const isLazy = useState('isLazy', () => false)
 
 const slug = route.params.slug as string
 
 const { list } = useGlossary()
 
-const { data: page, error } = await useAsyncData('glossary-page', () => {
-  return $directus.request(
+const { data: page, error } = await useAsyncData(`glossary-${slug}`, async () => {
+  const pageData = await $directus.request(
     $readItems('glossary', {
       filter: {
         slug: {
@@ -99,14 +104,18 @@ const { data: page, error } = await useAsyncData('glossary-page', () => {
       ],
     }),
   )
-}, { lazy: isLazy.value })
+  if (!pageData) {
+    throw createError({
+      statusCode: 404,
+      statusMessage: 'Page Not Found',
+    })
+  }
 
-// workaround for the lazy loading after first fetch
-if (!isLazy.value) {
-  isLazy.value = true
-}
+  return pageData
+}, { lazy: true })
 
-if (!page.value) {
+if (error.value) {
+  console.error(error.value)
   throw createError({
     statusCode: 404,
     statusMessage: 'Page Not Found',
@@ -114,12 +123,12 @@ if (!page.value) {
 }
 
 // const page = ref(pageData.value?.page[0])
-const currentPageIndex = computed(() => list.value?.findIndex(page => page.slug === slug))
+const currentPageIndex = computed(() => (list.value as GlossaryItem[])?.findIndex(page => page.slug === slug))
 
 const nextPage = computed(() => {
   if (!list.value || currentPageIndex.value == null)
     return null
-  const page = currentPageIndex.value === list.value.length - 1 ? list?.value[0] : list?.value[currentPageIndex.value + 1]
+  const page = currentPageIndex.value === (list.value as GlossaryItem[]).length - 1 ? (list?.value as GlossaryItem[])?.[0] : (list?.value as GlossaryItem[])?.[currentPageIndex.value + 1]
 
   return page
 })
@@ -129,30 +138,23 @@ const previousPage = computed(() => {
   if (!list.value || currentPageIndex.value == null)
     return null
 
-  const page = currentPageIndex.value === 0 ? list?.value[list.value.length - 1] : list?.value[currentPageIndex?.value - 1]
+  const page = currentPageIndex.value === 0 ? (list?.value as GlossaryItem[])?.[(list.value as GlossaryItem[]).length - 1] : (list?.value as GlossaryItem[])?.[currentPageIndex?.value - 1]
   return page
 })
 
-if (!page.value) {
-  throw createError({
-    statusCode: 404,
-    statusMessage: 'Page Not Found',
-  })
-}
-
-function getTranslation(item: any) {
-  return item.translations?.find(t => t.languages_code.startsWith(locale.value)) || 0
+function getTranslation(item: GlossaryItem): GlossaryTranslation | undefined {
+  return item.translations?.find((t: GlossaryTranslation) => t.languages_code.startsWith(locale.value))
 }
 
 const translation = computed(() => {
   if (!page.value)
     return null
 
-  const translation = getTranslation(page.value[0])
+  const translation = getTranslation(page.value[0] as GlossaryItem)
   if (!translation)
     return null
 
-  injectDataIntoContent(translation.editor_nodes, translation.description)
+  injectDataIntoContent((translation as any).editor_nodes, translation.description)
   return translation
 })
 
