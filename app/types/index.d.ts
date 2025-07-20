@@ -13,6 +13,8 @@ declare interface Resource {
   topics?: { topics_id: Topic }[] // Nested relationship
 }
 
+declare type ResourceSortKey = keyof Resource | 'author'
+
 declare interface Person {
   id: number
   status: 'published' | 'draft'
