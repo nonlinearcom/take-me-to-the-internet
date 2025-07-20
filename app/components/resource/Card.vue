@@ -23,7 +23,7 @@
     <NuxtImg
       v-if="resource.cover"
       class="cover"
-      :src="`${resource.cover}?fit=inside&width=800&height=800&format=auto&withoutEnlargement=true`"
+      :src="`${resource.cover}?fit=inside&width=400&format=auto&withoutEnlargement=true`"
       :alt="resource.title"
     />
 
@@ -86,6 +86,7 @@ const props = defineProps<{
 .resource-card {
   display: flex;
   flex-direction: column;
+  height: 100vh;
   padding: var(--app-margin-small);
   gap: var(--text);
 
@@ -98,8 +99,9 @@ const props = defineProps<{
     gap: 2px;
   }
   .cover {
-    max-width: 50%;
+    width: 200px;
     height: auto;
+    border-radius: 4px;
   }
 
   .description {

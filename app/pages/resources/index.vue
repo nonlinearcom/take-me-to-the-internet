@@ -9,7 +9,7 @@
       />
     </transition>
 
-    <ResourcesFilters
+    <ResourceFilters
       :resources="resourcesData"
       :filters="filters"
       :search="search"
@@ -18,13 +18,27 @@
       @update:filters="filters = $event"
       @update:search="search = $event"
       @reset="resetFilters"
-    />
+    >
+      <UiButton
+        :icon="viewMode === 'table' ? 'view-grid' : 'list'"
+        :label="viewMode === 'table' ? 'Grid view' : 'List view'"
+        variant="ghost"
+        invert-icon
+        @click="viewMode = viewMode === 'table' ? 'grid' : 'table'"
+      />
+    </ResourceFilters>
 
-    <ResourcesTable
+    <ResourceTable
+      v-if="viewMode === 'table'"
       ref="table"
       :resources="sortedResources"
       :is-sorted-by="isSortedBy"
       @toggle-sort="toggleSort"
+      @row-hover="getCoverUrl"
+    />
+    <ResourceGrid
+      v-else
+      :resources="sortedResources"
       @row-hover="getCoverUrl"
     />
   </article>
@@ -33,6 +47,8 @@
 <script lang="ts" setup>
 const { isLargeScreen } = useApp()
 const { $directus, $readItems } = useNuxtApp()
+
+const viewMode = ref<'table' | 'grid'>('table')
 
 const { data: resourcesData } = await useAsyncData('page-resources', () => {
   return $directus.request<Resource[]>(
