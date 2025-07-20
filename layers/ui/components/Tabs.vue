@@ -6,9 +6,7 @@
     :default-value
   >
     <TabsList class="TabsList">
-      <TabsIndicator class="TabsIndicator">
-        <div style="width: 100%; height: 100%" />
-      </TabsIndicator>
+      <TabsIndicator class="TabsIndicator" />
       <TabsTrigger
         v-for="(tab, key) in tabs"
         :key
@@ -28,15 +26,19 @@
       </TabsTrigger>
     </TabsList>
 
-    <TabsContent
-      v-for="(tab, key) in tabs"
-      :key
-      :value="typeof tab === 'string' ? tab : tab?.value"
-      class="TabsContent"
-      :hidden="modelValue !== (typeof tab === 'string' ? tab : tab?.value)"
+    <Transition
+      name="fade"
+      mode="out-in"
     >
-      <slot :name="typeof tab === 'string' ? tab : tab?.value" />
-    </TabsContent>
+      <TabsContent
+        v-if="modelValue"
+        :key="modelValue"
+        :value="modelValue"
+        class="TabsContent"
+      >
+        <slot :name="modelValue" />
+      </TabsContent>
+    </Transition>
   </TabsRoot>
 </template>
 
@@ -86,7 +88,6 @@ const forwarded = useForwardPropsEmits(props, emit)
       width: calc(var(--reka-tabs-indicator-size) - var(--padding) * 2);
       transform: translateX(var(--reka-tabs-indicator-position));
       background-color: var(--black-a1);
-
       border-radius: var(--border-radius);
       transition-property: width, transform;
       transition-duration: 300ms;
