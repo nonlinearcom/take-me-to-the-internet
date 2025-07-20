@@ -107,7 +107,6 @@ function recetlyUpdated(item: GlossaryItem) {
   align-items: center;
 
   .terms-grid {
-    //margin-left: 25vw;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 16px;

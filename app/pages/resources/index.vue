@@ -10,40 +10,85 @@
     </transition>
 
     <section class="resources-filters">
-      <h5>Filter by:</h5>
-      <h5>Topics</h5>
-      <UiToggleGroup
-        v-model="filters.topics"
-        size="sm"
+      <!-- tabs -->
+      <UiTabs
+        default-value="topics"
+        :tabs="[
+          { value: 'topics', label: 'Topics' },
+          { value: 'tags', label: 'Tags' },
+          { value: 'type', label: 'Type' },
+          { value: 'search', label: 'Search' },
+        ]"
       >
-        <UiToggleGroupItem
-          v-for="value in arrayUnion(resourcesData?.flatMap(({ topics }) => topics ?? []).map(({ topics_id }) => topics_id.title))"
-          :key="value"
-          :value
-          :disabled="!!isDisabled({ topic: value })"
-        >
-          {{ value }}
-        </UiToggleGroupItem>
-      </UiToggleGroup>
+        <!-- Topics -->
+        <template #topics>
+          <UiToggleGroup
+            v-model="filters.topics"
+            size="sm"
+          >
+            <UiToggleGroupItem
+              v-for="value in arrayUnion(resourcesData?.flatMap(({ topics }) => topics ?? []).map(({ topics_id }) => topics_id.title))"
+              :key="value"
+              :value
+              :disabled="!!isDisabled({ topic: value })"
+            >
+              {{ value }}
+            </UiToggleGroupItem>
+          </UiToggleGroup>
+        </template>
 
-      <h5>Tags</h5>
-      <UiToggleGroup
-        v-model="filters.tags"
-        size="sm"
-      >
-        <UiToggleGroupItem
-          v-for="value in arrayUnion(resourcesData?.flatMap(({ tags }) => tags ?? []).map(({ tags_id }) => tags_id.title))"
-          :key="value"
-          :value
-          :disabled="!!isDisabled({ tag: value })"
-        >
-          {{ value }}
-        </UiToggleGroupItem>
-      </UiToggleGroup>
+        <!-- Tags -->
+        <template #tags>
+          <UiToggleGroup
+            v-model="filters.tags"
+            size="sm"
+          >
+            <UiToggleGroupItem
+              v-for="value in arrayUnion(resourcesData?.flatMap(({ tags }) => tags ?? []).map(({ tags_id }) => tags_id.title))"
+              :key="value"
+              :value
+              :disabled="!!isDisabled({ tag: value })"
+            >
+              {{ value }}
+            </UiToggleGroupItem>
+          </UiToggleGroup>
+        </template>
 
-      <UiInput
-        v-model="search"
-        placeholder="Search…"
+        <!-- Type -->
+        <template #type>
+          <UiToggleGroup
+            v-model="filters.type"
+            size="sm"
+          >
+            <UiToggleGroupItem
+              v-for="value in arrayUnion(resourcesData?.flatMap(({ type }) => type ?? []))"
+              :key="value"
+              :value
+              :disabled="!!isDisabled({ type: value })"
+            >
+              {{ value }}
+            </UiToggleGroupItem>
+          </UiToggleGroup>
+        </template>
+
+        <!-- Search -->
+        <template #search>
+          <UiInput
+            v-model="search"
+            class="search-input"
+            placeholder="Search resources"
+          />
+        </template>
+      </UiTabs>
+      <UiButton
+        v-if="hasActiveFilters"
+        class="clear-filters-button"
+        size="xs"
+        icon="update"
+        rounded
+        variant="secondary"
+        aria-label="Clear filters"
+        @click="resetFilters"
       />
     </section>
 
@@ -111,21 +156,7 @@
             {{ item.year }}
           </td>
           <td class="author">
-            <UiDialog
-              v-for="author in item.people"
-              :key="author.people_id.name"
-              title="Author Details"
-              hide-title
-            >
-              <template #trigger>
-                <UiButton
-                  class="author"
-                  variant="ghost"
-                  :label="author.people_id.name"
-                />
-              </template>
-              <PeopleCard :author="author.people_id" />
-            </UiDialog>
+            {{ item.people.map(({ people_id }) => people_id.name).join(', ') }}
           </td>
           <td class="open">
             <span
@@ -166,12 +197,31 @@ const { data: resourcesData } = await useAsyncData('page-resources', () => {
   )
 })
 
-const filters = ref<{ topics: string[], tags: string[] }>({
+const filters = ref<{ topics: string[], tags: string[], type: string[] }>({
   topics: [],
   tags: [],
+  type: [],
 })
 const search = ref<string | undefined>()
 const searchDebounced = refDebounced(search, 1000)
+
+const hasActiveFilters = computed(() => {
+  return (
+    filters.value.topics.length > 0
+    || filters.value.tags.length > 0
+    || filters.value.type.length > 0
+    || !!searchDebounced.value
+  )
+})
+
+const resetFilters = () => {
+  filters.value = {
+    topics: [],
+    tags: [],
+    type: [],
+  }
+  search.value = undefined
+}
 
 const headers: { key: ResourceSortKey, label: string }[] = [
   { key: 'slug', label: 'Title' },
@@ -205,6 +255,8 @@ const filteredResources = computed(() => {
     res = res?.filter(({ topics }) => filters.value.topics.some(r => topics?.map(({ topics_id }) => topics_id.title)?.includes(r)))
   if (filters.value.tags?.length)
     res = res?.filter(({ tags }) => filters.value.tags.some(r => tags?.map(({ tags_id }) => tags_id.title)?.includes(r)))
+  if (filters.value.type?.length)
+    res = res?.filter(({ type }) => type && filters.value.type.includes(type))
   if (searchDebounced.value) {
     res = res?.filter((item) => {
       const title = item.title.toLowerCase()
@@ -217,11 +269,13 @@ const filteredResources = computed(() => {
   return res
 })
 
-const isDisabled = ({ tag, topic }: { tag?: string, topic?: string }) => {
+const isDisabled = ({ tag, topic, type }: { tag?: string, topic?: string, type?: string }) => {
   if (tag)
     return !filteredResources.value?.some(({ tags }) => tags?.map(({ tags_id }) => tags_id.title).includes(tag))
   if (topic)
     return !filteredResources.value?.some(({ topics }) => topics?.map(({ topics_id }) => topics_id.title).includes(topic))
+  if (type)
+    return !filteredResources.value?.some(r => r.type === type)
 }
 
 // Computed property to get sorted resources
@@ -270,29 +324,27 @@ const { isOutside, xPos, yPos } = useFollowMe(table)
 .resources-page {
   display: flex;
   flex-direction: column;
-  margin: 0 0 25vh;
+  margin: 10vh 0 0 0;
 }
 
 .resources-filters {
-  display: grid;
-  gap: var(--app-margin-mini);
-  /* margin-bottom: var(--app-margin); */
-  padding: var(--app-margin-small);
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-4);
+  width: 50%;
+  margin-left: auto;
+  margin-right: var(--app-margin);
+  margin-bottom: 10vh;
 
-  @media (min-width: 768px) {
-    grid-template-columns: 1fr 3fr;
-
-    .ui-input {
-      max-width: 480px;
-      grid-column: 2 / span 1;
-      margin: var(--app-margin-small) 0 var(--app-margin-mini);
-    }
+  @media (max-width: 1280px) {
+    width: 100%;
   }
 
-  h5 {
-    font-weight: 500;
-    font-size: var(--text-small);
-    grid-column: 1 / span 1;
+  .clear-filters-button {
+    position: absolute;
+    top: 6px;
+    right: 6px;
   }
 
   .ToggleGroup {
@@ -301,6 +353,7 @@ const { isOutside, xPos, yPos } = useFollowMe(table)
   }
   .ToggleGroupItem {
     padding: 8px 12px;
+    border-radius: 40px;
   }
 }
 
@@ -335,9 +388,6 @@ table tr td {
     display: flex;
     align-items: center;
     gap: 4px;
-  }
-  .author {
-    z-index: 20;
   }
 
   /* sorting */
