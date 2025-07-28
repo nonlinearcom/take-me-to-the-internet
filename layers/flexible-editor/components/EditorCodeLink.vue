@@ -16,6 +16,6 @@ defineProps<{
 <style lang="postcss" scoped>
 code {
   font-size: calc(var(--text) - 2px);
-  padding: 1px;
+  padding: 2px 4px;
 }
 </style>
