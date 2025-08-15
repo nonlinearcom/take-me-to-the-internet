@@ -1,12 +1,22 @@
 <template>
-  <div class="resource-grid">
-    <ResourceGridItem
+  <section class="resource-grid">
+    <article
       v-for="resource in resources"
       :key="resource.id"
-      :resource="resource"
-      @row-hover="$emit('rowHover', $event)"
-    />
-  </div>
+      class="resource-grid-item"
+      @click="$emit('viewResource', resource)"
+    >
+      <NuxtImg
+        v-if="resource.cover"
+        class="cover"
+        :src="`${resource.cover}?fit=inside&width=300&&format=auto&withoutEnlargement=true`"
+        :alt="resource.title"
+      />
+      <h2 class="title">
+        {{ resource.title }}
+      </h2>
+    </article>
+  </section>
 </template>
 
 <script lang="ts" setup>
@@ -14,7 +24,7 @@ defineProps<{
   resources: Resource[]
 }>()
 
-defineEmits(['rowHover'])
+defineEmits(['rowHover', 'viewResource'])
 </script>
 
 <style lang="postcss" scoped>
@@ -23,5 +33,29 @@ defineEmits(['rowHover'])
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: var(--app-margin);
   padding: var(--app-margin);
+
+  .resource-grid-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-self: self-start;
+    cursor: pointer;
+
+    &:hover {
+      .title {
+        text-decoration: underline;
+      }
+    }
+
+    .cover {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+    .title {
+      font-size: var(--text-small);
+      cursor: pointer;
+    }
+  }
 }
 </style>

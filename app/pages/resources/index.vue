@@ -35,12 +35,25 @@
       :is-sorted-by="isSortedBy"
       @toggle-sort="toggleSort"
       @row-hover="getCoverUrl"
+      @view-resource="openResourceDialog"
     />
     <ResourceGrid
       v-else
       :resources="sortedResources"
-      @row-hover="getCoverUrl"
+      @view-resource="openResourceDialog"
     />
+
+    <!-- Resource Dialog -->
+    <UiDialog
+      v-if="selectedResource"
+      v-model:open="isDialogOpen"
+      side="right"
+      title="Resource Details"
+      hide-title
+      :aria-label="`Resource ${selectedResource?.title}`"
+    >
+      <ResourceCard :resource="selectedResource" />
+    </UiDialog>
   </article>
 </template>
 
@@ -85,12 +98,19 @@ const {
 
 const table = useTemplateRef<HTMLElement>('table')
 const currentCover = ref<string | undefined>()
+const isDialogOpen = ref(false)
+const selectedResource = ref<Resource | null>(null)
 
 function getCoverUrl(url?: string) {
   currentCover.value = url
 }
 
 const { isOutside, xPos, yPos } = useFollowMe(table)
+
+function openResourceDialog(resource: Resource) {
+  selectedResource.value = resource
+  isDialogOpen.value = true
+}
 </script>
 
 <style lang="postcss" scoped>

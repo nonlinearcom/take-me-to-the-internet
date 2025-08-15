@@ -37,22 +37,14 @@
               :to="item.link"
               target="_blank"
             />
-            <UiDialog
-              side="right"
-              title="Resource Details"
-              hide-title
-              :aria-label="`Resource ${item.title}`"
-            >
-              <template #trigger>
-                <UiButton
-                  variant="ghost"
-                  size="sm"
-                  padded
-                  :label="item.title"
-                />
-              </template>
-              <ResourceCard :resource="item" />
-            </UiDialog>
+            <UiButton
+              variant="ghost"
+              size="sm"
+              :padded="false"
+              :label="item.title"
+              class="resource-title"
+              @click="emit('viewResource', item)"
+            />
           </span>
         </td>
         <td class="type">
@@ -83,7 +75,7 @@ const props = withDefaults(defineProps<{
   resources: () => [],
   isSortedBy: () => false,
 })
-const emit = defineEmits(['toggleSort', 'rowHover'])
+const emit = defineEmits(['toggleSort', 'rowHover', 'viewResource'])
 
 const headers: { key: ResourceSortKey, label: string }[] = [
   { key: 'slug', label: 'Title' },
@@ -123,6 +115,11 @@ table tr td {
     display: flex;
     align-items: center;
     gap: 4px;
+    align-self: stretch;
+    /* allow multiline children to expand the row height */
+    > * {
+      align-self: stretch;
+    }
   }
 
   /* sorting */
@@ -146,16 +143,30 @@ table tr td {
     flex-shrink: 1;
   }
 
+  /* Allow long titles to wrap within available space */
+  .resource-title {
+    white-space: normal;
+    text-align: left;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    flex: 1 1 auto;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 0;
+  }
+
   tr {
     width: 100%;
     display: flex;
-    align-items: center;
+    align-items: stretch;
     position: relative;
   }
 
   td,
   th {
     border-top: 1px solid rgba(var(--current-gray-rgb-inverted), 0.25);
+    align-items: stretch;
     &.table-year {
       flex: 0 1 10%;
       max-width: 100px;
