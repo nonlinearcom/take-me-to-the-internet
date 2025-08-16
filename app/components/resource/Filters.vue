@@ -8,12 +8,14 @@
     <UiTabs
       class="filters-tabs"
       default-value="topics"
+      :model-value="activeTab"
       :tabs="[
         { value: 'topics', label: 'Topics' },
         { value: 'tags', label: 'Tags' },
         { value: 'type', label: 'Type' },
         { value: 'search', label: 'Search' },
       ]"
+      @update:model-value="onTabsUpdate"
     >
       <!-- Topics -->
       <template #topics>
@@ -99,22 +101,29 @@
 <script lang="ts" setup>
 const props = withDefaults(defineProps<{
   resources?: Resource[] | null | undefined
-  filters?: { topics: string[], tags: string[], type: string[] }
+  filters: { topics: string[], tags: string[], type: string[] }
   search?: string
   hasActiveFilters?: boolean
-  isDisabled?: ({ tag, topic, type }: { tag?: string, topic?: string, type?: string }) => boolean | undefined
+  isDisabled: ({ tag, topic, type }: { tag?: string, topic?: string, type?: string }) => boolean | undefined
+  activeTab?: 'topics' | 'tags' | 'type' | 'search'
 }>(), {
   resources: null,
   filters: () => ({ topics: [], tags: [], type: [] }),
   hasActiveFilters: false,
   isDisabled: () => false,
+  activeTab: undefined,
 })
 
-const emit = defineEmits(['update:filters', 'update:search', 'reset'])
+const emit = defineEmits(['update:filters', 'update:search', 'reset', 'update:activeTab'])
 
 const topics = computed(() => arrayUnion(props.resources?.flatMap(({ topics }) => topics ?? []).map(({ topics_id }) => topics_id.title)))
 const tags = computed(() => arrayUnion(props.resources?.flatMap(({ tags }) => tags ?? []).map(({ tags_id }) => tags_id.title)))
 const types = computed(() => arrayUnion(props.resources?.flatMap(({ type }) => type ?? [])))
+
+function onTabsUpdate(value: string | number) {
+  const v = String(value)
+  emit('update:activeTab', v)
+}
 </script>
 
 <style lang="postcss" scoped>

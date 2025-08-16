@@ -7,6 +7,8 @@
           :label="resource.type"
           variant="outline"
           size="xs"
+          as="button"
+          @click="emit('selectFilter', { kind: 'type', value: resource.type })"
         />
         <UiChip
           v-if="resource.year"
@@ -27,13 +29,6 @@
       :alt="resource.title"
     />
 
-    <!-- <p
-      v-if="resource.description"
-      class="description"
-    >
-      {{ resource.description }}
-    </p> -->
-
     <main
       v-if="resource.description"
       class="description"
@@ -46,27 +41,31 @@
       <template v-if="resource.topics && resource.topics.length">
         <dt>TOPICS</dt>
         <dd>
-          <NuxtLink
+          <UiButton
             v-for="({ topics_id }) in resource.topics.filter(({ topics_id }) => topics_id)"
             :key="topics_id.id"
             class="tag"
-            :to="`/topics/${topics_id.slug}`"
-          >
-            {{ topics_id.title }}
-          </NuxtLink>
+            :label="topics_id.title"
+            variant="link"
+            :padded="false"
+            size="xs"
+            @click="emit('selectFilter', { kind: 'topics', value: topics_id.title })"
+          />
         </dd>
       </template>
       <template v-if="resource.tags && resource.tags.length">
         <dt>TAGS</dt>
         <dd>
-          <NuxtLink
+          <UiButton
             v-for="({ tags_id }) in resource.tags.filter(({ tags_id }) => tags_id)"
             :key="tags_id.id"
             class="tag"
-            :to="`/tags/${tags_id.slug}`"
-          >
-            {{ tags_id.title }}
-          </NuxtLink>
+            :label="tags_id.title"
+            variant="link"
+            :padded="false"
+            size="xs"
+            @click="emit('selectFilter', { kind: 'tags', value: tags_id.title })"
+          />
         </dd>
       </template>
     </dl>
@@ -85,6 +84,9 @@
 <script lang="ts" setup>
 const props = defineProps<{
   resource: Resource
+}>()
+const emit = defineEmits<{
+  (e: 'selectFilter', payload: { kind: 'topics' | 'tags' | 'type', value: string }): void
 }>()
 </script>
 
@@ -125,12 +127,21 @@ const props = defineProps<{
     dt {
       color: var(--text-color);
     }
+    dd {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
     .tag:hover {
       text-decoration: underline;
     }
     .tag ~ .tag::before {
       content: ', ';
     }
+  }
+
+  @media (max-width: 1280px) {
+    width: 100%;
   }
 }
 </style>

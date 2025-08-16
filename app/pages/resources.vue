@@ -6,9 +6,11 @@
       :search="search"
       :has-active-filters="hasActiveFilters"
       :is-disabled="isDisabled"
+      :active-tab="activeTab"
       @update:filters="filters = $event"
       @update:search="search = $event"
       @reset="resetFilters"
+      @update:active-tab="activeTab = $event"
     >
       <UiButton
         :icon="viewMode === 'table' ? 'view-grid' : 'list'"
@@ -53,7 +55,10 @@
       hide-title
       :aria-label="`Resource ${selectedResource?.title}`"
     >
-      <ResourceCard :resource="selectedResource" />
+      <ResourceCard
+        :resource="selectedResource"
+        @select-filter="onSelectFilter"
+      />
     </UiDialog>
   </article>
 </template>
@@ -101,6 +106,7 @@ const table = useTemplateRef<HTMLElement>('table')
 const currentCover = ref<string | undefined>()
 const isDialogOpen = ref(false)
 const selectedResource = ref<Resource | null>(null)
+const activeTab = ref<'topics' | 'tags' | 'type' | 'search'>('topics')
 
 function getCoverUrl(url?: string) {
   currentCover.value = url
@@ -111,6 +117,24 @@ const { isOutside, xPos, yPos } = useFollowMe(table)
 function openResourceDialog(resource: Resource) {
   selectedResource.value = resource
   isDialogOpen.value = true
+}
+
+function onSelectFilter(payload: { kind: 'topics' | 'tags' | 'type', value: string }) {
+  const { kind, value } = payload
+  if (kind === 'topics') {
+    filters.value = { topics: [value], tags: [], type: [] }
+    activeTab.value = 'topics'
+  } else if (kind === 'tags') {
+    filters.value = { topics: [], tags: [value], type: [] }
+    activeTab.value = 'tags'
+  } else if (kind === 'type') {
+    filters.value = { topics: [], tags: [], type: [value] }
+    activeTab.value = 'type'
+  }
+
+  // Auto-close the dialog after applying the filter
+  isDialogOpen.value = false
+  selectedResource.value = null
 }
 </script>
 

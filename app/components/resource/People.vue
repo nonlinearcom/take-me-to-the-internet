@@ -11,7 +11,7 @@
 
 <script lang="ts" setup>
 const props = defineProps<{
-  people: Person[]
+  people: { people_id: Person }[]
 }>()
 </script>
 
