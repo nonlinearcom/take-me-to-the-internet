@@ -18,7 +18,7 @@
   pointer-events: none;
 
   .home__iframe {
-    z-index: -2;
+    z-index: -1;
     width: 100%;
     height: 100%;
     border: 0px;

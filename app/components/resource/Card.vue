@@ -27,12 +27,18 @@
       :alt="resource.title"
     />
 
-    <p
+    <!-- <p
       v-if="resource.description"
       class="description"
     >
       {{ resource.description }}
-    </p>
+    </p> -->
+
+    <main
+      v-if="resource.description"
+      class="description"
+      v-html="resource.description"
+    />
 
     <ResourcePeople :people="resource.people" />
 
@@ -87,6 +93,7 @@ const props = defineProps<{
   display: flex;
   flex-direction: column;
   height: 100vh;
+  width: 50vw;
   padding: var(--app-margin-small);
   gap: var(--text);
 
@@ -105,6 +112,7 @@ const props = defineProps<{
   }
 
   .description {
+    max-width: 70ch;
     font-size: var(--text-small);
   }
 

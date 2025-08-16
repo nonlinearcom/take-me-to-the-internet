@@ -1,14 +1,5 @@
 <template>
   <article class="resources-page">
-    <transition name="fade">
-      <AppPreview
-        v-if="!isOutside && isLargeScreen && currentCover !== null"
-        :cover="currentCover"
-        :x-pos="xPos"
-        :y-pos="yPos"
-      />
-    </transition>
-
     <ResourceFilters
       :resources="resourcesData"
       :filters="filters"
@@ -42,6 +33,16 @@
       :resources="sortedResources"
       @view-resource="openResourceDialog"
     />
+
+    <!-- Preview -->
+    <transition name="fade">
+      <AppPreview
+        v-if="!isOutside && isLargeScreen && currentCover !== null"
+        :cover="currentCover"
+        :x-pos="xPos"
+        :y-pos="yPos"
+      />
+    </transition>
 
     <!-- Resource Dialog -->
     <UiDialog
