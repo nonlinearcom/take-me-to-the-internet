@@ -1,6 +1,7 @@
 declare interface Resource {
   id: number
   title: string
+  subtitle?: string
   slug: string
   year: number
   type: 'Article' | 'Book' | 'Podcast' | 'Talk' | 'Website' | string

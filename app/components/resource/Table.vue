@@ -41,7 +41,7 @@
               variant="ghost"
               size="sm"
               :padded="false"
-              :label="item.title"
+              :label="item.title + (item.subtitle ? ` ${item.subtitle}` : '')"
               class="resource-title"
               @click="emit('viewResource', item)"
             />
