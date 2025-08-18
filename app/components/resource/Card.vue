@@ -18,82 +18,85 @@
       :alt="resource.title"
     />
 
-    <main
-      v-if="resource.description"
-      class="description"
-      v-html="resource.description"
-    />
+    <main>
+      <div
+        v-if="resource.description"
+        class="description"
+        v-html="resource.description"
+      />
 
-    <dl class="meta">
-      <template v-if="resource.people && resource.people.length">
-        <div class="col col-authors">
-          <dt>{{ resource.people.length === 1 ? 'AUTHOR:' : 'AUTHORS:' }}</dt>
-          <dd>
-            <ResourcePeople :people="resource.people" />
-          </dd>
-        </div>
-      </template>
+      <dl class="meta">
+        <template v-if="resource.people && resource.people.length">
+          <div class="col col-authors">
+            <dt>{{ resource.people.length === 1 ? 'AUTHOR:' : 'AUTHORS:' }}</dt>
+            <dd>
+              <ResourcePeople :people="resource.people" />
+            </dd>
+          </div>
+        </template>
 
-      <template v-if="(resource.topics && resource.topics.length) || (resource.tags && resource.tags.length)">
-        <div class="col col-taxonomies">
-          <dt>TYPE:</dt>
-          <dd>
-            <UiButton
-              v-if="resource.type"
-              :label="resource.type"
-              class="tag"
-              variant="link"
-              :padded="false"
-              size="sm"
-              @click="emit('selectFilter', { kind: 'type', value: resource.type })"
-            />
-          </dd>
-          <dt>YEAR:</dt>
-          <dd>{{ resource.year }}</dd>
-          <template v-if="resource.topics && resource.topics.length">
-            <dt>TOPICS:</dt>
+        <template v-if="(resource.topics && resource.topics.length) || (resource.tags && resource.tags.length)">
+          <div class="col col-taxonomies">
+            <dt>TYPE:</dt>
             <dd>
               <UiButton
-                v-for="({ topics_id }) in resource.topics.filter(({ topics_id }) => topics_id)"
-                :key="topics_id.id"
+                v-if="resource.type"
+                :label="resource.type"
                 class="tag"
-                :label="topics_id.title"
                 variant="link"
                 :padded="false"
                 size="sm"
-                @click="emit('selectFilter', { kind: 'topics', value: topics_id.title })"
+                @click="emit('selectFilter', { kind: 'type', value: resource.type })"
               />
             </dd>
-          </template>
-          <template v-if="resource.tags && resource.tags.length">
-            <dt>TAGS:</dt>
-            <dd>
-              <UiButton
-                v-for="({ tags_id }) in resource.tags.filter(({ tags_id }) => tags_id)"
-                :key="tags_id.id"
-                class="tag"
-                :label="tags_id.title"
-                variant="link"
-                :padded="false"
-                size="sm"
-                @click="emit('selectFilter', { kind: 'tags', value: tags_id.title })"
-              />
-            </dd>
-          </template>
-        </div>
-      </template>
-    </dl>
+            <dt>YEAR:</dt>
+            <dd>{{ resource.year }}</dd>
+            <template v-if="resource.topics && resource.topics.length">
+              <dt>TOPICS:</dt>
+              <dd>
+                <UiButton
+                  v-for="({ topics_id }) in resource.topics.filter(({ topics_id }) => topics_id)"
+                  :key="topics_id.id"
+                  class="tag"
+                  :label="topics_id.title"
+                  variant="link"
+                  :padded="false"
+                  size="sm"
+                  @click="emit('selectFilter', { kind: 'topics', value: topics_id.title })"
+                />
+              </dd>
+            </template>
+            <template v-if="resource.tags && resource.tags.length">
+              <dt>TAGS:</dt>
+              <dd>
+                <UiButton
+                  v-for="({ tags_id }) in resource.tags.filter(({ tags_id }) => tags_id)"
+                  :key="tags_id.id"
+                  class="tag"
+                  :label="tags_id.title"
+                  variant="link"
+                  :padded="false"
+                  size="sm"
+                  @click="emit('selectFilter', { kind: 'tags', value: tags_id.title })"
+                />
+              </dd>
+            </template>
+          </div>
+        </template>
+      </dl>
 
-    <UiButton
-      v-if="resource.link"
-      :label="resource.title"
-      icon="external-link"
-      variant="secondary"
-      :to="resource.link"
-      target="_blank"
-      size="md"
-      block
-    />
+      <UiButton
+        v-if="resource.link"
+        class="resource-link"
+        :label="resource.title"
+        icon="external-link"
+        variant="secondary"
+        :to="resource.link"
+        target="_blank"
+        size="md"
+        block
+      />
+    </main>
   </article>
 </template>
 
@@ -108,43 +111,46 @@ const emit = defineEmits<{
 
 <style lang="postcss">
 .resource-card {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  width: 50vw;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  /* height: 100vh; */
+  /* width: 50vw; */
   padding: var(--app-margin-small);
   gap: var(--text);
 
   header {
+    grid-column: 1 / -1;
     display: flex;
     flex-direction: column;
     gap: 0px;
     font-size: var(--text-large);
+    margin-bottom: 64px;
+    .resource-title {
+      margin-bottom: 0px !important;
+      line-height: 1.2;
+    }
   }
 
-  .resource-title {
-    margin-bottom: 0px !important;
-    line-height: 1.2;
-  }
-  .chips {
-    display: flex;
-    gap: 2px;
-    margin-bottom: 8px;
-  }
   .cover {
-    margin-top: 64px;
-    margin-bottom: 16px;
+    /* margin-top: 64px; */
+    /* margin-bottom: 16px; */
     width: 200px;
     height: auto;
     border-radius: 4px;
   }
 
   .description {
+    grid-column: 2 / -1;
     max-width: 70ch;
     font-size: var(--text-small);
   }
 
+  .resource-link {
+    grid-column: 2 / -1;
+  }
+
   .meta {
+    grid-column: 2 / -1;
     margin: 16px 0;
     display: grid;
     grid-template-columns: 1fr 1fr;

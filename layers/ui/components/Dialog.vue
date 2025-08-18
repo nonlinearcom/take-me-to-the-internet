@@ -11,7 +11,7 @@
       <DialogOverlay class="DialogOverlay" />
       <DialogContent
         class="DialogContent"
-        :class="side"
+        :class="[side, { inset, 'inset-auto-height': insetAutoHeight }]"
         :style="{ '--ui-dialog-max-width': maxWidth }"
         v-bind="$attrs"
         trap-focus
@@ -76,11 +76,15 @@ const props = withDefaults(defineProps<{
   hideTitle?: boolean
   hideClose?: boolean
   maxWidth?: string
+  inset?: boolean
+  insetAutoHeight?: boolean
   side?: 'top' | 'left' | 'right' | 'bottom'
 } & DialogRootProps>(), {
   modal: true,
   description: '',
   maxWidth: '50vw',
+  inset: false,
+  insetAutoHeight: false,
 })
 const emits = defineEmits<DialogRootEmits>()
 const forwarded = useForwardPropsEmits(reactivePick(props, 'defaultOpen', 'modal', 'open'), emits)
@@ -98,7 +102,7 @@ const { focused } = useFocus(closeRef, { initialValue: true })
   right: 0;
   bottom: 0;
   background-color: var(--black-a6);
-  /* backdrop-filter: blur(8px); */
+  backdrop-filter: blur(8px);
   cursor: pointer;
   transition: background-color 200ms ease-out;
   animation: fadeIn 200ms ease-out;
@@ -222,6 +226,61 @@ const { focused } = useFocus(closeRef, { initialValue: true })
     position: absolute;
     top: 8px;
     right: 8px;
+  }
+
+  /* Inset variant: add a 32px gap from viewport edges */
+  &.inset {
+    /* Centered dialog: keep it away from edges */
+    /* width: calc(100vw - 64px); */
+    max-height: calc(100vh - 64px);
+
+    &.top,
+    &.bottom {
+      left: 32px;
+      right: 32px;
+      width: auto;
+    }
+
+    &.top {
+      top: 32px;
+    }
+
+    &.bottom {
+      bottom: 32px;
+    }
+
+    &.left,
+    &.right {
+      top: auto;
+      bottom: 32px;
+      height: calc(var(--unit-100vh) - 64px);
+      max-height: none;
+    }
+
+    &.left {
+      left: 32px;
+    }
+
+    &.right {
+      right: 32px;
+      left: auto;
+    }
+
+    /* Allow auto height with a capped max-height for side dialogs */
+    &.inset-auto-height {
+      &.left,
+      &.right {
+        height: auto;
+        max-height: calc(var(--unit-100vh) - 64px);
+      }
+    }
+
+    @media (max-width: 1024px) {
+      &.left,
+      &.right {
+        max-width: calc(100vw - 64px);
+      }
+    }
   }
 }
 

@@ -4,7 +4,7 @@ declare interface Resource {
   subtitle?: string
   slug: string
   year: number
-  type: 'Article' | 'Book' | 'Podcast' | 'Talk' | 'Website' | string
+  type: 'Article' | 'Book' | 'Podcast' | 'Talk' | 'Website' | 'Documentary' | 'Exhibition' | 'Tutorial' | 'Interview' | 'Newsletter' | string
   link: string
   open: boolean
   description?: string

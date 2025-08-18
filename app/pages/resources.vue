@@ -54,6 +54,8 @@
       title="Resource Details"
       hide-title
       :aria-label="`Resource ${selectedResource?.title}`"
+      inset
+      inset-auto-height
     >
       <ResourceCard
         :resource="selectedResource"
