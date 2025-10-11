@@ -3,35 +3,33 @@
     v-if="page"
     class="page"
   >
-    <ClientOnly>
-      <header>
-        <h3 class="tag">
-          CABLES.GL
-        </h3>
-        <h1 class="title">
-          {{ translation?.title }}
-        </h1>
-        <time
-          class="updated-on"
-          :datetime="page.date_updated?.split('T')[0]"
-        >
-          Updated on {{ formatDate(page.date_updated, { locale: languageCode }) }}
-        </time>
-      </header>
-      <EditorContent
-        v-if="translation?.content"
-        class="prose"
-        :content="translation?.content"
-        :relation-blocks
-        :relation-inline-blocks
-        :relation-marks
-      />
-      <EditorFootNotes
-        v-if="translation?.content"
-        class="prose"
-        :data="translation?.content"
-      />
-    </ClientOnly>
+    <header>
+      <h3 class="tag">
+        CABLES.GL
+      </h3>
+      <h1 class="title">
+        {{ translation?.title }}
+      </h1>
+      <time
+        class="updated-on"
+        :datetime="page.date_updated?.split('T')[0]"
+      >
+        Updated on {{ formatDate(page.date_updated, { locale: languageCode }) }}
+      </time>
+    </header>
+    <EditorContent
+      v-if="translation?.content"
+      class="prose"
+      :content="translation?.content"
+      :relation-blocks
+      :relation-inline-blocks
+      :relation-marks
+    />
+    <EditorFootNotes
+      v-if="translation?.content"
+      class="prose"
+      :data="translation?.content"
+    />
   </article>
 </template>
 

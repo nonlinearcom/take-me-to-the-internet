@@ -101,11 +101,12 @@ h1 {
     font-family: var(--font-stack-mono);
     font-weight: var(--regular-mono);
     line-height: 1.6;
-    padding: 24px;
+    padding: 12px 16px;
     margin: 32px 0;
 
     white-space: pre-wrap;
     border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
   }
 
   pre + pre {
@@ -116,6 +117,7 @@ h1 {
     margin: 16px 0;
   }
 
+  // Images and SVGs
   img,
   svg {
     display: block;
@@ -123,16 +125,33 @@ h1 {
     height: auto;
     background-color: var(--border-color);
     border-radius: var(--border-radius);
+    overflow: hidden;
     margin: 32px 0;
   }
 
   figure {
     margin: 16px 0;
+    img,
+    svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      background-color: var(--border-color);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      margin: 32px 0;
+    }
   }
 
   figcaption {
     margin-top: 10px;
     font-size: var(--text-small);
+  }
+
+  iframe {
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
   }
 }
 

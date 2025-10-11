@@ -1,5 +1,5 @@
 <template>
-  <div
+  <footer
     v-if="footnotes.length"
     class="footnotes"
     role="doc-endnotes"
@@ -9,28 +9,25 @@
         v-for="footnote in footnotes"
         :id="`sidenote-${footnote.attrs?.number}`"
         :key="footnote.attrs?.number"
+        class="footnote"
       >
-        <div class="footnote_content">
-          <span> <a
-            :href="`#sidenote-${footnote.attrs?.data?.number}`"
-            class="reversefootnote"
-            role="doc-backlink"
-            @click="highlightNote(footnote.attrs?.data?.number)"
-          >{{ footnote?.attrs?.data?.number }}</a></span>
-          <div
-            class="content"
-            v-html="footnote.attrs?.data?.content"
-          />
-          <!-- <a
-            :href="`#sidenote-${footnote.attrs?.data.number}`"
-            class="reversefootnote"
-            role="doc-backlink"
-            @click="highlightNote(footnote.attrs?.data.number)"
-          >↩︎</a> -->
-        </div>
+        <UiButton
+          class="reversefootnote"
+          role="doc-backlink"
+          icon="external-link"
+          :label="footnote?.attrs?.data?.number"
+          :to="`#sidenote-${footnote.attrs?.data?.number}`"
+          variant="ghost"
+          size="xs"
+          @click="highlightNote(footnote.attrs?.data?.number)"
+        />
+        <div
+          class="content"
+          v-html="footnote.attrs?.data?.content"
+        />
       </li>
     </ol>
-  </div>
+  </footer>
 </template>
 
 <script setup lang="ts">
@@ -71,49 +68,37 @@ function highlightNote(id: string) {
 
 <style lang="postcss">
 .footnotes {
-  margin-top: 48px;
+  margin: 72px 0;
   font-size: var(--text-small);
   color: var(--text-secondary);
 
   ol {
     border-top: 1px solid var(--text-secondary);
+    li {
+      margin-top: 16px;
+    }
   }
 
-  img {
-    max-width: 5% !important;
-    display: none !important;
-  }
-  li {
-    margin-top: 32px;
-  }
-
-  .footnote_content {
+  .footnote {
     width: 100%;
     display: grid;
     grid-template-columns: 48px 1fr;
     justify-content: space-between;
     gap: 10px;
-  }
 
-  .content_container {
-    display: flex;
-    gap: 10px;
-  }
+    .reversefootnote {
+      text-decoration: none;
+      color: var(--text-secondary);
 
-  .content p {
-    display: inline-flex;
-    width: fit-content;
-    margin: 0 !important;
-  }
-
-  a {
-    text-decoration: none;
-  }
-
-  .note_html {
-    display: inline-flex;
-    flex-direction: column;
-    gap: 20px;
+      &:hover {
+        color: var(--text-color);
+      }
+    }
+    p {
+      display: inline-flex;
+      width: fit-content;
+      margin: 0 !important;
+    }
   }
 }
 </style>

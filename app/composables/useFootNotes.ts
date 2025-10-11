@@ -1,6 +1,6 @@
 const activeNoteId = ref<string | null>(null)
 
-export default function () {
+export function useFootNotes() {
   /**
    * Set the active note by its ID.
    * @param id - The ID of the note to activate.
