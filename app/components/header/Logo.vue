@@ -18,11 +18,12 @@
   justify-content: space-between;
   gap: 6px;
   font-size: var(--text-large);
+  font-weight: var(--bold);
   transition: background-color 0.3s;
   pointer-events: all;
 
   .dash {
-    height: 2px;
+    height: 3px;
     min-width: 12px;
     top: 50%;
     background-color: var(--text-color);

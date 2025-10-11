@@ -4,13 +4,17 @@
 
   /* Typography */
   --font-stack: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --font-stack-mono: 'PlexMono', 'Helvetica Neue', Arial, sans-serif;
 
+  --text-xlarge: 42px;
   --text-large: 28px;
-  --text: 19px;
-  --text-small: 16px;
-  --text-mini: 12px;
+  --text: 16px;
+  --text-small: 14px;
+  --text-mini: 13px;
 
-  --regular: 400;
+  --regular: 300;
+  --regular-mono: 400;
+  --bold: 500;
 
   /* Shadow */
   --shadow: 0px 4px 6px var(--black-a2);

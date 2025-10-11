@@ -1,6 +1,10 @@
 <template>
   <main class="articles-page">
     <div class="articles-grid">
+      <h3 class="tag">
+        CABLES.GL
+      </h3>
+
       <NuxtLink
         v-for="(article, key) in data"
         :key
@@ -10,7 +14,7 @@
           {{ article?.translations[0]?.title }}
         </h2>
         <time :datetime="article.date_updated.split('T')[0]">
-          {{ formatDate(article.date_updated, { locale: languageCode }) }}
+          updated on {{ formatDate(article.date_updated, { locale: languageCode }) }}
         </time>
       </NuxtLink>
     </div>
@@ -67,6 +71,17 @@ const { data } = await useAsyncData('page-articles', () => {
   display: flex;
   flex-direction: column;
 
+  .tag {
+    display: inline-block;
+    font-size: var(--text-small);
+    text-transform: uppercase;
+    font-family: var(--font-stack-mono);
+    font-weight: var(--regular-mono);
+    border: 1px solid var(--border-color);
+    padding: 2px 8px;
+    border-radius: 25px;
+  }
+
   .articles-grid {
     display: flex;
     flex-direction: column;
@@ -75,15 +90,17 @@ const { data } = await useAsyncData('page-articles', () => {
     margin-left: 25vw;
 
     h2 {
-      display: inline-block;
-      margin-right: var(--app-margin-small);
+      display: block;
       font-size: var(--text-large);
     }
 
     time {
+      font-family: var(--font-stack-mono);
       color: var(--text-secondary);
-      font-size: var(--text-small);
-      text-transform: capitalize;
+      font-size: var(--text-mini);
+      text-transform: uppercase;
+      display: block;
+      margin: 8px 0;
     }
   }
 }

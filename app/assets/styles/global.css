@@ -58,20 +58,20 @@ a {
 h1.title {
   font-size: var(--text-large);
   line-height: 1.2;
-  font-weight: var(--regular);
+  font-weight: var(--bold);
   margin-bottom: var(--text-large);
 }
 
 /* TODO: temp overwriting the @layer's preflight reset */
 
-h1,
-h2,
 p {
-  margin-bottom: 21px !important;
+  margin: 16px 0;
+  font-weight: var(--regular);
 }
 
 h1 {
   font-size: var(--text-large) !important;
+  font-weight: var(--bold);
 }
 
 /* Flexible Editor Styles */
@@ -84,25 +84,28 @@ h1 {
   a {
     text-underline-offset: 2px;
     text-decoration: underline;
+    /* text-decoration-color: var(--border-color); */
   }
 
-  pre,
+  /* inline code */
   code {
-    background-color: var(--border-color);
+    font-family: var(--font-stack-mono);
+    font-weight: var(--regular-mono);
+    padding: 2px 4px;
     border-radius: var(--border-radius);
-    padding: 1px 4px;
+    background-color: rgba(0, 0, 0, 0.05);
   }
-
+  /* block code */
   pre {
-    white-space: pre-wrap;
-    margin: var(--app-margin) 0;
+    font-size: var(--text-small);
+    font-family: var(--font-stack-mono);
+    font-weight: var(--regular-mono);
+    line-height: 1.6;
     padding: 24px;
-    font-size: 14px;
+    margin: 32px 0;
 
-    @media (min-width: 1024px) {
-      margin-left: -24px !important;
-      margin-right: -24px !important;
-    }
+    white-space: pre-wrap;
+    border-radius: var(--border-radius);
   }
 
   pre + pre {
@@ -110,42 +113,26 @@ h1 {
   }
 
   pre + p {
-    margin: var(--app-margin) 0;
+    margin: 16px 0;
   }
 
   img,
   svg {
-    display: block !important;
-    max-width: 100% !important;
-    border-radius: var(--border-radius);
-    @media (min-width: 1024px) {
-      max-width: 106%;
-      /* margin-left: -24px; */
-      /* margin-right: -24px !important; */
-    }
-  }
-
-  svg {
-    height: auto !important;
+    display: block;
+    width: 100%;
+    height: auto;
     background-color: var(--border-color);
+    border-radius: var(--border-radius);
+    margin: 32px 0;
   }
 
   figure {
-    margin: var(--app-margin) 0;
+    margin: 16px 0;
   }
 
   figcaption {
     margin-top: 10px;
     font-size: var(--text-small);
-  }
-}
-
-.prose-external {
-  img {
-    @media (min-width: 1024px) {
-      max-width: 100% !important;
-      margin-left: 0 !important;
-    }
   }
 }
 

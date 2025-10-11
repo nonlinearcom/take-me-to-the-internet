@@ -109,7 +109,7 @@ table {
     }
     td {
       font-size: var(--text-small);
-      font-weight: 400;
+      font-weight: var(--regular);
       text-align: left;
       vertical-align: top;
       line-height: 1.4;

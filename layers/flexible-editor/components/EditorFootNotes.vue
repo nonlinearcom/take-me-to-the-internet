@@ -71,8 +71,8 @@ function highlightNote(id: string) {
 
 <style lang="postcss">
 .footnotes {
-  margin-top: 15ch;
-  font-size: small;
+  margin-top: 48px;
+  font-size: var(--text-small);
   color: var(--text-secondary);
 
   ol {
@@ -90,7 +90,7 @@ function highlightNote(id: string) {
   .footnote_content {
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 48px 1fr;
     justify-content: space-between;
     gap: 10px;
   }

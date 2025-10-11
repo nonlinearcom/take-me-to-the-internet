@@ -79,7 +79,7 @@ const translation = computed(() => {
 .page {
   padding: var(--app-margin-small);
 
-  max-width: 60ch;
+  max-width: 75ch;
   /* margin: 0 auto; */
 }
 </style>

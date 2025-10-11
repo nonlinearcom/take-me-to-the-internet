@@ -5,6 +5,9 @@
   >
     <ClientOnly>
       <header>
+        <h3 class="tag">
+          CABLES.GL
+        </h3>
         <h1 class="title">
           {{ translation?.title }}
         </h1>
@@ -117,19 +120,32 @@ useHighlight()
   position: relative;
   padding: var(--app-margin-small);
 
-  max-width: 65ch;
+  max-width: 75ch;
   margin: 0 auto;
 
   header {
     margin-bottom: 92px;
-
+    .tag {
+      display: inline-block;
+      font-size: var(--text-small);
+      text-transform: uppercase;
+      font-family: var(--font-stack-mono);
+      font-weight: var(--regular-mono);
+      border: 1px solid var(--border-color);
+      padding: 2px 8px;
+      border-radius: 25px;
+    }
     .title {
-      font-size: var(--text-large) !important;
+      font-size: var(--text-xlarge) !important;
       margin-bottom: 0 !important;
     }
     time {
+      font-family: var(--font-stack-mono);
       color: var(--text-secondary);
-      font-size: var(--text-small);
+      font-size: var(--text-mini);
+      text-transform: uppercase;
+      display: block;
+      margin: 8px 0;
     }
   }
 }
