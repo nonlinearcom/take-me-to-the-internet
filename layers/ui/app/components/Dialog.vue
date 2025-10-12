@@ -184,7 +184,7 @@ const { focused } = useFocus(closeRef, { initialValue: true })
     }
 
     &[data-state='closed'] {
-      animation: fullSlideRightAndFadeOut 200ms ease-out;
+      animation: fullSlideRightAndFadeOut 200ms ease-in;
     }
   }
 
