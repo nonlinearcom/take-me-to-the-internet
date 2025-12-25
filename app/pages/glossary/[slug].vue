@@ -67,7 +67,7 @@ const { locale } = useI18n()
 
 const slug = route.params.slug as string
 
-const { list } = useGlossary()
+const { list } = await useGlossary()
 
 const { data: page, error } = await useAsyncData(`glossary-${slug}`, async () => {
   const pageData = await $directus.request(
@@ -104,7 +104,7 @@ const { data: page, error } = await useAsyncData(`glossary-${slug}`, async () =>
       ],
     }),
   )
-  if (!pageData) {
+  if (!pageData || pageData.length === 0) {
     throw createError({
       statusCode: 404,
       statusMessage: 'Page Not Found',
@@ -112,7 +112,7 @@ const { data: page, error } = await useAsyncData(`glossary-${slug}`, async () =>
   }
 
   return pageData
-}, { lazy: true })
+})
 
 if (error.value) {
   console.error(error.value)

@@ -1,6 +1,6 @@
 import type { DirectusFile } from '@directus/sdk'
 
-export default function () {
+export function useFiles() {
   const { public: { directus: { url: baseURL } } } = useRuntimeConfig()
 
   function fileUrl(fileId: string | DirectusFile) {

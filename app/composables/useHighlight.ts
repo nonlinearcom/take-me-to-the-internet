@@ -1,6 +1,6 @@
 import hljs from 'highlight.js'
 
-export default function () {
+export function useHighlight() {
   const isDark = useDark()
 
   useHead({

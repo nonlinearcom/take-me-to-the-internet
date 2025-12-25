@@ -1,10 +1,8 @@
-export default function () {
+export async function useGlossary() {
   const { $directus, $readItems } = useNuxtApp()
-  const list = useState('glossary-list', () => [])
 
-  if (!list.value.length) {
-    console.log('Fetching glossary list')
-    $directus.request(
+  const { data: list } = await useAsyncData('glossary-list', () => {
+    return $directus.request(
       $readItems('glossary', {
         fields: [
           '*',
@@ -15,10 +13,7 @@ export default function () {
         sort: 'slug',
       }),
     )
-      .then((response) => {
-        list.value = response
-      })
-  }
+  })
 
   return {
     list,

@@ -1,8 +1,9 @@
 import { createDirectus, readItem, readItems, rest } from '@directus/sdk'
 
-const directus = createDirectus('https://tmtti.non-linear.dev').with(rest())
-
 export default defineNuxtPlugin(() => {
+  const config = useRuntimeConfig()
+  const directus = createDirectus(config.public.directus.url).with(rest())
+
   return {
     provide: { directus, readItem, readItems },
   }

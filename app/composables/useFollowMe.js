@@ -1,6 +1,6 @@
 import { useMouseInElement, useRafFn } from '@vueuse/core'
 
-export default function useFollowMe(el) {
+export function useFollowMe(el) {
   // const el = ref(null)
   const { elementX, elementY, elementPositionY, isOutside } = useMouseInElement(el)
   const xOffset = 40
