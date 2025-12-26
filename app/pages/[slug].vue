@@ -1,6 +1,6 @@
 <template>
   <article class="page">
-    <h1> {{ translation.title }} </h1>
+    <h1> {{ translation?.title }} </h1>
     <EditorContent
       v-if="translation?.content"
       class="prose prose-external"
@@ -62,7 +62,7 @@ if (!page.value) {
 }
 
 const translation = computed(() => {
-  if (!page.value)
+  if (!page.value?.translations)
     return null
 
   // here we could also set a fallback language
