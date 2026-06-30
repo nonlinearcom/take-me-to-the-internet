@@ -6,11 +6,13 @@
 </template>
 
 <script lang="ts" setup>
-const { $directus, $readItems } = useNuxtApp()
+import { readItems } from '@directus/sdk'
+
+const { $directus } = useNuxtApp()
 
 const { data: logs } = await useAsyncData('logs', () => {
   return $directus.request(
-    $readItems('log', {
+    readItems('log', {
       filter: {
         status: {
           _neq: 'draft',

@@ -52,7 +52,6 @@ const props = withDefaults(defineProps<Button>(), {
   ariaLabel: undefined,
 })
 
-const $attrs = useAttrs()
 const slots = useSlots()
 const isSquare = computed(() => !slots.default && !props.label)
 

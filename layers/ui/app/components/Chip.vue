@@ -2,7 +2,7 @@
   <Primitive
     :as="as"
     class="ui-button ui-chip"
-    :class="[size, variant, { rounded, padded, uppercase, bold }]"
+    :class="[size, variant, { rounded, padded, bold }]"
   >
     <slot>{{ label }}</slot>
   </Primitive>
@@ -20,7 +20,6 @@ const props = withDefaults(defineProps<ChipProps>(), {
   size: 'lg',
   rounded: true,
   padded: true,
-  uppercase: true,
   bold: false,
   variant: 'soft',
   as: 'span',
@@ -30,7 +29,6 @@ interface ChipProps {
   label?: string | number
   rounded?: boolean
   padded?: boolean
-  uppercase?: boolean
   bold?: boolean
   size?: ButtonSize
   variant?: Exclude<ButtonVariant, 'ghost' | 'link'> // all variants except ghost and link

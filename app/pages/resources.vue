@@ -66,14 +66,16 @@
 </template>
 
 <script lang="ts" setup>
+import { readItems } from '@directus/sdk'
+
 const { isLargeScreen } = useApp()
-const { $directus, $readItems } = useNuxtApp()
+const { $directus } = useNuxtApp()
 
 const viewMode = ref<'table' | 'grid'>('table')
 
 const { data: resourcesData } = await useAsyncData('page-resources', () => {
   return $directus.request<Resource[]>(
-    $readItems('resources', {
+    readItems('resources', {
       filter: {
         status: {
           _neq: 'draft',
