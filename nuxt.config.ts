@@ -44,14 +44,20 @@ export default defineNuxtConfig({
   },
 
   image: {
-    directus: {
-      baseURL: `${process.env.NUXT_PUBLIC_DIRECTUS_URL}/assets/`,
-      modifiers: { withoutEnlargement: 'true' },
+    // Custom provider so the Directus asset baseURL is read from runtime config
+    // at request time (see app/providers/directus-runtime.ts), not baked in at
+    // build time. Changing NUXT_PUBLIC_DIRECTUS_URL no longer requires a rebuild.
+    provider: 'directusRuntime',
+    providers: {
+      directusRuntime: {
+        provider: '~/providers/directus-runtime',
+        options: {
+          modifiers: { withoutEnlargement: 'true' },
+        },
+      },
     },
     quality: 80,
     format: ['webp'],
-    sizes: 'xs:320 sm:640 md:768 lg:1024 xl:1280 xxl:1920',
-    provider: 'directus',
   },
 
   runtimeConfig: {
