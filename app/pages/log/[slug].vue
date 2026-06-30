@@ -56,10 +56,6 @@
               :content="page.content"
               :relation-blocks
             />
-            <!-- <PanelGallery
-              v-if="page.gallery"
-              :gallery="page.gallery"
-            /> -->
 
             <section
               v-if="page?.participants && page.participants !== ''"

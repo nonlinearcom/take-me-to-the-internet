@@ -9,3 +9,6 @@ node_modules
 !.env.example
 dist
 .DS_Store
+.zed
+.vscode
+.claude
