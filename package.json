@@ -22,9 +22,7 @@
     "nuxt-swiper": "^2.0.2",
     "nuxt-umami": "^3.2.1",
     "reka-ui": "^2.10.1",
-    "tiptap-render-view": "^1.0.4",
-    "unplugin-svg-transformer": "^1.0.32",
-    "vite-svg-loader": "^5.1.1"
+    "tiptap-render-view": "^1.0.4"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^9.1.0",
@@ -37,7 +35,6 @@
     "@vueuse/nuxt": "^14.3.0",
     "eslint": "^10.6.0",
     "eslint-plugin-format": "^2.0.1",
-    "postcss-nested": "^7.0.2",
     "typescript": "^5.9.3",
     "vue-tsc": "^3.3.6"
   },

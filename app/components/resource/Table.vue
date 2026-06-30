@@ -1,8 +1,5 @@
 <template>
-  <table
-    ref="table"
-    class="resources-table"
-  >
+  <table class="resources-table">
     <thead v-if="headers">
       <tr>
         <th
@@ -84,9 +81,6 @@ const headers: { key: ResourceSortKey, label: string }[] = [
   { key: 'author', label: 'Author' },
   { key: 'open', label: 'Open' },
 ]
-
-const table = ref(null)
-defineExpose({ table })
 </script>
 
 <style lang="postcss" scoped>

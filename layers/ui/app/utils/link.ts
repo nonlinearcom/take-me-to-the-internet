@@ -22,15 +22,6 @@ export const nuxtLinkProps = {
   // Edge cases handling
   external: { type: Boolean as PropType<NuxtLinkProps['external']>, default: undefined, required: false },
 } as const
-const uLinkProps = {
-  as: { type: String, default: 'button' },
-  type: { type: String, default: 'button' },
-  disabled: { type: Boolean, default: null },
-  active: { type: Boolean, default: undefined },
-  exact: { type: Boolean, default: false },
-  exactQuery: { type: Boolean, default: false },
-  exactHash: { type: Boolean, default: false },
-} as const
 
 export const getNuxtLinkProps = (props: { [x: string]: any }) => {
   const keys = Object.keys(nuxtLinkProps)
@@ -41,15 +32,3 @@ export const getNuxtLinkProps = (props: { [x: string]: any }) => {
     return acc
   }, {})
 }
-
-export const getULinkProps = (props: { [x: string]: any }) => {
-  const keys = [...Object.keys(nuxtLinkProps), ...Object.keys(uLinkProps)]
-
-  return keys.reduce((acc: { [x: string]: any }, key: string) => {
-    if (props[key] !== undefined)
-      acc[key] = props[key]
-    return acc
-  }, {})
-}
-
-export const isExternal = (url: RouteLocationRaw) => typeof url !== 'string' ? false : new URL(url).origin !== location.origin

@@ -59,7 +59,6 @@ const emit = defineEmits(['showCover'])
 function goToPanel(item) {
   if (item.status === 'archived')
     return
-  console.log('naviagte to:', `/log/${item.slug}`)
   return navigateTo(`/log/${item.slug}`)
 }
 

@@ -21,11 +21,6 @@ export const TextAlign = Extension.create<TextAlignOptions>({
         attributes: {
           textAlign: {
             default: this.options.defaultAlignment,
-            /* parseHTML: (element) => {
-              const alignment = element.style.textAlign || this.options.defaultAlignment
-
-              return this.options.alignments.includes(alignment) ? alignment : this.options.defaultAlignment
-            }, */
             renderHTML: (attributes) => {
               if (attributes.textAlign === this.options.defaultAlignment)
                 return {}
@@ -37,31 +32,4 @@ export const TextAlign = Extension.create<TextAlignOptions>({
       },
     ]
   },
-
-  /* addCommands() {
-    return {
-      setTextAlign: (alignment: string) => ({ commands }) => {
-        if (!this.options.alignments.includes(alignment))
-          return false
-
-        return this.options.types
-          .map(type => commands.updateAttributes(type, { textAlign: alignment }))
-          .every(response => response)
-      },
-
-      unsetTextAlign: () => ({ commands }) => {
-        return this.options.types
-          .map(type => commands.resetAttributes(type, 'textAlign'))
-          .every(response => response)
-      },
-    }
-  }, */
-  /* addKeyboardShortcuts() {
-    return {
-      'Mod-Shift-l': () => this.editor.commands.setTextAlign('left'),
-      'Mod-Shift-e': () => this.editor.commands.setTextAlign('center'),
-      'Mod-Shift-r': () => this.editor.commands.setTextAlign('right'),
-      'Mod-Shift-j': () => this.editor.commands.setTextAlign('justify'),
-    }
-  }, */
 })
