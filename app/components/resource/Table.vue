@@ -23,8 +23,8 @@
     </thead>
     <tbody>
       <tr
-        v-for="(item, index) in resources"
-        :key="index"
+        v-for="item in resources"
+        :key="item.id"
         @mouseover="emit('rowHover', item?.cover)"
       >
         <td class="slug">

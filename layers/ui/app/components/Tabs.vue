@@ -44,6 +44,7 @@
 
 <script setup lang="ts">
 import type { TabsRootEmits, TabsRootProps } from 'reka-ui'
+import { reactiveOmit } from '@vueuse/core'
 import {
   TabsContent,
   TabsIndicator,
@@ -63,7 +64,7 @@ const props = withDefaults(defineProps<{
 
 const emit = defineEmits<TabsRootEmits>()
 
-const forwarded = useForwardPropsEmits(props, emit)
+const forwarded = useForwardPropsEmits(reactiveOmit(props, 'tabs'), emit)
 </script>
 
 <style lang="postcss">

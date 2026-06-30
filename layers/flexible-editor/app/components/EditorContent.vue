@@ -23,7 +23,6 @@ const props = defineProps<{
   relationMarks?: VueRelationNodeSerializers
 }>()
 
-const serializers = props.serializers ?? extensions.slice(0) ?? [] // `.slice(0)` to clone the extensions array
 const relationBlockSerializer = Node.create({
   name: 'relation-block',
   renderHTML({ node, HTMLAttributes }) {
@@ -64,15 +63,12 @@ const relationMarkSerializer = Mark.create({
   },
 })
 
-// const sidenoteSerializer = Node.create({
-//   name: 'sidenote',
-//   renderHTML({ HTMLAttributes }) {
-//     return ['aside', HTMLAttributes, 0] as any
-//   },
-// })
-
-// serializers.push(sidenoteSerializer)
-serializers.push(relationBlockSerializer)
-serializers.push(relationInlineBlockSerializer)
-serializers.push(relationMarkSerializer)
+// Build a fresh array so appending the relation serializers never mutates a
+// caller-passed `props.serializers` (or the shared `extensions` module array).
+const serializers = [
+  ...(props.serializers ?? extensions),
+  relationBlockSerializer,
+  relationInlineBlockSerializer,
+  relationMarkSerializer,
+] as Extensions
 </script>
