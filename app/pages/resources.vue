@@ -27,7 +27,7 @@
       :resources="sortedResources"
       :is-sorted-by="isSortedBy"
       @toggle-sort="toggleSort"
-      @row-hover="getCoverUrl"
+      @row-hover="setCover"
       @view-resource="openResourceDialog"
     />
     <ResourceGrid
@@ -107,16 +107,10 @@ const {
 } = useResources(resourcesData)
 
 const table = useTemplateRef<HTMLElement>('table')
-const currentCover = ref<string | undefined>()
+const { currentCover, setCover, isOutside, xPos, yPos } = useCoverPreview(table)
 const isDialogOpen = ref(false)
 const selectedResource = ref<Resource | null>(null)
 const activeTab = ref<'topics' | 'tags' | 'type' | 'search'>('topics')
-
-function getCoverUrl(url?: string) {
-  currentCover.value = url
-}
-
-const { isOutside, xPos, yPos } = useFollowMe(table)
 
 function openResourceDialog(resource: Resource) {
   selectedResource.value = resource

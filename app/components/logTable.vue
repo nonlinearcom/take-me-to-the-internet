@@ -12,7 +12,7 @@
     <AppTable
       ref="table"
       :table-data="tableData"
-      @show-cover="getCoverUrl($event)"
+      @show-cover="setCover($event)"
     />
   </section>
 </template>
@@ -27,12 +27,7 @@ const props = defineProps({
 const { isLargeScreen } = useApp()
 
 const table = ref(null)
-const currentCover = ref(null)
-function getCoverUrl(url) {
-  currentCover.value = url
-}
-
-const { isOutside, xPos, yPos } = useFollowMe(table)
+const { currentCover, setCover, isOutside, xPos, yPos } = useCoverPreview(table)
 </script>
 
 <style lang="postcss">
