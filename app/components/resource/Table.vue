@@ -89,12 +89,22 @@ table tr td {
 }
 
 .resources-table {
+  /* Self-contained base table styling. Previously these leaked in from
+     AppTable.vue's global `table {}` block, which only loads on the /log route
+     chunk — so the resources table rendered unstyled until you visited /log. */
+  width: 100%;
+  cursor: pointer;
+
   button {
     font-size: inherit !important;
   }
 
   tbody tr {
     border-top: 1px solid var(--border-color);
+
+    &:last-child {
+      border-bottom: 1px solid var(--border-color);
+    }
   }
 
   thead tr {
@@ -102,7 +112,11 @@ table tr td {
   }
 
   td {
+    padding: 8px 16px;
     font-size: var(--text-small);
+    font-weight: var(--regular);
+    line-height: 1.4;
+    text-align: left;
     vertical-align: middle;
   }
   .resource {
