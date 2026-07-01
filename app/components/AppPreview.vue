@@ -2,7 +2,7 @@
   <NuxtImg
     class="previewCover"
     loading="lazy"
-    :src="cover"
+    :src="cover ?? undefined"
     alt=""
     format="webp"
     sizes="xs:320 sm:640 md:768 lg:1024 xl:1280 xxl:1920"
@@ -10,34 +10,18 @@
   />
 </template>
 
-<script>
-export default {
-  props: {
-    cover: {
-      type: String,
-      default: null,
-    },
-    offset: {
-      type: Number,
-      default: 0,
-      required: false,
-    },
-    xPos: {
-      type: Number,
-      default: 0,
-    },
-    yPos: {
-      type: Number,
-      default: 0,
-    },
-  },
+<script setup lang="ts">
+const props = withDefaults(defineProps<{
+  cover?: string | null
+  xPos?: number
+  yPos?: number
+}>(), {
+  cover: null,
+  xPos: 0,
+  yPos: 0,
+})
 
-  computed: {
-    translatePosition() {
-      return `translate(${this.xPos}px, ${this.yPos - 120}px)`
-    },
-  },
-}
+const translatePosition = computed(() => `translate(${props.xPos}px, ${props.yPos - 120}px)`)
 </script>
 
 <style lang="postcss">

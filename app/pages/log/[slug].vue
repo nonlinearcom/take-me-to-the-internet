@@ -56,10 +56,6 @@
               :content="page.content"
               :relation-blocks
             />
-            <!-- <PanelGallery
-              v-if="page.gallery"
-              :gallery="page.gallery"
-            /> -->
 
             <section
               v-if="page?.participants && page.participants !== ''"
@@ -85,6 +81,7 @@
 </template>
 
 <script setup lang="ts">
+import { readItem } from '@directus/sdk'
 import { EditorGallery, EditorMedia } from '#components'
 
 const relationBlocks = [
@@ -95,18 +92,15 @@ const relationBlocks = [
 const route = useRoute()
 const isPanelOpen = ref(false)
 
-const { $directus, $readItem } = useNuxtApp()
+const { $directus } = useNuxtApp()
 
 const { data: page, error } = await useAsyncData(
   'log-page',
   () => {
     return $directus.request(
-      $readItem('log', String(route.params.slug), {
+      readItem('log', String(route.params.slug), {
         fields: [
           '*',
-          {
-            '*': ['*'],
-          },
           {
             editor_nodes: [
               '*',

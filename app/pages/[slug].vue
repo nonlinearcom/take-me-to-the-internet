@@ -11,6 +11,7 @@
 </template>
 
 <script lang="ts" setup>
+import { readItem } from '@directus/sdk'
 import { EditorGallery, EditorMedia } from '#components'
 
 const relationBlocks = [
@@ -19,16 +20,12 @@ const relationBlocks = [
 ]
 
 const route = useRoute()
+const languageCode = useLanguageCode()
 
-const { locale } = useI18n()
-const languageCode = computed(() => {
-  return locale.value === 'en' ? 'en-US' : 'it-IT'
-})
-
-const { $directus, $readItem } = useNuxtApp()
+const { $directus } = useNuxtApp()
 const { data: page } = await useAsyncData(`page-${route.params.slug}`, () => {
   return $directus.request(
-    $readItem('pages', route.params.slug as string, {
+    readItem('pages', route.params.slug as string, {
       fields: [
         '*',
         {

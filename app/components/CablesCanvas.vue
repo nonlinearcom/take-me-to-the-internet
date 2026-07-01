@@ -38,13 +38,13 @@ const mergedPatchOptions = computed(() => {
 
 const _patchInitialized = (patch) => {
   // You can now access the patch object (patch), register variable watchers and so on
-  console.log(`${props.patchDir} initialized`)
 }
 
 const _patchFinishedLoading = (patch) => {
   // The patch is ready now, all assets have been loaded
-  console.log(`${props.patchDir} finished loading`)
 }
+
+const isDark = useDark()
 
 const { onLoaded } = useScript(src.value, {
   async: true,
@@ -65,21 +65,9 @@ onMounted(() =>
       patchOptions.onFinishedLoading = _patchFinishedLoading
     CABLES.patch = new CABLES.Patch(patchOptions)
 
-    // const rootElement = getComputedStyle(document.documentElement)
-    // const darkColor =  rootElement.getPropertyValue('--gray-11');
-    // const lightColor = rootElement.getPropertyValue('--gray-1')
-
     const clearColor = CABLES.patch.getVar('clearColor')
 
-    const isDark = useDark({
-      onChanged(dark) {
-        if (dark) {
-          clearColor.setValue('#222222')
-        } else {
-          clearColor.setValue('#fcfcfc')
-        }
-      },
-    })
+    watch(isDark, dark => clearColor.setValue(dark ? '#222222' : '#fcfcfc'))
   }),
 )
 </script>

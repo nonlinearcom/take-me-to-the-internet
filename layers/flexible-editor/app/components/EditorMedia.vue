@@ -1,6 +1,6 @@
 <template>
   <figure>
-    <template v-if="getMediaType(data.file) === 'image'">
+    <template v-if="mediaType === 'image'">
       <!-- <pre v-if="data.file.type?.startsWith('image/svg')">{{ data }}</pre> -->
       <div
         v-if="data.file.type.startsWith('image/svg')"
@@ -15,7 +15,7 @@
       />
     </template>
     <div
-      v-else-if="getMediaType(data.file) === 'video'"
+      v-else-if="mediaType === 'video'"
       class="video"
     >
       <video
@@ -53,6 +53,7 @@ const props = defineProps<{
 
 const { fileUrl } = useFiles()
 const src = fileUrl(props.data.file)
+const mediaType = computed(() => getMediaType(props.data.file))
 
 const { isMediumScreen } = useApp()
 
@@ -63,13 +64,20 @@ const { playing } = useMediaControls(video, { src })
 
 const svgContent = ref('')
 async function fetchHtml() {
-  // Replace with your actual async fetch call
-  const response = await fetch(fileUrl(props.data.file.id))
-  const data = await response.text()
-  svgContent.value = data
+  if (!src)
+    return
+  try {
+    const response = await fetch(src)
+    svgContent.value = await response.text()
+  } catch {
+    // leave svgContent empty if the inline SVG can't be loaded
+  }
 }
 
-fetchHtml()
+// Only SVGs are rendered inline via svgContent; skip the fetch for raster
+// images and videos (NuxtImg / <video> handle those by id/url).
+if (props.data.file?.type?.startsWith('image/svg'))
+  fetchHtml()
 </script>
 
 <style lang="postcss" scoped>

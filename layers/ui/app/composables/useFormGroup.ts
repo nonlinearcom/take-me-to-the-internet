@@ -1,8 +1,3 @@
-import type { UseEventBusReturn } from '@vueuse/core'
-import type { FormEvent, FormEventType } from '~/components/ui/Form.vue'
-import type { InjectedFormGroupValue } from '~/components/ui/FormGroup.vue'
-import { useDebounceFn } from '#imports'
-
 interface InputProps {
   id?: string
   name?: string
@@ -10,44 +5,18 @@ interface InputProps {
   legend?: string | null
 }
 
+// No Form/FormGroup provider exists anywhere in the app, so the form-event bus
+// is inert. This keeps the inputId/name derivation and the no-op blur/input
+// hooks that Input.vue calls, without the broken cross-component type imports
+// and unreachable injection branch.
 export function useFormGroup(inputProps?: InputProps) {
-  const formBus = inject<UseEventBusReturn<FormEvent, string> | undefined>('form-events', undefined)
-  const formGroup = inject<InjectedFormGroupValue | undefined>('form-group', undefined)
-  const formInputs = inject<any>('form-inputs', undefined)
-
-  if (formGroup) {
-    if (inputProps?.id)
-      formGroup.inputId.value = inputProps?.id
-    if (formInputs)
-      formInputs.value[formGroup.name.value] = formGroup.inputId.value
-  }
-
-  const blurred = ref(false)
-
-  function emitFormEvent(type: FormEventType, path: string) {
-    if (formBus)
-      formBus.emit({ type, path })
-  }
-
-  function emitFormBlur() {
-    emitFormEvent('blur', formGroup?.name.value as string)
-    blurred.value = true
-  }
-
-  function emitFormChange() {
-    emitFormEvent('change', formGroup?.name.value as string)
-  }
-
-  const emitFormInput = useDebounceFn(() => {
-    if (blurred.value || formGroup?.eagerValidation.value)
-      emitFormEvent('input', formGroup?.name.value as string)
-  }, 300)
+  function emitFormBlur() {}
+  function emitFormInput() {}
 
   return {
-    inputId: computed(() => inputProps?.id ?? formGroup?.inputId.value),
-    name: computed(() => inputProps?.name ?? formGroup?.name.value),
+    inputId: computed(() => inputProps?.id),
+    name: computed(() => inputProps?.name),
     emitFormBlur,
     emitFormInput,
-    emitFormChange,
   }
 }

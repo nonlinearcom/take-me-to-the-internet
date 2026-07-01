@@ -30,12 +30,15 @@
 </template>
 
 <script lang="ts" setup>
-const { $directus, $readItems } = useNuxtApp()
-const { locale, localeProperties } = useI18n()
+import { readItems } from '@directus/sdk'
+
+const { $directus } = useNuxtApp()
+const { locale } = useI18n()
+const languageCode = useLanguageCode()
 
 const { data: glossary } = await useAsyncData('glossary-page', () => {
   return $directus.request<GlossaryItem[]>(
-    $readItems('glossary', {
+    readItems('glossary', {
       filter: {
         status: {
           _eq: 'published',
@@ -67,7 +70,7 @@ const { data: glossary } = await useAsyncData('glossary-page', () => {
         translations: {
           _filter: {
             languages_code: {
-              _eq: localeProperties.value.language,
+              _eq: languageCode.value,
             },
           },
         },

@@ -34,6 +34,7 @@
 </template>
 
 <script lang="ts" setup>
+import { readItem } from '@directus/sdk'
 import { EditorCables, EditorCodeLink, EditorFootNotes, EditorGallery, EditorMedia, EditorSideNote } from '#components'
 
 const relationBlocks = [
@@ -51,17 +52,13 @@ const relationMarks = [
 ]
 
 const route = useRoute()
+const languageCode = useLanguageCode()
 
-const { locale } = useI18n()
-const languageCode = computed(() => {
-  return locale.value === 'en' ? 'en-US' : 'it-IT'
-})
-
-const { $directus, $readItem } = useNuxtApp()
+const { $directus } = useNuxtApp()
 
 const { data: page } = await useAsyncData(`article-${route.params.slug}`, () => {
   return $directus.request(
-    $readItem('pages', route.params.slug as string, {
+    readItem('pages', route.params.slug as string, {
       fields: [
         '*',
         {

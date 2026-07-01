@@ -10,6 +10,7 @@
 
 <script setup lang="ts">
 import type { ToggleGroupRootEmits, ToggleGroupRootProps } from 'reka-ui'
+import { reactiveOmit } from '@vueuse/core'
 import { ToggleGroupRoot, useForwardPropsEmits } from 'reka-ui'
 
 defineOptions({ name: 'UiToggleGroup' })
@@ -19,7 +20,7 @@ const props = defineProps<{
   // variant?: ButtonVariant
 } & ToggleGroupRootProps>()
 const emit = defineEmits<ToggleGroupRootEmits>()
-const forwarded = useForwardPropsEmits(props, emit)
+const forwarded = useForwardPropsEmits(reactiveOmit(props, 'size'), emit)
 
 provide(toggleGroupInjectionKey, computed(() => ({
   // rounded: props.rounded,

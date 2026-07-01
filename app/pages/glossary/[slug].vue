@@ -46,6 +46,7 @@
 </template>
 
 <script lang="ts" setup>
+import { readItems } from '@directus/sdk'
 import { EditorCables, EditorCodeLink, EditorGallery, EditorMedia, EditorSideNote } from '#components'
 
 const relationBlocks = [
@@ -61,7 +62,7 @@ const relationInlineBlocks = [
 const relationMarks = [
   { collection: 'sidenote', component: EditorSideNote },
 ]
-const { $directus, $readItems } = useNuxtApp()
+const { $directus } = useNuxtApp()
 const route = useRoute()
 const { locale } = useI18n()
 
@@ -71,7 +72,7 @@ const { list } = await useGlossary()
 
 const { data: page, error } = await useAsyncData(`glossary-${slug}`, async () => {
   const pageData = await $directus.request(
-    $readItems('glossary', {
+    readItems('glossary', {
       filter: {
         slug: {
           _eq: slug,
@@ -112,6 +113,9 @@ const { data: page, error } = await useAsyncData(`glossary-${slug}`, async () =>
   }
 
   return pageData
+}, {
+  // collapse the single-row result so `page.value` is the item, not an array
+  transform: rows => (rows?.[0] ?? null) as GlossaryItem | null,
 })
 
 if (error.value) {
@@ -122,24 +126,21 @@ if (error.value) {
   })
 }
 
-// const page = ref(pageData.value?.page[0])
-const currentPageIndex = computed(() => (list.value as GlossaryItem[])?.findIndex(page => page.slug === slug))
+const items = computed(() => (list.value ?? []) as GlossaryItem[])
+const currentPageIndex = computed(() => items.value.findIndex(page => page.slug === slug))
 
 const nextPage = computed(() => {
-  if (!list.value || currentPageIndex.value == null)
+  const i = currentPageIndex.value
+  if (i < 0 || items.value.length === 0)
     return null
-  const page = currentPageIndex.value === (list.value as GlossaryItem[]).length - 1 ? (list?.value as GlossaryItem[])?.[0] : (list?.value as GlossaryItem[])?.[currentPageIndex.value + 1]
-
-  return page
+  return items.value[(i + 1) % items.value.length]
 })
 
-// const previousPage = computed(() => currentPage.value == 0 ? list?.value[list.value.length - 1] : list?.value[currentPage?.value - 1])
 const previousPage = computed(() => {
-  if (!list.value || currentPageIndex.value == null)
+  const i = currentPageIndex.value
+  if (i < 0 || items.value.length === 0)
     return null
-
-  const page = currentPageIndex.value === 0 ? (list?.value as GlossaryItem[])?.[(list.value as GlossaryItem[]).length - 1] : (list?.value as GlossaryItem[])?.[currentPageIndex?.value - 1]
-  return page
+  return items.value[(i - 1 + items.value.length) % items.value.length]
 })
 
 function getTranslation(item: GlossaryItem): GlossaryTranslation | undefined {
@@ -150,7 +151,7 @@ const translation = computed(() => {
   if (!page.value)
     return null
 
-  const translation = getTranslation(page.value[0] as GlossaryItem)
+  const translation = getTranslation(page.value as GlossaryItem)
   if (!translation)
     return null
 

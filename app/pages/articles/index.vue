@@ -22,16 +22,15 @@
 </template>
 
 <script lang="ts" setup>
-const { $directus, $readItems } = useNuxtApp()
-const { locale, localeProperties } = useI18n()
+import { readItems } from '@directus/sdk'
 
-const languageCode = computed(() => {
-  return locale.value === 'en' ? 'en-US' : 'it-IT'
-})
+const { $directus } = useNuxtApp()
+const { locale } = useI18n()
+const languageCode = useLanguageCode()
 
 const { data } = await useAsyncData('page-articles', () => {
   return $directus.request(
-    $readItems('pages', {
+    readItems('pages', {
       filter: {
         status: {
           _eq: 'published',
@@ -52,7 +51,7 @@ const { data } = await useAsyncData('page-articles', () => {
         translations: {
           _filter: {
             languages_code: {
-              _eq: localeProperties.value.language,
+              _eq: languageCode.value,
             },
           },
         },

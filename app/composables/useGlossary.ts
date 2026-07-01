@@ -1,9 +1,11 @@
+import { readItems } from '@directus/sdk'
+
 export async function useGlossary() {
-  const { $directus, $readItems } = useNuxtApp()
+  const { $directus } = useNuxtApp()
 
   const { data: list } = await useAsyncData('glossary-list', () => {
     return $directus.request(
-      $readItems('glossary', {
+      readItems('glossary', {
         fields: [
           '*',
           {

@@ -27,7 +27,7 @@
       :resources="sortedResources"
       :is-sorted-by="isSortedBy"
       @toggle-sort="toggleSort"
-      @row-hover="getCoverUrl"
+      @row-hover="setCover"
       @view-resource="openResourceDialog"
     />
     <ResourceGrid
@@ -66,14 +66,16 @@
 </template>
 
 <script lang="ts" setup>
+import { readItems } from '@directus/sdk'
+
 const { isLargeScreen } = useApp()
-const { $directus, $readItems } = useNuxtApp()
+const { $directus } = useNuxtApp()
 
 const viewMode = ref<'table' | 'grid'>('table')
 
 const { data: resourcesData } = await useAsyncData('page-resources', () => {
   return $directus.request<Resource[]>(
-    $readItems('resources', {
+    readItems('resources', {
       filter: {
         status: {
           _neq: 'draft',
@@ -105,16 +107,10 @@ const {
 } = useResources(resourcesData)
 
 const table = useTemplateRef<HTMLElement>('table')
-const currentCover = ref<string | undefined>()
+const { currentCover, setCover, isOutside, xPos, yPos } = useCoverPreview(table)
 const isDialogOpen = ref(false)
 const selectedResource = ref<Resource | null>(null)
 const activeTab = ref<'topics' | 'tags' | 'type' | 'search'>('topics')
-
-function getCoverUrl(url?: string) {
-  currentCover.value = url
-}
-
-const { isOutside, xPos, yPos } = useFollowMe(table)
 
 function openResourceDialog(resource: Resource) {
   selectedResource.value = resource

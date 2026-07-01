@@ -18,9 +18,10 @@ export function truncate(input: string | null | undefined, length: number): stri
     }
   }
 
-  // If no words were added (first word is too long), fall back to truncate.
+  // If no words were added (first word is longer than `length`), hard-cut the
+  // input so a single long token can't recurse forever.
   if (outputWords.length === 0)
-    return truncate(input, length)
+    return `${input.slice(0, Math.max(0, length - 1))}…`
 
   let output = outputWords.join(' ')
 
