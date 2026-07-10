@@ -5,18 +5,20 @@
 
 <script setup>
 useHead({
-
   titleTemplate: (titleChunk) => {
     return titleChunk
       ? `${titleChunk} - Take me to the internet`
       : 'Take me to the internet'
   },
-  meta: [
-    { name: 'description', content: 'Teaching portal of Manuel Ehrenfeld, designer & developer based in Geneva.' },
-    { property: 'og:description', content: 'Teaching portal of Manuel Ehrenfeld, designer & developer based in Geneva.' },
-    { property: 'og:image', content: 'https://res.cloudinary.com/non-linear/image/upload/f_webp,q_auto,w_1536/take-me-to-the-internet/post-screen/2016/img_1' },
-    { name: 'twitter:card', content: `summary_large_image` },
-  ],
+})
+
+const img = useImage()
+
+useSeoMeta({
+  description: 'Teaching portal of Manuel Ehrenfeld, designer & developer based in Geneva.',
+  // Static share image for all pages, served by Directus (host from runtime config)
+  ogImage: img('5fae7d78-fcfa-4435-8898-77436e70eb7e', { width: 1200, height: 630, fit: 'cover', format: 'webp' }),
+  twitterCard: 'summary_large_image',
 })
 </script>
 

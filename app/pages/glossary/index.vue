@@ -36,6 +36,11 @@ const { $directus } = useNuxtApp()
 const { locale } = useI18n()
 const languageCode = useLanguageCode()
 
+useSeoMeta({
+  title: 'Glossary',
+  description: 'A glossary of terms around creative coding, web design and development.',
+})
+
 const { data: glossary } = await useAsyncData('glossary-page', () => {
   return $directus.request<GlossaryItem[]>(
     readItems('glossary', {

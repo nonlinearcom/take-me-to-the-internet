@@ -28,6 +28,11 @@ const { $directus } = useNuxtApp()
 const { locale } = useI18n()
 const languageCode = useLanguageCode()
 
+useSeoMeta({
+  title: 'Articles',
+  description: 'Articles and tutorials on cables.gl, creative coding and web design.',
+})
+
 const { data } = await useAsyncData('page-articles', () => {
   return $directus.request(
     readItems('pages', {
@@ -36,7 +41,7 @@ const { data } = await useAsyncData('page-articles', () => {
           _eq: 'published',
         },
         slug: {
-          _nin: ['privacy', 'terms', 'about'],
+          _nin: STATIC_PAGE_SLUGS,
         },
       },
       fields: [

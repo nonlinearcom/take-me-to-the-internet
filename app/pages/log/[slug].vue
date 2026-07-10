@@ -136,6 +136,17 @@ if (!page.value) {
   })
 }
 
+useSeoMeta({
+  title: () => [page.value?.title, page.value?.subtitle].filter(Boolean).join(' – '),
+  description: () => {
+    const entry = page.value
+    const fallback = entry?.role
+      ? `${entry.role} at ${entry.institution}, ${entry.location} ${entry.year}`
+      : undefined
+    return contentToDescription(entry?.content) ?? fallback
+  },
+})
+
 function closeModal() {
   // router.back()
   navigateTo('/log')

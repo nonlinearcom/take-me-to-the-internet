@@ -107,6 +107,28 @@ const translation = computed(() => {
   return translation
 })
 
+useSeoMeta({
+  title: () => translation.value?.title,
+  description: () => contentToDescription(translation.value?.content),
+})
+
+useSchemaOrg([
+  defineArticle({
+    headline: translation.value?.title,
+    datePublished: page.value?.date_created ?? page.value?.date_updated,
+    dateModified: page.value?.date_updated,
+  }),
+])
+
+// The static pages (privacy/terms/about) are also reachable here — point
+// crawlers at their canonical /:slug variant.
+const slug = route.params.slug as string
+if (STATIC_PAGE_SLUGS.includes(slug)) {
+  useHead({
+    link: [{ rel: 'canonical', href: withSiteUrl(`/${slug}`) }],
+  })
+}
+
 useHighlight()
 </script>
 

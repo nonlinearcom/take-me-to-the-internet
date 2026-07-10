@@ -21,14 +21,48 @@ export default defineNuxtConfig({
     '@nuxt/icon',
     '@nuxt/image',
     '@nuxt/scripts',
+    '@nuxtjs/seo',
     '@vueuse/nuxt',
     'nuxt-swiper',
     'nuxt-umami',
     'reka-ui/nuxt',
   ],
 
+  site: {
+    // Runtime-overridable via NUXT_PUBLIC_SITE_URL / NUXT_PUBLIC_SITE_ENV
+    url: process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+    name: 'Take me to the internet',
+    description: 'Teaching portal of Manuel Ehrenfeld, designer & developer based in Geneva.',
+    defaultLocale: 'en',
+  },
+
+  sitemap: {
+    sources: ['/api/__sitemap__/urls'],
+  },
+
+  robots: {
+    disallow: ['/api/'],
+  },
+
+  schemaOrg: {
+    identity: {
+      type: 'Person',
+      name: 'Manuel Ehrenfeld',
+      jobTitle: 'Designer & Developer',
+      url: 'https://www.take-me-to-the-internet.com',
+    },
+  },
+
+  ogImage: {
+    // A static og:image is set globally in app.vue; the generator would need
+    // the satori/resvg runtime dependencies.
+    enabled: false,
+  },
+
   i18n: {
-    baseUrl: process.env.NUXT_BASE_URL,
+    // No baseUrl here: nuxt-site-config feeds site.url into i18n at runtime.
+    // Setting it would bake the build-time value in and break the
+    // NUXT_PUBLIC_SITE_URL runtime override.
     strategy: 'no_prefix', // 'prefix_except_default',
     defaultLocale: 'en',
     detectBrowserLanguage: {

@@ -159,6 +159,24 @@ const translation = computed(() => {
   return translation
 })
 
+useSeoMeta({
+  title: () => translation.value?.term,
+  description: () => contentToDescription(translation.value?.description),
+})
+
+useSchemaOrg([
+  {
+    '@type': 'DefinedTerm',
+    'name': translation.value?.term,
+    'description': contentToDescription(translation.value?.description),
+    'inDefinedTermSet': {
+      '@type': 'DefinedTermSet',
+      'name': 'Take me to the internet — Glossary',
+      'url': withSiteUrl('/glossary'),
+    },
+  },
+])
+
 useHighlight()
 </script>
 

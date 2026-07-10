@@ -68,6 +68,11 @@
 <script lang="ts" setup>
 import { readItems } from '@directus/sdk'
 
+useSeoMeta({
+  title: 'Resources',
+  description: 'A curated collection of resources on creative coding, web design and development.',
+})
+
 const { isLargeScreen } = useApp()
 const { $directus } = useNuxtApp()
 

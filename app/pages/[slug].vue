@@ -70,6 +70,20 @@ const translation = computed(() => {
   injectDataIntoContent(translation.editor_nodes, translation.content)
   return translation
 })
+
+useSeoMeta({
+  title: () => translation.value?.title,
+  description: () => contentToDescription(translation.value?.content),
+})
+
+// Articles are also reachable here at /:slug — point crawlers at the
+// canonical /articles/:slug variant.
+const slug = route.params.slug as string
+if (!STATIC_PAGE_SLUGS.includes(slug)) {
+  useHead({
+    link: [{ rel: 'canonical', href: withSiteUrl(`/articles/${slug}`) }],
+  })
+}
 </script>
 
 <style lang="postcss">

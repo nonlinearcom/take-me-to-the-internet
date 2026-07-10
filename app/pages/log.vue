@@ -8,6 +8,11 @@
 <script lang="ts" setup>
 import { readItems } from '@directus/sdk'
 
+useSeoMeta({
+  title: 'Log',
+  description: 'Teaching log: courses, workshops and lectures',
+})
+
 const { $directus } = useNuxtApp()
 
 const { data: logs } = await useAsyncData('logs', () => {
