@@ -14,9 +14,9 @@
   },
   "dependencies": {
     "@directus/sdk": "^22.0.0",
-    "@nuxt/icon": "^2.2.5",
-    "@tiptap/core": "^3.27.1",
-    "@tiptap/pm": "^3.27.1",
+    "@nuxt/icon": "^2.3.1",
+    "@tiptap/core": "^3.27.3",
+    "@tiptap/pm": "^3.27.3",
     "highlight.js": "^11.11.1",
     "nuxt": "^4.4.8",
     "nuxt-swiper": "^2.0.2",
@@ -36,7 +36,7 @@
     "eslint": "^10.6.0",
     "eslint-plugin-format": "^2.0.1",
     "typescript": "^5.9.3",
-    "vue-tsc": "^3.3.6"
+    "vue-tsc": "^3.3.7"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
