@@ -95,9 +95,13 @@ function highlightNote(id: string) {
       }
     }
     p {
-      display: inline-flex;
-      width: fit-content;
-      margin: 0 !important;
+      margin: 0 0 8px !important;
+    }
+    p:last-child {
+      margin-bottom: 0 !important;
+    }
+    p:empty {
+      display: none;
     }
   }
 }

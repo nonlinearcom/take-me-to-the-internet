@@ -65,11 +65,12 @@ const { activeNoteId } = useFootNotes()
   padding: 0.8rem 1.6rem; */
 }
 
+/* hangs in the note's left padding; the note_html box is too wide
+   to share a line with an inline number, so inline flow wraps it below */
 .sidenote_number {
-  display: inline;
-  margin-left: -25px;
-  margin-right: 15px;
-  vertical-align: top;
+  position: absolute;
+  left: 15px;
+  top: 16px;
   font-size: small;
 }
 .sidenote__content {
@@ -83,6 +84,18 @@ const { activeNoteId } = useFootNotes()
   display: inline-flex;
   flex-direction: column;
   /* gap: 20px; */
+}
+
+/* flex column prevents margin collapse, so the global p margin pushes the first line below the note number */
+.note_html :deep(p) {
+  margin: 0 0 8px;
+}
+.note_html :deep(p:last-child) {
+  margin-bottom: 0;
+}
+/* the content pipeline emits empty leading paragraphs that would otherwise set the flex baseline and misalign the note number */
+.note_html :deep(p:empty) {
+  display: none;
 }
 
 span a {
