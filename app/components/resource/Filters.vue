@@ -101,10 +101,10 @@
 <script lang="ts" setup>
 const props = withDefaults(defineProps<{
   resources?: Resource[] | null | undefined
-  filters: { topics: string[], tags: string[], type: string[] }
+  filters?: { topics: string[], tags: string[], type: string[] }
   search?: string
   hasActiveFilters?: boolean
-  isDisabled: ({ tag, topic, type }: { tag?: string, topic?: string, type?: string }) => boolean | undefined
+  isDisabled?: ({ tag, topic, type }: { tag?: string, topic?: string, type?: string }) => boolean | undefined
   activeTab?: 'topics' | 'tags' | 'type' | 'search'
 }>(), {
   resources: null,

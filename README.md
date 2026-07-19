@@ -23,9 +23,9 @@ cp .env.example .env   # then edit values
 
 ### Environment
 
-| Variable                   | Description                                            |
-| -------------------------- | ------------------------------------------------------ |
-| `NUXT_BASE_URL`            | Base URL of this site (i18n / canonical URLs)          |
+| Variable                   | Description                                                                                                        |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `NUXT_BASE_URL`            | Base URL of this site (i18n / canonical URLs)                                                                      |
 | `NUXT_PUBLIC_DIRECTUS_URL` | Public URL of the Directus backend (content + assets). Read at runtime, so changing it does not require a rebuild. |
 
 ## Development

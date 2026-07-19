@@ -23,7 +23,7 @@ declare global {
   type ProviderGetImage = (
     src: string,
     options: ImageOptions,
-    ctx: ImageCTX
+    ctx: ImageCTX,
   ) => ResolvedImage
 
   interface ImageProvider {
@@ -76,7 +76,7 @@ declare global {
     getSizes: (
       source: string,
       options?: ImageOptions,
-      sizes?: string[]
+      sizes?: string[],
     ) => ImageSizes
     getMeta: (source: string, options?: ImageOptions) => Promise<ImageInfo>
   }

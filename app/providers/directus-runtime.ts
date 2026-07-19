@@ -1,6 +1,6 @@
 import type { ProviderGetImage } from '@nuxt/image'
-import { useRuntimeConfig } from '#imports'
 import directusProvider from '@nuxt/image/runtime/providers/directus'
+import { useRuntimeConfig } from '#imports'
 
 // Reuse the built-in Directus provider for all modifier/operation handling.
 // The only difference: resolve `baseURL` from runtime config at request time

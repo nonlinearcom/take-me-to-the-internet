@@ -23,7 +23,6 @@ export default defineNuxtConfig({
     '@nuxt/scripts',
     '@nuxtjs/seo',
     '@vueuse/nuxt',
-    'nuxt-swiper',
     'nuxt-umami',
     'reka-ui/nuxt',
   ],
