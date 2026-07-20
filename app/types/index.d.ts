@@ -51,7 +51,12 @@ declare interface GlossaryItem {
   date_created: string
   date_updated: string
   translations: GlossaryTranslation[]
+  related_terms?: GlossaryRelatedTerm[]
 };
+
+declare interface GlossaryRelatedTerm {
+  related_glossary_id: number
+}
 
 declare interface GlossaryTranslation {
   id: number

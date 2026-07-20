@@ -6,10 +6,18 @@ export async function useGlossary() {
   const { data: list } = await useAsyncData('glossary-list', () => {
     return $directus.request(
       readItems('glossary', {
+        filter: {
+          status: {
+            _eq: 'published',
+          },
+        },
         fields: [
           '*',
           {
             translations: ['languages_code', 'term'],
+          },
+          {
+            related_terms: ['related_glossary_id'],
           },
         ],
         sort: 'slug',

@@ -23,6 +23,11 @@
       :data="translation"
     />
 
+    <GlossaryGraph
+      :items="items"
+      :current-slug="slug"
+    />
+    <!--
     <div class="glossary-navigation">
       <NuxtLink
         v-if="previousPage"
@@ -41,7 +46,7 @@
         {{ getTranslation(nextPage)?.term }}
         <UiIcon name="chevron-right" />
       </NuxtLink>
-    </div>
+    </div> -->
   </article>
 </template>
 
