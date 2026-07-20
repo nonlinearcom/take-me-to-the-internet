@@ -2,7 +2,6 @@
   <div
     ref="container"
     class="glossary-graph"
-    :style="{ height: `${height}px` }"
   >
     <svg
       v-if="ready"
@@ -45,7 +44,7 @@
         <circle
           :cx="node.x"
           :cy="node.y"
-          r="6"
+          r="4"
         />
         <text
           :x="node.x"
@@ -63,8 +62,7 @@
 import type { SimulationLinkDatum, SimulationNodeDatum } from 'd3-force'
 import { forceCollide, forceLink, forceManyBody, forceSimulation, forceX, forceY } from 'd3-force'
 
-// Structural subset of GlossaryItem: defineProps can't resolve the global
-// declarations from app/types, so the shape is repeated here.
+// Structural subset of GlossaryItem: defineProps can't resolve the global declarations from app/types, so the shape is repeated here.
 interface GraphSourceItem {
   id: number
   slug: string
@@ -83,6 +81,7 @@ interface SimLink extends SimulationLinkDatum<SimNode> {
   source: SimNode
   target: SimNode
   key: string
+  seed: number
 }
 
 const props = defineProps<{
@@ -90,28 +89,59 @@ const props = defineProps<{
   currentSlug?: string
 }>()
 
+// ---- layout tuning ----
+// Distances (LINK_DISTANCE, REPULSION, REPULSION_RANGE) are for the
+// SPREAD_BASELINE canvas and scale with min(width, height) / baseline,
+// so the graph fills the available space on any screen.
+const SPREAD_BASELINE = 480
+// Connected nodes: spring rest length + how rigidly it is enforced (0..1).
+const LINK_DISTANCE = 260
+const LINK_STRENGTH = 0.4
+// Spread: node-node repulsion (more negative = wider graph) and the range
+// beyond which nodes stop repelling each other.
+const REPULSION = -240
+const REPULSION_RANGE = 250
+// Pull toward the center — the counterweight to repulsion; also keeps isolated nodes near the cluster. Raise for a tighter graph.
+const CENTER_PULL_X = 0.1
+const CENTER_PULL_Y = 0.3
+// Hard minimum gap between any two node centers = sum of their collide radii (base + per-label-character, capped).
+const COLLIDE_BASE = 42
+const COLLIDE_PER_CHAR = 3
+const COLLIDE_MAX = 70
+
+// ---- edge look ----
+// Hand-drawn wobble: distance between wobble points (smaller = wigglier),
+// jitter amplitude in px, and max bow as a fraction of edge length (each
+// edge bows a seeded amount to its own side).
+const EDGE_SEGMENT = 35
+const EDGE_WOBBLE = 4
+const EDGE_BOW = 0.12
+
 const { t, locale } = useI18n()
 
-// Layout survives the per-slug page remount, so prev/next navigation
-// re-settles gently instead of re-scrambling the whole graph.
+// Layout survives the per-slug page remount, so prev/next navigation re-settles gently instead of re-scrambling the whole graph.
 const savedPositions = useState<Record<number, { x: number, y: number }>>('glossary-graph-positions', () => ({}))
 
 const container = useTemplateRef('container')
-const { width } = useElementSize(container)
-const height = computed(() => width.value > 0 ? Math.min(440, Math.max(300, width.value * 0.7)) : 360)
+// The container's size is owned by CSS (see .glossary-graph); the
+// simulation and viewBox just follow the measured box.
+const { width, height } = useElementSize(container)
 
 const reducedMotion = usePreferredReducedMotion()
 
 const ready = ref(false)
-const frame = ref(0)
 const hoverId = ref<number | null>(null)
 
+// d3 mutates node x/y in place, so triggerRef() is the only reliable
+// re-render signal: since Vue 3.4 a computed that re-evaluates to the
+// same reference does not notify its subscribers.
+const renderNodes = shallowRef<SimNode[]>([])
+const renderEdges = shallowRef<SimLink[]>([])
+
 let simulation: ReturnType<typeof forceSimulation<SimNode, SimLink>> | null = null
-let simNodes: SimNode[] = []
-let simLinks: SimLink[] = []
-let centerX: ReturnType<typeof forceX<SimNode>> | null = null
-let centerY: ReturnType<typeof forceY<SimNode>> | null = null
+let adjacency = new Map<number, Set<number>>()
 let lastWidth = 0
+let lastHeight = 0
 
 const labels = computed(() => {
   const map = new Map<number, string>()
@@ -122,42 +152,72 @@ const labels = computed(() => {
   return map
 })
 
-const adjacency = computed(() => {
-  const map = new Map<number, Set<number>>()
-  for (const link of simLinks) {
-    if (!map.has(link.source.id))
-      map.set(link.source.id, new Set())
-    if (!map.has(link.target.id))
-      map.set(link.target.id, new Set())
-    map.get(link.source.id)!.add(link.target.id)
-    map.get(link.target.id)!.add(link.source.id)
-  }
-  return map
-})
-
-const renderNodes = computed(() => {
-  void frame.value
-  return simNodes
-})
-
-const renderEdges = computed(() => {
-  void frame.value
-  return simLinks
-})
-
 function isDimmed(node: SimNode) {
   if (hoverId.value === null || node.id === hoverId.value)
     return false
-  return !adjacency.value.get(hoverId.value)?.has(node.id)
+  return !adjacency.get(hoverId.value)?.has(node.id)
 }
 
-function edgePath({ source, target }: SimLink) {
-  const midX = (source.x + target.x) / 2
-  const midY = (source.y + target.y) / 2
-  const curve = 0.15
-  const controlX = midX - (target.y - source.y) * curve
-  const controlY = midY + (target.x - source.x) * curve
-  return `M${source.x},${source.y} Q${controlX},${controlY} ${target.x},${target.y}`
+// Deterministic -1..1 noise: seeded per edge so the wobble is stable
+// frame-to-frame (no shimmer while the simulation animates).
+function noise(n: number) {
+  const x = Math.sin(n * 127.1) * 43758.5453
+  return (x - Math.floor(x)) * 2 - 1
+}
+
+function edgePath({ source, target, seed }: SimLink) {
+  const dx = target.x - source.x
+  const dy = target.y - source.y
+  const length = Math.hypot(dx, dy)
+  if (length < 1)
+    return `M${source.x},${source.y}`
+
+  const perpX = -dy / length
+  const perpY = dx / length
+  const bow = EDGE_BOW * length * noise(seed)
+
+  const segments = Math.max(2, Math.round(length / EDGE_SEGMENT))
+  const points = [{ x: source.x, y: source.y }]
+  for (let i = 1; i < segments; i++) {
+    const p = i / segments
+    // sin() tapers the offset to zero at both ends so the stroke still
+    // meets the nodes exactly.
+    const taper = Math.sin(Math.PI * p)
+    const offset = (bow + EDGE_WOBBLE * noise(seed + i)) * taper
+    points.push({
+      x: source.x + dx * p + perpX * offset,
+      y: source.y + dy * p + perpY * offset,
+    })
+  }
+  points.push({ x: target.x, y: target.y })
+
+  // Smooth through the points: each interior point becomes a quadratic
+  // control point, joined at segment midpoints.
+  let d = `M${points[0]!.x},${points[0]!.y}`
+  for (let i = 1; i < points.length - 1; i++) {
+    const midX = (points[i]!.x + points[i + 1]!.x) / 2
+    const midY = (points[i]!.y + points[i + 1]!.y) / 2
+    d += ` Q${points[i]!.x},${points[i]!.y} ${midX},${midY}`
+  }
+  d += ` L${points[points.length - 1]!.x},${points[points.length - 1]!.y}`
+  return d
+}
+
+function applyForces(w: number, h: number) {
+  if (!simulation)
+    return
+  const spread = Math.min(w, h) / SPREAD_BASELINE
+  simulation
+    .force('link', forceLink<SimNode, SimLink>(renderEdges.value).distance(LINK_DISTANCE * spread).strength(LINK_STRENGTH))
+    .force('charge', forceManyBody<SimNode>().strength(REPULSION * spread).distanceMax(REPULSION_RANGE * spread))
+    .force('collide', forceCollide<SimNode>().radius((node) => {
+      const label = labels.value.get(node.id) ?? node.slug
+      return Math.min(COLLIDE_MAX, COLLIDE_BASE + label.length * COLLIDE_PER_CHAR)
+    }))
+    // Center pull weakens as the canvas grows, so it stops compressing
+    // the cluster on large screens.
+    .force('x', forceX<SimNode>(w / 2).strength(CENTER_PULL_X / spread))
+    .force('y', forceY<SimNode>(h / 2).strength(CENTER_PULL_Y / spread))
 }
 
 function initSimulation(w: number, h: number) {
@@ -165,22 +225,23 @@ function initSimulation(w: number, h: number) {
   const cy = h / 2
   const saved = savedPositions.value
 
-  simNodes = props.items.map((item, i) => {
-    // Deterministic golden-angle seed near the center: the settle blooms
-    // outward instead of exploding in from d3's origin-based defaults.
+  const nodes: SimNode[] = props.items.map((item, i) => {
+    // Deterministic golden-angle seed near the center: the settle blooms outward instead of exploding in from d3's origin-based defaults.
+    // Saved positions are center-relative, so they stay centered even if
+    // the canvas size changed since they were stored.
     const angle = i * 2.399
     const radius = 30 + (i % 5) * 8
     return {
       id: item.id,
       slug: item.slug,
-      x: saved[item.id]?.x ?? cx + Math.cos(angle) * radius,
-      y: saved[item.id]?.y ?? cy + Math.sin(angle) * radius,
+      x: cx + (saved[item.id]?.x ?? Math.cos(angle) * radius),
+      y: cy + (saved[item.id]?.y ?? Math.sin(angle) * radius),
     }
   })
 
-  const nodeById = new Map(simNodes.map(node => [node.id, node]))
+  const nodeById = new Map(nodes.map(node => [node.id, node]))
   const seen = new Set<string>()
-  simLinks = []
+  const links: SimLink[] = []
   for (const item of props.items) {
     for (const rel of item.related_terms ?? []) {
       const targetId = rel.related_glossary_id
@@ -190,38 +251,44 @@ function initSimulation(w: number, h: number) {
       if (seen.has(key))
         continue
       seen.add(key)
-      simLinks.push({ source: nodeById.get(item.id)!, target: nodeById.get(targetId)!, key })
+      links.push({ source: nodeById.get(item.id)!, target: nodeById.get(targetId)!, key, seed: item.id * 73 + targetId * 179 })
     }
   }
 
-  centerX = forceX<SimNode>(cx).strength(0.05)
-  centerY = forceY<SimNode>(cy).strength(0.08)
+  adjacency = new Map()
+  for (const link of links) {
+    if (!adjacency.has(link.source.id))
+      adjacency.set(link.source.id, new Set())
+    if (!adjacency.has(link.target.id))
+      adjacency.set(link.target.id, new Set())
+    adjacency.get(link.source.id)!.add(link.target.id)
+    adjacency.get(link.target.id)!.add(link.source.id)
+  }
 
-  simulation = forceSimulation<SimNode, SimLink>(simNodes)
-    .force('link', forceLink<SimNode, SimLink>(simLinks).distance(80).strength(0.4))
-    .force('charge', forceManyBody<SimNode>().strength(-180))
-    .force('collide', forceCollide<SimNode>().radius((node) => {
-      const label = labels.value.get(node.id) ?? node.slug
-      return Math.min(70, 16 + label.length * 3)
-    }))
-    .force('x', centerX)
-    .force('y', centerY)
-    .alphaDecay(0.04)
+  renderNodes.value = nodes
+  renderEdges.value = links
 
-  const hasSavedPositions = simNodes.some(node => saved[node.id])
+  simulation = forceSimulation<SimNode, SimLink>(nodes).alphaDecay(0.04)
+  applyForces(w, h)
+
+  const onTick = () => {
+    triggerRef(renderNodes)
+    triggerRef(renderEdges)
+  }
+
+  const hasSavedPositions = nodes.some(node => saved[node.id])
   if (reducedMotion.value === 'reduce') {
     simulation.stop()
     simulation.tick(300)
-    frame.value++
+    onTick()
   } else {
     if (hasSavedPositions)
       simulation.alpha(0.15)
-    simulation.on('tick', () => {
-      frame.value++
-    })
+    simulation.on('tick', onTick)
   }
 
   lastWidth = w
+  lastHeight = h
   ready.value = true
 }
 
@@ -230,19 +297,27 @@ watch(width, (w) => {
     initSimulation(w, height.value)
 }, { immediate: true })
 
-watchDebounced(width, (w) => {
-  if (!simulation || w <= 0 || w === lastWidth)
+watchDebounced([width, height], ([w, h]) => {
+  if (!simulation || w <= 0 || (w === lastWidth && h === lastHeight))
     return
+  // Shift the whole layout to the new center — the centering forces are
+  // too weak to drag it there before the reheat cools off.
+  const dx = (w - lastWidth) / 2
+  const dy = (h - lastHeight) / 2
+  for (const node of renderNodes.value) {
+    node.x += dx
+    node.y += dy
+  }
   lastWidth = w
-  centerX?.x(w / 2)
-  centerY?.y(height.value / 2)
+  lastHeight = h
+  applyForces(w, h)
   simulation.alpha(0.3).restart()
 }, { debounce: 200 })
 
 onBeforeUnmount(() => {
   const positions: Record<number, { x: number, y: number }> = {}
-  for (const node of simNodes)
-    positions[node.id] = { x: node.x, y: node.y }
+  for (const node of renderNodes.value)
+    positions[node.id] = { x: node.x - lastWidth / 2, y: node.y - lastHeight / 2 }
   savedPositions.value = positions
   simulation?.stop()
 })
@@ -250,9 +325,11 @@ onBeforeUnmount(() => {
 
 <style lang="postcss" scoped>
 .glossary-graph {
-  width: 100%;
+  /* Full-bleed breakout of the centered 68ch article column. */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
   margin-top: 64px;
-
+  height: clamp(480px, 70vw, 840px);
   svg {
     display: block;
     width: 100%;
@@ -264,7 +341,10 @@ onBeforeUnmount(() => {
 .edge {
   fill: none;
   stroke: var(--border-color);
-  stroke-width: 1.5px;
+  stroke-width: 2px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 4 6;
   transition:
     opacity 0.2s,
     stroke 0.2s;
@@ -291,7 +371,7 @@ onBeforeUnmount(() => {
   }
 
   text {
-    font-size: var(--text-mini);
+    font-size: var(--text-small);
     fill: var(--text-color);
     paint-order: stroke;
     stroke: var(--bg-color);
