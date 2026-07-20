@@ -14,8 +14,8 @@
         :key="edge.key"
         class="edge"
         :class="{
-          active: hoverId !== null && (edge.source.id === hoverId || edge.target.id === hoverId),
-          dimmed: hoverId !== null && edge.source.id !== hoverId && edge.target.id !== hoverId,
+          active: activeId !== null && (edge.source.id === activeId || edge.target.id === activeId),
+          dimmed: activeId !== null && edge.source.id !== activeId && edge.target.id !== activeId,
         }"
         :d="edgePath(edge)"
       />
@@ -34,21 +34,10 @@
         @focus="hoverId = node.id"
         @blur="hoverId = null"
       >
-        <circle
-          v-if="node.slug === currentSlug"
-          class="ring"
-          :cx="node.x"
-          :cy="node.y"
-          r="11"
-        />
-        <circle
-          :cx="node.x"
-          :cy="node.y"
-          r="4"
-        />
         <text
           :x="node.x"
-          :y="node.y + 20"
+          :y="node.y"
+          dy="0.35em"
           text-anchor="middle"
         >
           {{ labels.get(node.id) ?? node.slug }}
@@ -132,6 +121,11 @@ const reducedMotion = usePreferredReducedMotion()
 const ready = ref(false)
 const hoverId = ref<number | null>(null)
 
+// The current page's node acts as the default selection: hovering another
+// node takes over, and the highlight falls back when the pointer leaves.
+const currentId = computed(() => props.items.find(item => item.slug === props.currentSlug)?.id ?? null)
+const activeId = computed(() => hoverId.value ?? currentId.value)
+
 // d3 mutates node x/y in place, so triggerRef() is the only reliable
 // re-render signal: since Vue 3.4 a computed that re-evaluates to the
 // same reference does not notify its subscribers.
@@ -153,9 +147,9 @@ const labels = computed(() => {
 })
 
 function isDimmed(node: SimNode) {
-  if (hoverId.value === null || node.id === hoverId.value)
+  if (activeId.value === null || node.id === activeId.value)
     return false
-  return !adjacency.get(hoverId.value)?.has(node.id)
+  return !adjacency.get(activeId.value)?.has(node.id)
 }
 
 // Deterministic -1..1 noise: seeded per edge so the wobble is stable
@@ -350,7 +344,7 @@ onBeforeUnmount(() => {
     stroke 0.2s;
 
   &.active {
-    stroke: #000;
+    stroke: var(--text-color);
   }
 }
 
@@ -359,38 +353,27 @@ onBeforeUnmount(() => {
   outline: none;
   transition: opacity 0.2s;
 
-  circle {
-    fill: var(--text-secondary);
-    transition: fill 0.2s;
-  }
-
-  .ring {
-    fill: none;
-    stroke: #000;
-    stroke-width: 1.5px;
-  }
-
+  /* The label IS the node: the bg-color halo masks the edges that run
+     underneath the word. */
   text {
     font-size: var(--text-small);
     fill: var(--text-color);
     paint-order: stroke;
     stroke: var(--bg-color);
-    stroke-width: 3px;
+    stroke-width: 10px;
     stroke-linejoin: round;
+    transition: fill 0.2s;
   }
 
-  &:hover circle:not(.ring),
-  &:focus-visible circle:not(.ring) {
-    fill: #000;
-  }
-
-  &.current circle:not(.ring) {
-    fill: #000;
+  &:hover text,
+  &:focus-visible text,
+  &.current text {
+    fill: var(--text-color);
   }
 }
 
 .node.dimmed,
 .edge.dimmed {
-  opacity: 0.15;
+  opacity: 0.5;
 }
 </style>
