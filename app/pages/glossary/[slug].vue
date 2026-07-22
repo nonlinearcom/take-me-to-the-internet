@@ -1,7 +1,7 @@
 <template>
   <article
     v-if="translation"
-    class="glossary-term"
+    class="glossary-term margin-notes"
   >
     <header>
       <h1 class="title">
@@ -188,8 +188,8 @@ useHighlight()
 <style lang="postcss">
 .glossary-term {
   position: relative;
-  margin: var(--app-margin-small);
-  max-width: 68ch;
+  padding-inline: var(--app-margin-small);
+  max-inline-size: var(--paragraph-width);
   margin: 0 auto;
 
   header {
@@ -215,7 +215,7 @@ useHighlight()
     justify-content: space-between;
     margin: 0 auto;
     margin-top: 100px;
-    max-width: 68ch;
+    max-inline-size: var(--paragraph-width);
   }
 
   .previous-button,
@@ -223,6 +223,16 @@ useHighlight()
     display: flex;
     align-items: center;
     margin-bottom: 64px;
+  }
+}
+
+/* keep the text measure, reserve the right margin column for sidenotes
+   (breakpoint must match EditorSideNote.vue) */
+@media (min-width: 1280px) {
+  .glossary-term.margin-notes {
+    max-inline-size: calc(var(--paragraph-width) + var(--sidenote-width) + var(--sidenote-gap));
+    padding-inline-end: calc(var(--app-margin-small) + var(--sidenote-width) + var(--sidenote-gap));
+    display: flow-root;
   }
 }
 

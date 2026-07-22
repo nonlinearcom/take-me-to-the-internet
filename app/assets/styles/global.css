@@ -155,6 +155,16 @@ h1 {
   }
 }
 
+/* Prose media run wider than the text, bleeding into the sidenote gutter.
+   Capped at the gutter width so they never reach the note column itself
+   (breakpoint must match EditorSideNote.vue). */
+@media (min-width: 1280px) {
+  .margin-notes .prose :is(figure, .gallery, img):not(figure *, .gallery *, .sidenote *) {
+    inline-size: var(--image-width);
+    max-inline-size: calc(100% + var(--sidenote-gap));
+  }
+}
+
 /* Functional */
 .responsive {
   width: 100%;

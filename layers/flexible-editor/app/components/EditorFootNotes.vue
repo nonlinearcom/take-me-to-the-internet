@@ -105,4 +105,11 @@ function highlightNote(id: string) {
     }
   }
 }
+
+/* Endnotes duplicate the always-visible margin notes on desktop */
+@media (min-width: 1280px) {
+  .margin-notes .footnotes {
+    display: none;
+  }
+}
 </style>

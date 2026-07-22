@@ -40,8 +40,6 @@ const props = defineProps<{
 }>()
 
 const { activeNoteId } = useFootNotes()
-
-// Example: Add any additional logic if needed
 </script>
 
 <style lang="postcss" scoped>
@@ -61,8 +59,6 @@ const { activeNoteId } = useFootNotes()
   left: auto; /* override screen-reader-only */
   display: inline-block;
   flex-wrap: wrap;
-  /* margin: 0.8rem 0;
-  padding: 0.8rem 1.6rem; */
 }
 
 /* hangs in the note's left padding; the note_html box is too wide
@@ -74,8 +70,8 @@ const { activeNoteId } = useFootNotes()
   font-size: small;
 }
 .sidenote__content {
-  padding: 16px 90px 0px 40px;
-  margin-top: 16px;
+  padding: 16px 40px;
+  margin-block: 16px;
   min-width: 100%;
   color: var(--text-secondary);
 }
@@ -113,58 +109,89 @@ small img {
   margin-top: 10px;
 }
 
-/*input styling*/
+/* Marker bubble, two states: normal = light chip with stroke,
+   hover/checked = inverted (text color as background, page background as number).
+   The semantic theme vars flip both automatically in dark mode. */
+.sidenote__checkbox {
+  appearance: none;
+  position: relative;
+  vertical-align: top;
+  inline-size: 16px;
+  block-size: 16px;
+  margin: 0;
+  margin-inline-start: 2px;
+  cursor: pointer;
+  border: 1px solid var(--text-secondary);
+  border-radius: 50%;
+  background-color: var(--bg-secondary);
+  transition:
+    background-color 0.3s,
+    border-color 0.3s;
+}
 
-@supports (-webkit-appearance: none) or (-moz-appearance: none) {
-  input[type='checkbox'] {
-    --active: var(--bg-secondary);
-    --active-inner: #fff;
-    --focus: 2px rgba(39, 94, 254, 0.3);
-    --border: var(--bg-secondary);
-    --border-hover: #275efe;
-    --background: rgba();
-    --disabled: #f6f8ff;
-    --disabled-inner: #e1e6f9;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    position: relative;
-    vertical-align: top;
-    width: 12px;
-    height: 12px;
-    margin: 0;
-    margin-left: 2px;
-    cursor: pointer;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    background: var(--b, var(--background));
-    transition:
-      background 0.3s,
-      border-color 0.3s,
-      box-shadow 0.2s,
-      border-radius 0.2s;
-  }
-  input[type='checkbox']:checked {
-    --b: var(--active);
-    --bc: var(--active);
-  }
-  input[type='checkbox']::after {
-    content: attr(data-sidenote-number);
+.sidenote__checkbox::after {
+  content: attr(data-sidenote-number);
+  display: block;
+  color: var(--text-color);
+  font-size: 10px;
+  line-height: 14px;
+  text-align: center;
+  transition: color 0.3s;
+}
+
+.sidenote__checkbox:hover,
+.sidenote__checkbox:checked {
+  background-color: var(--text-hover);
+  border-color: var(--text-hover);
+}
+
+.sidenote__checkbox:hover::after,
+.sidenote__checkbox:checked::after {
+  color: var(--bg-color);
+}
+
+.sidenote__checkbox:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Desktop margin notes: pages opt in with a .margin-notes ancestor class.
+   Breakpoint must match the container rules in articles/[slug].vue and glossary/[slug].vue.
+   float+clear (not grid/anchor-pos): the note is nested inline in the paragraph,
+   and clear is what stacks consecutive notes without overlap, JS-free. */
+@media (min-width: 1280px) {
+  /* Cover both toggle states so the checkbox becomes layout-inert; including
+     :checked also wins the specificity race against the toggle rule above. */
+  .margin-notes .sidenote__checkbox ~ .sidenote__content,
+  .margin-notes .sidenote__checkbox:checked ~ .sidenote__content {
+    position: relative; /* keeps .sidenote_number's absolute positioning local */
+    inset-inline-start: auto; /* overrides left: -99999px */
     display: block;
-    position: absolute;
-    left: 2.5px;
-    top: -0.68px;
-    color: var(--text-secondary);
-    font-size: 9px;
-  }
-  input[type='checkbox']:hover {
-    --b: var(--active);
-  }
-  input[type='checkbox']:checked::after {
-    color: var(--text-secondary);
+    float: inline-end;
+    clear: inline-end;
+    inline-size: var(--sidenote-width);
+    min-inline-size: 0; /* overrides min-width: 100% */
+    margin-block: 4px 16px;
+    /* negative end margin pushes the note into the container's reserved padding zone */
+    margin-inline: 0 calc(-1 * (var(--sidenote-width) + var(--sidenote-gap)));
+    padding: 0;
+    padding-inline-start: 20px; /* hanging-number gutter */
+    font-size: var(--text-small);
+    line-height: 1.35;
+    overflow-wrap: break-word;
   }
 
-  input[type='checkbox']:hover::after {
-    color: var(--text-secondary);
+  .margin-notes .sidenote_number {
+    inset-inline-start: 0;
+    top: 2px;
+  }
+
+  /* clicking the marker highlights the margin note instead of toggling visibility;
+     the spread-only shadow acts as padding without shifting the text */
+  .margin-notes .sidenote__checkbox:checked ~ .sidenote__content {
+    background-color: var(--bg-secondary);
+    box-shadow: 0 0 0 8px var(--bg-secondary);
+    border-radius: var(--border-radius);
   }
 }
 </style>

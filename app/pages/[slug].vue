@@ -90,7 +90,7 @@ if (!STATIC_PAGE_SLUGS.includes(slug)) {
 .page {
   padding: var(--app-margin-small);
 
-  max-width: 75ch;
+  max-inline-size: var(--paragraph-width);
   /* margin: 0 auto; */
 }
 </style>

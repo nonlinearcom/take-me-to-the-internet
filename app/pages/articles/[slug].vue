@@ -1,7 +1,7 @@
 <template>
   <article
     v-if="page"
-    class="page"
+    class="page margin-notes"
   >
     <header>
       <h3 class="tag">
@@ -137,7 +137,7 @@ useHighlight()
   position: relative;
   padding: var(--app-margin-small);
 
-  max-width: 75ch;
+  max-inline-size: var(--paragraph-width);
   margin: 0 auto;
 
   header {
@@ -164,6 +164,16 @@ useHighlight()
       display: block;
       margin: 8px 0;
     }
+  }
+}
+
+/* keep the text measure, reserve the right margin column for sidenotes,
+   center text+notes as one block (breakpoint must match EditorSideNote.vue) */
+@media (min-width: 1280px) {
+  .page.margin-notes {
+    max-inline-size: calc(var(--paragraph-width) + var(--sidenote-width) + var(--sidenote-gap));
+    padding-inline-end: calc(var(--app-margin-small) + var(--sidenote-width) + var(--sidenote-gap));
+    display: flow-root; /* encloses trailing floats (notes near article end) */
   }
 }
 </style>

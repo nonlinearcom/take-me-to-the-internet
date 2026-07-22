@@ -97,6 +97,14 @@
   --app-margin: 48px;
   --app-margin-small: 24px;
   --app-margin-mini: 16px;
+
+  /* Text column measure (long-form pages: articles, glossary, static) */
+  --paragraph-width: 60ch;
+  --image-width: 60ch;
+
+  /* Margin sidenotes (desktop, .margin-notes pages; breakpoint hardcoded at 1280px) */
+  --sidenote-width: 360px;
+  --sidenote-gap: 90px;
 }
 
 @media screen and (max-width: 768px) {

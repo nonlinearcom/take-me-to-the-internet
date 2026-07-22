@@ -319,7 +319,7 @@ onBeforeUnmount(() => {
 
 <style lang="postcss" scoped>
 .glossary-graph {
-  /* Full-bleed breakout of the centered 68ch article column. */
+  /* Full-bleed breakout of the centered 50ch article column. */
   width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-top: 64px;
