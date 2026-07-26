@@ -1,5 +1,5 @@
 <template>
-  <figure>
+  <figure :class="layout">
     <template v-if="mediaType === 'image'">
       <!-- <pre v-if="data.file.type?.startsWith('image/svg')">{{ data }}</pre> -->
       <div
@@ -52,6 +52,8 @@ const props = defineProps<{
 }>()
 
 const { fileUrl } = useFiles()
+// Directus dropdown values may be stored capitalized; normalize for CSS classes
+const layout = computed(() => props.data?.layout?.toLowerCase())
 const src = fileUrl(props.data.file)
 const mediaType = computed(() => getMediaType(props.data.file))
 

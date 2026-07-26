@@ -75,7 +75,7 @@ const { data: page } = await useAsyncData(`article-${route.params.slug}`, () => 
                     gallery: [
                       { content: ['*'] },
                     ],
-                    media: [{ file: ['*'] }],
+                    media: ['layout', { file: ['*'] }],
                   },
                 },
               ],

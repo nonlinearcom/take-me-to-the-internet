@@ -109,7 +109,7 @@ const { data: page, error } = await useAsyncData(
                   gallery: [
                     { content: ['*'] },
                   ],
-                  media: [{ file: ['*'] }],
+                  media: ['layout', { file: ['*'] }],
                 },
               },
             ],

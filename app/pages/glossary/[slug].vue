@@ -97,7 +97,7 @@ const { data: page, error } = await useAsyncData(`glossary-${slug}`, async () =>
                     cables: ['*'],
                     code_link: ['*'],
                     sidenote: ['*'],
-                    media: ['id', { file: ['*'] }],
+                    media: ['id', 'layout', { file: ['*'] }],
                     gallery: [
                       { content: ['*'] },
                     ],

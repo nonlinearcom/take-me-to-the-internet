@@ -165,6 +165,26 @@ h1 {
   }
 }
 
+/* media.layout from Directus: two consecutive `half` figures share a row
+   (a lone one just sits narrower); `full`/empty keeps the default flow */
+.prose figure.half {
+  display: inline-block;
+  vertical-align: top;
+  inline-size: calc(50% - 8px);
+}
+
+.prose figure.half + figure.half {
+  margin-inline-start: 16px;
+}
+
+/* keep a half pair spanning the same bleed width as a full figure;
+   must out-rank the wide-bleed rule above */
+@media (min-width: 1280px) {
+  .margin-notes .prose figure.half:not(figure *, .sidenote *) {
+    inline-size: calc((var(--image-width) - 16px) / 2);
+  }
+}
+
 /* Functional */
 .responsive {
   width: 100%;

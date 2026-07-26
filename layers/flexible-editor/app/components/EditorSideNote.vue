@@ -104,9 +104,12 @@ span a {
   transition: background-color 0.2s ease-in-out;
 }
 
-small img {
-  width: 100%;
-  margin-top: 10px;
+/* the note body is v-html content, so scoped selectors need :deep to reach it */
+.note_html :deep(:is(img, video)) {
+  display: block;
+  inline-size: 100%;
+  margin-block: 10px 0;
+  border-radius: var(--border-radius);
 }
 
 /* Marker bubble, two states: normal = light chip with stroke,
