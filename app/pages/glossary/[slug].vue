@@ -22,31 +22,10 @@
       class="prose"
       :data="translation"
     />
-
     <GlossaryGraph
       :items="items"
       :current-slug="slug"
     />
-    <!--
-    <div class="glossary-navigation">
-      <NuxtLink
-        v-if="previousPage"
-        class="previous-button"
-        :to="`/glossary/${previousPage.slug}`"
-      >
-        <UiIcon name="chevron-left" />
-        {{ getTranslation(previousPage)?.term }}
-      </NuxtLink>
-
-      <NuxtLink
-        v-if="nextPage"
-        class="next-button"
-        :to="`/glossary/${nextPage.slug}`"
-      >
-        {{ getTranslation(nextPage)?.term }}
-        <UiIcon name="chevron-right" />
-      </NuxtLink>
-    </div> -->
   </article>
 </template>
 
@@ -132,21 +111,9 @@ if (error.value) {
 }
 
 const items = computed(() => (list.value ?? []) as GlossaryItem[])
-const currentPageIndex = computed(() => items.value.findIndex(page => page.slug === slug))
 
-const nextPage = computed(() => {
-  const i = currentPageIndex.value
-  if (i < 0 || items.value.length === 0)
-    return null
-  return items.value[(i + 1) % items.value.length]
-})
 
-const previousPage = computed(() => {
-  const i = currentPageIndex.value
-  if (i < 0 || items.value.length === 0)
-    return null
-  return items.value[(i - 1 + items.value.length) % items.value.length]
-})
+
 
 function getTranslation(item: GlossaryItem): GlossaryTranslation | undefined {
   return item.translations?.find((t: GlossaryTranslation) => t.languages_code.startsWith(locale.value))
@@ -207,9 +174,6 @@ useHighlight()
     margin: var(--app-margin-small);
   }
 
-  .glossary-content {
-  }
-
   .glossary-navigation {
     display: flex;
     justify-content: space-between;
@@ -233,6 +197,12 @@ useHighlight()
     max-inline-size: calc(var(--paragraph-width) + var(--sidenote-width) + var(--sidenote-gap));
     padding-inline-end: calc(var(--app-margin-small) + var(--sidenote-width) + var(--sidenote-gap));
     display: flow-root;
+  }
+
+  /* the sidenote padding above shifts the content box off viewport center,
+     so the graph's 100vw breakout gets that half-column offset added back */
+  .glossary-term.margin-notes .glossary-graph {
+    margin-inline-start: calc(50% - 50vw + (var(--sidenote-width) + var(--sidenote-gap)) / 2);
   }
 }
 

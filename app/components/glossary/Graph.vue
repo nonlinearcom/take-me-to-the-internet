@@ -79,20 +79,24 @@ const props = defineProps<{
 }>()
 
 // ---- layout tuning ----
-// Distances (LINK_DISTANCE, REPULSION, REPULSION_RANGE) are for the
-// SPREAD_BASELINE canvas and scale with min(width, height) / baseline,
-// so the graph fills the available space on any screen.
+// Distances are for the SPREAD_BASELINE canvas: LINK_DISTANCE scales with
+// min(width, height) / baseline (tight pairs on any screen), REPULSION and
+// REPULSION_RANGE with sqrt(width * height) / baseline (cloud fills the
+// whole canvas, including the width of wide screens).
 const SPREAD_BASELINE = 480
 // Connected nodes: spring rest length + how rigidly it is enforced (0..1).
-const LINK_DISTANCE = 260
-const LINK_STRENGTH = 0.4
+const LINK_DISTANCE = 120
+const LINK_STRENGTH = 0.7
 // Spread: node-node repulsion (more negative = wider graph) and the range
 // beyond which nodes stop repelling each other.
-const REPULSION = -240
+const REPULSION = -400
 const REPULSION_RANGE = 250
-// Pull toward the center — the counterweight to repulsion; also keeps isolated nodes near the cluster. Raise for a tighter graph.
-const CENTER_PULL_X = 0.1
-const CENTER_PULL_Y = 0.3
+// Pull toward the center — the counterweight to repulsion; also keeps
+// isolated nodes near the cluster. Raise for a tighter graph. The X/Y
+// strengths are derived from the canvas aspect in applyForces, so the
+// cloud's ellipse tracks the box on any screen: wide desktop = loose X /
+// firm Y, portrait phone = the reverse.
+const CENTER_PULL = 0.13
 // Hard minimum gap between any two node centers = sum of their collide radii (base + per-label-character, capped).
 const COLLIDE_BASE = 42
 const COLLIDE_PER_CHAR = 3
@@ -197,21 +201,34 @@ function edgePath({ source, target, seed }: SimLink) {
   return d
 }
 
+// Min spacing radius between nodes; doubles as the "half a label fits"
+// estimate for the canvas edge clamp, since labels are middle-anchored.
+function collideRadius(node: SimNode) {
+  const label = labels.value.get(node.id) ?? node.slug
+  return Math.min(COLLIDE_MAX, COLLIDE_BASE + label.length * COLLIDE_PER_CHAR)
+}
+
 function applyForces(w: number, h: number) {
   if (!simulation)
     return
+  // Two scales: links follow the small dimension so related pairs stay
+  // tight, while repulsion and the center pulls follow the full canvas
+  // (geometric mean) so a wide screen stretches the cloud into the extra
+  // width instead of leaving side margins empty.
   const spread = Math.min(w, h) / SPREAD_BASELINE
+  const fill = Math.sqrt(w * h) / SPREAD_BASELINE
+  // Equilibrium radius goes ~1/sqrt(pull strength), so a strength ratio of
+  // aspect² keeps the cloud's proportions matching the canvas — the pull is
+  // firm along the short axis and loose along the long one.
+  const aspect = w / h
   simulation
     .force('link', forceLink<SimNode, SimLink>(renderEdges.value).distance(LINK_DISTANCE * spread).strength(LINK_STRENGTH))
-    .force('charge', forceManyBody<SimNode>().strength(REPULSION * spread).distanceMax(REPULSION_RANGE * spread))
-    .force('collide', forceCollide<SimNode>().radius((node) => {
-      const label = labels.value.get(node.id) ?? node.slug
-      return Math.min(COLLIDE_MAX, COLLIDE_BASE + label.length * COLLIDE_PER_CHAR)
-    }))
+    .force('charge', forceManyBody<SimNode>().strength(REPULSION * fill).distanceMax(REPULSION_RANGE * fill))
+    .force('collide', forceCollide<SimNode>().radius(collideRadius))
     // Center pull weakens as the canvas grows, so it stops compressing
     // the cluster on large screens.
-    .force('x', forceX<SimNode>(w / 2).strength(CENTER_PULL_X / spread))
-    .force('y', forceY<SimNode>(h / 2).strength(CENTER_PULL_Y / spread))
+    .force('x', forceX<SimNode>(w / 2).strength(CENTER_PULL / aspect / fill))
+    .force('y', forceY<SimNode>(h / 2).strength(CENTER_PULL * aspect / fill))
 }
 
 function initSimulation(w: number, h: number) {
@@ -265,7 +282,19 @@ function initSimulation(w: number, h: number) {
   simulation = forceSimulation<SimNode, SimLink>(nodes).alphaDecay(0.04)
   applyForces(w, h)
 
+  lastWidth = w
+  lastHeight = h
+
+  // The forces only position node centers, so a middle-anchored label can
+  // hang past the canvas edge and get clipped (worst on phones). Every
+  // frame, clamp centers a label-half-width inside the box; one text line
+  // needs much less clearance vertically.
   const onTick = () => {
+    for (const node of nodes) {
+      const r = collideRadius(node)
+      node.x = Math.max(r, Math.min(lastWidth - r, node.x))
+      node.y = Math.max(16, Math.min(lastHeight - 16, node.y))
+    }
     triggerRef(renderNodes)
     triggerRef(renderEdges)
   }
@@ -281,8 +310,6 @@ function initSimulation(w: number, h: number) {
     simulation.on('tick', onTick)
   }
 
-  lastWidth = w
-  lastHeight = h
   ready.value = true
 }
 
@@ -319,10 +346,13 @@ onBeforeUnmount(() => {
 
 <style lang="postcss" scoped>
 .glossary-graph {
-  /* Full-bleed breakout of the centered 50ch article column. */
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-top: 64px;
+  /* Full-bleed breakout of the centered article column. Assumes the
+     container's content box is viewport-centered; containers with
+     asymmetric padding must add the offset back (see the .margin-notes
+     rule in glossary/[slug].vue). */
+  inline-size: 100vw;
+  margin-inline-start: calc(50% - 50vw);
+  margin-block-start: 64px;
   height: clamp(480px, 70vw, 840px);
   svg {
     display: block;
