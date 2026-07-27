@@ -63,11 +63,10 @@ export const Link = Mark.create<LinkOptions>({
     const isInternal = href?.startsWith('/') === true && !href.startsWith('//')
 
     if (isInternal) {
-      // Internal links must not carry the external defaults (nofollow, _blank)
-      if (HTMLAttributes.target === '_blank')
-        return ['a', mergeAttributes(HTMLAttributes, { rel: 'noopener' }), 0]
-
-      // NuxtLink so navigation goes through vue-router instead of a full page load
+      // Always NuxtLink so navigation goes through vue-router instead of a full
+      // page load. A stored target="_blank" is ignored: imported content bakes
+      // it into the mark attrs and the Directus link dialog can't reliably
+      // unset it, so it never reflects author intent for internal links.
       return [NuxtLink, { to: href, class: HTMLAttributes.class }, 0] as any
     }
 

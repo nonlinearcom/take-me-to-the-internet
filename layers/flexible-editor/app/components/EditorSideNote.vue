@@ -7,7 +7,9 @@
       class="sidenote__label"
       :class="{ active: activeNoteId === data?.number }"
     >
-      {{ data.text }}
+      <!-- slot carries nested marks (e.g. italic) that the renderer wraps around the text;
+           data.text is the plain-text fallback -->
+      <slot>{{ data.text }}</slot>
     </label>
 
     <input
