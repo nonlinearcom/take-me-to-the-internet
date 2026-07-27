@@ -161,37 +161,21 @@ useHighlight()
 
   header {
     margin-bottom: 96px;
-    text-align: center;
+    text-align: left;
 
     h1 {
       font-size: var(--text-large);
     }
   }
 
-  .glossary-close {
-    height: 100px;
-    width: 100px;
-    margin: var(--app-margin-small);
-  }
-
-  .glossary-navigation {
-    display: flex;
-    justify-content: space-between;
-    margin: 0 auto;
-    margin-top: 100px;
-    max-inline-size: var(--paragraph-width);
-  }
-
-  .previous-button,
-  .next-button {
-    display: flex;
-    align-items: center;
-    margin-bottom: 64px;
+  .glossary-content > h2 {
+    font-size: var(--text-large);
+    line-height: 1.2;
+    font-weight: var(--regular);
   }
 }
 
-/* keep the text measure, reserve the right margin column for sidenotes
-   (breakpoint must match EditorSideNote.vue) */
+/* keep the text measure, reserve the right margin column for sidenotes (breakpoint must match EditorSideNote.vue) */
 @media (min-width: 1280px) {
   .glossary-term.margin-notes {
     max-inline-size: calc(var(--paragraph-width) + var(--sidenote-width) + var(--sidenote-gap));
@@ -199,8 +183,7 @@ useHighlight()
     display: flow-root;
   }
 
-  /* the sidenote padding above shifts the content box off viewport center,
-     so the graph's 100vw breakout gets that half-column offset added back */
+  /* the sidenote padding above shifts the content box off viewport center, so the graph's 100vw breakout gets that half-column offset added back */
   .glossary-term.margin-notes .glossary-graph {
     margin-inline-start: calc(50% - 50vw + (var(--sidenote-width) + var(--sidenote-gap)) / 2);
   }

@@ -34,6 +34,11 @@
         @focus="hoverId = node.id"
         @blur="hoverId = null"
       >
+        <path
+          v-if="node.slug === currentSlug"
+          class="bubble"
+          :d="bubblePath(node)"
+        />
         <text
           :x="node.x"
           :y="node.y"
@@ -109,6 +114,16 @@ const COLLIDE_MAX = 70
 const EDGE_SEGMENT = 35
 const EDGE_WOBBLE = 4
 const EDGE_BOW = 0.12
+
+// ---- current-node bubble ----
+// Hand-drawn chip (stadium: straight top/bottom, semicircular ends) around
+// the current page's term. The half-width is estimated from the label length
+// (half an average glyph per character at --text-small, plus breathing room);
+// the wobble is a fraction of the half-height.
+const BUBBLE_HALF_CHAR = 4.2
+const BUBBLE_PAD_X = 10
+const BUBBLE_RY = 14
+const BUBBLE_WOBBLE = 0.05
 
 const { t, locale } = useI18n()
 
@@ -199,6 +214,65 @@ function edgePath({ source, target, seed }: SimLink) {
   }
   d += ` L${points[points.length - 1]!.x},${points[points.length - 1]!.y}`
   return d
+}
+
+function bubblePath(node: SimNode) {
+  const label = labels.value.get(node.id) ?? node.slug
+  const rx = label.length * BUBBLE_HALF_CHAR + BUBBLE_PAD_X
+  const ry = BUBBLE_RY
+  // Walk the stadium perimeter (top edge → right cap → bottom edge → left
+  // cap) at even arc length, jittering each sample along the outward normal.
+  const half = Math.max(0, rx - ry)
+  const perimeter = 4 * half + 2 * Math.PI * ry
+  const topEnd = 2 * half
+  const rightEnd = topEnd + Math.PI * ry
+  const bottomEnd = rightEnd + 2 * half
+  const steps = Math.max(16, Math.round(perimeter / 8))
+  const points: { x: number, y: number }[] = []
+  for (let i = 0; i < steps; i++) {
+    const s = (i / steps) * perimeter
+    let px, py, nx, ny
+    if (s < topEnd) {
+      px = -half + s
+      py = -ry
+      nx = 0
+      ny = -1
+    } else if (s < rightEnd) {
+      const angle = (s - topEnd) / ry - Math.PI / 2
+      nx = Math.cos(angle)
+      ny = Math.sin(angle)
+      px = half + nx * ry
+      py = ny * ry
+    } else if (s < bottomEnd) {
+      px = half - (s - rightEnd)
+      py = ry
+      nx = 0
+      ny = 1
+    } else {
+      const angle = (s - bottomEnd) / ry + Math.PI / 2
+      nx = Math.cos(angle)
+      ny = Math.sin(angle)
+      px = -half + nx * ry
+      py = ny * ry
+    }
+    const jitter = BUBBLE_WOBBLE * ry * noise(node.id * 91 + i)
+    points.push({
+      x: node.x + px + nx * jitter,
+      y: node.y + py + ny * jitter,
+    })
+  }
+
+  // Same midpoint-quadratic smoothing as edgePath, closed on itself: the
+  // final segment curves through points[0] back to the starting midpoint.
+  let d = ''
+  for (let i = 0; i <= steps; i++) {
+    const p = points[i % steps]!
+    const next = points[(i + 1) % steps]!
+    const midX = (p.x + next.x) / 2
+    const midY = (p.y + next.y) / 2
+    d += i === 0 ? `M${midX},${midY}` : ` Q${p.x},${p.y} ${midX},${midY}`
+  }
+  return `${d} Z`
 }
 
 // Min spacing radius between nodes; doubles as the "half a label fits"
@@ -383,6 +457,15 @@ onBeforeUnmount(() => {
   outline: none;
   transition: opacity 0.2s;
 
+  /* "You are here" ring: filled with the page background so edges stop at
+     the bubble's rim instead of running under the word. */
+  .bubble {
+    fill: var(--bg-color);
+    stroke: var(--text-color);
+    stroke-width: 2px;
+    stroke-linejoin: round;
+  }
+
   /* The label IS the node: the bg-color halo masks the edges that run
      underneath the word. */
   text {
@@ -399,6 +482,12 @@ onBeforeUnmount(() => {
   &:focus-visible text,
   &.current text {
     fill: var(--text-color);
+  }
+
+  /* The bubble's fill already masks the edges under the current term, and
+     the halo would paint over the bubble's rim on tight fits. */
+  &.current text {
+    stroke: none;
   }
 }
 
