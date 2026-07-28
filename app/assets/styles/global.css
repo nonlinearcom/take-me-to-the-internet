@@ -121,6 +121,32 @@ h1 {
     margin: 16px 0;
   }
 
+  /* Lists: restore the markers and indent stripped by the preflight reset
+     (ol/ul there get list-style: none and zero padding). The endnote list
+     (.footnotes) keeps its own bare grid layout, so it is excluded. */
+  :is(ul, ol):not(.footnotes *) {
+    padding-inline-start: 24px;
+    margin-block: 16px;
+  }
+
+  ul:not(.footnotes *) {
+    /* string marker: en dash instead of a bullet; the trailing
+       non-breaking space sets the gap to the text */
+    list-style-type: '–\00a0\00a0';
+  }
+
+  ol:not(.footnotes *) {
+    list-style: decimal;
+  }
+
+  li:not(.footnotes *) {
+    margin-block: 4px;
+
+    p {
+      margin-block: 0;
+    }
+  }
+
   /* Images and SVGs */
   img,
   svg {

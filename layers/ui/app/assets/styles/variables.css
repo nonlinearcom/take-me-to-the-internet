@@ -67,7 +67,7 @@
 .light {
   --bg-color: var(--gray-1);
   --bg-hover: var(--gray-2);
-  --bg-secondary: var(--gray-4);
+  --bg-secondary: var(--gray-3);
   --border-color: var(--gray-5);
   --text-secondary: var(--gray-8);
   --text-secondary-hover: var(--gray-9);
