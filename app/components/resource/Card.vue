@@ -14,7 +14,10 @@
     <NuxtImg
       v-if="resource.cover"
       class="cover"
-      :src="coverSrc(resource.cover, 400)"
+      :src="resource.cover"
+      :width="400"
+      fit="inside"
+      format="auto"
       :alt="resource.title"
     />
 

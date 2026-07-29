@@ -85,7 +85,7 @@ export default defineNuxtConfig({
       directusRuntime: {
         provider: '~/providers/directus-runtime',
         options: {
-          modifiers: { withoutEnlargement: 'true' },
+          modifiers: { withoutEnlargement: true },
         },
       },
     },

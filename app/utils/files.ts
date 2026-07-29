@@ -4,11 +4,6 @@ export function isDirectusFile(file?: any): file is DirectusFile {
   return (file as DirectusFile)?.id !== undefined
 }
 
-// Directus thumbnail URL for an already-resolved cover URL/path.
-export function coverSrc(cover: string, width: number) {
-  return `${cover}?fit=inside&width=${width}&format=auto&withoutEnlargement=true`
-}
-
 export function getMediaType(media: string | DirectusFile) {
   if (typeof media === 'string') {
     type ExtensionType = 'image' | 'video'

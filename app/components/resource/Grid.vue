@@ -9,7 +9,10 @@
       <NuxtImg
         v-if="resource.cover"
         class="cover"
-        :src="coverSrc(resource.cover, 300)"
+        :src="resource.cover"
+        :width="300"
+        fit="inside"
+        format="auto"
         :alt="resource.title"
       />
       <h2 class="title">
