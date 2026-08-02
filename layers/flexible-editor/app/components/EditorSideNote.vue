@@ -25,9 +25,9 @@
       class="sidenote__content "
     >
       <span class="sidenote_number">{{ data?.number }}</span>
-      <div
+      <span
         class="note_html"
-        v-html="data?.content"
+        v-html="noteHtml"
       />
     </small>
   </span>
@@ -42,6 +42,20 @@ const props = defineProps<{
 }>()
 
 const { activeNoteId } = useFootNotes()
+
+/* The note renders inside the article's <p> (the mark is inline), but the
+   raw note HTML contains <p>/<div>, which the HTML parser is not allowed to
+   nest in a paragraph — it closes the outer <p> early, re-parenting the SSR
+   markup and breaking hydration (following blocks could even get swallowed
+   into the note). Rewrite them to spans, keeping attributes; the flex column
+   blockifies them again so the layout is unchanged. Everything else in the
+   note content (code, em, a, img, br, video) is phrasing content. */
+const noteHtml = computed(() =>
+  (props.data?.content ?? '').replace(
+    /<(\/?)(p|div)(?=[\s>])/g,
+    (_match, close, tag) => close ? '</span' : `<span data-${tag}`,
+  ),
+)
 </script>
 
 <style lang="postcss" scoped>
@@ -84,15 +98,16 @@ const { activeNoteId } = useFootNotes()
   /* gap: 20px; */
 }
 
-/* flex column prevents margin collapse, so the global p margin pushes the first line below the note number */
-.note_html :deep(p) {
+/* note paragraphs are spans rewritten by noteHtml (see script); as items of
+   the flex column they are blockified, so only spacing needs styling */
+.note_html :deep([data-p]) {
   margin: 0 0 8px;
 }
-.note_html :deep(p:last-child) {
+.note_html :deep([data-p]:last-child) {
   margin-bottom: 0;
 }
 /* the content pipeline emits empty leading paragraphs that would otherwise set the flex baseline and misalign the note number */
-.note_html :deep(p:empty) {
+.note_html :deep([data-p]:empty) {
   display: none;
 }
 

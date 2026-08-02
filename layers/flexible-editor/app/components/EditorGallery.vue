@@ -28,38 +28,24 @@
 
       <span class="pagination">{{ activeIndex + 1 }}/{{ slideCount }}</span>
 
-      <button
-        type="button"
-        :disabled="!canPrev"
-        :aria-controls="carouselId"
+      <UiButton
+        icon="chevron-left"
+        variant="ghost"
+        rounded
         aria-label="Previous slide"
-        @click="goTo('prev')"
-      >
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        ><path d="M15 18l-6-6 6-6" /></svg>
-      </button>
-      <button
-        type="button"
-        :disabled="!canNext"
         :aria-controls="carouselId"
+        :disabled="!canPrev"
+        @click="goTo('prev')"
+      />
+      <UiButton
+        icon="chevron-right"
+        variant="ghost"
+        rounded
         aria-label="Next slide"
+        :aria-controls="carouselId"
+        :disabled="!canNext"
         @click="goTo('next')"
-      >
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        ><path d="M9 18l6-6-6-6" /></svg>
-      </button>
+      />
     </div>
   </div>
 </template>
@@ -206,7 +192,7 @@ onBeforeUnmount(() => {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 16px;
+  gap: 8px;
   margin-block-start: 12px;
 
   .caption {
@@ -224,27 +210,12 @@ onBeforeUnmount(() => {
     color: var(--text-secondary);
   }
 
-  button {
-    padding: 0;
-    border: 0;
+  /* undo the .prose img/svg figure treatment on the button icon svgs
+     (:deep — the svg renders inside UiButton, outside this scope) */
+  :deep(svg) {
+    margin: 0;
     background: none;
-    color: currentColor;
-    cursor: pointer;
-
-    svg {
-      display: block;
-      width: 28px;
-      height: 28px;
-      /* undo the .prose img/svg figure treatment (gray backdrop, radius, block margins) */
-      margin: 0;
-      background: none;
-      border-radius: 0;
-    }
-
-    &[disabled] {
-      opacity: 0.35;
-      pointer-events: none;
-    }
+    border-radius: 0;
   }
 }
 </style>

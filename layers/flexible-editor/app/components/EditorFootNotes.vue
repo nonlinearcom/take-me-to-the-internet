@@ -15,7 +15,7 @@
           class="reversefootnote"
           role="doc-backlink"
           icon="external-link"
-          :label="footnote?.attrs?.data?.number"
+          :label="String(footnote?.attrs?.data?.number ?? '')"
           :to="`#sidenote-${footnote.attrs?.data?.number}`"
           variant="ghost"
           size="xs"
