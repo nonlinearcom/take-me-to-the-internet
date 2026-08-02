@@ -37,7 +37,7 @@ const { data: page } = await useAsyncData(`page-${route.params.slug}`, () => {
                 {
                   item: {
                     gallery: [
-                      { content: ['*'] },
+                      { content: ['*', { directus_files_id: ['id', 'description'] }] },
                     ],
                     media: [{ file: ['*'] }],
                   },
@@ -92,5 +92,13 @@ if (!STATIC_PAGE_SLUGS.includes(slug)) {
 
   max-inline-size: var(--paragraph-width);
   /* margin: 0 auto; */
+}
+
+/* this column is left-aligned (no auto margins), so the gallery's left
+   edge distance is just the page padding; :not keeps it off the centered
+   article pages, which this unscoped .page rule would otherwise also hit */
+.page:not(.margin-notes) {
+  --gallery-edge-start: var(--app-margin-small);
+  --gallery-edge-end: calc(100vw - min(100vw, var(--paragraph-width)) + var(--app-margin-small));
 }
 </style>

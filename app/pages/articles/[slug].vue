@@ -73,7 +73,7 @@ const { data: page } = await useAsyncData(`article-${route.params.slug}`, () => 
                     code_link: ['*'],
                     sidenote: ['*'],
                     gallery: [
-                      { content: ['*'] },
+                      { content: ['*', { directus_files_id: ['id', 'description'] }] },
                     ],
                     media: ['layout', { file: ['*'] }],
                   },

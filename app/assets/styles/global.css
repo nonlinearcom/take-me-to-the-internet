@@ -186,12 +186,34 @@ h1 {
 }
 
 /* Prose media run wider than the text, bleeding into the sidenote gutter.
-   Capped at the gutter width so they never reach the note column itself
+Capped at the gutter width so they never reach the note column itself
    (breakpoint must match EditorSideNote.vue). */
 @media (min-width: 1280px) {
-  .margin-notes .prose :is(figure, .gallery, img):not(figure *, .gallery *, .sidenote *) {
+  .margin-notes .prose :is(figure, img):not(figure *, .gallery *, .sidenote *) {
     inline-size: var(--image-width);
     max-inline-size: calc(100% + var(--sidenote-gap));
+  }
+}
+
+/* Gallery scroll strips run edge-to-edge across the viewport, with
+   leading/trailing insets so the first/last slide rest aligned to the text
+   column (vars consumed by EditorGallery's carousel). Kept %-free because
+   scroll-padding resolves percentages against the scrollport, so the
+   distances are rebuilt from the tokens that size the page columns — they
+   must mirror the .page/.glossary-term rules in articles/[slug].vue and
+   glossary/[slug].vue. Where the vars are absent (e.g. the log panel) the
+   strip stays at container width. */
+.prose {
+  --gallery-edge-start: calc((100vw - min(100vw, var(--paragraph-width))) / 2 + var(--app-margin-small));
+  --gallery-edge-end: var(--gallery-edge-start);
+}
+
+@media (min-width: 1280px) {
+  /* margin-notes pages widen the column cap and reserve the note gutter on
+     the end side */
+  .margin-notes .prose {
+    --gallery-edge-start: calc((100vw - min(100vw, var(--paragraph-width) + var(--sidenote-width) + var(--sidenote-gap))) / 2 + var(--app-margin-small));
+    --gallery-edge-end: calc(var(--gallery-edge-start) + var(--sidenote-width) + var(--sidenote-gap));
   }
 }
 

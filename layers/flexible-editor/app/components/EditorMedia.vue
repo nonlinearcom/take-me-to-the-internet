@@ -83,6 +83,25 @@ if (props.data.file?.type?.startsWith('image/svg'))
 </script>
 
 <style lang="postcss" scoped>
+/* match the gallery caption: small secondary text, tight under the media
+   (figure prefix outranks the .prose figcaption global) */
+figure figcaption {
+  margin-block-start: 8px;
+  font-size: var(--text-small);
+  /* p-based gallery captions inherit the global p weight; match it here */
+  font-weight: var(--regular);
+  color: var(--text-secondary);
+}
+
+/* the prose img/svg 32px block margin would otherwise push the caption away */
+:is(.image, .video, div):has(+ figcaption) {
+  margin-block-end: 0;
+
+  :deep(svg) {
+    margin-block-end: 0;
+  }
+}
+
 .video {
   position: relative;
 

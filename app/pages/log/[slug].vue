@@ -107,7 +107,7 @@ const { data: page, error } = await useAsyncData(
               {
                 item: {
                   gallery: [
-                    { content: ['*'] },
+                    { content: ['*', { directus_files_id: ['id', 'description'] }] },
                   ],
                   media: ['layout', { file: ['*'] }],
                 },

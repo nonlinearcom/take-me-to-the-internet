@@ -78,7 +78,7 @@ const { data: page, error } = await useAsyncData(`glossary-${slug}`, async () =>
                     sidenote: ['*'],
                     media: ['id', 'layout', { file: ['*'] }],
                     gallery: [
-                      { content: ['*'] },
+                      { content: ['*', { directus_files_id: ['id', 'description'] }] },
                     ],
                   },
                 },
