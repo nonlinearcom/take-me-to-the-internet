@@ -87,6 +87,16 @@ h1 {
     /* text-decoration-color: var(--border-color); */
   }
 
+  /* highlighted text — the strike mark repurposed by the flexible-editor
+     layer, plus any <mark> arriving in sidenote HTML */
+  mark {
+    background-color: var(--highlight-bg);
+    color: inherit;
+    padding-inline: 2px;
+    border-radius: var(--border-radius);
+    box-decoration-break: clone;
+  }
+
   /* inline code */
   code {
     font-family: var(--font-stack-mono);
