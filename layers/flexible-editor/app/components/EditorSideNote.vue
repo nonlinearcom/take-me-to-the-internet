@@ -73,8 +73,13 @@ const noteHtml = computed(() =>
 .sidenote__checkbox:checked ~ .sidenote__content {
   position: relative; /* override screen-reader-only */
   left: auto; /* override screen-reader-only */
-  display: inline-block;
-  flex-wrap: wrap;
+  /* float (not inline-block): takes the note out of the inline flow, so text
+     following the marker (e.g. a closing ".") stays on the marker's line
+     instead of being pushed below the note; min-width: 100% drops the note
+     onto its own row. Same technique as the desktop margin notes. */
+  display: block;
+  float: inline-start;
+  clear: inline-start;
 }
 
 /* hangs in the note's left padding; the note_html box is too wide
