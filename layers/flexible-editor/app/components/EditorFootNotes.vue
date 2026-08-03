@@ -94,6 +94,12 @@ function highlightNote(id: string) {
         color: var(--text-color);
       }
     }
+    /* inline code inherits white-space: pre from .prose; in the narrow
+       endnote cell it must wrap instead of overflowing */
+    code {
+      white-space: pre-wrap;
+      overflow-wrap: break-word;
+    }
     p {
       margin: 0 0 8px !important;
     }

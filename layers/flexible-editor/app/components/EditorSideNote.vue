@@ -82,16 +82,18 @@ const noteHtml = computed(() =>
   clear: inline-start;
 }
 
-/* hangs in the note's left padding; the note_html box is too wide
-   to share a line with an inline number, so inline flow wraps it below */
+/* hidden in the inline presentation: there the note sits directly below its
+   numbered trigger, so repeating the number is noise. Desktop margin notes
+   re-enable it (they detach from the trigger), hanging it in the note's
+   start padding; the note_html box is too wide to share a line with an
+   inline number, so inline flow wraps it below */
 .sidenote_number {
+  display: none;
   position: absolute;
-  left: 15px;
-  top: 16px;
   font-size: small;
 }
 .sidenote__content {
-  padding: 16px 40px;
+  /* no padding: the inline note aligns with the regular paragraph text */
   margin-block: 16px;
   min-width: 100%;
   color: var(--text-secondary);
@@ -124,6 +126,13 @@ span a {
   background-color: var(--bg-secondary) !important;
   border-radius: var(--border-radius);
   transition: background-color 0.2s ease-in-out;
+}
+
+/* inline code inherits white-space: pre from .prose; inside the narrow note
+   column it must wrap instead of overflowing the note box */
+.note_html :deep(code) {
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
 }
 
 /* the note body is v-html content, so scoped selectors need :deep to reach it */
@@ -207,6 +216,7 @@ span a {
   }
 
   .margin-notes .sidenote_number {
+    display: block;
     inset-inline-start: 0;
     top: 2px;
   }
