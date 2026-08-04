@@ -168,10 +168,12 @@ useHighlight()
     }
   }
 
+  /* opening definition (authored as an h2 lead): bold serif, larger than
+     the bumped-up body text */
   .glossary-content > h2 {
-    font-size: var(--text-large);
-    line-height: 1.2;
-    font-weight: var(--regular);
+    font-size: calc(var(--text-large) + 10px);
+    line-height: 1.1;
+    font-weight: var(--regular-serif);
   }
 }
 

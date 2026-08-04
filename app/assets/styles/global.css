@@ -77,6 +77,29 @@ h1 {
 /* Flexible Editor Styles */
 
 .prose {
+  /* prose body runs in Junicode Condensed (variable serif, width 75%):
+     regular weight for running text, bold for headings; UI stays Inter */
+  font-family: var(--font-stack-serif);
+  font-weight: var(--regular-serif);
+  font-stretch: 75%;
+  /* condensed cut reads small at the base size, so bump it up; Junicode's
+     tall vertical metrics also want a tighter leading than the sans */
+  font-size: calc(var(--text) + 4px);
+  line-height: 1.3;
+
+  p {
+    /* a hair over regular — the variable wght axis takes any in-between value */
+    font-weight: 450;
+    /* running text at normal width; headings keep the condensed cut */
+    font-stretch: 100%;
+  }
+
+  b,
+  strong,
+  :is(h1, h2, h3, h4) {
+    font-weight: var(--bold-serif);
+  }
+
   h2 {
     margin-top: var(--app-margin);
   }

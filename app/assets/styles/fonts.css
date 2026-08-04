@@ -43,6 +43,26 @@
   src: url('/fonts/Inter-MediumItalic.woff2?v=4.1') format('woff2');
 }
 
+/* Junicode variable font. weight 300–700, width 75% (Condensed) to 125% (Expanded).
+   Pick the actual cut at the usage site (font-weight / font-stretch on .prose).
+   The custom ENLA axis (0–100) is reachable only via font-variation-settings: 'ENLA' <n>. */
+@font-face {
+  font-family: 'Junicode';
+  font-style: normal;
+  font-weight: 300 700;
+  font-stretch: 75% 125%;
+  font-display: swap;
+  src: url('/fonts/JunicodeVF-Roman.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Junicode';
+  font-style: italic;
+  font-weight: 300 700;
+  font-stretch: 75% 125%;
+  font-display: swap;
+  src: url('/fonts/JunicodeVF-Italic.woff2') format('woff2');
+}
+
 @font-face {
   font-family: 'PlexMono';
   font-style: normal;
