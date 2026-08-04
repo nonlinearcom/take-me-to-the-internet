@@ -4,6 +4,7 @@
 
   /* Typography */
   --font-stack: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --font-stack-serif: 'Libre Caslon Text', Georgia, 'Times New Roman', serif;
   --font-stack-mono: 'PlexMono', 'Helvetica Neue', Arial, sans-serif;
 
   --text-xlarge: 42px;
@@ -13,8 +14,10 @@
   --text-mini: 12px;
 
   --regular: 300;
+  --regular-serif: 400;
   --regular-mono: 400;
   --bold: 500;
+  --bold-serif: 700;
 
   /* Shadow */
   --shadow: 0px 4px 6px var(--black-a2);
@@ -66,6 +69,8 @@
 :root,
 .light {
   --bg-color: var(--gray-1);
+  --bg-color: #FAFAF9;
+
   --bg-hover: var(--gray-2);
   --bg-secondary: var(--gray-3);
   --border-color: var(--gray-5);

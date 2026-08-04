@@ -77,6 +77,15 @@ h1 {
 /* Flexible Editor Styles */
 
 .prose {
+  /* long-form body copy runs in the serif; headings, captions, and the
+     surrounding UI stay on the sans stack */
+  p,
+  li,
+  blockquote {
+    font-family: var(--font-stack-serif);
+    font-weight: var(--regular-serif);
+  }
+
   h2 {
     margin-top: var(--app-margin);
   }

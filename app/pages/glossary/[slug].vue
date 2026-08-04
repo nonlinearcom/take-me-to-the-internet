@@ -168,10 +168,13 @@ useHighlight()
     }
   }
 
+  /* lead paragraph, authored as h2 — reads as body copy, so it follows the
+     prose serif */
   .glossary-content > h2 {
     font-size: var(--text-large);
     line-height: 1.2;
-    font-weight: var(--regular);
+    font-family: var(--font-stack-serif);
+    font-weight: var(--regular-serif);
   }
 }
 
