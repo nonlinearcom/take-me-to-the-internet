@@ -1,4 +1,15 @@
 {
   "close": "Close",
-  "glossaryGraph": "Map of related glossary terms"
+  "glossaryGraph": "Map of related glossary terms",
+  "search": {
+    "title": "Search",
+    "openSearch": "Open search",
+    "placeholder": "Search articles, glossary, resources…",
+    "loading": "Loading…",
+    "noResults": "No results",
+    "articles": "Articles",
+    "glossary": "Glossary",
+    "resources": "Resources",
+    "log": "Log"
+  }
 }

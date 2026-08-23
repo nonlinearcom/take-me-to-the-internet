@@ -1,5 +1,6 @@
 <template>
   <AppHeader />
+  <SearchPalette />
   <NuxtPage />
 </template>
 

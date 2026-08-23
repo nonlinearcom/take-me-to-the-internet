@@ -1,4 +1,15 @@
 {
   "close": "Chiudi",
-  "glossaryGraph": "Mappa dei termini correlati del glossario"
+  "glossaryGraph": "Mappa dei termini correlati del glossario",
+  "search": {
+    "title": "Cerca",
+    "openSearch": "Apri la ricerca",
+    "placeholder": "Cerca articoli, glossario, risorse…",
+    "loading": "Caricamento…",
+    "noResults": "Nessun risultato",
+    "articles": "Articoli",
+    "glossary": "Glossario",
+    "resources": "Risorse",
+    "log": "Log"
+  }
 }

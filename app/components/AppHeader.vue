@@ -35,6 +35,14 @@
     </nav>
 
     <span class="mode-settings">
+      <UiButton
+        class="search-toggle"
+        icon="search"
+        :aria-label="$t('search.openSearch')"
+        variant="outline"
+        rounded
+        @click="isSearchOpen = true"
+      />
       <ClientOnly>
         <UiButton
           class="mode-toggle"
@@ -74,6 +82,8 @@ defineOptions({
 })
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
+
+const { isSearchOpen } = useSearch()
 
 const { locale, locales, setLocale } = useI18n()
 const switchLocalePath = useSwitchLocalePath()
