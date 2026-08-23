@@ -2,7 +2,7 @@
   <div>
     <canvas
       :id="canvasId"
-      tabIndex="1"
+      tabindex="0"
     />
   </div>
 </template>

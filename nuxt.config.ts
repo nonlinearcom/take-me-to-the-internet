@@ -21,6 +21,8 @@ export default defineNuxtConfig({
   routeRules: {
     // Fonts are cache-busted via the ?v= query param, so they can be immutable
     '/fonts/**': { headers: { 'cache-control': 'public, max-age=31536000, immutable' } },
+    // Cables exports land in fresh coverN dirs, so paths rarely change in place; a month keeps the ~185KiB patch.js out of repeat loads
+    '/patches/**': { headers: { 'cache-control': 'public, max-age=2592000' } },
   },
 
   modules: [
@@ -61,8 +63,7 @@ export default defineNuxtConfig({
   },
 
   ogImage: {
-    // A static og:image is set globally in app.vue; the generator would need
-    // the satori/resvg runtime dependencies.
+    // A static og:image is set globally in app.vue; the generator would need the satori/resvg runtime dependencies.
     enabled: false,
   },
 
