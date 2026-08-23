@@ -18,8 +18,9 @@ export default defineSitemapEventHandler(async () => {
       fields: ['slug', 'date_updated'],
       limit: -1,
     })),
+    // Published only: archived log entries are listed on /log but not reachable
     directus.request(readItems('log', {
-      filter: { status: { _neq: 'draft' } },
+      filter: { status: { _eq: 'published' } },
       fields: ['slug', 'date_updated'],
       limit: -1,
     })),

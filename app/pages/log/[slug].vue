@@ -81,7 +81,7 @@
 </template>
 
 <script setup lang="ts">
-import { readItem } from '@directus/sdk'
+import { readItems } from '@directus/sdk'
 import { EditorGallery, EditorMedia } from '#components'
 
 const relationBlocks = [
@@ -97,8 +97,15 @@ const { $directus } = useNuxtApp()
 const { data: page, error } = await useAsyncData(
   'log-page',
   () => {
+    // Filtered readItems instead of readItem by key: archived entries are
+    // listed on /log but must not be reachable directly.
     return $directus.request(
-      readItem('log', String(route.params.slug), {
+      readItems('log', {
+        filter: {
+          slug: { _eq: String(route.params.slug) },
+          status: { _eq: 'published' },
+        },
+        limit: 1,
         fields: [
           '*',
           {
@@ -119,7 +126,7 @@ const { data: page, error } = await useAsyncData(
     )
   },
   {
-    transform: (data) => {
+    transform: ([data]) => {
       if (!data)
         return null
 
