@@ -4,8 +4,8 @@
   --unit-100vh: 100dvh;
 
   /* Typography */
-  --font-stack: 'Inter', 'Helvetica Neue', Arial, sans-serif;
-  --font-stack-mono: 'PlexMono', 'Helvetica Neue', Arial, sans-serif;
+  --font-stack: 'Inter', 'Inter Fallback', 'Helvetica Neue', Arial, sans-serif;
+  --font-stack-mono: 'PlexMono', 'PlexMono Fallback', 'Courier New', monospace;
 
   --text-xlarge: 42px;
   --text-large: 28px;

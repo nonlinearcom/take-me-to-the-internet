@@ -57,3 +57,22 @@
   font-display: swap;
   src: url('/fonts/IBMPlexMono-Italic.woff2?v=4.1') format('woff2');
 }
+
+/* Metric-matched fallbacks: sized so text set in the local fallback occupies
+   the same space as the web font, keeping layout stable during the swap */
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial');
+  size-adjust: 107%;
+  ascent-override: 90.44%;
+  descent-override: 22.52%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'PlexMono Fallback';
+  src: local('Courier New');
+  size-adjust: 100%;
+  ascent-override: 102.5%;
+  descent-override: 27.5%;
+  line-gap-override: 0%;
+}

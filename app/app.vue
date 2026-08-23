@@ -1,7 +1,9 @@
 <template>
   <AppHeader />
   <SearchPalette />
-  <NuxtPage />
+  <main>
+    <NuxtPage />
+  </main>
 </template>
 
 <script setup>

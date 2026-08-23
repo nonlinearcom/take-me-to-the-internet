@@ -4,9 +4,18 @@ export function useHighlight() {
   const isDark = useDark()
 
   useHead({
-    link: () => isDark.value
-      ? [{ rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/stackoverflow-dark.min.css' }]
-      : [{ rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/stackoverflow-light.min.css' }],
+    link: () => [
+      { rel: 'preconnect', href: 'https://cdnjs.cloudflare.com', crossorigin: '' },
+      {
+        rel: 'stylesheet',
+        href: `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/styles/stackoverflow-${isDark.value ? 'dark' : 'light'}.min.css`,
+        // Highlighting only happens client-side after mount, so the theme is
+        // never needed for first paint: load it without blocking render
+        // (fetched as low-priority "print", then enabled once it arrives)
+        media: 'print',
+        onload: 'this.media=\'all\'',
+      },
+    ],
   })
 
   onMounted(async () => {

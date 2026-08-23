@@ -9,10 +9,18 @@ export default defineNuxtConfig({
       title: 'Take me to the internet',
       link: [
         { rel: 'icon', type: 'image/png', href: '/favicon.png' },
+        // Preload fonts
+        { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/Inter-Light.woff2?v=4.1', crossorigin: '' },
+        { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/Inter-Medium.woff2?v=4.1', crossorigin: '' },
       ],
     },
 
     pageTransition: { name: 'page', mode: 'out-in' },
+  },
+
+  routeRules: {
+    // Fonts are cache-busted via the ?v= query param, so they can be immutable
+    '/fonts/**': { headers: { 'cache-control': 'public, max-age=31536000, immutable' } },
   },
 
   modules: [

@@ -1,5 +1,5 @@
 <template>
-  <footer
+  <section
     v-if="footnotes.length"
     class="footnotes"
     role="doc-endnotes"
@@ -27,7 +27,7 @@
         />
       </li>
     </ol>
-  </footer>
+  </section>
 </template>
 
 <script setup lang="ts">

@@ -2,7 +2,7 @@
   <Icon
     class="ui-icon"
     :name="`${collection}:${name}`"
-    aria-hidden
+    aria-hidden="true"
   />
 </template>
 
