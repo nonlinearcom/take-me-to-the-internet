@@ -28,12 +28,12 @@
       :is-sorted-by="isSortedBy"
       @toggle-sort="toggleSort"
       @row-hover="setCover"
-      @view-resource="openResourceDialog"
+      @view-resource="openResource"
     />
     <ResourceGrid
       v-else
       :resources="sortedResources"
-      @view-resource="openResourceDialog"
+      @view-resource="openResource"
     />
 
     <!-- Preview -->
@@ -46,22 +46,8 @@
       />
     </transition>
 
-    <!-- Resource Dialog -->
-    <UiDialog
-      v-if="selectedResource"
-      v-model:open="isDialogOpen"
-      side="right"
-      title="Resource Details"
-      hide-title
-      :aria-label="`Resource ${selectedResource?.title}`"
-      inset
-      inset-auto-height
-    >
-      <ResourceCard
-        :resource="selectedResource"
-        @select-filter="onSelectFilter"
-      />
-    </UiDialog>
+    <!-- Resource overlay route (/resources/:slug) -->
+    <NuxtPage />
   </article>
 </template>
 
@@ -113,16 +99,15 @@ const {
 
 const table = useTemplateRef<HTMLElement>('table')
 const { currentCover, setCover, isOutside, xPos, yPos } = useCoverPreview(table)
-const isDialogOpen = ref(false)
-const selectedResource = ref<Resource | null>(null)
 const activeTab = ref<'topics' | 'tags' | 'type' | 'search'>('topics')
 
-function openResourceDialog(resource: Resource) {
-  selectedResource.value = resource
-  isDialogOpen.value = true
+function openResource(resource: Resource) {
+  if (!resource.slug)
+    return
+  navigateTo(`/resources/${resource.slug}`)
 }
 
-function onSelectFilter(payload: { kind: 'topics' | 'tags' | 'type', value: string }) {
+function onSelectFilter(payload: ResourceFilterPayload) {
   const { kind, value } = payload
   if (kind === 'topics') {
     filters.value = { topics: [value], tags: [], type: [] }
@@ -134,11 +119,10 @@ function onSelectFilter(payload: { kind: 'topics' | 'tags' | 'type', value: stri
     filters.value = { topics: [], tags: [], type: [value] }
     activeTab.value = 'type'
   }
-
-  // Auto-close the dialog after applying the filter
-  isDialogOpen.value = false
-  selectedResource.value = null
 }
+
+// The overlay route renders inside this page's tree, so it can apply filters here.
+provide(resourceFilterKey, onSelectFilter)
 </script>
 
 <style lang="postcss" scoped>

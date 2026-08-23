@@ -16,6 +16,11 @@ declare interface Resource {
 
 declare type ResourceSortKey = keyof Resource | 'author'
 
+declare interface ResourceFilterPayload {
+  kind: 'topics' | 'tags' | 'type'
+  value: string
+}
+
 declare interface Person {
   id: number
   status: 'published' | 'draft'

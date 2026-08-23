@@ -1,3 +1,6 @@
+// Lets the /resources/:slug overlay apply a filter on the parent list page.
+export const resourceFilterKey: InjectionKey<(payload: ResourceFilterPayload) => void> = Symbol('resource-filter')
+
 export function useResources(resourcesData: Ref<Resource[] | null | undefined>) {
   const filters = ref<{ topics: string[], tags: string[], type: string[] }>({
     topics: [],

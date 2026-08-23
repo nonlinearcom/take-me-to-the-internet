@@ -1,6 +1,7 @@
 :root {
   --border-radius: 6px;
   --border-radius-round: 9999px;
+  --unit-100vh: 100dvh;
 
   /* Typography */
   --font-stack: 'Inter', 'Helvetica Neue', Arial, sans-serif;

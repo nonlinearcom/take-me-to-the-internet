@@ -7,7 +7,7 @@ import { readItems } from '@directus/sdk'
 export default defineSitemapEventHandler(async () => {
   const directus = useServerDirectus()
 
-  const [pages, glossary, logs] = await Promise.all([
+  const [pages, glossary, logs, resources] = await Promise.all([
     directus.request(readItems('pages', {
       filter: { status: { _eq: 'published' } },
       fields: ['slug', 'date_updated'],
@@ -19,6 +19,11 @@ export default defineSitemapEventHandler(async () => {
       limit: -1,
     })),
     directus.request(readItems('log', {
+      filter: { status: { _neq: 'draft' } },
+      fields: ['slug', 'date_updated'],
+      limit: -1,
+    })),
+    directus.request(readItems('resources', {
       filter: { status: { _neq: 'draft' } },
       fields: ['slug', 'date_updated'],
       limit: -1,
@@ -37,6 +42,10 @@ export default defineSitemapEventHandler(async () => {
     ...logs.map(log => ({
       loc: `/log/${log.slug}`,
       lastmod: log.date_updated ?? undefined,
+    })),
+    ...resources.map(resource => ({
+      loc: `/resources/${resource.slug}`,
+      lastmod: resource.date_updated ?? undefined,
     })),
   ] satisfies SitemapUrlInput[]
 })
