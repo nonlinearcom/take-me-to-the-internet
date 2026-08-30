@@ -370,12 +370,11 @@ function recetlyUpdated(item: GlossaryItem) {
     display: grid;
     place-items: center;
     overflow: hidden;
-
     span {
       font-size: min(35dvh, 28vw);
       line-height: 1;
       font-weight: var(--bold);
-      translate: 0 32px;
+      translate: 0 24px;
     }
   }
 
