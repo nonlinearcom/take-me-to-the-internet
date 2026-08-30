@@ -5,7 +5,7 @@
   >
     <header>
       <span class="tag">
-        GLOSSARY
+        {{ t('glossary') }}
       </span>
       <h1 class="title">
         {{ translation.term }}

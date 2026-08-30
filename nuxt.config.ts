@@ -123,6 +123,10 @@ export default defineNuxtConfig({
     '@/assets/styles/global.css',
   ],
 
+  build: {
+    transpile: ['@blossom-carousel/vue'],
+  },
+
   compatibilityDate: '2024-10-25',
 
   icon: {

@@ -2,6 +2,7 @@
   "close": "Chiudi",
   "updated": "Aggiornato {time}",
   "glossaryGraph": "Mappa dei termini correlati del glossario",
+  "glossary": "Glossario",
   "search": {
     "title": "Cerca",
     "openSearch": "Apri la ricerca",
