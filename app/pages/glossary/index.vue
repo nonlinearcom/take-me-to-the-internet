@@ -4,12 +4,12 @@
       class="letter-display"
       aria-hidden="true"
     >
-      <Transition
-        name="letter-fade"
-        mode="out-in"
-      >
-        <span :key="displayLetter">{{ displayLetter }}</span>
-      </Transition>
+      <CablesCanvas
+        patch-dir="/patches/glossary"
+        patch-id="Ooj72y"
+        resize-to="parent"
+        :variables="{ letter: displayLetter, amount: 0.5 }"
+      />
     </div>
 
     <GlossaryRail
@@ -113,25 +113,9 @@ const displayLetter = computed(() => railLetter.value || groups.value[0]?.letter
 
   .letter-display {
     z-index: -1;
-    display: grid;
-    place-items: center;
+    /* let the 1fr row bound it; the canvas sizes itself to this box */
+    min-block-size: 0;
     overflow: hidden;
-    span {
-      font-size: min(35dvh, 28vw);
-      line-height: 1;
-      font-weight: var(--bold);
-      translate: 0 24px;
-    }
-  }
-
-  .letter-fade-enter-active,
-  .letter-fade-leave-active {
-    transition: opacity 0.12s ease;
-  }
-
-  .letter-fade-enter-from,
-  .letter-fade-leave-to {
-    opacity: 0;
   }
 
   .glossary-rail {

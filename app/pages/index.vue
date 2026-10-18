@@ -1,11 +1,22 @@
 <template>
   <article class="home">
-    <CablesCanvas class="home__iframe" />
+    <CablesCanvas
+      class="home__iframe"
+      patch-dir="/patches/cover3/patch"
+      js-path="js/"
+      patch-id="z3OwyT"
+      :variables
+    />
   </article>
 </template>
 
 <script lang="ts" setup>
+const isDark = useDark()
 
+// the cover patch exposes clearColor; keep it on the page background
+const variables = computed(() => ({
+  clearColor: isDark.value ? '#222222' : '#fcfcfc',
+}))
 </script>
 
   <style lang="postcss">
