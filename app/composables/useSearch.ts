@@ -36,12 +36,6 @@ function normalizeText(input: string) {
   return input.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '')
 }
 
-function stripHtml(html?: string | null) {
-  if (!html)
-    return ''
-  return html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim()
-}
-
 function makeEntry(input: {
   group: SearchGroup
   title: string
@@ -83,40 +77,41 @@ function makeSnippet(body: string, terms: string[]): SearchSnippet | null {
   return null
 }
 
+// The open flag alone, for the header toggle: it has no use for the index
+export function useSearchOpen() {
+  return useState('search-open', () => false)
+}
+
 export function useSearch() {
   const { $directus } = useNuxtApp()
   const languageCode = useLanguageCode()
 
-  const isSearchOpen = useState('search-open', () => false)
+  const isSearchOpen = useSearchOpen()
   const query = useState('search-query', () => '')
   const queryDebounced = refDebounced(query, 200)
+  // two characters before anything is matched
+  const hasQuery = computed(() => normalizeText(queryDebounced.value.trim()).length >= 2)
 
   async function buildIndex(): Promise<SearchEntry[]> {
-    const translationsDeep = {
-      translations: {
-        _filter: {
-          languages_code: { _eq: languageCode.value },
-        },
-      },
-    }
+    const deep = translationsDeep(languageCode.value)
 
     const [pages, glossary, resources, log] = await Promise.all([
       // Articles only: the static pages (about, privacy) are always one click
       // away in the nav, so they stay out of the index.
       $directus.request<Page[]>(readItems('pages', {
-        filter: { status: { _eq: 'published' }, type: { _in: ARTICLE_TYPES } },
+        filter: { ...PUBLISHED, type: { _in: ARTICLE_TYPES } },
         fields: ['slug', { translations: ['title', 'content'] }],
-        deep: translationsDeep,
+        deep,
         limit: -1,
       })),
       $directus.request<GlossaryItem[]>(readItems('glossary', {
-        filter: { status: { _eq: 'published' } },
+        filter: PUBLISHED,
         fields: ['slug', { translations: ['term', 'description'] }],
-        deep: translationsDeep,
+        deep,
         limit: -1,
       })),
       $directus.request<Resource[]>(readItems('resources', {
-        filter: { status: { _neq: 'draft' } },
+        filter: NOT_DRAFT,
         fields: [
           'slug',
           'title',
@@ -133,7 +128,7 @@ export function useSearch() {
       // Only published: archived log entries are listed on /log but deliberately
       // not clickable, so search must not deep-link into them either.
       $directus.request<any[]>(readItems('log', {
-        filter: { status: { _eq: 'published' } },
+        filter: PUBLISHED,
         fields: ['slug', 'title', 'subtitle', 'institution', 'role', 'type', 'location', 'year', 'content'],
         limit: -1,
       })),
@@ -175,9 +170,9 @@ export function useSearch() {
         meta: [
           resource.type,
           resource.year,
-          ...(resource.people?.map(({ people_id }) => people_id?.name) ?? []),
-          ...(resource.tags?.map(({ tags_id }) => tags_id?.title) ?? []),
-          ...(resource.topics?.map(({ topics_id }) => topics_id?.title) ?? []),
+          authorNames(resource),
+          ...tagTitles(resource),
+          ...topicTitles(resource),
         ].filter(Boolean).join(' '),
         body: stripHtml(resource.description),
         url: `/resources/${resource.slug}`,
@@ -215,9 +210,9 @@ export function useSearch() {
   }
 
   const results = computed<SearchResult[]>(() => {
-    const q = normalizeText(queryDebounced.value.trim())
-    if (q.length < 2 || !index.value)
+    if (!hasQuery.value || !index.value)
       return []
+    const q = normalizeText(queryDebounced.value.trim())
     const terms = q.split(/\s+/).filter(Boolean)
     const rawTerms = queryDebounced.value.trim().toLowerCase().split(/\s+/).filter(Boolean)
 
@@ -262,6 +257,7 @@ export function useSearch() {
     isSearchOpen,
     query,
     queryDebounced,
+    hasQuery,
     indexStatus,
     ensureIndex,
     refreshIndex,

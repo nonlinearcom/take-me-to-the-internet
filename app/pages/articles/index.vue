@@ -6,7 +6,7 @@
         :key="column.type"
         class="articles-column"
       >
-        <h3 class="tag">
+        <h3 class="pill">
           {{ column.tag }}
         </h3>
 
@@ -18,9 +18,7 @@
           <h2 class="line">
             {{ article.translations[0]?.title }}
           </h2>
-          <time :datetime="lastUpdated(article).split('T')[0]">
-            updated on {{ formatDate(lastUpdated(article), { locale: languageCode }) }}
-          </time>
+          <UpdatedOn :date="lastUpdated(article)" />
         </NuxtLink>
 
         <p
@@ -49,14 +47,7 @@ useSeoMeta({
 const { data } = await useAsyncData('page-articles', () => {
   return $directus.request<Page[]>(
     readItems('pages', {
-      filter: {
-        status: {
-          _eq: 'published',
-        },
-        type: {
-          _in: ARTICLE_TYPES,
-        },
-      },
+      filter: { ...PUBLISHED, type: { _in: ARTICLE_TYPES } },
       sort: ['-date_created'],
       fields: [
         '*',
@@ -66,15 +57,7 @@ const { data } = await useAsyncData('page-articles', () => {
           ],
         },
       ],
-      deep: {
-        translations: {
-          _filter: {
-            languages_code: {
-              _eq: languageCode.value,
-            },
-          },
-        },
-      },
+      deep: translationsDeep(languageCode.value),
     }),
   )
 }, {
@@ -96,17 +79,6 @@ const columns = computed(() => [
   padding: var(--app-margin-small);
   display: flex;
   flex-direction: column;
-
-  .tag {
-    display: inline-block;
-    font-size: var(--text-small);
-    text-transform: uppercase;
-    font-family: var(--font-stack-mono);
-    font-weight: var(--regular-mono);
-    border: 1px solid var(--border-color);
-    padding: 2px 8px;
-    border-radius: 25px;
-  }
 
   .articles-grid {
     display: grid;
@@ -130,7 +102,10 @@ const columns = computed(() => [
       font-size: var(--text-large);
     }
 
-    time,
+    .updated-on {
+      margin-block-end: 8px;
+    }
+
     .empty {
       font-family: var(--font-stack-mono);
       color: var(--text-secondary);

@@ -36,12 +36,12 @@
             <h3 class="term-title">
               <span class="line">{{ item.translations[0]?.term }}</span>
               <span
-                v-if="recetlyUpdated(item)"
+                v-if="recentlyUpdated(item)"
                 class="dot"
               />
             </h3>
             <p class="description">
-              {{ leadText(item) }}
+              {{ leads.get(item.id) }}
             </p>
           </article>
         </div>
@@ -79,6 +79,7 @@ const props = defineProps<{
 const letter = defineModel<string>('letter', { default: '' })
 
 const carousel = useTemplateRef<InstanceType<typeof BlossomCarousel>>('carousel')
+const railEl = () => carousel.value?.el as HTMLElement | null
 const scrolledLetter = ref('')
 const hoverLetter = ref('')
 
@@ -145,6 +146,7 @@ function refreshHover() {
 }
 
 let raf = 0
+let resizeRaf = 0
 let resizeObserver: ResizeObserver | undefined
 
 // CSS can't pack variable-height cards into height-bound columns without
@@ -188,7 +190,7 @@ const chunkedGroups = computed(() => {
 })
 
 function measureLayout() {
-  const el = carousel.value?.el as HTMLElement | null
+  const el = railEl()
   const terms = el?.querySelector<HTMLElement>('.group-terms')
   const column = el?.querySelector<HTMLElement>('.term-column')
   if (!el || !terms || !column)
@@ -220,7 +222,7 @@ function onScroll() {
 // of the rail, where the trailing letters can never reach the origin, so
 // once no further snap stop is reachable the last group takes over.
 function updateLetter() {
-  const el = carousel.value?.el as HTMLElement | null
+  const el = railEl()
   if (!el)
     return
   const groupEls = [...el.querySelectorAll<HTMLElement>('[data-letter]')]
@@ -257,13 +259,17 @@ watch(() => props.groups, () => nextTick(() => {
 
 onMounted(() => {
   canHover = window.matchMedia('(hover: hover)').matches
-  const el = carousel.value?.el as HTMLElement | null
+  const el = railEl()
   el?.addEventListener('scroll', onScroll, { passive: true })
   el?.addEventListener('pointerdown', onRailPointerDown)
   if (el) {
+    // one measure per frame while the window is being resized
     resizeObserver = new ResizeObserver(() => {
-      measureLayout()
-      updateLetter()
+      cancelAnimationFrame(resizeRaf)
+      resizeRaf = requestAnimationFrame(() => {
+        measureLayout()
+        updateLetter()
+      })
     })
     resizeObserver.observe(el)
   }
@@ -272,13 +278,14 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-  const el = carousel.value?.el as HTMLElement | null
+  const el = railEl()
   el?.removeEventListener('scroll', onScroll)
   el?.removeEventListener('pointerdown', onRailPointerDown)
   window.removeEventListener('pointermove', onDragMove)
   window.removeEventListener('pointerup', onDragEnd)
   resizeObserver?.disconnect()
   cancelAnimationFrame(raf)
+  cancelAnimationFrame(resizeRaf)
   clearTimeout(scrollEndTimer)
 })
 
@@ -294,12 +301,15 @@ function leadText(item: RailItem) {
   return truncate(generateText(description), 150)
 }
 
-function recetlyUpdated(item: RailItem) {
-  const updated = new Date(item.date_updated).getTime()
-  const today = Date.now()
-  const diffTime = Math.abs(today - updated)
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-  return diffDays < 10
+// generateText builds a tiptap schema per call, so resolve the leads once
+// per data load instead of on every render
+const leads = computed(() => new Map(
+  props.groups.flatMap(({ items }) => items).map(item => [item.id, leadText(item)] as const),
+))
+
+// updated within the last nine days
+function recentlyUpdated(item: RailItem) {
+  return Date.now() - Date.parse(item.date_updated) <= 9 * 86_400_000
 }
 </script>
 
@@ -381,7 +391,6 @@ function recetlyUpdated(item: RailItem) {
   }
 
   .description {
-    /* font-size: var(--text-small); */
     font-size: clamp(var(--text-mini), 1vw, var(--text-small));
   }
 
@@ -425,13 +434,7 @@ function recetlyUpdated(item: RailItem) {
   }
 }
 
-@media (600px < width <= 900px) {
-  .glossary-rail {
-    --cols: 2;
-  }
-}
-
-@media (width <= 600px) {
+@media (width <= 900px) {
   .glossary-rail {
     --cols: 2;
   }

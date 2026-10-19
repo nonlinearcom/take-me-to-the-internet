@@ -116,9 +116,13 @@ const props = withDefaults(defineProps<{
 
 const emit = defineEmits(['update:filters', 'update:search', 'reset', 'update:activeTab'])
 
-const topics = computed(() => arrayUnion(props.resources?.flatMap(({ topics }) => topics ?? []).map(({ topics_id }) => topics_id.title)))
-const tags = computed(() => arrayUnion(props.resources?.flatMap(({ tags }) => tags ?? []).map(({ tags_id }) => tags_id.title)))
-const types = computed(() => arrayUnion(props.resources?.flatMap(({ type }) => type ?? [])))
+function unique<T>(items: T[] = []) {
+  return [...new Set(items)]
+}
+
+const topics = computed(() => unique(props.resources?.flatMap(topicTitles)))
+const tags = computed(() => unique(props.resources?.flatMap(tagTitles)))
+const types = computed(() => unique(props.resources?.flatMap(({ type }) => type ?? [])))
 
 function onTabsUpdate(value: string | number) {
   const v = String(value)

@@ -41,47 +41,43 @@ export function useResources(resourcesData: Ref<Resource[] | null | undefined>) 
   }
 
   const filteredResources = computed(() => {
-    let res = resourcesData.value ?? undefined
-    if (filters.value.topics?.length)
-      res = res?.filter(({ topics }) => filters.value.topics.some(r => topics?.map(({ topics_id }) => topics_id.title)?.includes(r)))
-    if (filters.value.tags?.length)
-      res = res?.filter(({ tags }) => filters.value.tags.some(r => tags?.map(({ tags_id }) => tags_id.title)?.includes(r)))
-    if (filters.value.type?.length)
-      res = res?.filter(({ type }) => type && filters.value.type.includes(type))
-    if (searchDebounced.value) {
-      res = res?.filter((item) => {
-        const title = item.title.toLowerCase()
-        const description = item.description?.toLowerCase()
-        const people = item.people.map(({ people_id }) => people_id.name.trim()).join(', ').toLowerCase()
-        return `${title} ${description} ${people}`.includes(searchDebounced.value?.toLowerCase() ?? '')
-      })
-    }
-    return res
+    const { topics, tags, type } = filters.value
+    const q = searchDebounced.value?.toLowerCase()
+    return (resourcesData.value ?? []).filter(resource =>
+      (!topics.length || topics.some(t => topicTitles(resource).includes(t)))
+      && (!tags.length || tags.some(t => tagTitles(resource).includes(t)))
+      && (!type.length || (!!resource.type && type.includes(resource.type)))
+      && (!q || [resource.title, resource.description, authorNames(resource)].join(' ').toLowerCase().includes(q)),
+    )
   })
 
   const isDisabled = ({ tag, topic, type }: { tag?: string, topic?: string, type?: string }) => {
     if (tag)
-      return !filteredResources.value?.some(({ tags }) => tags?.map(({ tags_id }) => tags_id.title).includes(tag))
+      return !filteredResources.value.some(r => tagTitles(r).includes(tag))
     if (topic)
-      return !filteredResources.value?.some(({ topics }) => topics?.map(({ topics_id }) => topics_id.title).includes(topic))
+      return !filteredResources.value.some(r => topicTitles(r).includes(topic))
     if (type)
-      return !filteredResources.value?.some(r => r.type === type)
+      return !filteredResources.value.some(r => r.type === type)
   }
 
+  const isEmpty = (value: unknown) => value == null || value === ''
+  const sortValue = (resource: Resource, key: ResourceSortKey) =>
+    key === 'author' ? authorNames(resource) : resource[key as keyof Resource]
+
   const sortedResources = computed(() => {
-    if (!filteredResources.value || !sortKey.value || !sortDirection.value)
-      return filteredResources.value || []
+    const key = sortKey.value
+    const direction = sortDirection.value
+    if (!key || !direction)
+      return filteredResources.value
 
     return [...filteredResources.value].sort((a, b) => {
-      const key = sortKey.value as ResourceSortKey
-      let valueA = key === 'author' ? a.people.map(({ people_id }) => people_id.name.trim()).join(', ') : a[key as keyof Resource]
-      let valueB = key === 'author' ? b.people.map(({ people_id }) => people_id.name.trim()).join(', ') : b[key as keyof Resource]
+      let valueA = sortValue(a, key)
+      let valueB = sortValue(b, key)
 
       // Push empty values to the end of the list
-      if (valueA === null || valueA === undefined || valueA === '')
-        return (valueB === null || valueB === undefined || valueB === '') ? 0 : 1
-
-      if (valueB === null || valueB === undefined || valueB === '')
+      if (isEmpty(valueA))
+        return isEmpty(valueB) ? 0 : 1
+      if (isEmpty(valueB))
         return -1
 
       // Case-insensitive sorting for strings
@@ -90,10 +86,9 @@ export function useResources(resourcesData: Ref<Resource[] | null | undefined>) 
         valueB = valueB.trim().toLowerCase()
       }
 
-      if (sortDirection.value === 'asc')
-        return valueA > valueB ? 1 : -1
-      else
-        return valueA < valueB ? 1 : -1
+      return direction === 'asc'
+        ? (valueA > valueB ? 1 : -1)
+        : (valueA < valueB ? 1 : -1)
     })
   })
 

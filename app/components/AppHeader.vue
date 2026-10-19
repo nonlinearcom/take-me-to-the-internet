@@ -3,34 +3,12 @@
     <HeaderLogo />
     <nav class="main-menu">
       <NuxtLink
-        to="/articles"
+        v-for="[to, label] in links"
+        :key="to"
+        :to
         class="line"
       >
-        Articles
-      </NuxtLink>
-      <NuxtLink
-        to="/resources"
-        class="line"
-      >
-        Resources
-      </NuxtLink>
-      <NuxtLink
-        to="/glossary"
-        class="line"
-      >
-        Glossary
-      </NuxtLink>
-      <NuxtLink
-        to="/about"
-        class="line"
-      >
-        About
-      </NuxtLink>
-      <NuxtLink
-        to="/log"
-        class="line"
-      >
-        Log
+        {{ label }}
       </NuxtLink>
     </nav>
 
@@ -53,15 +31,6 @@
           @click="toggleDark()"
         />
       </ClientOnly>
-      <!-- TODO: check why this does not work -->
-      <!-- <UiButton
-        class="lang-toggle"
-        :label="locale.code"
-        aria-label="Toggle language"
-        variant="outline"
-        rounded
-        @click.prevent.stop="setLocale(locale.code)"
-      /> -->
 
       <NuxtLink
         v-for="loc in availableLocales"
@@ -77,16 +46,20 @@
 </template>
 
 <script setup lang="ts">
-defineOptions({
-  name: 'AppHeader',
-})
+const links = [
+  ['/articles', 'Articles'],
+  ['/resources', 'Resources'],
+  ['/glossary', 'Glossary'],
+  ['/about', 'About'],
+  ['/log', 'Log'],
+]
+
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
 
-const { isSearchOpen } = useSearch()
+const isSearchOpen = useSearchOpen()
 
 const { locale, locales, setLocale } = useI18n()
-const switchLocalePath = useSwitchLocalePath()
 
 const availableLocales = computed(() => {
   return locales.value.filter(i => i.code !== locale.value)

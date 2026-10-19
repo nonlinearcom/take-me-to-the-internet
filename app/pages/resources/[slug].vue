@@ -28,40 +28,25 @@ const img = useImage()
 
 const slug = String(route.params.slug)
 
-const { data: resource, error } = await useAsyncData(
-  `resource-${slug}`,
-  () => {
-    return $directus.request<Resource[]>(
-      readItems('resources', {
-        filter: {
-          slug: { _eq: slug },
-          status: { _neq: 'draft' },
-        },
-        limit: 1,
-        fields: [
-          '*',
-          'people.people_id.*',
-          'people.people_id.*.resources_id.title',
-          'people.people_id.*.resources_id.link',
-          'tags.tags_id.id',
-          'tags.tags_id.title',
-          'tags.tags_id.slug',
-          'topics.topics_id.id',
-          'topics.topics_id.title',
-          'topics.topics_id.slug',
-        ],
-      }),
-    )
-  },
-  {
-    transform: data => data[0] ?? null,
-  },
-)
+const { data: list } = useNuxtData<Resource[]>('page-resources')
+
+const { data: resource } = await useAsyncData(`resource-${slug}`, () => $directus.request<Resource[]>(
+  readItems('resources', {
+    filter: { slug: { _eq: slug }, ...NOT_DRAFT },
+    limit: 1,
+    fields: RESOURCE_FIELDS,
+  }),
+), {
+  transform: rows => rows[0] ?? null,
+  // Opened from the list, the record is already in the parent page's
+  // payload (same RESOURCE_FIELDS shape): only a direct link has to fetch
+  getCachedData: () => list.value?.find(r => r.slug === slug),
+})
 
 if (!resource.value) {
   throw createError({
     statusCode: 404,
-    statusMessage: `Resource Not Found:${error.value ?? ''}`,
+    statusMessage: 'Resource Not Found',
   })
 }
 
@@ -72,7 +57,7 @@ const ogImage = resource.value?.cover
   : undefined
 
 useSeoMeta({
-  title: () => [resource.value?.title, resource.value?.subtitle].filter(Boolean).join(' – '),
+  title: () => joinTitle(resource.value?.title, resource.value?.subtitle),
   description: () => htmlToDescription(resource.value?.description),
   ...(ogImage ? { ogImage } : {}),
 })

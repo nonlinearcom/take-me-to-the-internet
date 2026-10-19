@@ -9,23 +9,23 @@ export default defineSitemapEventHandler(async () => {
 
   const [pages, glossary, logs, resources] = await Promise.all([
     directus.request(readItems('pages', {
-      filter: { status: { _eq: 'published' } },
+      filter: PUBLISHED,
       fields: ['slug', 'type', 'date_updated'],
       limit: -1,
     })),
     directus.request(readItems('glossary', {
-      filter: { status: { _eq: 'published' } },
+      filter: PUBLISHED,
       fields: ['slug', 'date_updated'],
       limit: -1,
     })),
     // Published only: archived log entries are listed on /log but not reachable
     directus.request(readItems('log', {
-      filter: { status: { _eq: 'published' } },
+      filter: PUBLISHED,
       fields: ['slug', 'date_updated'],
       limit: -1,
     })),
     directus.request(readItems('resources', {
-      filter: { status: { _neq: 'draft' } },
+      filter: NOT_DRAFT,
       fields: ['slug', 'date_updated'],
       limit: -1,
     })),

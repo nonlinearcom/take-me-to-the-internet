@@ -1,21 +1,26 @@
 <template>
-  <NuxtImg
-    class="previewCover"
-    loading="lazy"
-    :src="cover ?? undefined"
-    alt=""
-    format="webp"
-    sizes="xs:320 sm:640 md:768 lg:1024 xl:1280 xxl:1920"
-    :style="{ transform: translatePosition }"
-  />
+  <Transition name="fade">
+    <NuxtImg
+      v-if="visible"
+      class="previewCover"
+      loading="lazy"
+      :src="cover ?? undefined"
+      alt=""
+      format="webp"
+      sizes="xs:320 sm:640 md:768 lg:1024 xl:1280 xxl:1920"
+      :style="{ transform: translatePosition }"
+    />
+  </Transition>
 </template>
 
 <script setup lang="ts">
 const props = withDefaults(defineProps<{
+  visible?: boolean
   cover?: string | null
   xPos?: number
   yPos?: number
 }>(), {
+  visible: false,
   cover: null,
   xPos: 0,
   yPos: 0,

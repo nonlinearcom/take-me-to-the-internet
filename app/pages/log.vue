@@ -18,11 +18,7 @@ const { $directus } = useNuxtApp()
 const { data: logs } = await useAsyncData('logs', () => {
   return $directus.request(
     readItems('log', {
-      filter: {
-        status: {
-          _neq: 'draft',
-        },
-      },
+      filter: NOT_DRAFT,
       fields: [
         'slug',
         'status',

@@ -45,15 +45,18 @@ a {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
-/* .stretched-link::after {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
 
-  content: '';
-} */
+/* the small mono label pill above page titles */
+.pill {
+  display: inline-block;
+  font-size: var(--text-small);
+  text-transform: uppercase;
+  font-family: var(--font-stack-mono);
+  font-weight: var(--regular-mono);
+  border: 1px solid var(--border-color);
+  padding: 2px 8px;
+  border-radius: 25px;
+}
 
 h1.title {
   font-size: var(--text-large);
@@ -105,9 +108,7 @@ h1 {
     border-radius: var(--border-radius);
     background-color: rgba(0, 0, 0, 0.05);
     font-size: var(--text-small);
-    white-space: nowrap;
     white-space: pre;
-
   }
   /* block code */
   pre {
@@ -171,16 +172,6 @@ h1 {
 
   figure {
     margin: 16px 0;
-    img,
-    svg {
-      display: block;
-      width: 100%;
-      height: auto;
-      background-color: var(--border-color);
-      border-radius: var(--border-radius);
-      overflow: hidden;
-      margin: 32px 0;
-    }
   }
 
   figcaption {
@@ -222,7 +213,10 @@ Capped at the gutter width so they never reach the note column itself
   /* margin-notes pages widen the column cap and reserve the note gutter on
      the end side */
   .margin-notes .prose {
-    --gallery-edge-start: calc((100vw - min(100vw, var(--paragraph-width) + var(--sidenote-width) + var(--sidenote-gap))) / 2 + var(--app-margin-small));
+    --gallery-edge-start: calc(
+      (100vw - min(100vw, var(--paragraph-width) + var(--sidenote-width) + var(--sidenote-gap))) / 2 +
+        var(--app-margin-small)
+    );
     --gallery-edge-end: calc(var(--gallery-edge-start) + var(--sidenote-width) + var(--sidenote-gap));
   }
 }
@@ -251,11 +245,6 @@ Capped at the gutter width so they never reach the note column itself
 }
 
 /* Functional */
-.responsive {
-  width: 100%;
-  height: auto;
-}
-
 .dot {
   display: inline-block;
   vertical-align: middle;

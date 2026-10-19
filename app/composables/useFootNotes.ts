@@ -12,15 +12,8 @@ export function useFootNotes() {
     }, 250)
   }
 
-  /**
-   * Clear the active note.
-   */
-  function clearActiveNote() {
-    activeNoteId.value = null
-  }
   return {
     activeNoteId,
     setActiveNote,
-    clearActiveNote,
   }
 }

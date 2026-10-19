@@ -6,13 +6,11 @@ export async function useGlossary() {
   const { data: list } = await useAsyncData('glossary-list', () => {
     return $directus.request(
       readItems('glossary', {
-        filter: {
-          status: {
-            _eq: 'published',
-          },
-        },
+        filter: PUBLISHED,
+        // the graph reads ids, slugs, labels and links
         fields: [
-          '*',
+          'id',
+          'slug',
           {
             translations: ['languages_code', 'term'],
           },

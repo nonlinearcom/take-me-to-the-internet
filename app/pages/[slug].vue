@@ -24,8 +24,8 @@ const languageCode = useLanguageCode()
 
 const { $directus } = useNuxtApp()
 // Only static pages live here; notes and tutorials are served under /articles
-const { data: page } = await useAsyncData(`page-${route.params.slug}`, async () => {
-  const [page] = await $directus.request<Page[]>(
+const { data: page } = await useAsyncData(`page-${route.params.slug}`, () =>
+  $directus.request<Page[]>(
     readItems('pages', {
       filter: {
         slug: { _eq: route.params.slug as string },
@@ -54,8 +54,8 @@ const { data: page } = await useAsyncData(`page-${route.params.slug}`, async () 
         },
       ],
     }),
-  )
-  return page ?? null
+  ), {
+  transform: rows => rows[0] ?? null,
 })
 
 if (!page.value) {
@@ -66,15 +66,9 @@ if (!page.value) {
 }
 
 const translation = computed(() => {
-  if (!page.value?.translations)
-    return null
-
-  // here we could also set a fallback language
-  const translation = page.value.translations.find(t => t.languages_code === languageCode.value) || null
-  if (!translation)
-    return null
-
-  injectDataIntoContent(translation.editor_nodes, translation.content)
+  const translation = findTranslation(page.value?.translations, languageCode.value)
+  if (translation)
+    injectDataIntoContent(translation.editor_nodes, translation.content)
   return translation
 })
 

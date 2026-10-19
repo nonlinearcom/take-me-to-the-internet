@@ -4,36 +4,32 @@
     class="glossary-term margin-notes"
   >
     <header>
-      <span class="tag">
+      <span class="pill">
         {{ t('glossary') }}
       </span>
       <h1 class="title">
         {{ translation.term }}
       </h1>
-      <time
-        v-if="page?.date_updated"
-        class="updated-on"
-        :datetime="page.date_updated.split('T')[0]"
-      >
-        {{ t('updated', { time: timeAgo }) }}
-      </time>
+      <UpdatedOn
+        :date="lastUpdated(page)"
+        relative
+      />
     </header>
     <EditorContent
-      v-if="translation?.description"
+      v-if="translation.description"
       class="prose glossary-content"
-      :content="translation?.description"
+      :content="translation.description"
       :relation-blocks
       :relation-marks
       :relation-inline-blocks
     />
     <EditorFootNotes
-      v-if="translation"
-      :key="translation?.id"
+      :key="translation.id"
       class="prose"
       :data="translation"
     />
     <GlossaryGraph
-      :items="items"
+      :items="list ?? []"
       :current-slug="slug"
     />
   </article>
@@ -47,31 +43,26 @@ const relationBlocks = [
   { collection: 'cables', component: EditorCables },
   { collection: 'gallery', component: EditorGallery },
   { collection: 'media', component: EditorMedia },
-
 ]
 const relationInlineBlocks = [
   { collection: 'code_link', component: EditorCodeLink },
-
 ]
 const relationMarks = [
   { collection: 'sidenote', component: EditorSideNote },
 ]
 const { $directus } = useNuxtApp()
 const route = useRoute()
-const { locale, t } = useI18n()
+const { t } = useI18n()
+const languageCode = useLanguageCode()
 
 const slug = route.params.slug as string
 
-const { list } = await useGlossary()
-
-const { data: page, error } = await useAsyncData(`glossary-${slug}`, async () => {
-  const pageData = await $directus.request(
+// the term and the full list (for the graph) are independent requests
+const [{ list }, { data: page }] = await Promise.all([
+  useGlossary(),
+  useAsyncData(`glossary-${slug}`, () => $directus.request<GlossaryItem[]>(
     readItems('glossary', {
-      filter: {
-        slug: {
-          _eq: slug,
-        },
-      },
+      filter: { slug: { _eq: slug } },
       limit: 1,
       fields: [
         '*',
@@ -98,48 +89,22 @@ const { data: page, error } = await useAsyncData(`glossary-${slug}`, async () =>
         },
       ],
     }),
-  )
-  if (!pageData || pageData.length === 0) {
-    throw createError({
-      statusCode: 404,
-      statusMessage: 'Page Not Found',
-    })
-  }
+  ), {
+    transform: rows => rows[0] ?? null,
+  }),
+])
 
-  return pageData
-}, {
-  // collapse the single-row result so `page.value` is the item, not an array
-  transform: rows => (rows?.[0] ?? null) as GlossaryItem | null,
-})
-
-if (error.value) {
-  console.error(error.value)
+if (!page.value) {
   throw createError({
     statusCode: 404,
     statusMessage: 'Page Not Found',
   })
 }
 
-const items = computed(() => (list.value ?? []) as GlossaryItem[])
-
-// formatTimeAgoIntl over useTimeAgoIntl: the composable's locale option is
-// not reactive, and the label doesn't need live ticking during a visit
-const timeAgo = computed(() =>
-  formatTimeAgoIntl(new Date(page.value?.date_updated ?? Date.now()), { locale: locale.value }))
-
-function getTranslation(item: GlossaryItem): GlossaryTranslation | undefined {
-  return item.translations?.find((t: GlossaryTranslation) => t.languages_code.startsWith(locale.value))
-}
-
 const translation = computed(() => {
-  if (!page.value)
-    return null
-
-  const translation = getTranslation(page.value as GlossaryItem)
-  if (!translation)
-    return null
-
-  injectDataIntoContent((translation as any).editor_nodes, translation.description)
+  const translation = findTranslation(page.value?.translations, languageCode.value)
+  if (translation)
+    injectDataIntoContent((translation as any).editor_nodes, translation.description)
   return translation
 })
 
@@ -192,29 +157,14 @@ useHighlight()
     justify-items: start;
     pointer-events: none;
 
-    .tag {
-      display: inline-block;
+    .pill {
       font-size: var(--text-mini);
-      text-transform: uppercase;
-      font-family: var(--font-stack-mono);
-      font-weight: var(--regular-mono);
-      border: 1px solid var(--border-color);
-      padding: 2px 8px;
-      border-radius: 25px;
-      margin-bottom: 8px;
+      margin-block-end: 8px;
     }
     h1 {
       font-size: var(--text-large);
       margin: 0;
       pointer-events: auto;
-    }
-
-    time {
-      font-family: var(--font-stack-mono);
-      color: var(--text-secondary);
-      font-size: var(--text-mini);
-      text-transform: uppercase;
-      margin-block-start: 8px;
     }
   }
 
@@ -258,8 +208,5 @@ useHighlight()
     --text-large: 32px;
     font-size: var(--text);
   }
-}
-
-@media (max-width: 1440px) {
 }
 </style>

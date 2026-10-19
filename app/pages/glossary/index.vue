@@ -34,42 +34,11 @@ useSeoMeta({
 const { data: glossary } = await useAsyncData('glossary-page', () => {
   return $directus.request<GlossaryItem[]>(
     readItems('glossary', {
-      filter: {
-        status: {
-          _eq: 'published',
-        },
-      },
+      filter: PUBLISHED,
       sort: ['slug'],
-      fields: [
-        '*',
-        {
-          translations: [
-            '*',
-            {
-              editor_nodes: [
-                '*',
-                {
-                  item: {
-                    image: ['*'],
-                    gallery: [
-                      { content: ['*'] },
-                    ],
-                  },
-                },
-              ],
-            },
-          ],
-        },
-      ],
-      deep: {
-        translations: {
-          _filter: {
-            languages_code: {
-              _eq: languageCode.value,
-            },
-          },
-        },
-      },
+      // the rail only shows each term and its lead
+      fields: ['id', 'slug', 'date_updated', { translations: ['term', 'description'] }],
+      deep: translationsDeep(languageCode.value),
     }),
   )
 }, {

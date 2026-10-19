@@ -1,6 +1,7 @@
 {
   "close": "Close",
   "updated": "Updated {time}",
+  "updatedOn": "Updated on {date}",
   "glossaryGraph": "Map of related glossary terms",
   "glossary": "Glossary",
   "search": {

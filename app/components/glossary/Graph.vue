@@ -125,7 +125,8 @@ const BUBBLE_PAD_X = 10
 const BUBBLE_RY = 14
 const BUBBLE_WOBBLE = 0.05
 
-const { t, locale } = useI18n()
+const { t } = useI18n()
+const languageCode = useLanguageCode()
 
 // Layout survives the per-slug page remount, so prev/next navigation re-settles gently instead of re-scrambling the whole graph.
 const savedPositions = useState<Record<number, { x: number, y: number }>>('glossary-graph-positions', () => ({}))
@@ -159,8 +160,7 @@ let lastHeight = 0
 const labels = computed(() => {
   const map = new Map<number, string>()
   for (const item of props.items) {
-    const translation = item.translations?.find(tr => tr.languages_code.startsWith(locale.value))
-    map.set(item.id, translation?.term ?? item.slug)
+    map.set(item.id, findTranslation(item.translations, languageCode.value)?.term ?? item.slug)
   }
   return map
 })

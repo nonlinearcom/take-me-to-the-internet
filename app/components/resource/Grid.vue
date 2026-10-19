@@ -27,7 +27,7 @@ defineProps<{
   resources: Resource[]
 }>()
 
-defineEmits(['rowHover', 'viewResource'])
+defineEmits(['viewResource'])
 </script>
 
 <style lang="postcss" scoped>

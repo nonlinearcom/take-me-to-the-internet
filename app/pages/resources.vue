@@ -37,14 +37,12 @@
     />
 
     <!-- Preview -->
-    <transition name="fade">
-      <AppPreview
-        v-if="!isOutside && isLargeScreen && currentCover !== null"
-        :cover="currentCover"
-        :x-pos="xPos"
-        :y-pos="yPos"
-      />
-    </transition>
+    <AppPreview
+      :visible
+      :cover="currentCover"
+      :x-pos="xPos"
+      :y-pos="yPos"
+    />
 
     <!-- Resource overlay route (/resources/:slug) -->
     <NuxtPage />
@@ -59,7 +57,6 @@ useSeoMeta({
   description: 'A curated collection of resources on creative coding, web design and development.',
 })
 
-const { isLargeScreen } = useApp()
 const { $directus } = useNuxtApp()
 
 const viewMode = ref<'table' | 'grid'>('table')
@@ -67,21 +64,8 @@ const viewMode = ref<'table' | 'grid'>('table')
 const { data: resourcesData } = await useAsyncData('page-resources', () => {
   return $directus.request<Resource[]>(
     readItems('resources', {
-      filter: {
-        status: {
-          _neq: 'draft',
-        },
-      },
-      fields: [
-        '*',
-        'people.people_id.*',
-        'people.people_id.*.resources_id.title',
-        'people.people_id.*.resources_id.link',
-        'tags.tags_id.title',
-        'tags.tags_id.slug',
-        'topics.topics_id.title',
-        'topics.topics_id.slug',
-      ],
+      filter: NOT_DRAFT,
+      fields: RESOURCE_FIELDS,
     }),
   )
 })
@@ -98,7 +82,7 @@ const {
 } = useResources(resourcesData)
 
 const table = useTemplateRef<HTMLElement>('table')
-const { currentCover, setCover, isOutside, xPos, yPos } = useCoverPreview(table)
+const { currentCover, setCover, visible, xPos, yPos } = useCoverPreview(table)
 const activeTab = ref<'topics' | 'tags' | 'type' | 'search'>('topics')
 
 function openResource(resource: Resource) {
@@ -107,18 +91,9 @@ function openResource(resource: Resource) {
   navigateTo(`/resources/${resource.slug}`)
 }
 
-function onSelectFilter(payload: ResourceFilterPayload) {
-  const { kind, value } = payload
-  if (kind === 'topics') {
-    filters.value = { topics: [value], tags: [], type: [] }
-    activeTab.value = 'topics'
-  } else if (kind === 'tags') {
-    filters.value = { topics: [], tags: [value], type: [] }
-    activeTab.value = 'tags'
-  } else if (kind === 'type') {
-    filters.value = { topics: [], tags: [], type: [value] }
-    activeTab.value = 'type'
-  }
+function onSelectFilter({ kind, value }: ResourceFilterPayload) {
+  filters.value = { topics: [], tags: [], type: [], [kind]: [value] }
+  activeTab.value = kind
 }
 
 // The overlay route renders inside this page's tree, so it can apply filters here.

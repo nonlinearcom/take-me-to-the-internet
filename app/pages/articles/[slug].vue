@@ -4,18 +4,13 @@
     class="page margin-notes"
   >
     <header>
-      <h3 class="tag">
+      <h3 class="pill">
         {{ page.type }}
       </h3>
       <h1 class="title">
         {{ translation?.title }}
       </h1>
-      <time
-        class="updated-on"
-        :datetime="lastUpdated(page).split('T')[0]"
-      >
-        Updated on {{ formatDate(lastUpdated(page), { locale: languageCode }) }}
-      </time>
+      <UpdatedOn :date="lastUpdated(page)" />
     </header>
     <EditorContent
       v-if="translation?.content"
@@ -35,13 +30,12 @@
 
 <script lang="ts" setup>
 import { readItems } from '@directus/sdk'
-import { EditorCables, EditorCodeLink, EditorFootNotes, EditorGallery, EditorMedia, EditorSideNote } from '#components'
+import { EditorCables, EditorCodeLink, EditorGallery, EditorMedia, EditorSideNote } from '#components'
 
 const relationBlocks = [
   { collection: 'cables', component: EditorCables },
   { collection: 'gallery', component: EditorGallery },
   { collection: 'media', component: EditorMedia },
-
 ]
 const relationInlineBlocks = [
   { collection: 'code_link', component: EditorCodeLink },
@@ -57,8 +51,8 @@ const languageCode = useLanguageCode()
 const { $directus } = useNuxtApp()
 
 // Only notes and tutorials live here; static pages are served at /:slug
-const { data: page } = await useAsyncData(`article-${route.params.slug}`, async () => {
-  const [page] = await $directus.request<Page[]>(
+const { data: page } = await useAsyncData(`article-${route.params.slug}`, () =>
+  $directus.request<Page[]>(
     readItems('pages', {
       filter: {
         slug: { _eq: route.params.slug as string },
@@ -90,8 +84,8 @@ const { data: page } = await useAsyncData(`article-${route.params.slug}`, async 
         },
       ],
     }),
-  )
-  return page ?? null
+  ), {
+  transform: rows => rows[0] ?? null,
 })
 
 if (!page.value) {
@@ -102,15 +96,9 @@ if (!page.value) {
 }
 
 const translation = computed(() => {
-  if (!page.value)
-    return null
-
-  // here we could also set a fallback language
-  const translation = page.value?.translations?.find(t => t.languages_code === languageCode.value) || null
-  if (!translation)
-    return null
-
-  injectDataIntoContent(translation.editor_nodes, translation.content)
+  const translation = findTranslation(page.value?.translations, languageCode.value)
+  if (translation)
+    injectDataIntoContent(translation.editor_nodes, translation.content)
   return translation
 })
 
@@ -140,27 +128,9 @@ useHighlight()
 
   header {
     margin-bottom: 92px;
-    .tag {
-      display: inline-block;
-      font-size: var(--text-small);
-      text-transform: uppercase;
-      font-family: var(--font-stack-mono);
-      font-weight: var(--regular-mono);
-      border: 1px solid var(--border-color);
-      padding: 2px 8px;
-      border-radius: 25px;
-    }
     .title {
       font-size: var(--text-xlarge) !important;
       margin-bottom: 0 !important;
-    }
-    time {
-      font-family: var(--font-stack-mono);
-      color: var(--text-secondary);
-      font-size: var(--text-mini);
-      text-transform: uppercase;
-      display: block;
-      margin: 8px 0;
     }
   }
 }

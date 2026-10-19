@@ -102,7 +102,7 @@ import {
 const {
   isSearchOpen,
   query,
-  queryDebounced,
+  hasQuery,
   indexStatus,
   ensureIndex,
   refreshIndex,
@@ -111,8 +111,6 @@ const {
 
 const route = useRoute()
 const languageCode = useLanguageCode()
-
-const hasQuery = computed(() => queryDebounced.value.trim().length >= 2)
 
 watch(isSearchOpen, (open) => {
   if (open)
@@ -136,8 +134,6 @@ function onKeydown(event: KeyboardEvent) {
   if ((event.metaKey || event.ctrlKey) && event.key === 'k') {
     event.preventDefault()
     isSearchOpen.value = !isSearchOpen.value
-    if (isSearchOpen.value)
-      ensureIndex()
   }
 }
 

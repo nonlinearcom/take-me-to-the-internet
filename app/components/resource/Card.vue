@@ -29,63 +29,53 @@
       />
 
       <dl class="meta">
-        <template v-if="resource.people && resource.people.length">
-          <div class="col col-authors">
-            <dt>{{ resource.people.length === 1 ? 'AUTHOR:' : 'AUTHORS:' }}</dt>
-            <dd>
-              <ResourcePeople :people="resource.people" />
-            </dd>
-          </div>
-        </template>
+        <div
+          v-if="resource.people?.length"
+          class="col col-authors"
+        >
+          <dt>{{ resource.people.length === 1 ? 'AUTHOR:' : 'AUTHORS:' }}</dt>
+          <dd>
+            <ResourcePeople :people="resource.people" />
+          </dd>
+        </div>
 
-        <template v-if="(resource.topics && resource.topics.length) || (resource.tags && resource.tags.length)">
-          <div class="col col-taxonomies">
-            <dt>TYPE:</dt>
+        <div
+          v-if="taxonomies.length"
+          class="col col-taxonomies"
+        >
+          <dt>TYPE:</dt>
+          <dd>
+            <UiButton
+              v-if="resource.type"
+              :label="resource.type"
+              class="tag"
+              variant="link"
+              :padded="false"
+              size="sm"
+              @click="emit('selectFilter', { kind: 'type', value: resource.type })"
+            />
+          </dd>
+          <dt>YEAR:</dt>
+          <dd>{{ resource.year }}</dd>
+          <template
+            v-for="{ kind, label, items } in taxonomies"
+            :key="kind"
+          >
+            <dt>{{ label }}</dt>
             <dd>
               <UiButton
-                v-if="resource.type"
-                :label="resource.type"
+                v-for="item in items"
+                :key="item.id"
                 class="tag"
+                :label="item.title"
                 variant="link"
                 :padded="false"
                 size="sm"
-                @click="emit('selectFilter', { kind: 'type', value: resource.type })"
+                @click="emit('selectFilter', { kind, value: item.title })"
               />
             </dd>
-            <dt>YEAR:</dt>
-            <dd>{{ resource.year }}</dd>
-            <template v-if="resource.topics && resource.topics.length">
-              <dt>TOPICS:</dt>
-              <dd>
-                <UiButton
-                  v-for="({ topics_id }) in resource.topics.filter(({ topics_id }) => topics_id)"
-                  :key="topics_id.id"
-                  class="tag"
-                  :label="topics_id.title"
-                  variant="link"
-                  :padded="false"
-                  size="sm"
-                  @click="emit('selectFilter', { kind: 'topics', value: topics_id.title })"
-                />
-              </dd>
-            </template>
-            <template v-if="resource.tags && resource.tags.length">
-              <dt>TAGS:</dt>
-              <dd>
-                <UiButton
-                  v-for="({ tags_id }) in resource.tags.filter(({ tags_id }) => tags_id)"
-                  :key="tags_id.id"
-                  class="tag"
-                  :label="tags_id.title"
-                  variant="link"
-                  :padded="false"
-                  size="sm"
-                  @click="emit('selectFilter', { kind: 'tags', value: tags_id.title })"
-                />
-              </dd>
-            </template>
-          </div>
-        </template>
+          </template>
+        </div>
       </dl>
 
       <UiButton
@@ -110,14 +100,18 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'selectFilter', payload: { kind: 'topics' | 'tags' | 'type', value: string }): void
 }>()
+
+// topics and tags render the same way; deleted relations leave nulls behind
+const taxonomies = computed(() => [
+  { kind: 'topics' as const, label: 'TOPICS:', items: props.resource.topics?.map(({ topics_id }) => topics_id).filter(Boolean) ?? [] },
+  { kind: 'tags' as const, label: 'TAGS:', items: props.resource.tags?.map(({ tags_id }) => tags_id).filter(Boolean) ?? [] },
+].filter(({ items }) => items.length))
 </script>
 
 <style lang="postcss">
 .resource-card {
   display: grid;
   grid-template-columns: 1fr 2fr;
-  /* height: 100vh; */
-  /* width: 50vw; */
   padding: var(--app-margin-small);
   gap: var(--text);
 
@@ -135,8 +129,6 @@ const emit = defineEmits<{
   }
 
   .cover {
-    /* margin-top: 64px; */
-    /* margin-bottom: 16px; */
     width: 200px;
     height: auto;
     border-radius: 4px;

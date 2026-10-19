@@ -46,9 +46,9 @@
               <h3>{{ page.type }}</h3>
               <h3>{{ page.location }}, {{ page.year }}</h3>
 
-              <template v-if="page.assistant">
-                <h3><br>Teaching assistant <br>{{ page.assistant.join(', ') }}</h3>
-              </template>
+              <h3 v-if="page.assistant">
+                <br>Teaching assistant <br>{{ page.assistant.join(', ') }}
+              </h3>
             </aside>
             <EditorContent
               v-if="page.content"
@@ -58,7 +58,7 @@
             />
 
             <section
-              v-if="page?.participants && page.participants !== ''"
+              v-if="page.participants"
               class="participants"
             >
               <h5> Participants </h5>
@@ -90,12 +90,11 @@ const relationBlocks = [
 ]
 
 const route = useRoute()
-const isPanelOpen = ref(false)
 
 const { $directus } = useNuxtApp()
 
 const { data: page, error } = await useAsyncData(
-  'log-page',
+  `log-${route.params.slug}`,
   () => {
     // Filtered readItems instead of readItem by key: archived entries are
     // listed on /log but must not be reachable directly.
@@ -103,7 +102,7 @@ const { data: page, error } = await useAsyncData(
       readItems('log', {
         filter: {
           slug: { _eq: String(route.params.slug) },
-          status: { _eq: 'published' },
+          ...PUBLISHED,
         },
         limit: 1,
         fields: [
@@ -144,7 +143,7 @@ if (!page.value) {
 }
 
 useSeoMeta({
-  title: () => [page.value?.title, page.value?.subtitle].filter(Boolean).join(' – '),
+  title: () => joinTitle(page.value?.title, page.value?.subtitle),
   description: () => {
     const entry = page.value
     const fallback = entry?.role
@@ -155,18 +154,10 @@ useSeoMeta({
 })
 
 function closeModal() {
-  // router.back()
   navigateTo('/log')
 }
 
 const { isSmallScreen } = useApp()
-
-onBeforeMount(() => {
-  isPanelOpen.value = true
-})
-onUnmounted(() => {
-  isPanelOpen.value = false
-})
 </script>
 
 <style lang="postcss">
@@ -187,7 +178,6 @@ onUnmounted(() => {
   top: 0;
   right: 0;
 
-  transform: translateX(100%);
   background-color: var(--bg-color);
   width: 50%;
   height: 100vh;

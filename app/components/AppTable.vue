@@ -13,7 +13,7 @@
       >
         <td
           class="year"
-          :class="{ visible: dateCheck(item.year, index) }"
+          :class="{ visible: showYear(index) }"
         >
           {{ item.year }}
         </td>
@@ -54,7 +54,7 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['showCover'])
+defineEmits(['showCover'])
 
 function goToPanel(item) {
   if (item.status === 'archived')
@@ -62,26 +62,13 @@ function goToPanel(item) {
   return navigateTo(`/log/${item.slug}`)
 }
 
-function getYear(index) {
-  return props.tableData[index].year
-}
-function dateCheck(year, index) {
-  const prevIndex = index - 1
-
-  // display first by default
-  if (prevIndex === -1) {
-    return true
-  }
-
-  if (year === getYear(prevIndex)) {
-    return false
-  } else {
-    return true
-  }
+// the year is printed once per run of entries sharing it
+function showYear(index) {
+  return index === 0 || props.tableData[index].year !== props.tableData[index - 1].year
 }
 </script>
 
-<style lang="postcss">
+<style lang="postcss" scoped>
 table {
   margin-top: auto;
   border-collapse: collapse;
@@ -93,9 +80,6 @@ table {
 
     &:last-child {
       border-bottom: 1px solid var(--border-color);
-    }
-    &:hover {
-      /* cursor: pointer; */
     }
     &.offline {
       cursor: default;

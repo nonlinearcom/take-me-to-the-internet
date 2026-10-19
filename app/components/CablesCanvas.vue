@@ -19,30 +19,20 @@ const props = defineProps({
   },
   patchOptions: {
     type: Object,
-    default: () => { },
+    default: () => ({}),
   },
 })
 
 const src = computed(() => `${props.patchDir}/js/patch.js`)
 
-const mergedPatchOptions = computed(() => {
-  const defaultOptions = {
-    prefixAssetPath: props.patchDir,
-    jsPath: `${props.patchDir}/js/`,
-    glCanvasId: props.canvasId,
-    glCanvasResizeToWindow: true,
-    canvas: { alpha: true, premultipliedAlpha: true },
-  }
-  return { ...defaultOptions, ...props.patchOptions }
-})
-
-const _patchInitialized = (patch) => {
-  // You can now access the patch object (patch), register variable watchers and so on
-}
-
-const _patchFinishedLoading = (patch) => {
-  // The patch is ready now, all assets have been loaded
-}
+const mergedPatchOptions = computed(() => ({
+  prefixAssetPath: props.patchDir,
+  jsPath: `${props.patchDir}/js/`,
+  glCanvasId: props.canvasId,
+  glCanvasResizeToWindow: true,
+  canvas: { alpha: true, premultipliedAlpha: true },
+  ...props.patchOptions,
+}))
 
 const isDark = useDark()
 
@@ -54,22 +44,25 @@ const { onLoaded } = useScript(src.value, {
   },
 })
 
+// The patch drives its own requestAnimationFrame loop, so it is torn down
+// with the component; otherwise it keeps rendering behind every later page.
+// The dark-mode watcher is created outside setup and must be stopped by hand.
+let patch
+let stopDarkWatch
+
 onMounted(() =>
   onLoaded(() => {
-    const patchOptions = mergedPatchOptions.value
-    if (!patchOptions.patch)
-      patchOptions.patch = CABLES.exportedPatch
-    if (!patchOptions.onPatchLoaded)
-      patchOptions.onPatchLoaded = _patchInitialized
-    if (!patchOptions.onFinishedLoading)
-      patchOptions.onFinishedLoading = _patchFinishedLoading
-    CABLES.patch = new CABLES.Patch(patchOptions)
+    patch = new CABLES.Patch({ patch: CABLES.exportedPatch, ...mergedPatchOptions.value })
+    CABLES.patch = patch
 
-    const clearColor = CABLES.patch.getVar('clearColor')
-
-    watch(isDark, dark => clearColor.setValue(dark ? '#222222' : '#fcfcfc'))
+    const clearColor = patch.getVar('clearColor')
+    stopDarkWatch = watch(isDark, dark => clearColor.setValue(dark ? '#222222' : '#fcfcfc'))
   }),
 )
-</script>
 
-<style></style>
+onBeforeUnmount(() => {
+  stopDarkWatch?.()
+  patch?.dispose()
+  patch = undefined
+})
+</script>

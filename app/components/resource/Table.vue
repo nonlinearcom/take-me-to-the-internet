@@ -51,7 +51,7 @@
           {{ item.year }}
         </td>
         <td class="author">
-          {{ item.people.map(({ people_id }) => people_id.name).join(', ') }}
+          {{ authorNames(item) }}
         </td>
         <td class="open">
           <span
@@ -84,14 +84,7 @@ const headers: { key: ResourceSortKey, label: string }[] = [
 </script>
 
 <style lang="postcss" scoped>
-table tr td {
-  border: none;
-}
-
 .resources-table {
-  /* Self-contained base table styling. Previously these leaked in from
-     AppTable.vue's global `table {}` block, which only loads on the /log route
-     chunk — so the resources table rendered unstyled until you visited /log. */
   width: 100%;
   cursor: pointer;
 
@@ -173,7 +166,6 @@ table tr td {
 
   td,
   th {
-    border-top: 1px solid rgba(var(--current-gray-rgb-inverted), 0.25);
     align-items: stretch;
     &.table-year {
       flex: 0 1 10%;
