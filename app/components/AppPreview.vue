@@ -21,13 +21,20 @@ const props = withDefaults(defineProps<{
   yPos: 0,
 })
 
-const translatePosition = computed(() => `translate(${props.xPos}px, ${props.yPos - 120}px)`)
+const translatePosition = computed(() => `translate(${props.xPos}px, ${props.yPos}px) translateY(-50%)`)
 </script>
 
 <style lang="postcss">
 .previewCover {
   /* this solution allows border-radius  */
   position: absolute !important;
+  /* anchor at the document origin so page coordinates apply directly; relies
+     on no ancestor being positioned (otherwise the origin shifts with it) */
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  /* table rows are position: relative, so without this the preview paints
+     under any row that follows it in the DOM; stays below panels (10+) */
+  z-index: 1;
   width: auto;
   height: auto;
   max-width: 260px;
