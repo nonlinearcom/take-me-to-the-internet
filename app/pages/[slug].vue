@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts" setup>
-import { readItem } from '@directus/sdk'
+import { readItems } from '@directus/sdk'
 import { EditorGallery, EditorMedia } from '#components'
 
 const relationBlocks = [
@@ -23,9 +23,15 @@ const route = useRoute()
 const languageCode = useLanguageCode()
 
 const { $directus } = useNuxtApp()
-const { data: page } = await useAsyncData(`page-${route.params.slug}`, () => {
-  return $directus.request(
-    readItem('pages', route.params.slug as string, {
+// Only static pages live here; notes and tutorials are served under /articles
+const { data: page } = await useAsyncData(`page-${route.params.slug}`, async () => {
+  const [page] = await $directus.request<Page[]>(
+    readItems('pages', {
+      filter: {
+        slug: { _eq: route.params.slug as string },
+        type: { _eq: 'page' },
+      },
+      limit: 1,
       fields: [
         '*',
         {
@@ -49,6 +55,7 @@ const { data: page } = await useAsyncData(`page-${route.params.slug}`, () => {
       ],
     }),
   )
+  return page ?? null
 })
 
 if (!page.value) {
@@ -75,15 +82,6 @@ useSeoMeta({
   title: () => translation.value?.title,
   description: () => contentToDescription(translation.value?.content),
 })
-
-// Articles are also reachable here at /:slug — point crawlers at the
-// canonical /articles/:slug variant.
-const slug = route.params.slug as string
-if (!STATIC_PAGE_SLUGS.includes(slug)) {
-  useHead({
-    link: [{ rel: 'canonical', href: withSiteUrl(`/articles/${slug}`) }],
-  })
-}
 </script>
 
 <style lang="postcss">

@@ -73,6 +73,8 @@ declare interface GlossaryTranslation {
 declare interface Page {
   id: number
   slug: string
+  type: 'page' | 'note' | 'tutorial'
+  date_created: string
   date_updated: string
   translations: PageTranslation[]
 }

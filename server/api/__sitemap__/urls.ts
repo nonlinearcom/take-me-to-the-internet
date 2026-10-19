@@ -10,7 +10,7 @@ export default defineSitemapEventHandler(async () => {
   const [pages, glossary, logs, resources] = await Promise.all([
     directus.request(readItems('pages', {
       filter: { status: { _eq: 'published' } },
-      fields: ['slug', 'date_updated'],
+      fields: ['slug', 'type', 'date_updated'],
       limit: -1,
     })),
     directus.request(readItems('glossary', {
@@ -33,7 +33,7 @@ export default defineSitemapEventHandler(async () => {
 
   return [
     ...pages.map(page => ({
-      loc: STATIC_PAGE_SLUGS.includes(page.slug) ? `/${page.slug}` : `/articles/${page.slug}`,
+      loc: page.type === 'page' ? `/${page.slug}` : `/articles/${page.slug}`,
       lastmod: page.date_updated ?? undefined,
     })),
     ...glossary.map(item => ({

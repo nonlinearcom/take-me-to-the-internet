@@ -5,16 +5,16 @@
   >
     <header>
       <h3 class="tag">
-        CABLES.GL
+        {{ page.type }}
       </h3>
       <h1 class="title">
         {{ translation?.title }}
       </h1>
       <time
         class="updated-on"
-        :datetime="page.date_updated?.split('T')[0]"
+        :datetime="lastUpdated(page).split('T')[0]"
       >
-        Updated on {{ formatDate(page.date_updated, { locale: languageCode }) }}
+        Updated on {{ formatDate(lastUpdated(page), { locale: languageCode }) }}
       </time>
     </header>
     <EditorContent
@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts" setup>
-import { readItem } from '@directus/sdk'
+import { readItems } from '@directus/sdk'
 import { EditorCables, EditorCodeLink, EditorFootNotes, EditorGallery, EditorMedia, EditorSideNote } from '#components'
 
 const relationBlocks = [
@@ -56,9 +56,15 @@ const languageCode = useLanguageCode()
 
 const { $directus } = useNuxtApp()
 
-const { data: page } = await useAsyncData(`article-${route.params.slug}`, () => {
-  return $directus.request(
-    readItem('pages', route.params.slug as string, {
+// Only notes and tutorials live here; static pages are served at /:slug
+const { data: page } = await useAsyncData(`article-${route.params.slug}`, async () => {
+  const [page] = await $directus.request<Page[]>(
+    readItems('pages', {
+      filter: {
+        slug: { _eq: route.params.slug as string },
+        type: { _in: ARTICLE_TYPES },
+      },
+      limit: 1,
       fields: [
         '*',
         {
@@ -85,6 +91,7 @@ const { data: page } = await useAsyncData(`article-${route.params.slug}`, () => 
       ],
     }),
   )
+  return page ?? null
 })
 
 if (!page.value) {
@@ -119,15 +126,6 @@ useSchemaOrg([
     dateModified: page.value?.date_updated,
   }),
 ])
-
-// The static pages (privacy/terms/about) are also reachable here — point
-// crawlers at their canonical /:slug variant.
-const slug = route.params.slug as string
-if (STATIC_PAGE_SLUGS.includes(slug)) {
-  useHead({
-    link: [{ rel: 'canonical', href: withSiteUrl(`/${slug}`) }],
-  })
-}
 
 useHighlight()
 </script>

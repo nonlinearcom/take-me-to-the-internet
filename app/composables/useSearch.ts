@@ -101,8 +101,10 @@ export function useSearch() {
     }
 
     const [pages, glossary, resources, log] = await Promise.all([
+      // Articles only: the static pages (about, privacy) are always one click
+      // away in the nav, so they stay out of the index.
       $directus.request<Page[]>(readItems('pages', {
-        filter: { status: { _eq: 'published' } },
+        filter: { status: { _eq: 'published' }, type: { _in: ARTICLE_TYPES } },
         fields: ['slug', { translations: ['title', 'content'] }],
         deep: translationsDeep,
         limit: -1,
@@ -147,7 +149,7 @@ export function useSearch() {
         group: 'articles',
         title: translation.title,
         body: translation.content ? generateText(translation.content) : '',
-        url: STATIC_PAGE_SLUGS.includes(page.slug) ? `/${page.slug}` : `/articles/${page.slug}`,
+        url: `/articles/${page.slug}`,
       }))
     }
 

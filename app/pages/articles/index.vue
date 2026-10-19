@@ -1,22 +1,35 @@
 <template>
   <main class="articles-page">
     <div class="articles-grid">
-      <h3 class="tag">
-        CABLES.GL
-      </h3>
-
-      <NuxtLink
-        v-for="(article, key) in data"
-        :key
-        :to="`/articles/${article?.slug}`"
+      <section
+        v-for="column in columns"
+        :key="column.type"
+        class="articles-column"
       >
-        <h2 class="line">
-          {{ article?.translations[0]?.title }}
-        </h2>
-        <time :datetime="article.date_updated.split('T')[0]">
-          updated on {{ formatDate(article.date_updated, { locale: languageCode }) }}
-        </time>
-      </NuxtLink>
+        <h3 class="tag">
+          {{ column.tag }}
+        </h3>
+
+        <NuxtLink
+          v-for="article in column.articles"
+          :key="article.id"
+          :to="`/articles/${article.slug}`"
+        >
+          <h2 class="line">
+            {{ article.translations[0]?.title }}
+          </h2>
+          <time :datetime="lastUpdated(article).split('T')[0]">
+            updated on {{ formatDate(lastUpdated(article), { locale: languageCode }) }}
+          </time>
+        </NuxtLink>
+
+        <p
+          v-if="!column.articles.length"
+          class="empty"
+        >
+          Nothing here yet
+        </p>
+      </section>
     </div>
   </main>
 </template>
@@ -34,16 +47,17 @@ useSeoMeta({
 })
 
 const { data } = await useAsyncData('page-articles', () => {
-  return $directus.request(
+  return $directus.request<Page[]>(
     readItems('pages', {
       filter: {
         status: {
           _eq: 'published',
         },
-        slug: {
-          _nin: STATIC_PAGE_SLUGS,
+        type: {
+          _in: ARTICLE_TYPES,
         },
       },
+      sort: ['-date_created'],
       fields: [
         '*',
         {
@@ -66,6 +80,14 @@ const { data } = await useAsyncData('page-articles', () => {
 }, {
   watch: [locale],
 })
+
+const columns = computed(() => [
+  { type: 'note', tag: 'Notes' },
+  { type: 'tutorial', tag: 'Tutorials' },
+].map(column => ({
+  ...column,
+  articles: data.value?.filter(article => article.type === column.type) ?? [],
+})))
 </script>
 
 <style lang="postcss">
@@ -87,24 +109,35 @@ const { data } = await useAsyncData('page-articles', () => {
   }
 
   .articles-grid {
+    display: grid;
+    /* minmax(0, …) lets long titles wrap instead of widening the column */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--app-margin);
+
+    @media (width <= 900px) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  .articles-column {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 16px;
-    margin-left: 25vw;
 
     h2 {
       display: block;
       font-size: var(--text-large);
     }
 
-    time {
+    time,
+    .empty {
       font-family: var(--font-stack-mono);
       color: var(--text-secondary);
       font-size: var(--text-mini);
       text-transform: uppercase;
       display: block;
-      margin: 8px 0;
+      margin-block: 8px;
     }
   }
 }

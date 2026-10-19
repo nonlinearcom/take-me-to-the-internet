@@ -8,3 +8,8 @@ export function formatDate(d: Date | string | undefined, options: { locale?: str
     day: 'numeric',
   })
 }
+
+// Directus leaves date_updated empty until an item is edited after creation
+export function lastUpdated(item: { date_created: string, date_updated?: string | null }) {
+  return item.date_updated ?? item.date_created
+}

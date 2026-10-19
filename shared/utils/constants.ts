@@ -1,3 +1,3 @@
-// Slugs of the `pages` collection that are standalone pages served at /:slug;
-// every other published page is an article served at /articles/:slug.
-export const STATIC_PAGE_SLUGS = ['privacy', 'terms', 'about']
+// `pages` collection types served at /articles/:slug; every other page
+// (type 'page') is a standalone page served at /:slug.
+export const ARTICLE_TYPES = ['note', 'tutorial']
