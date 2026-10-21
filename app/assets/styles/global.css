@@ -80,6 +80,17 @@ h1 {
 /* Flexible Editor Styles */
 
 .prose {
+  hr {
+    border: 0;
+    /* the preflight reset sets height: 0 and the UA gives hr overflow: hidden, which clips the ::after glyph */
+    block-size: auto;
+    margin-block: 32px;
+    text-align: center;
+  }
+  hr::after {
+    content: '⁂';
+  }
+
   h2 {
     margin-top: var(--app-margin);
   }
