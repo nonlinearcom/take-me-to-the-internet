@@ -1,16 +1,20 @@
+/* Subset to Latin (basic, Latin-1, Extended-A/B), punctuation, currency,
+   arrows and math symbols with pyftsubset; the mono face also keeps box
+   drawing for code blocks. Bump ?v= whenever a file changes: /fonts/** is
+   served as immutable (see routeRules in nuxt.config.ts). */
 @font-face {
   font-family: 'Inter';
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url('/fonts/Inter-Light.woff2?v=4.1') format('woff2');
+  src: url('/fonts/Inter-Light.woff2?v=4.2') format('woff2');
 }
 @font-face {
   font-family: 'Inter';
   font-style: italic;
   font-weight: 300;
   font-display: swap;
-  src: url('/fonts/Inter-LightItalic.woff2?v=4.1') format('woff2');
+  src: url('/fonts/Inter-LightItalic.woff2?v=4.2') format('woff2');
 }
 
 /* @font-face {
@@ -18,14 +22,14 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('/fonts/Inter-Regular.woff2?v=4.1') format('woff2');
+  src: url('/fonts/Inter-Regular.woff2?v=4.2') format('woff2');
 }
 @font-face {
   font-family: 'Inter';
   font-style: italic;
   font-weight: 400;
   font-display: swap;
-  src: url('/fonts/Inter-Italic.woff2?v=4.1') format('woff2');
+  src: url('/fonts/Inter-Italic.woff2?v=4.2') format('woff2');
 } */
 
 @font-face {
@@ -33,14 +37,14 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url('/fonts/Inter-Medium.woff2?v=4.1') format('woff2');
+  src: url('/fonts/Inter-Medium.woff2?v=4.2') format('woff2');
 }
 @font-face {
   font-family: 'Inter';
   font-style: italic;
   font-weight: 500;
   font-display: swap;
-  src: url('/fonts/Inter-MediumItalic.woff2?v=4.1') format('woff2');
+  src: url('/fonts/Inter-MediumItalic.woff2?v=4.2') format('woff2');
 }
 
 @font-face {
@@ -48,14 +52,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('/fonts/IBMPlexMono-Regular.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'PlexMono';
-  font-style: italic;
-  font-weight: 400;
-  font-display: swap;
-  src: url('/fonts/IBMPlexMono-Italic.woff2?v=4.1') format('woff2');
+  src: url('/fonts/IBMPlexMono-Regular.woff2?v=4.2') format('woff2');
 }
 
 /* Metric-matched fallbacks: sized so text set in the local fallback occupies

@@ -29,12 +29,13 @@
             class="term"
             :data-id="item.id"
           >
-            <NuxtLinkLocale
-              class="stretched-link"
-              :to="`/glossary/${item.slug}`"
-            />
             <h3 class="term-title">
-              <span class="line">{{ item.translations[0]?.term }}</span>
+              <NuxtLinkLocale
+                class="stretched-link"
+                :to="`/glossary/${item.slug}`"
+              >
+                <span class="line">{{ item.translations[0]?.term }}</span>
+              </NuxtLinkLocale>
               <span
                 v-if="recentlyUpdated(item)"
                 class="dot"

@@ -6,9 +6,9 @@ export default defineNuxtConfig({
       title: 'Take me to the internet',
       link: [
         { rel: 'icon', type: 'image/png', href: '/favicon.png' },
-        // Preload fonts
-        { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/Inter-Light.woff2?v=4.1', crossorigin: '' },
-        { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/Inter-Medium.woff2?v=4.1', crossorigin: '' },
+        { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/Inter-Light.woff2?v=4.2', crossorigin: '' },
+        { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/Inter-Medium.woff2?v=4.2', crossorigin: '' },
+        { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/IBMPlexMono-Regular.woff2?v=4.2', crossorigin: '' },
       ],
     },
 
