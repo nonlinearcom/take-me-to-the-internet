@@ -56,7 +56,7 @@ const links = [
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
 
-const isSearchOpen = useSearchOpen()
+const { isSearchOpen } = useApp()
 
 const { locale, locales } = useI18n()
 

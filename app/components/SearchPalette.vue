@@ -113,10 +113,11 @@ const route = useRoute()
 const languageCode = useLanguageCode()
 const localePath = useLocalePath()
 
+// The palette is mounted lazily on the first open (see app.vue), so the watcher must also run for the already-open initial state.
 watch(isSearchOpen, (open) => {
   if (open)
     ensureIndex()
-})
+}, { immediate: true })
 
 // The index holds one locale's content: rebuild it when the language changes.
 watch(languageCode, () => refreshIndex())
@@ -130,16 +131,6 @@ function openResult(entry: SearchEntry) {
   isSearchOpen.value = false
   navigateTo(localePath(entry.url))
 }
-
-function onKeydown(event: KeyboardEvent) {
-  if ((event.metaKey || event.ctrlKey) && event.key === 'k') {
-    event.preventDefault()
-    isSearchOpen.value = !isSearchOpen.value
-  }
-}
-
-onMounted(() => window.addEventListener('keydown', onKeydown))
-onUnmounted(() => window.removeEventListener('keydown', onKeydown))
 </script>
 
 <style lang="postcss">
@@ -149,7 +140,15 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
   z-index: 30;
   background-color: var(--black-a5);
   backdrop-filter: blur(8px);
-  animation: fadeIn 200ms ease-out;
+  animation: searchOverlayIn 200ms ease-out;
+}
+
+/* Own keyframes: reka-ui keeps a closed overlay mounted if its enter
+   animation never ran, and this dialog mounts already open */
+@keyframes searchOverlayIn {
+  from {
+    opacity: 0;
+  }
 }
 
 .SearchPalette {

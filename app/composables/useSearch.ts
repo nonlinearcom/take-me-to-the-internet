@@ -78,15 +78,11 @@ function makeSnippet(body: string, terms: string[]): SearchSnippet | null {
 }
 
 // The open flag alone, for the header toggle: it has no use for the index
-export function useSearchOpen() {
-  return useState('search-open', () => false)
-}
-
 export function useSearch() {
   const { $directus } = useNuxtApp()
   const languageCode = useLanguageCode()
 
-  const isSearchOpen = useSearchOpen()
+  const { isSearchOpen } = useApp()
   const query = useState('search-query', () => '')
   const queryDebounced = refDebounced(query, 200)
   // two characters before anything is matched

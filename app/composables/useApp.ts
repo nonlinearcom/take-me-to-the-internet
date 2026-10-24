@@ -7,9 +7,14 @@ export const useApp = createSharedComposable(() => {
   const isMediumScreen = useMediaQuery('(min-width: 768px) and (max-width: 1024px)', { ssrWidth: 768 })
   const isSmallScreen = useMediaQuery('(max-width: 768px)', { ssrWidth: 768 })
 
+  // Kept here rather than in useSearch: the header and app.vue only need the flag,
+  // and importing the search module would pull its index code and tiptap into the entry chunk.
+  const isSearchOpen = useState('search-open', () => false)
+
   return {
     isLargeScreen,
     isMediumScreen,
     isSmallScreen,
+    isSearchOpen,
   }
 })
