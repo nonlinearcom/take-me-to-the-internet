@@ -16,9 +16,13 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
+    // Pages: an hour at the Cloudflare edge (its cache rule respects origin headers), served stale while it refetches.
+    // No max-age, so browsers always come back to the edge. More specific rules below and Nuxt's own /_nuxt/** rules override this one.
+    '/**': { headers: { 'cache-control': 'public, s-maxage=3600, stale-while-revalidate=86400' } },
+    '/api/**': { headers: { 'cache-control': 'no-store' } },
     // Fonts are cache-busted via the ?v= query param, so they can be immutable
     '/fonts/**': { headers: { 'cache-control': 'public, max-age=31536000, immutable' } },
-    // Cables exports land in fresh coverN dirs, so paths rarely change in place; a month keeps the ~185KiB patch.js out of repeat loads
+    // Cables exports: one month, they land in fresh cover dirs
     '/patches/**': { headers: { 'cache-control': 'public, max-age=2592000' } },
   },
 
