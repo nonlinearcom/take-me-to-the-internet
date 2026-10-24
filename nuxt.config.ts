@@ -67,12 +67,13 @@ export default defineNuxtConfig({
   i18n: {
     strategy: 'prefix_except_default',
     defaultLocale: 'en',
-    detectBrowserLanguage: {
-      fallbackLocale: 'en',
-      useCookie: false, // required for Cloudflare catching to work.
-      cookieKey: 'i18n_redirected', // ignored because useCookie is false
-      redirectOn: 'root',
-    },
+    // detectBrowserLanguage: {
+    //   fallbackLocale: 'en',
+    //   useCookie: false, // required for Cloudflare catching to work.
+    //   cookieKey: 'i18n_redirected', // ignored because useCookie is false
+    //   redirectOn: 'root',
+    // },
+    detectBrowserLanguage: false, // we will cache the homepage too
     experimental: {
       // i18n emits <html lang>, hreflang alternates, canonical and og:url
       // itself; unhead dedupes them against nuxt-seo-utils' tags
