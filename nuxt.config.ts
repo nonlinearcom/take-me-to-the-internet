@@ -103,6 +103,9 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
+    directus: {
+      url: '', // server-side only, filled at runtime by NUXT_DIRECTUS_URL
+    },
     public: {
       directus: {
         url: process.env.NUXT_PUBLIC_DIRECTUS_URL || 'http://localhost:8055',
