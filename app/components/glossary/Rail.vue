@@ -29,7 +29,7 @@
             class="term"
             :data-id="item.id"
           >
-            <NuxtLink
+            <NuxtLinkLocale
               class="stretched-link"
               :to="`/glossary/${item.slug}`"
             />

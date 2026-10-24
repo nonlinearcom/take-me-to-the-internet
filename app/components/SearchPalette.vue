@@ -111,6 +111,7 @@ const {
 
 const route = useRoute()
 const languageCode = useLanguageCode()
+const localePath = useLocalePath()
 
 watch(isSearchOpen, (open) => {
   if (open)
@@ -127,7 +128,7 @@ watch(() => route.fullPath, () => {
 
 function openResult(entry: SearchEntry) {
   isSearchOpen.value = false
-  navigateTo(entry.url)
+  navigateTo(localePath(entry.url))
 }
 
 function onKeydown(event: KeyboardEvent) {

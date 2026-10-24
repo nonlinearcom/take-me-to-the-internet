@@ -113,6 +113,8 @@ useSeoMeta({
   description: () => contentToDescription(translation.value?.description),
 })
 
+const localePath = useLocalePath()
+
 useSchemaOrg([
   {
     '@type': 'DefinedTerm',
@@ -121,7 +123,7 @@ useSchemaOrg([
     'inDefinedTermSet': {
       '@type': 'DefinedTermSet',
       'name': 'Take me to the internet — Glossary',
-      'url': withSiteUrl('/glossary'),
+      'url': withSiteUrl(localePath('/glossary')),
     },
   },
 ])

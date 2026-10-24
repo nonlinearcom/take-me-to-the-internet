@@ -1,7 +1,7 @@
 <template>
-  <NuxtLink :to="data?.link">
+  <NuxtLinkLocale :to="data?.link">
     <code> {{ data?.code }} </code>
-  </NuxtLink>
+  </NuxtLinkLocale>
 </template>
 
 <script setup lang="ts">

@@ -85,10 +85,12 @@ const table = useTemplateRef<HTMLElement>('table')
 const { currentCover, setCover, visible, xPos, yPos } = useCoverPreview(table)
 const activeTab = ref<'topics' | 'tags' | 'type' | 'search'>('topics')
 
+const localePath = useLocalePath()
+
 function openResource(resource: Resource) {
   if (!resource.slug)
     return
-  navigateTo(`/resources/${resource.slug}`)
+  navigateTo(localePath(`/resources/${resource.slug}`))
 }
 
 function onSelectFilter({ kind, value }: ResourceFilterPayload) {

@@ -19,7 +19,7 @@
         }"
         :d="edgePath(edge)"
       />
-      <NuxtLink
+      <NuxtLinkLocale
         v-for="node in renderNodes"
         :key="node.id"
         class="node"
@@ -47,7 +47,7 @@
         >
           {{ labels.get(node.id) ?? node.slug }}
         </text>
-      </NuxtLink>
+      </NuxtLinkLocale>
     </svg>
   </div>
 </template>

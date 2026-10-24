@@ -1,5 +1,5 @@
 import { Mark, mergeAttributes } from '@tiptap/core'
-import { NuxtLink } from '#components'
+import { NuxtLinkLocale } from '#components'
 
 export interface LinkProtocolOptions {
   scheme: string
@@ -63,11 +63,12 @@ export const Link = Mark.create<LinkOptions>({
     const isInternal = href?.startsWith('/') === true && !href.startsWith('//')
 
     if (isInternal) {
-      // Always NuxtLink so navigation goes through vue-router instead of a full
-      // page load. A stored target="_blank" is ignored: imported content bakes
-      // it into the mark attrs and the Directus link dialog can't reliably
-      // unset it, so it never reflects author intent for internal links.
-      return [NuxtLink, { to: href, class: HTMLAttributes.class }, 0] as any
+      // Always NuxtLinkLocale so navigation goes through vue-router instead of
+      // a full page load and the reader's language is kept. A stored
+      // target="_blank" is ignored: imported content bakes it into the mark
+      // attrs and the Directus link dialog can't reliably unset it, so it never
+      // reflects author intent for internal links.
+      return [NuxtLinkLocale, { to: href, class: HTMLAttributes.class }, 0] as any
     }
 
     return ['a', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0]

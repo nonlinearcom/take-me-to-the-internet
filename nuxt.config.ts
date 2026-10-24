@@ -2,9 +2,6 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      htmlAttrs: {
-        lang: 'en',
-      },
       charset: 'utf-8',
       title: 'Take me to the internet',
       link: [
@@ -68,16 +65,25 @@ export default defineNuxtConfig({
   },
 
   i18n: {
-    // No baseUrl here: nuxt-site-config feeds site.url into i18n at runtime.
-    // Setting it would bake the build-time value in and break the
-    // NUXT_PUBLIC_SITE_URL runtime override.
-    strategy: 'no_prefix', // 'prefix_except_default',
+    // No baseUrl here: nuxt-site-config copies it into its stack at build time
+    // without a priority, which beats the NUXT_PUBLIC_SITE_URL runtime
+    // override. The base for hreflang/canonical tags is set under
+    // runtimeConfig.public.i18n.baseUrl instead.
+    // English stays at /, Italian lives under /it
+    strategy: 'prefix_except_default',
     defaultLocale: 'en',
+    // Only the root URL redirects (cookie, then Accept-Language); deep links
+    // and crawlers are never bounced
     detectBrowserLanguage: {
       fallbackLocale: 'en',
       useCookie: true,
       cookieKey: 'i18n_redirected',
       redirectOn: 'root',
+    },
+    experimental: {
+      // i18n emits <html lang>, hreflang alternates, canonical and og:url
+      // itself; unhead dedupes them against nuxt-seo-utils' tags
+      strictSeo: true,
     },
     locales: [
       { code: 'en', file: 'en-US.json', language: 'en-US', name: 'English' },
@@ -109,6 +115,13 @@ export default defineNuxtConfig({
     public: {
       directus: {
         url: process.env.NUXT_PUBLIC_DIRECTUS_URL || 'http://localhost:8055',
+      },
+      i18n: {
+        // Absolute base for the hreflang/canonical tags i18n emits (strictSeo).
+        // i18n only reads this key, never site.url, so the site URL is baked in
+        // at build time. Should a deploy ever need a different value at runtime,
+        // NUXT_PUBLIC_I18N_BASE_URL overrides it.
+        baseUrl: process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000',
       },
     },
   },

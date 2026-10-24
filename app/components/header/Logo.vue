@@ -1,9 +1,9 @@
 <template>
-  <NuxtLink to="/">
+  <NuxtLinkLocale to="/">
     <h1 class="tmtti-logo">
       TAKE<span class="dash" />ME<span class="dash" />TO<span class="dash" />THE<span class="dash" />INTERNET
     </h1>
-  </NuxtLink>
+  </NuxtLinkLocale>
 </template>
 
 <script lang="ts" setup>

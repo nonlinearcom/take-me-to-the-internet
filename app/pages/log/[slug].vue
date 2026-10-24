@@ -153,8 +153,10 @@ useSeoMeta({
   },
 })
 
+const localePath = useLocalePath()
+
 function closeModal() {
-  navigateTo('/log')
+  navigateTo(localePath('/log'))
 }
 
 const { isSmallScreen } = useApp()

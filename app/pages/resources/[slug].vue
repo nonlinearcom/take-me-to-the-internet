@@ -8,7 +8,7 @@
       inset
       :title="resource?.title ?? 'Resource'"
       @update:open="isOpen = $event"
-      @close-complete="navigateTo('/resources')"
+      @close-complete="navigateTo(localePath('/resources'))"
     >
       <ResourceCard
         v-if="resource"
@@ -25,6 +25,7 @@ import { readItems } from '@directus/sdk'
 const route = useRoute()
 const { $directus } = useNuxtApp()
 const img = useImage()
+const localePath = useLocalePath()
 
 const slug = String(route.params.slug)
 

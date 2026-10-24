@@ -31,7 +31,9 @@ useSeoMeta({
   description: 'A glossary of terms around creative coding, web design and development.',
 })
 
-const { data: glossary } = await useAsyncData('glossary-page', () => {
+// one cache entry per locale, so switching language never shows the other
+// language's terms while the new ones load
+const { data: glossary } = await useAsyncData(() => `glossary-page-${locale.value}`, () => {
   return $directus.request<GlossaryItem[]>(
     readItems('glossary', {
       filter: PUBLISHED,
@@ -41,8 +43,6 @@ const { data: glossary } = await useAsyncData('glossary-page', () => {
       deep: translationsDeep(languageCode.value),
     }),
   )
-}, {
-  watch: [locale],
 })
 
 // Group by the displayed term's first letter (not the slug)

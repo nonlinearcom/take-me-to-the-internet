@@ -2,14 +2,14 @@
   <header class="app-header">
     <HeaderLogo />
     <nav class="main-menu">
-      <NuxtLink
+      <NuxtLinkLocale
         v-for="[to, label] in links"
         :key="to"
         :to
         class="line"
       >
         {{ label }}
-      </NuxtLink>
+      </NuxtLinkLocale>
     </nav>
 
     <span class="mode-settings">
@@ -32,15 +32,14 @@
         />
       </ClientOnly>
 
-      <NuxtLink
+      <SwitchLocalePathLink
         v-for="loc in availableLocales"
         :key="loc.code"
         class="lang-toggle"
-        href="#"
-        @click.prevent.stop="setLocale(loc.code)"
+        :locale="loc.code"
       >
         {{ loc.code }}
-      </NuxtLink>
+      </SwitchLocalePathLink>
     </span>
   </header>
 </template>
@@ -59,7 +58,7 @@ const toggleDark = useToggle(isDark)
 
 const isSearchOpen = useSearchOpen()
 
-const { locale, locales, setLocale } = useI18n()
+const { locale, locales } = useI18n()
 
 const availableLocales = computed(() => {
   return locales.value.filter(i => i.code !== locale.value)

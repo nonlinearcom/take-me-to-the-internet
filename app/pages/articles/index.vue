@@ -10,7 +10,7 @@
           {{ column.tag }}
         </h3>
 
-        <NuxtLink
+        <NuxtLinkLocale
           v-for="article in column.articles"
           :key="article.id"
           :to="`/articles/${article.slug}`"
@@ -19,7 +19,7 @@
             {{ article.translations[0]?.title }}
           </h2>
           <UpdatedOn :date="lastUpdated(article)" />
-        </NuxtLink>
+        </NuxtLinkLocale>
 
         <p
           v-if="!column.articles.length"
@@ -44,7 +44,9 @@ useSeoMeta({
   description: 'Articles and tutorials on cables.gl, creative coding and web design.',
 })
 
-const { data } = await useAsyncData('page-articles', () => {
+// one cache entry per locale, so switching language never shows the other
+// language's list while the new one loads
+const { data } = await useAsyncData(() => `page-articles-${locale.value}`, () => {
   return $directus.request<Page[]>(
     readItems('pages', {
       filter: { ...PUBLISHED, type: { _in: ARTICLE_TYPES } },
@@ -60,8 +62,6 @@ const { data } = await useAsyncData('page-articles', () => {
       deep: translationsDeep(languageCode.value),
     }),
   )
-}, {
-  watch: [locale],
 })
 
 const columns = computed(() => [

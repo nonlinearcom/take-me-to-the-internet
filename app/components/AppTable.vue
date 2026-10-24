@@ -24,13 +24,13 @@
           <h3 v-if="item.status === 'archived'">
             {{ item.title }}
           </h3>
-          <NuxtLink
+          <NuxtLinkLocale
             v-else
             class="stretched-link"
             :to="`/log/${item.slug}`"
           >
             {{ item.title }}
-          </NuxtLink>
+          </NuxtLinkLocale>
         </td>
         <td class="role">
           {{ item.role }}
@@ -56,10 +56,12 @@ const props = defineProps({
 
 defineEmits(['showCover'])
 
+const localePath = useLocalePath()
+
 function goToPanel(item) {
   if (item.status === 'archived')
     return
-  return navigateTo(`/log/${item.slug}`)
+  return navigateTo(localePath(`/log/${item.slug}`))
 }
 
 // the year is printed once per run of entries sharing it
