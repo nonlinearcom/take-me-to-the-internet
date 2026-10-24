@@ -65,19 +65,12 @@ export default defineNuxtConfig({
   },
 
   i18n: {
-    // No baseUrl here: nuxt-site-config copies it into its stack at build time
-    // without a priority, which beats the NUXT_PUBLIC_SITE_URL runtime
-    // override. The base for hreflang/canonical tags is set under
-    // runtimeConfig.public.i18n.baseUrl instead.
-    // English stays at /, Italian lives under /it
     strategy: 'prefix_except_default',
     defaultLocale: 'en',
-    // Only the root URL redirects (cookie, then Accept-Language); deep links
-    // and crawlers are never bounced
     detectBrowserLanguage: {
       fallbackLocale: 'en',
-      useCookie: true,
-      cookieKey: 'i18n_redirected',
+      useCookie: false, // required for Cloudflare catching to work.
+      cookieKey: 'i18n_redirected', // ignored because useCookie is false
       redirectOn: 'root',
     },
     experimental: {
