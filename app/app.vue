@@ -38,7 +38,7 @@ const img = useImage()
 
 useSeoMeta({
   description: 'Teaching portal of Manuel Ehrenfeld, designer & developer based in Geneva.',
-  // Static share image for all pages, served by Directus (host from runtime config)
+  // Static share image for all pages: a site-relative /assets/ URL, which nuxt-seo-utils makes absolute in the rendered head
   ogImage: img('5fae7d78-fcfa-4435-8898-77436e70eb7e', { width: 1200, height: 630, fit: 'cover', format: 'webp' }),
   twitterCard: 'summary_large_image',
 })

@@ -90,17 +90,13 @@ export default defineNuxtConfig({
   },
 
   image: {
-    // Custom provider so the Directus asset baseURL is read from runtime config
-    // at request time (see app/providers/directus-runtime.ts), not baked in at
-    // build time. Changing NUXT_PUBLIC_DIRECTUS_URL no longer requires a rebuild.
-    provider: 'directusRuntime',
-    providers: {
-      directusRuntime: {
-        provider: '~/providers/directus-runtime',
-        options: {
-          modifiers: { withoutEnlargement: true },
-        },
-      },
+    // Images are served from this site's own domain: /assets/** is proxied to
+    // Directus by server/routes/assets/[...path].ts, which reads the backend
+    // URL from runtime config. The provider itself needs no host at all.
+    provider: 'directus',
+    directus: {
+      baseURL: '/assets/',
+      modifiers: { withoutEnlargement: true },
     },
     quality: 80,
     format: ['webp'],

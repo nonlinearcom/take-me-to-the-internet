@@ -23,10 +23,13 @@ cp .env.example .env   # then edit values
 
 ### Environment
 
-| Variable                   | Description                                                                                                        |
-| -------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| `NUXT_BASE_URL`            | Base URL of this site (i18n / canonical URLs)                                                                      |
-| `NUXT_PUBLIC_DIRECTUS_URL` | Public URL of the Directus backend (content + assets). Read at runtime, so changing it does not require a rebuild. |
+| Variable                   | Description                                                                                                                                  |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| `NUXT_PUBLIC_SITE_URL`     | Canonical URL of this site (sitemap, canonicals, hreflang, absolute `og:image`). Needed at build time too, see `.env.example`.               |
+| `NUXT_PUBLIC_DIRECTUS_URL` | URL of the Directus backend (content + assets). Read at runtime, so changing it does not require a rebuild.                                  |
+| `NUXT_DIRECTUS_URL`        | Optional server-only Directus URL (e.g. an internal Docker hostname). Used for SSR content fetches and the `/assets/**` proxy when set.      |
+
+Images are served from this site's own domain: `/assets/**` is proxied to Directus by [`server/routes/assets/[...path].ts`](server/routes/assets/%5B...path%5D.ts), so image URLs never carry the backend host.
 
 ## Development
 

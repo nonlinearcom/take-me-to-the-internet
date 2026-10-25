@@ -51,8 +51,7 @@ if (!resource.value) {
   })
 }
 
-// Resolved eagerly: the runtime-config image provider needs the Nuxt
-// instance, which lazy head getters don't have.
+// Site-relative /assets/ URL; nuxt-seo-utils makes it absolute in the rendered head
 const ogImage = resource.value?.cover
   ? img(resource.value.cover, { width: 1200, height: 630, fit: 'cover', format: 'webp' })
   : undefined
