@@ -101,7 +101,9 @@ const { data: page, error } = await useAsyncData(
     return $directus.request(
       readItems('log', {
         filter: {
-          slug: { _eq: String(route.params.slug) },
+          slug: {
+            _eq: String(route.params.slug),
+          },
           ...PUBLISHED,
         },
         limit: 1,
@@ -113,9 +115,21 @@ const { data: page, error } = await useAsyncData(
               {
                 item: {
                   gallery: [
-                    { content: ['*', { directus_files_id: ['id', 'description'] }] },
+                    {
+                      content: [
+                        '*',
+                        {
+                          directus_files_id: ['id', 'description'],
+                        },
+                      ],
+                    },
                   ],
-                  media: ['layout', { file: ['*'] }],
+                  media: [
+                    'layout',
+                    {
+                      file: ['*'],
+                    },
+                  ],
                 },
               },
             ],

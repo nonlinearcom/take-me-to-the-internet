@@ -15,8 +15,12 @@ export function useFollowMe(el: MaybeElementRef) {
 
   // Ease toward the target; snap the last pixel so it settles exactly on it (flooring left it up to 10px short, always on the same side).
   function updatePosition() {
-    xPos.value += Math.abs(dX.value) < 1 ? dX.value : dX.value / 10
-    yPos.value += Math.abs(dY.value) < 1 ? dY.value : dY.value / 10
+    xPos.value += Math.abs(dX.value) < 1
+      ? dX.value
+      : dX.value / 10
+    yPos.value += Math.abs(dY.value) < 1
+      ? dY.value
+      : dY.value / 10
   }
 
   // Start paused so the rAF loop only runs while the pointer is inside the element; the watcher resumes it on enter and pauses on leave.

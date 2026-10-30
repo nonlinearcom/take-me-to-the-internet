@@ -16,10 +16,16 @@ export default (document: JSONContent) => {
       .filter(({ type }) => type !== 'relation-block' && type !== 'relation-inline-block')
       .map((node) => {
         if (node.content) {
-          node = { ...node, content: filterRelationTypes(node.content) }
+          node = {
+            ...node,
+            content: filterRelationTypes(node.content),
+          }
         }
         if (node.marks) {
-          node = { ...node, marks: node.marks.filter(mark => mark.type !== 'relation-mark') }
+          node = {
+            ...node,
+            marks: node.marks.filter(mark => mark.type !== 'relation-mark'),
+          }
         }
         return node
       })

@@ -12,6 +12,10 @@ export const Subscript = Mark.create<SubscriptExtensionOptions>({
     }
   },
   renderHTML({ HTMLAttributes }) {
-    return ['sub', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0]
+    return [
+      'sub',
+      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
+      0,
+    ]
   },
 })

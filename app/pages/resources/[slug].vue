@@ -33,7 +33,10 @@ const { data: list } = useNuxtData<Resource[]>('page-resources')
 
 const { data: resource } = await useAsyncData(`resource-${slug}`, () => $directus.request<Resource[]>(
   readItems('resources', {
-    filter: { slug: { _eq: slug }, ...NOT_DRAFT },
+    filter: {
+      slug: { _eq: slug },
+      ...NOT_DRAFT,
+    },
     limit: 1,
     fields: RESOURCE_FIELDS,
   }),
@@ -53,13 +56,20 @@ if (!resource.value) {
 
 // Site-relative /assets/ URL; nuxt-seo-utils makes it absolute in the rendered head
 const ogImage = resource.value?.cover
-  ? img(resource.value.cover, { width: 1200, height: 630, fit: 'cover', format: 'webp' })
+  ? img(resource.value.cover, {
+      width: 1200,
+      height: 630,
+      fit: 'cover',
+      format: 'webp',
+    })
   : undefined
 
 useSeoMeta({
   title: () => joinTitle(resource.value?.title, resource.value?.subtitle),
   description: () => htmlToDescription(resource.value?.description),
-  ...(ogImage ? { ogImage } : {}),
+  ...(ogImage
+    ? { ogImage }
+    : {}),
 })
 
 // The drawer is state-driven but the overlay is a route: closing only flips

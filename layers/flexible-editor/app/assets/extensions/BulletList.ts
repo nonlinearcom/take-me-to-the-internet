@@ -22,6 +22,10 @@ export const BulletList = Node.create<BulletListOptions>({
     return `${this.options.itemTypeName}+`
   },
   renderHTML({ HTMLAttributes }) {
-    return ['ul', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0]
+    return [
+      'ul',
+      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
+      0,
+    ]
   },
 })

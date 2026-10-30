@@ -12,6 +12,10 @@ export const Bold = Mark.create<BoldOptions>({
     }
   },
   renderHTML({ HTMLAttributes }) {
-    return ['strong', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0]
+    return [
+      'strong',
+      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
+      0,
+    ]
   },
 })

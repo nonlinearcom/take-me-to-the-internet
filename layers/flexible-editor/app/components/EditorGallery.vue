@@ -86,7 +86,9 @@ function snapStops(el: HTMLElement) {
   const inset = Number.parseFloat(getComputedStyle(el).scrollPaddingInlineStart) || 0
   const max = Math.max(el.scrollWidth - el.clientWidth, 0)
   const base = el.getBoundingClientRect().left
-  return [...el.querySelectorAll('[data-blossom-slide]')].map((slide) => {
+  return [
+    ...el.querySelectorAll('[data-blossom-slide]'),
+  ].map((slide) => {
     const x = slide.getBoundingClientRect().left - base + el.scrollLeft - inset
     return Math.min(Math.max(x, 0), max)
   })

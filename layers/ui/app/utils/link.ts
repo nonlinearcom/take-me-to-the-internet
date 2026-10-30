@@ -3,8 +3,16 @@ import type { PropType } from 'vue'
 import type { RouteLocationRaw } from 'vue-router'
 
 export const nuxtLinkProps = {
-  to: { type: [String, Object] as PropType<RouteLocationRaw>, default: undefined, required: false },
-  href: { type: [String, Object] as PropType<RouteLocationRaw>, default: undefined, required: false },
+  to: {
+    type: [String, Object] as PropType<RouteLocationRaw>,
+    default: undefined,
+    required: false,
+  },
+  href: {
+    type: [String, Object] as PropType<RouteLocationRaw>,
+    default: undefined,
+    required: false,
+  },
   // Attributes
   target: { type: String as PropType<NuxtLinkProps['target']>, default: undefined, required: false },
   rel: { type: String as PropType<NuxtLinkProps['rel']>, default: undefined, required: false },

@@ -226,7 +226,9 @@ function updateLetter() {
   const el = railEl()
   if (!el)
     return
-  const groupEls = [...el.querySelectorAll<HTMLElement>('[data-letter]')]
+  const groupEls = [
+    ...el.querySelectorAll<HTMLElement>('[data-letter]'),
+  ]
   if (!groupEls.length)
     return
   const inset = Number.parseFloat(getComputedStyle(el).scrollPaddingInlineStart) || 0
@@ -297,15 +299,22 @@ function leadText(item: RailItem) {
   if (!description)
     return ''
   const lead = description.content?.[0]
-  if (lead?.type === 'heading' && lead.attrs?.level === 2)
-    return generateText({ type: 'doc', content: [lead] })
+  if (lead?.type === 'heading' && lead.attrs?.level === 2) {
+    return generateText({
+      type: 'doc',
+      content: [lead],
+    })
+  }
   return truncate(generateText(description), 150)
 }
 
 // generateText builds a tiptap schema per call, so resolve the leads once
 // per data load instead of on every render
 const leads = computed(() => new Map(
-  props.groups.flatMap(({ items }) => items).map(item => [item.id, leadText(item)] as const),
+  props.groups.flatMap(({ items }) => items).map(item => [
+    item.id,
+    leadText(item),
+  ] as const),
 ))
 
 // updated within the last nine days

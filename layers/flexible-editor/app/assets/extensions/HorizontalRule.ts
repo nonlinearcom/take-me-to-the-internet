@@ -13,6 +13,9 @@ export const HorizontalRule = Node.create<HorizontalRuleOptions>({
   },
   group: 'block',
   renderHTML({ HTMLAttributes }) {
-    return ['hr', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes)]
+    return [
+      'hr',
+      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
+    ]
   },
 })

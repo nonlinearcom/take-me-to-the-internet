@@ -17,7 +17,10 @@ export const HardBreak = Node.create<HardBreakOptions>({
   group: 'inline',
   selectable: false,
   renderHTML({ HTMLAttributes }) {
-    return ['br', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes)]
+    return [
+      'br',
+      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
+    ]
   },
   renderText() {
     return '\n'

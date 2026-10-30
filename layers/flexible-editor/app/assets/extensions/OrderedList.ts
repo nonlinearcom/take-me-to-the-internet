@@ -37,7 +37,15 @@ export const OrderedList = Node.create<OrderedListOptions>({
     const { start, ...attributesWithoutStart } = HTMLAttributes
 
     return start === 1
-      ? ['ol', mergeAttributes(this.options.HTMLAttributes, attributesWithoutStart), 0]
-      : ['ol', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0]
+      ? [
+          'ol',
+          mergeAttributes(this.options.HTMLAttributes, attributesWithoutStart),
+          0,
+        ]
+      : [
+          'ol',
+          mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
+          0,
+        ]
   },
 })

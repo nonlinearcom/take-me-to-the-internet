@@ -15,6 +15,10 @@ export const Paragraph = Node.create<ParagraphOptions>({
   group: 'block',
   content: 'inline*',
   renderHTML({ HTMLAttributes }) {
-    return ['p', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0]
+    return [
+      'p',
+      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
+      0,
+    ]
   },
 })

@@ -15,6 +15,10 @@ export const Blockquote = Node.create<BlockquoteOptions>({
   group: 'block',
   defining: true,
   renderHTML({ HTMLAttributes }) {
-    return ['blockquote', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0]
+    return [
+      'blockquote',
+      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
+      0,
+    ]
   },
 })

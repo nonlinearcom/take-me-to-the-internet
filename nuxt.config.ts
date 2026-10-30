@@ -1,14 +1,31 @@
 export default defineNuxtConfig({
-
   app: {
     head: {
       charset: 'utf-8',
       title: 'Take me to the internet',
       link: [
         { rel: 'icon', type: 'image/png', href: '/favicon.png' },
-        { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/Inter-Light.woff2?v=4.2', crossorigin: '' },
-        { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/Inter-Medium.woff2?v=4.2', crossorigin: '' },
-        { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/IBMPlexMono-Regular.woff2?v=4.2', crossorigin: '' },
+        {
+          rel: 'preload',
+          as: 'font',
+          type: 'font/woff2',
+          href: '/fonts/Inter-Light.woff2?v=4.2',
+          crossorigin: '',
+        },
+        {
+          rel: 'preload',
+          as: 'font',
+          type: 'font/woff2',
+          href: '/fonts/Inter-Medium.woff2?v=4.2',
+          crossorigin: '',
+        },
+        {
+          rel: 'preload',
+          as: 'font',
+          type: 'font/woff2',
+          href: '/fonts/IBMPlexMono-Regular.woff2?v=4.2',
+          crossorigin: '',
+        },
       ],
     },
 
@@ -18,12 +35,20 @@ export default defineNuxtConfig({
   routeRules: {
     // Pages: an hour at the Cloudflare edge (its cache rule respects origin headers), served stale while it refetches.
     // No max-age, so browsers always come back to the edge. More specific rules below and Nuxt's own /_nuxt/** rules override this one.
-    '/**': { headers: { 'cache-control': 'public, s-maxage=3600, stale-while-revalidate=86400' } },
-    '/api/**': { headers: { 'cache-control': 'no-store' } },
+    '/**': {
+      headers: { 'cache-control': 'public, s-maxage=3600, stale-while-revalidate=86400' },
+    },
+    '/api/**': {
+      headers: { 'cache-control': 'no-store' },
+    },
     // Fonts are cache-busted via the ?v= query param, so they can be immutable
-    '/fonts/**': { headers: { 'cache-control': 'public, max-age=31536000, immutable' } },
+    '/fonts/**': {
+      headers: { 'cache-control': 'public, max-age=31536000, immutable' },
+    },
     // Cables exports: one month, they land in fresh cover dirs
-    '/patches/**': { headers: { 'cache-control': 'public, max-age=2592000' } },
+    '/patches/**': {
+      headers: { 'cache-control': 'public, max-age=2592000' },
+    },
   },
 
   modules: [
@@ -68,6 +93,10 @@ export default defineNuxtConfig({
     enabled: false,
   },
 
+  // Keeps earlier builds' assets for open tabs, but its storage lives in
+  // node_modules/.cache, which every Coolify build starts without
+  skewProtection: false,
+
   i18n: {
     strategy: 'prefix_except_default',
     defaultLocale: 'en',
@@ -84,8 +113,18 @@ export default defineNuxtConfig({
       strictSeo: true,
     },
     locales: [
-      { code: 'en', file: 'en-US.json', language: 'en-US', name: 'English' },
-      { code: 'it', file: 'it-IT.json', language: 'it-IT', name: 'Italiano' },
+      {
+        code: 'en',
+        file: 'en-US.json',
+        language: 'en-US',
+        name: 'English',
+      },
+      {
+        code: 'it',
+        file: 'it-IT.json',
+        language: 'it-IT',
+        name: 'Italiano',
+      },
     ],
   },
 
@@ -151,4 +190,7 @@ export default defineNuxtConfig({
     ],
   },
 
+  devtools: {
+    enabled: true,
+  },
 })

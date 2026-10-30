@@ -1,4 +1,4 @@
-import type { SitemapUrlInput } from '#sitemap/types'
+import type { SitemapUrlInput } from '#sitemap/server'
 import { readItems } from '@directus/sdk'
 
 // Feeds the Directus-backed dynamic routes into @nuxtjs/sitemap
@@ -24,12 +24,25 @@ export default defineSitemapEventHandler(async (event) => {
   const [pages, glossary, logs, resources] = await Promise.all([
     directus.request(readItems('pages', {
       filter: PUBLISHED,
-      fields: ['slug', 'type', 'date_updated', { translations: ['languages_code'] }],
+      fields: [
+        'slug',
+        'type',
+        'date_updated',
+        {
+          translations: ['languages_code'],
+        },
+      ],
       limit: -1,
     })),
     directus.request(readItems('glossary', {
       filter: PUBLISHED,
-      fields: ['slug', 'date_updated', { translations: ['languages_code'] }],
+      fields: [
+        'slug',
+        'date_updated',
+        {
+          translations: ['languages_code'],
+        },
+      ],
       limit: -1,
     })),
     // Published only: archived log entries are listed on /log but not reachable
@@ -47,7 +60,9 @@ export default defineSitemapEventHandler(async (event) => {
 
   return [
     ...pages.map(page => ({
-      loc: page.type === 'page' ? `/${page.slug}` : `/articles/${page.slug}`,
+      loc: page.type === 'page'
+        ? `/${page.slug}`
+        : `/articles/${page.slug}`,
       lastmod: page.date_updated ?? undefined,
       _i18nTransform: isTranslated(page),
     })),

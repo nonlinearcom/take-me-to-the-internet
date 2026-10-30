@@ -190,7 +190,9 @@ function edgePath({ source, target, seed }: SimLink) {
   const bow = EDGE_BOW * length * noise(seed)
 
   const segments = Math.max(2, Math.round(length / EDGE_SEGMENT))
-  const points = [{ x: source.x, y: source.y }]
+  const points = [
+    { x: source.x, y: source.y },
+  ]
   for (let i = 1; i < segments; i++) {
     const p = i / segments
     // sin() tapers the offset to zero at both ends so the stroke still
@@ -270,7 +272,9 @@ function bubblePath(node: SimNode) {
     const next = points[(i + 1) % steps]!
     const midX = (p.x + next.x) / 2
     const midY = (p.y + next.y) / 2
-    d += i === 0 ? `M${midX},${midY}` : ` Q${p.x},${p.y} ${midX},${midY}`
+    d += i === 0
+      ? `M${midX},${midY}`
+      : ` Q${p.x},${p.y} ${midX},${midY}`
   }
   return `${d} Z`
 }
@@ -332,11 +336,18 @@ function initSimulation(w: number, h: number) {
       const targetId = rel.related_glossary_id
       if (targetId === item.id || !nodeById.has(targetId))
         continue
-      const key = item.id < targetId ? `${item.id}-${targetId}` : `${targetId}-${item.id}`
+      const key = item.id < targetId
+        ? `${item.id}-${targetId}`
+        : `${targetId}-${item.id}`
       if (seen.has(key))
         continue
       seen.add(key)
-      links.push({ source: nodeById.get(item.id)!, target: nodeById.get(targetId)!, key, seed: item.id * 73 + targetId * 179 })
+      links.push({
+        source: nodeById.get(item.id)!,
+        target: nodeById.get(targetId)!,
+        key,
+        seed: item.id * 73 + targetId * 179,
+      })
     }
   }
 

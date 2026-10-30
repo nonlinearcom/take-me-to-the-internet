@@ -16,6 +16,10 @@ export const Strike = Mark.create<StrikeOptions>({
        unused strike mark is repurposed: editors toggle "strikethrough" in the
        CMS, the site renders it as a highlight. The stored mark type stays
        'strike'. */
-    return ['mark', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0]
+    return [
+      'mark',
+      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
+      0,
+    ]
   },
 })

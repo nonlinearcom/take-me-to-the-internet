@@ -33,7 +33,9 @@ export function useResources(resourcesData: Ref<Resource[] | null | undefined>) 
 
   const toggleSort = (key: ResourceSortKey) => {
     if (sortKey.value === key) {
-      sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc'
+      sortDirection.value = sortDirection.value === 'asc'
+        ? 'desc'
+        : 'asc'
     } else {
       sortKey.value = key
       sortDirection.value = 'asc'
@@ -47,7 +49,11 @@ export function useResources(resourcesData: Ref<Resource[] | null | undefined>) 
       (!topics.length || topics.some(t => topicTitles(resource).includes(t)))
       && (!tags.length || tags.some(t => tagTitles(resource).includes(t)))
       && (!type.length || (!!resource.type && type.includes(resource.type)))
-      && (!q || [resource.title, resource.description, authorNames(resource)].join(' ').toLowerCase().includes(q)),
+      && (!q || [
+        resource.title,
+        resource.description,
+        authorNames(resource),
+      ].join(' ').toLowerCase().includes(q)),
     )
   })
 
@@ -62,7 +68,9 @@ export function useResources(resourcesData: Ref<Resource[] | null | undefined>) 
 
   const isEmpty = (value: unknown) => value == null || value === ''
   const sortValue = (resource: Resource, key: ResourceSortKey) =>
-    key === 'author' ? authorNames(resource) : resource[key as keyof Resource]
+    key === 'author'
+      ? authorNames(resource)
+      : resource[key as keyof Resource]
 
   const sortedResources = computed(() => {
     const key = sortKey.value
@@ -75,8 +83,11 @@ export function useResources(resourcesData: Ref<Resource[] | null | undefined>) 
       let valueB = sortValue(b, key)
 
       // Push empty values to the end of the list
-      if (isEmpty(valueA))
-        return isEmpty(valueB) ? 0 : 1
+      if (isEmpty(valueA)) {
+        return isEmpty(valueB)
+          ? 0
+          : 1
+      }
       if (isEmpty(valueB))
         return -1
 
@@ -87,8 +98,12 @@ export function useResources(resourcesData: Ref<Resource[] | null | undefined>) 
       }
 
       return direction === 'asc'
-        ? (valueA > valueB ? 1 : -1)
-        : (valueA < valueB ? 1 : -1)
+        ? (valueA > valueB
+            ? 1
+            : -1)
+        : (valueA < valueB
+            ? 1
+            : -1)
     })
   })
 

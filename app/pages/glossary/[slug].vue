@@ -62,7 +62,9 @@ const [{ list }, { data: page }] = await Promise.all([
   useGlossary(),
   useAsyncData(`glossary-${slug}`, () => $directus.request<GlossaryItem[]>(
     readItems('glossary', {
-      filter: { slug: { _eq: slug } },
+      filter: {
+        slug: { _eq: slug },
+      },
       limit: 1,
       fields: [
         '*',
@@ -77,9 +79,22 @@ const [{ list }, { data: page }] = await Promise.all([
                     cables: ['*'],
                     code_link: ['*'],
                     sidenote: ['*'],
-                    media: ['id', 'layout', { file: ['*'] }],
+                    media: [
+                      'id',
+                      'layout',
+                      {
+                        file: ['*'],
+                      },
+                    ],
                     gallery: [
-                      { content: ['*', { directus_files_id: ['id', 'description'] }] },
+                      {
+                        content: [
+                          '*',
+                          {
+                            directus_files_id: ['id', 'description'],
+                          },
+                        ],
+                      },
                     ],
                   },
                 },

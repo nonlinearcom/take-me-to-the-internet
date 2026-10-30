@@ -77,7 +77,7 @@
 
   --accent: var(--accent-7);
   --accent-hover: var(--accent-8);
-  --highlight-bg: #FFD700;
+  --highlight-bg: #ffd700;
 }
 
 .dark {
@@ -92,7 +92,7 @@
 
   --accent: var(--accent-7);
   --accent-hover: var(--accent-6);
-  --highlight-bg: #DC143C;
+  --highlight-bg: #dc143c;
 }
 
 /* TBD: From origial website */

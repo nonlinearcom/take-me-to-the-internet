@@ -18,6 +18,10 @@ export const ListItem = Node.create<ListItemOptions>({
   content: 'paragraph block*',
   defining: true,
   renderHTML({ HTMLAttributes }) {
-    return ['li', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0]
+    return [
+      'li',
+      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
+      0,
+    ]
   },
 })

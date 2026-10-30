@@ -8,7 +8,13 @@ import type { DirectusFile } from '@directus/sdk'
 // Deep filter that keeps only the active language's row of a `translations`
 // relation (Directus still returns the relation as an array)
 export function translationsDeep(languageCode: string) {
-  return { translations: { _filter: { languages_code: { _eq: languageCode } } } }
+  return {
+    translations: {
+      _filter: {
+        languages_code: { _eq: languageCode },
+      },
+    },
+  }
 }
 
 // Pick the active language's translation out of a fetched list. A fallback
@@ -31,15 +37,23 @@ export function lastUpdated(item: { date_created: string, date_updated?: string 
    leave a null behind, hence the guards */
 
 export function topicTitles(resource: Pick<Resource, 'topics'>) {
-  return (resource.topics ?? []).flatMap(({ topics_id }) => topics_id ? [topics_id.title] : [])
+  return (resource.topics ?? []).flatMap(({ topics_id }) => topics_id
+    ? [topics_id.title]
+    : [])
 }
 
 export function tagTitles(resource: Pick<Resource, 'tags'>) {
-  return (resource.tags ?? []).flatMap(({ tags_id }) => tags_id ? [tags_id.title] : [])
+  return (resource.tags ?? []).flatMap(({ tags_id }) => tags_id
+    ? [tags_id.title]
+    : [])
 }
 
 export function authorNames(resource: Pick<Resource, 'people'>) {
-  return (resource.people ?? []).flatMap(({ people_id }) => people_id ? [people_id.name.trim()] : []).join(', ')
+  return (resource.people ?? []).flatMap(({ people_id }) => people_id
+    ? [
+        people_id.name.trim(),
+      ]
+    : []).join(', ')
 }
 
 // Shared by the list page and the drawer so both load the same shape
@@ -66,8 +80,38 @@ export function getMediaType(media: string | DirectusFile) {
   if (typeof media === 'string') {
     type ExtensionType = 'image' | 'video'
     const extensions: Record<ExtensionType, string[]> = {
-      image: ['JPEG', 'JPG', 'JPE', 'JIF', 'JFIF', 'PNG', 'APNG', 'GIF', 'BMP', 'WEBP', 'TIFF', 'TIF', 'AVIF', 'SVG', 'ICO'],
-      video: ['MP4', 'M4V', 'M4P', 'OGG', 'OGV', 'AVI', 'MOV', 'WEBM', 'MPEG', 'MPG', 'FLV', '3GP', 'MKV'],
+      image: [
+        'JPEG',
+        'JPG',
+        'JPE',
+        'JIF',
+        'JFIF',
+        'PNG',
+        'APNG',
+        'GIF',
+        'BMP',
+        'WEBP',
+        'TIFF',
+        'TIF',
+        'AVIF',
+        'SVG',
+        'ICO',
+      ],
+      video: [
+        'MP4',
+        'M4V',
+        'M4P',
+        'OGG',
+        'OGV',
+        'AVI',
+        'MOV',
+        'WEBM',
+        'MPEG',
+        'MPG',
+        'FLV',
+        '3GP',
+        'MKV',
+      ],
     }
 
     const ext = media.split('.').pop()?.toUpperCase()

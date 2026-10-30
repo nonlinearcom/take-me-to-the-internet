@@ -56,7 +56,11 @@ export const Link = Mark.create<LinkOptions>({
   },
   renderHTML({ HTMLAttributes }) {
     if (HTMLAttributes.href?.startsWith('javascript:') === true) {
-      return ['a', mergeAttributes(this.options.HTMLAttributes, { ...HTMLAttributes, href: '' }), 0]
+      return [
+        'a',
+        mergeAttributes(this.options.HTMLAttributes, { ...HTMLAttributes, href: '' }),
+        0,
+      ]
     }
 
     const href = HTMLAttributes.href as string | undefined
@@ -68,9 +72,17 @@ export const Link = Mark.create<LinkOptions>({
       // target="_blank" is ignored: imported content bakes it into the mark
       // attrs and the Directus link dialog can't reliably unset it, so it never
       // reflects author intent for internal links.
-      return [NuxtLinkLocale, { to: href, class: HTMLAttributes.class }, 0] as any
+      return [
+        NuxtLinkLocale,
+        { to: href, class: HTMLAttributes.class },
+        0,
+      ] as any
     }
 
-    return ['a', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0]
+    return [
+      'a',
+      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
+      0,
+    ]
   },
 })

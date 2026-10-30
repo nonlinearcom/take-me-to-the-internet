@@ -94,7 +94,12 @@ function openResource(resource: Resource) {
 }
 
 function onSelectFilter({ kind, value }: ResourceFilterPayload) {
-  filters.value = { topics: [], tags: [], type: [], [kind]: [value] }
+  filters.value = {
+    topics: [],
+    tags: [],
+    type: [],
+    [kind]: [value],
+  }
   activeTab.value = kind
 }
 

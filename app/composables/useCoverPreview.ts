@@ -14,5 +14,11 @@ export function useCoverPreview(tableRef: MaybeElementRef) {
 
   const visible = computed(() => !isOutside.value && isLargeScreen.value && currentCover.value !== null)
 
-  return { currentCover, setCover, visible, xPos, yPos }
+  return {
+    currentCover,
+    setCover,
+    visible,
+    xPos,
+    yPos,
+  }
 }

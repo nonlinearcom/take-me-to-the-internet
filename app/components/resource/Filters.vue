@@ -114,10 +114,17 @@ const props = withDefaults(defineProps<{
   activeTab: undefined,
 })
 
-const emit = defineEmits(['update:filters', 'update:search', 'reset', 'update:activeTab'])
+const emit = defineEmits([
+  'update:filters',
+  'update:search',
+  'reset',
+  'update:activeTab',
+])
 
 function unique<T>(items: T[] = []) {
-  return [...new Set(items)]
+  return [
+    ...new Set(items),
+  ]
 }
 
 const topics = computed(() => unique(props.resources?.flatMap(topicTitles)))

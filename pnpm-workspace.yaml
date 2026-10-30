@@ -1,4 +1,16 @@
+minimumReleaseAgeExcludePrune: true
+
+trustPolicy: no-downgrade
+# Published after 7.5.x (which has provenance) without it — false positive
+trustPolicyExclude:
+  - semver@6.3.1
+
+shellEmulator: true
+
+overrides:
+  '@nuxt/devtools': ^4.0.0
+
 allowBuilds:
-  sharp: true
   esbuild: false
+  sharp: true
   unrs-resolver: false

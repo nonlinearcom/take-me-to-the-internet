@@ -27,7 +27,12 @@ export interface SearchResult {
   snippet: SearchSnippet | null
 }
 
-export const SEARCH_GROUPS: SearchGroup[] = ['articles', 'glossary', 'resources', 'log']
+export const SEARCH_GROUPS: SearchGroup[] = [
+  'articles',
+  'glossary',
+  'resources',
+  'log',
+]
 
 const BODY_LIMIT = 3000
 const MAX_PER_GROUP = 8
@@ -69,9 +74,13 @@ function makeSnippet(body: string, terms: string[]): SearchSnippet | null {
     const start = Math.max(0, index - 40)
     const end = Math.min(body.length, index + term.length + 60)
     return {
-      before: (start > 0 ? '…' : '') + body.slice(start, index),
+      before: (start > 0
+        ? '…'
+        : '') + body.slice(start, index),
       match: body.slice(index, index + term.length),
-      after: body.slice(index + term.length, end) + (end < body.length ? '…' : ''),
+      after: body.slice(index + term.length, end) + (end < body.length
+        ? '…'
+        : ''),
     }
   }
   return null
@@ -95,14 +104,27 @@ export function useSearch() {
       // Articles only: the static pages (about, privacy) are always one click
       // away in the nav, so they stay out of the index.
       $directus.request<Page[]>(readItems('pages', {
-        filter: { ...PUBLISHED, type: { _in: ARTICLE_TYPES } },
-        fields: ['slug', { translations: ['title', 'content'] }],
+        filter: {
+          ...PUBLISHED,
+          type: { _in: ARTICLE_TYPES },
+        },
+        fields: [
+          'slug',
+          {
+            translations: ['title', 'content'],
+          },
+        ],
         deep,
         limit: -1,
       })),
       $directus.request<GlossaryItem[]>(readItems('glossary', {
         filter: PUBLISHED,
-        fields: ['slug', { translations: ['term', 'description'] }],
+        fields: [
+          'slug',
+          {
+            translations: ['term', 'description'],
+          },
+        ],
         deep,
         limit: -1,
       })),
@@ -125,7 +147,17 @@ export function useSearch() {
       // not clickable, so search must not deep-link into them either.
       $directus.request<any[]>(readItems('log', {
         filter: PUBLISHED,
-        fields: ['slug', 'title', 'subtitle', 'institution', 'role', 'type', 'location', 'year', 'content'],
+        fields: [
+          'slug',
+          'title',
+          'subtitle',
+          'institution',
+          'role',
+          'type',
+          'location',
+          'year',
+          'content',
+        ],
         limit: -1,
       })),
     ])
@@ -139,7 +171,9 @@ export function useSearch() {
       entries.push(makeEntry({
         group: 'articles',
         title: translation.title,
-        body: translation.content ? generateText(translation.content) : '',
+        body: translation.content
+          ? generateText(translation.content)
+          : '',
         url: `/articles/${page.slug}`,
       }))
     }
@@ -151,7 +185,9 @@ export function useSearch() {
       entries.push(makeEntry({
         group: 'glossary',
         title: translation.term,
-        body: translation.description ? generateText(translation.description) : '',
+        body: translation.description
+          ? generateText(translation.description)
+          : '',
         url: `/glossary/${item.slug}`,
       }))
     }
@@ -180,8 +216,16 @@ export function useSearch() {
         group: 'log',
         title: entry.title,
         subtitle: entry.subtitle,
-        meta: [entry.role, entry.institution, entry.type, entry.location, entry.year].filter(Boolean).join(' '),
-        body: entry.content ? generateText(entry.content) : '',
+        meta: [
+          entry.role,
+          entry.institution,
+          entry.type,
+          entry.location,
+          entry.year,
+        ].filter(Boolean).join(' '),
+        body: entry.content
+          ? generateText(entry.content)
+          : '',
         url: `/log/${entry.slug}`,
       }))
     }
@@ -233,8 +277,13 @@ export function useSearch() {
         }
         score += termScore
       }
-      if (matchedAll)
-        matches.push({ entry, score, snippet: makeSnippet(entry.body, rawTerms) })
+      if (matchedAll) {
+        matches.push({
+          entry,
+          score,
+          snippet: makeSnippet(entry.body, rawTerms),
+        })
+      }
     }
 
     return matches.sort((a, b) => b.score - a.score)

@@ -53,7 +53,9 @@ const { activeNoteId } = useFootNotes()
 const noteHtml = computed(() =>
   (props.data?.content ?? '').replace(
     /<(\/?)(p|div)(?=[\s>])/g,
-    (_match, close, tag) => close ? '</span' : `<span data-${tag}`,
+    (_match, close, tag) => close
+      ? '</span'
+      : `<span data-${tag}`,
   ),
 )
 </script>

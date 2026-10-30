@@ -13,7 +13,15 @@ export interface Link extends NuxtLinkProps {
 
 // Single size definition - reused across components
 export const buttonSize = ['xs', 'sm', 'md', 'lg', 'xl'] as const
-export const buttonVariant = ['primary', 'secondary', 'accent', 'outline', 'soft', 'ghost', 'link'] as const
+export const buttonVariant = [
+  'primary',
+  'secondary',
+  'accent',
+  'outline',
+  'soft',
+  'ghost',
+  'link',
+] as const
 
 declare global {
   type ButtonSize = typeof buttonSize[number]

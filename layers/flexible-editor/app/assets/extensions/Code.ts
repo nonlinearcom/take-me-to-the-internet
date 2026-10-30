@@ -15,6 +15,10 @@ export const Code = Mark.create<CodeOptions>({
   code: true,
   exitable: true,
   renderHTML({ HTMLAttributes }) {
-    return ['code', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0]
+    return [
+      'code',
+      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
+      0,
+    ]
   },
 })

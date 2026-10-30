@@ -49,7 +49,10 @@ useSeoMeta({
 const { data } = await useAsyncData(() => `page-articles-${locale.value}`, () => {
   return $directus.request<Page[]>(
     readItems('pages', {
-      filter: { ...PUBLISHED, type: { _in: ARTICLE_TYPES } },
+      filter: {
+        ...PUBLISHED,
+        type: { _in: ARTICLE_TYPES },
+      },
       sort: ['-date_created'],
       fields: [
         '*',

@@ -20,7 +20,11 @@ export default antfu(
   // Without `files`, they are general rules for all files
     rules: {
       'style/semi': ['error', 'never'],
-      'style/brace-style': ['error', '1tbs', { allowSingleLine: true }],
+      'style/brace-style': [
+        'error',
+        '1tbs',
+        { allowSingleLine: true },
+      ],
       'vue/no-v-text-v-html-on-component': 'off',
 
       'no-console': 'off',
@@ -33,18 +37,24 @@ export default antfu(
       'ts/consistent-type-imports': 'off',
       'ts/ban-types': 'off',
 
-      'vue/block-order': ['error', {
-        order: ['template', 'script', 'style'],
-      }],
+      'vue/block-order': [
+        'error',
+        {
+          order: ['template', 'script', 'style'],
+        },
+      ],
 
-      'vue/max-attributes-per-line': ['warn', {
-        singleline: {
-          max: 1,
+      'vue/max-attributes-per-line': [
+        'warn',
+        {
+          singleline: {
+            max: 1,
+          },
+          multiline: {
+            max: 1,
+          },
         },
-        multiline: {
-          max: 1,
-        },
-      }],
+      ],
     },
   },
 )

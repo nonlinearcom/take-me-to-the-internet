@@ -39,7 +39,14 @@ const { data: glossary } = await useAsyncData(() => `glossary-page-${locale.valu
       filter: PUBLISHED,
       sort: ['slug'],
       // the rail only shows each term and its lead
-      fields: ['id', 'slug', 'date_updated', { translations: ['term', 'description'] }],
+      fields: [
+        'id',
+        'slug',
+        'date_updated',
+        {
+          translations: ['term', 'description'],
+        },
+      ],
       deep: translationsDeep(languageCode.value),
     }),
   )
@@ -51,12 +58,18 @@ const groups = computed(() => {
   for (const item of glossary.value ?? []) {
     const term = item.translations?.[0]?.term?.trim() || item.slug
     const raw = term[0]!.normalize('NFD')[0]!.toLocaleUpperCase(locale.value)
-    const letter = /\p{L}/u.test(raw) ? raw : '#'
+    const letter = /\p{L}/u.test(raw)
+      ? raw
+      : '#'
     map.get(letter)?.push(item) ?? map.set(letter, [item])
   }
-  return [...map.entries()]
+  return [
+    ...map.entries(),
+  ]
     .sort(([a], [b]) => (a === '#') !== (b === '#')
-      ? (a === '#' ? 1 : -1)
+      ? (a === '#'
+          ? 1
+          : -1)
       : a.localeCompare(b, locale.value))
     .map(([letter, items]) => ({
       letter,

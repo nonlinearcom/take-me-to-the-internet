@@ -19,7 +19,10 @@ export default defineNuxtConfig({
 
   icon: {
     customCollections: [
-      { prefix: 'ui', dir: join(currentDir, 'app/assets/icons') },
+      {
+        prefix: 'ui',
+        dir: join(currentDir, 'app/assets/icons'),
+      },
     ],
   },
 

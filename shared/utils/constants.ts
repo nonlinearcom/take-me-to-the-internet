@@ -4,5 +4,9 @@ export const ARTICLE_TYPES = ['note', 'tutorial']
 
 // Directus status filters shared by the listing pages, the detail routes,
 // search and the sitemap, so what counts as public is decided once.
-export const PUBLISHED = { status: { _eq: 'published' } }
-export const NOT_DRAFT = { status: { _neq: 'draft' } }
+export const PUBLISHED = {
+  status: { _eq: 'published' },
+}
+export const NOT_DRAFT = {
+  status: { _neq: 'draft' },
+}

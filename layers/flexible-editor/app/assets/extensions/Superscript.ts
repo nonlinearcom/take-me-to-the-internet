@@ -12,6 +12,10 @@ export const Superscript = Mark.create<SuperscriptExtensionOptions>({
     }
   },
   renderHTML({ HTMLAttributes }) {
-    return ['sup', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0]
+    return [
+      'sup',
+      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
+      0,
+    ]
   },
 })

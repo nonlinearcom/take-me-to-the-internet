@@ -28,7 +28,9 @@ export const CodeBlock = Node.create<CodeBlockOptions>({
         default: null,
         parseHTML: (element) => {
           const { languageClassPrefix } = this.options
-          const classNames = [...(element.firstElementChild?.classList || [])]
+          const classNames = [
+            ...(element.firstElementChild?.classList || []),
+          ]
           const languages = classNames
             .filter(className => className.startsWith(languageClassPrefix))
             .map(className => className.replace(languageClassPrefix, ''))
